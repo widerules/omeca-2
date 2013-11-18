@@ -31,4 +31,8 @@ public abstract class GameEntity {
 	public boolean removeCard(Card card){
 		return cards.remove(card);
 	}
+	
+	public int getNumberOfCards(){
+		return cards.size();
+	}
 }
