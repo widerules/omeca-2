@@ -15,6 +15,30 @@ public class Board extends GameEntity{
 		cardsToDeal = 0;
 	}
 	
+	public Hashtable<Integer, Player> getPlayers() {
+		return players;
+	}
+
+	public void setPlayers(Hashtable<Integer, Player> players) {
+		this.players = players;
+	}
+
+	public DrawPile getDrawPile() {
+		return drawPile;
+	}
+
+	public void setDrawPile(DrawPile drawPile) {
+		this.drawPile = drawPile;
+	}
+
+	public DiscardPile getDiscardPile() {
+		return discardPile;
+	}
+
+	public void setDiscardPile(DiscardPile discardPile) {
+		this.discardPile = discardPile;
+	}
+	
 	public int getCardsToDeal() {
 		return cardsToDeal;
 	}
