@@ -1,0 +1,24 @@
+<?xml version="1.0"?>
+<deck path="config/deck">
+	<colors>
+	    <color name="of_diamonds"></color>
+	    <color name="of_spades"></color>
+	    <color name="of_hearts"></color>
+	    <color name="of_clubs"></color>
+	</colors>
+	<cards>
+		<card value="1"></card>
+		<card value="2"></card>
+		<card value="3"></card>
+		<card value="4"></card>
+		<card value="5"></card>
+		<card value="6"></card>
+		<card value="7"></card>
+		<card value="8"></card>
+		<card value="9"></card>
+		<card value="10"></card>
+		<card value="11"></card>
+		<card value="12"></card>
+		<card value="13"></card>
+	</cards>
+</deck>
