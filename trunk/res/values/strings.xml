@@ -9,7 +9,8 @@
     <string name="button_options">Options</string>
     <string name="start_game">Jouer</string>
     
-    <string name="tmp_board">Board Fragment</string>
-    <string name="tmp_hand">Hand Fragment</string>
+    <string name="tmp_board">Board</string>
+    <string name="tmp_hand">Hand</string>
+    <string name="tmp_slidebar">Da f*cking awesome slidebar!</string>
 
 </resources>

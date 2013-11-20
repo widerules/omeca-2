@@ -14,6 +14,6 @@ public class HandFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
         Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.view_fragment_hand, container, false);
+        return inflater.inflate(R.layout.view_hand, container, false);
     }
 }
