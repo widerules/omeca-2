@@ -1,27 +1,31 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
     android:orientation="vertical" >
-
-    <fragment
-        android:id="@+id/view_fragment_board"
-        android:name="com.ensibs.omeca.fragment.BoardFragment"
+    
+    <com.sothree.slidinguppanel.SlidingUpPanelLayout
+        android:id="@+id/sliding_layout"
         android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="80"
-        tools:layout="@layout/view_fragment_board" >
-    </fragment>
+        android:layout_height="match_parent">
 
-    <fragment
-        android:id="@+id/view_fragment_hand"
-        android:name="com.ensibs.omeca.fragment.HandFragment"
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="20"
-        tools:layout="@layout/view_fragment_hand" >
+        <include  
+	        layout="@layout/view_board" 
+	        android:id="@+id/view_board" />
+	    
+	    <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
 
-    </fragment>
-
-</LinearLayout>
+           	<include  
+		        layout="@layout/view_slidebar" 
+		        android:id="@+id/view_slidebar" />
+            
+	        <include  
+		        layout="@layout/view_hand" 
+		        android:id="@+id/view_hand" />
+        </LinearLayout>	    
+    </com.sothree.slidinguppanel.SlidingUpPanelLayout>
+</RelativeLayout>

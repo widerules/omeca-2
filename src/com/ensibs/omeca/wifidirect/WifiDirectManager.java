@@ -52,7 +52,7 @@ public class WifiDirectManager extends Observable{
 	    p2pEnabled = new IntentFilter(WifiP2pManager.WIFI_P2P_STATE_CHANGED_ACTION);
 	    ownDeviceFilter = new IntentFilter(WifiP2pManager.WIFI_P2P_THIS_DEVICE_CHANGED_ACTION);
 		//enable wifi on the device
-		this.enableWifi();
+		//this.enableWifi();
 		this.initializeWiFiDirect();
 	}
 	
