@@ -13,6 +13,7 @@ public class Card{
 	//private static final String CONFIG_PATH = "/config/config.xml";
 	public static int[] VALUES;
 	public static String[] COLORS;
+	public static String[] JOKERS;
 	public static String DECK_PATH;
 	
 	private int value;
@@ -47,29 +48,36 @@ public class Card{
 			if(rootNode == null)
 				throw new Exception("Error while parsing config file. (Empty file)");
 			
-			List<Element> colors = rootNode.getChild("colors").getChildren();
-			List<Element> cards = rootNode.getChild("cards").getChildren();
+			Element colors = rootNode.getChild("colors");
+			Element cards = rootNode.getChild("cards");
+			Element jokers = rootNode.getChild("jokers");
 			
-			if(colors == null || cards == null)
+			if(colors == null || cards == null || jokers == null)
 				throw new Exception("Error while parsing config file. (No cards or values)");
 			
 			Element node = null;
 			
 			DECK_PATH = rootNode.getAttributeValue("path");
-			VALUES = new int[cards.size()];
-			COLORS = new String[colors.size()];
+			VALUES = new int[cards.getChildren().size()];
+			COLORS = new String[colors.getChildren().size()];
+			JOKERS = new String[jokers.getChildren().size()];
 			
-			
-			for (int i = 0; i < colors.size(); i++) {
-			   node = (Element) colors.get(i);
+			for (int i = 0; i < colors.getChildren().size(); i++) {
+			   node = (Element) colors.getChildren().get(i);
 			   COLORS[i] = node.getAttributeValue("name");
 	 
 			}
 			
-			for (int i = 0; i < cards.size(); i++) {
-				node = (Element) cards.get(i);
+			for (int i = 0; i < cards.getChildren().size(); i++) {
+				node = (Element) cards.getChildren().get(i);
 				VALUES[i] = Integer.parseInt(node.getAttributeValue("value"));
 			}
+			
+			for (int i = 0; i < jokers.getChildren().size(); i++) {
+				node = (Element) jokers.getChildren().get(i);
+				JOKERS[i] = node.getAttributeValue("name");
+			}
+			
 			in.close();
 	 
 		  } catch (Exception e){

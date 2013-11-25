@@ -25,7 +25,7 @@ public class PlayerCardsTransfertAction extends AbstractAction{
 
 	@Override
 	public void executeAction() {
-		
+		//Do model & view update
 		
 	}
 	

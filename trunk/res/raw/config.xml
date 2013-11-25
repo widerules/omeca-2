@@ -21,4 +21,8 @@
 		<card value="12"></card>
 		<card value="13"></card>
 	</cards>
+	<jokers>
+	    <joker name="red_joker"></joker>
+	    <joker name="black_joker"></joker>
+	</jokers>
 </deck>
