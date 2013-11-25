@@ -1,10 +1,10 @@
 <?xml version="1.0"?>
 <deck path="config/deck">
 	<colors>
-	    <color name="of_diamonds"></color>
-	    <color name="of_spades"></color>
-	    <color name="of_hearts"></color>
-	    <color name="of_clubs"></color>
+	    <color name="ofdiamonds"></color>
+	    <color name="ofspades"></color>
+	    <color name="ofhearts"></color>
+	    <color name="ofclubs"></color>
 	</colors>
 	<cards>
 		<card value="1"></card>
@@ -22,7 +22,7 @@
 		<card value="13"></card>
 	</cards>
 	<jokers>
-	    <joker name="red_joker"></joker>
-	    <joker name="black_joker"></joker>
+	    <joker name="redjoker"></joker>
+	    <joker name="blackjoker"></joker>
 	</jokers>
 </deck>
