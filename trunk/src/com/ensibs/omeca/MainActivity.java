@@ -9,11 +9,13 @@ import com.ensibs.omeca.wifidirect.WifiDirectManager;
 import com.ensibs.omeca.wifidirect.event.ConnectionWifiDirectEvent;
 
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Toast;
@@ -21,10 +23,14 @@ import android.widget.Toast;
 public class MainActivity extends Activity implements Observer {
 
 	WifiDirectManager wifiDirectManager;
+	ControlerView controler;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
+		
+		//create controler 
+		controler = new ControlerView(this);
 
 		// Hides titlebar and actionbar
 		requestWindowFeature(Window.FEATURE_NO_TITLE);
@@ -89,5 +95,27 @@ public class MainActivity extends Activity implements Observer {
 				setContentView(R.layout.view_game);
 			}
 		}
+	}
+	
+	public void showDealPopup(){
+		final DealView dv = new DealView(0, 0, this.getApplicationContext());
+		AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
+		builder.setTitle("Distribuer les cartes");
+		builder.setView(dv);
+		final AlertDialog alert = builder.create();
+		alert.show();
+		dv.buttonSave.setOnClickListener( new OnClickListener() {
+			public void onClick(View v) {
+				controler.board.setCardsToDeal(dv.getDealNumber());
+				alert.dismiss();
+			}
+		});
+		dv.buttonCancle.setOnClickListener(new OnClickListener() {
+			public void onClick(View v) {
+				alert.cancel();
+			}
+		});
+		
+		
 	}
 }
