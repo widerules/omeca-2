@@ -17,6 +17,7 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.Window;
 import android.view.WindowManager;
+import android.widget.Button;
 import android.widget.Toast;
 
 public class MainActivity extends Activity implements Observer {
@@ -44,6 +45,16 @@ public class MainActivity extends Activity implements Observer {
 
 		// Launches the stuff
 		setContentView(R.layout.view_homescreen);
+		
+		Button but = (Button) findViewById(R.id.button4);
+		but.setOnClickListener(new OnClickListener() {
+			
+			@Override
+			public void onClick(View v) {
+				showDealPopup();
+				
+			}
+		});
 	}
 
 	@Override
@@ -97,24 +108,27 @@ public class MainActivity extends Activity implements Observer {
 	}
 	
 	public void showDealPopup(){
-		final DealView dv = new DealView(0, 0, this.getApplicationContext());
-		AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
-		builder.setTitle("Distribuer les cartes");
-		builder.setView(dv);
-		final AlertDialog alert = builder.create();
-		alert.show();
-		dv.buttonSave.setOnClickListener( new OnClickListener() {
-			public void onClick(View v) {
-				controler.board.setCardsToDeal(dv.getDealNumber());
-				alert.dismiss();
-			}
-		});
-		dv.buttonCancle.setOnClickListener(new OnClickListener() {
-			public void onClick(View v) {
-				alert.cancel();
-			}
-		});
-		
+		if(controler.board.getDrawPile().getNumberOfCards()> 0){
+			final DealView dv = new DealView( controler.board.getDrawPile().getNumberOfCards(),
+					controler.board.getPlayers().size(), this.getApplicationContext());
+			AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
+			builder.setTitle("Distribuer les cartes");
+			builder.setView(dv);
+			final AlertDialog alert = builder.create();
+			alert.show();
+			dv.buttonSave.setOnClickListener( new OnClickListener() {
+				public void onClick(View v) {
+					controler.dealCard(dv.getDealNumber());
+					alert.dismiss();
+				}
+			});
+			dv.buttonCancle.setOnClickListener(new OnClickListener() {
+				public void onClick(View v) {
+					alert.cancel();
+				}
+			});
+		}else Toast.makeText(getApplicationContext(), "La pile est vide",
+				   Toast.LENGTH_LONG).show();
 		
 	}
 }
