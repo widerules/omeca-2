@@ -1,7 +1,8 @@
 package com.ensibs.omeca;
 
 import com.ensibs.omeca.model.entities.Board;
-import model.entities.Player;
+import com.ensibs.omeca.model.entities.Player;
+
 
 public class ControlerView {
 	public MainActivity maActivity;
@@ -13,7 +14,7 @@ public class ControlerView {
 		//TODO set the userID 
 		myId= 1;
 		Player p = new Player();
-		board.addPlayer(0, p);
+		//board.addPlayer(0, p);
 	}
 
 	public void dealCard(int nbToDeal){
