@@ -1,5 +1,5 @@
 <?xml version="1.0"?>
-<deck path="config/deck">
+<deck>
 	<colors>
 	    <color name="ofdiamonds"></color>
 	    <color name="ofspades"></color>

@@ -3,22 +3,26 @@ package com.ensibs.omeca;
 import java.util.Observable;
 import java.util.Observer;
 
-import com.ensibs.omeca.model.entities.Card;
-import com.ensibs.omeca.wifidirect.WifiDirectManager;
-import com.ensibs.omeca.wifidirect.event.ConnectionWifiDirectEvent;
-
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.os.Bundle;
+import android.text.Layout;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.view.ViewGroup;
 import android.view.Window;
 import android.view.WindowManager;
-import android.widget.Button;
+import android.widget.LinearLayout;
 import android.widget.Toast;
+
+import com.ensibs.omeca.model.entities.Card;
+import com.ensibs.omeca.view.CardView;
+import com.ensibs.omeca.wifidirect.WifiDirectManager;
+import com.ensibs.omeca.wifidirect.event.ConnectionWifiDirectEvent;
 
 public class MainActivity extends Activity implements Observer {
 
@@ -73,7 +77,26 @@ public class MainActivity extends Activity implements Observer {
 		Toast.makeText(this, "Hosting...", Toast.LENGTH_SHORT).show();
 		this.wifiDirectManager.setRole(true);
 		this.wifiDirectManager.discoverPeers();
-		setContentView(R.layout.view_game);
+		LayoutInflater inflater = this.getLayoutInflater();
+		View gameView = inflater.inflate(R.layout.view_game, null);
+		setContentView(gameView);
+		LinearLayout boardView = (LinearLayout)(gameView.findViewById(R.id.view_board));
+		Card aCard = new Card(8, "ofhearts");
+		Card aCard2 = new Card(1, "ofhearts");
+		Card aCard3 = new Card(1, "ofclubs");
+		Card aCard4 = new Card(9, "ofspades");
+		
+		CardView cardView = new CardView(this, aCard);
+		CardView cardView2 = new CardView(this, aCard2);
+		CardView cardView3 = new CardView(this, aCard3);
+		CardView cardView4 = new CardView(this, aCard4);
+		
+		boardView.addView(cardView);
+		boardView.addView(cardView2);
+		boardView.addView(cardView3);
+		boardView.addView(cardView4);
+		
+		
 	}
 
 	public void join(View view) {
