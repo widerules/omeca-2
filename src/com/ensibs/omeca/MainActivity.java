@@ -45,16 +45,6 @@ public class MainActivity extends Activity implements Observer {
 
 		// Launches the stuff
 		setContentView(R.layout.view_homescreen);
-		
-		Button but = (Button) findViewById(R.id.button4);
-		but.setOnClickListener(new OnClickListener() {
-			
-			@Override
-			public void onClick(View v) {
-				showDealPopup();
-				
-			}
-		});
 	}
 
 	@Override
