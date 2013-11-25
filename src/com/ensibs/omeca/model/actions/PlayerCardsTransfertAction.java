@@ -1,6 +1,6 @@
-package model.actions;
+package com.ensibs.omeca.model.actions;
 
-import model.entities.Card;
+import com.ensibs.omeca.model.entities.Card;
 
 public class PlayerCardsTransfertAction extends AbstractAction{
 	int source;
