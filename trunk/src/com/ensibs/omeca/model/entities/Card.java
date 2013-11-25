@@ -1,8 +1,6 @@
 package com.ensibs.omeca.model.entities;
 
 import java.io.InputStream;
-import java.util.List;
-
 import org.jdom2.Document;
 import org.jdom2.Element;
 import org.jdom2.input.SAXBuilder;
@@ -14,7 +12,6 @@ public class Card{
 	public static int[] VALUES;
 	public static String[] COLORS;
 	public static String[] JOKERS;
-	public static String DECK_PATH;
 	
 	private int value;
 	private String color;
@@ -57,7 +54,6 @@ public class Card{
 			
 			Element node = null;
 			
-			DECK_PATH = rootNode.getAttributeValue("path");
 			VALUES = new int[cards.getChildren().size()];
 			COLORS = new String[colors.getChildren().size()];
 			JOKERS = new String[jokers.getChildren().size()];
@@ -87,7 +83,7 @@ public class Card{
 	
 	public static String getCardsConfig(){
 		String ret = "";
-		ret +="Deck path : " +DECK_PATH+"\n Colors : ";
+		ret +="Colors : ";
 		for(String col : COLORS)
 			ret +=col+" ";
 		ret +="\n Values : ";
