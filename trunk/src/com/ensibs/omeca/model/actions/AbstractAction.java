@@ -1,6 +1,6 @@
-package model.actions;
+package com.ensibs.omeca.model.actions;
 
-import model.entities.Board;
+import com.ensibs.omeca.model.entities.Board;
 
 public abstract class AbstractAction implements ActionEvent{
 	protected Board board;

@@ -3,8 +3,7 @@ package com.ensibs.omeca;
 import java.util.Observable;
 import java.util.Observer;
 
-import model.entities.Card;
-
+import com.ensibs.omeca.model.entities.Card;
 import com.ensibs.omeca.wifidirect.WifiDirectManager;
 import com.ensibs.omeca.wifidirect.event.ConnectionWifiDirectEvent;
 

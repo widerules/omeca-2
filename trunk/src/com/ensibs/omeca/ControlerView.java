@@ -1,6 +1,6 @@
 package com.ensibs.omeca;
 
-import model.entities.Board;
+import com.ensibs.omeca.model.entities.Board;
 
 public class ControlerView {
 	public MainActivity maActivity;

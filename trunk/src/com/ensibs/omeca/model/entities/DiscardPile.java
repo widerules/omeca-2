@@ -1,4 +1,4 @@
-package model.entities;
+package com.ensibs.omeca.model.entities;
 
 public class DiscardPile extends GameEntity{
 

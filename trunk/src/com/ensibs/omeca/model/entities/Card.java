@@ -1,4 +1,4 @@
-package model.entities;
+package com.ensibs.omeca.model.entities;
 
 import java.io.InputStream;
 import java.util.List;
