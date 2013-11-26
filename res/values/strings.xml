@@ -7,8 +7,9 @@
     <string name="button_host">Héberger</string>
     <string name="button_client">Rejoindre</string>
     <string name="button_options">Options</string>
-    <string name="button_avatar">Avatar</string>
-    <string name="button_exit">Quitter</string>
+    <string name="button_avatar">Choix avatar</string>
+    <string name="button_disconnect">Quitter la partie</string>
+    <string name="button_exit">Quitter le jeu</string>
     <string name="start_game">Jouer</string>
     
     <string name="tmp_board">Board</string>

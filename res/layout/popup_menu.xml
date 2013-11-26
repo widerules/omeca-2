@@ -7,13 +7,33 @@
         android:id="@+id/popupMenuAvatar"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:onClick="test"
-        android:text="@string/button_avatar" />
+        android:onClick="avatar"
+        android:text="@string/button_avatar"
+        android:background="@android:color/white" />
+    
+    <View
+	    android:layout_width="fill_parent"
+	    android:layout_height="1dp"
+	    android:background="#dddddd"/>
+    
+    <Button
+        android:id="@+id/popupMenuDisconnect"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:onClick="disconnect"
+        android:text="@string/button_disconnect"
+        android:background="@android:color/white" />
+    
+    <View
+	    android:layout_width="fill_parent"
+	    android:layout_height="1dp"
+	    android:background="#dddddd"/>
     
     <Button
         android:id="@+id/popupMenuExit"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:onClick="exit"
-        android:text="@string/button_exit" />
+        android:text="@string/button_exit"
+        android:background="@android:color/white" />
 </LinearLayout>

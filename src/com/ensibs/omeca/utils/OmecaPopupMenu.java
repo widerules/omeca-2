@@ -6,14 +6,18 @@ import android.view.LayoutInflater;
 import com.ensibs.omeca.R;
 
 public class OmecaPopupMenu {
-	private static AlertDialog.Builder dDialog = null;
-	private static LayoutInflater inflater = null;
+	private static AlertDialog omecaPopupMenu = null;
 
 	public static void show(Activity act) {
-		dDialog = new AlertDialog.Builder(act);
-		inflater = act.getLayoutInflater();
-	    dDialog.setTitle("Options");
-	    dDialog.setView(inflater.inflate(R.layout.popup_menu, null));
-	    dDialog.show();		
+		AlertDialog.Builder builder = new AlertDialog.Builder(act);
+		LayoutInflater inflater = act.getLayoutInflater();
+		omecaPopupMenu = builder.create();
+		omecaPopupMenu.setTitle("Options");
+		omecaPopupMenu.setView(inflater.inflate(R.layout.popup_menu, null));
+		omecaPopupMenu.show();		
+	}
+	
+	public static void dismiss() {
+		omecaPopupMenu.cancel();
 	}
 }
