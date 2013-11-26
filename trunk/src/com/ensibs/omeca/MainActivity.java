@@ -6,21 +6,16 @@ import java.util.Observer;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.os.Bundle;
-import android.text.Layout;
 import android.util.Log;
-import android.view.LayoutInflater;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
-import android.view.ViewGroup;
 import android.view.Window;
 import android.view.WindowManager;
-import android.widget.LinearLayout;
 import android.widget.Toast;
 
 import com.ensibs.omeca.model.entities.Card;
 import com.ensibs.omeca.utils.OmecaPopupMenu;
-import com.ensibs.omeca.view.CardView;
 import com.ensibs.omeca.wifidirect.WifiDirectManager;
 import com.ensibs.omeca.wifidirect.event.ConnectionWifiDirectEvent;
 
@@ -160,6 +155,18 @@ public class MainActivity extends Activity implements Observer {
 	 */
 	public void avatar(View view) {
 		Toast.makeText(this, "Avatar...", Toast.LENGTH_SHORT).show();
+		OmecaPopupMenu.dismiss();
+	}
+
+	/**
+	 * Exits the current game after the corresponding
+	 * menu button have been pressed
+	 * @param view
+	 */
+	public void disconnect(View view) {
+		System.out.println("Disconnecting !!!");
+		setContentView(R.layout.view_homescreen);
+		OmecaPopupMenu.dismiss();
 	}
 
 	/**
@@ -168,7 +175,7 @@ public class MainActivity extends Activity implements Observer {
 	 * @param view
 	 */
 	public void exit(View view) {
-		System.out.println("Join !!!");
+		System.out.println("Exit !!!");
 		wifiDirectManager.removeWifiDirect();
 		this.finish();
 	}
