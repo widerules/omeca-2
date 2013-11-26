@@ -9,8 +9,7 @@ import android.os.Bundle;
 import android.text.Layout;
 import android.util.Log;
 import android.view.LayoutInflater;
-import android.view.Menu;
-import android.view.MenuItem;
+import android.view.KeyEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
@@ -20,6 +19,7 @@ import android.widget.LinearLayout;
 import android.widget.Toast;
 
 import com.ensibs.omeca.model.entities.Card;
+import com.ensibs.omeca.utils.OmecaPopupMenu;
 import com.ensibs.omeca.view.CardView;
 import com.ensibs.omeca.wifidirect.WifiDirectManager;
 import com.ensibs.omeca.wifidirect.event.ConnectionWifiDirectEvent;
@@ -28,6 +28,7 @@ public class MainActivity extends Activity implements Observer {
 
 	WifiDirectManager wifiDirectManager;
 	ControlerView controler;
+	AlertDialog popupMenu;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -51,14 +52,14 @@ public class MainActivity extends Activity implements Observer {
 		setContentView(R.layout.view_homescreen);
 	}
 
-	@Override
+	/*@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 		// Inflate the menu; this adds items to the action bar if it is present.
 		getMenuInflater().inflate(R.menu.main, menu);
 		return true;
-	}
+	}*/
 
-	@Override
+	/*@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
 		// Handle item selection
 		switch (item.getItemId()) {
@@ -70,46 +71,7 @@ public class MainActivity extends Activity implements Observer {
 			default:
 				return super.onOptionsItemSelected(item);
 		}
-	}
-
-	public void host(View view) {
-		System.out.println("Host !!!");
-		Toast.makeText(this, "Hosting...", Toast.LENGTH_SHORT).show();
-		this.wifiDirectManager.setRole(true);
-		this.wifiDirectManager.discoverPeers();
-		LayoutInflater inflater = this.getLayoutInflater();
-		View gameView = inflater.inflate(R.layout.view_game, null);
-		setContentView(gameView);
-		LinearLayout boardView = (LinearLayout)(gameView.findViewById(R.id.view_board));
-		Card aCard = new Card(8, "ofhearts");
-		Card aCard2 = new Card(1, "ofhearts");
-		Card aCard3 = new Card(1, "ofclubs");
-		Card aCard4 = new Card(9, "ofspades");
-		
-		CardView cardView = new CardView(this, aCard);
-		CardView cardView2 = new CardView(this, aCard2);
-		CardView cardView3 = new CardView(this, aCard3);
-		CardView cardView4 = new CardView(this, aCard4);
-		
-		boardView.addView(cardView);
-		boardView.addView(cardView2);
-		boardView.addView(cardView3);
-		boardView.addView(cardView4);
-		
-		
-	}
-
-	public void join(View view) {
-		System.out.println("Join !!!");
-		Toast.makeText(this, "Joining...", Toast.LENGTH_SHORT).show();
-		this.wifiDirectManager.setRole(false);
-		this.wifiDirectManager.discoverPeers();
-	}
-
-	public void options(View view) {
-		System.out.println("Options !!!");
-		Toast.makeText(this, "Options", Toast.LENGTH_SHORT).show();
-	}
+	}*/
 
 	@Override
 	public void update(Observable observable, Object data) {
@@ -118,6 +80,17 @@ public class MainActivity extends Activity implements Observer {
 				setContentView(R.layout.view_game);
 			}
 		}
+	}
+	
+	@Override
+	public boolean onKeyDown(int keyCode, KeyEvent event) {
+		if (keyCode == KeyEvent.KEYCODE_BACK
+				|| keyCode == KeyEvent.KEYCODE_MENU
+				|| keyCode == KeyEvent.KEYCODE_HOME) {
+			OmecaPopupMenu.show(this);
+		}
+		
+		return super.onKeyDown(keyCode, event);
 	}
 	
 	public void showDealPopup(){
@@ -143,5 +116,60 @@ public class MainActivity extends Activity implements Observer {
 		}else Toast.makeText(getApplicationContext(), "La pile est vide",
 				   Toast.LENGTH_LONG).show();
 		
+	}
+
+	/**
+	 * Hosts a game after the corresponding
+	 * menu button have been pressed
+	 * @param view
+	 */
+	public void host(View view) {
+		System.out.println("Host !!!");
+		Toast.makeText(this, "Hosting...", Toast.LENGTH_SHORT).show();
+		this.wifiDirectManager.setRole(true);
+		this.wifiDirectManager.discoverPeers();
+		setContentView(R.layout.view_game);
+	}
+
+	/**
+	 * Joins a game after the corresponding
+	 * menu button have been pressed
+	 * @param view
+	 */
+	public void join(View view) {
+		System.out.println("Join !!!");
+		Toast.makeText(this, "Joining...", Toast.LENGTH_SHORT).show();
+		this.wifiDirectManager.setRole(false);
+		this.wifiDirectManager.discoverPeers();
+	}
+
+	/**
+	 * Opens the popup menu after the corresponding
+	 * menu button have been pressed
+	 * @param view
+	 */
+	public void options(View view) {
+		System.out.println("Options !!!");
+		OmecaPopupMenu.show(this);
+	}
+
+	/**
+	 * Jumps to the avatar creation/modification after
+	 * the corresponding menu button have been pressed
+	 * @param view
+	 */
+	public void avatar(View view) {
+		Toast.makeText(this, "Avatar...", Toast.LENGTH_SHORT).show();
+	}
+
+	/**
+	 * Exits properly the program after the corresponding
+	 * menu button have been pressed
+	 * @param view
+	 */
+	public void exit(View view) {
+		System.out.println("Join !!!");
+		wifiDirectManager.removeWifiDirect();
+		this.finish();
 	}
 }
