@@ -7,8 +7,8 @@ import android.content.Context;
 import android.util.DisplayMetrics;
 import android.view.MotionEvent;
 import android.view.View;
-import android.view.ViewGroup.LayoutParams;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 
 public class CardView extends ImageView{
 	Card card;
@@ -29,7 +29,7 @@ public class CardView extends ImageView{
 		DisplayMetrics metrics = context.getApplicationContext().getResources().getDisplayMetrics();
 		int height = metrics.heightPixels/4;
 		int width = (int) (height/ratio);
-		setLayoutParams(new LayoutParams(width, height));
+		setLayoutParams(new RelativeLayout.LayoutParams(width, height));
 		setOnTouchListener(new CardTouchListener());
 				
 	}
