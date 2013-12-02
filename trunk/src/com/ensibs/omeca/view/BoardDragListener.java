@@ -30,7 +30,9 @@ public class BoardDragListener implements OnDragListener{
 				MarginLayoutParams marginParams = new MarginLayoutParams(view.getLayoutParams());
 				int left = (int)(event.getX() - (view.getWidth()/2));
 				int top = (int)(event.getY() - (view.getHeight()/2));
-				marginParams.setMargins(left, top, 0, 0);
+				int right = (int)(((View)view.getParent()).getWidth() - left + view.getWidth());
+				int bottom = (int)(((View)view.getParent()).getHeight() - top + view.getHeight());
+				marginParams.setMargins(left, top, right,bottom);
 				view.setLayoutParams(new RelativeLayout.LayoutParams(marginParams));
 				view.setVisibility(View.VISIBLE);
 				break;
