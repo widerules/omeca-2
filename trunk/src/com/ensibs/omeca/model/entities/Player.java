@@ -1,31 +1,28 @@
 package com.ensibs.omeca.model.entities;
 
-import android.net.Uri;
-
 public class Player extends GameEntity {
-	private String name;
-	private Uri avatar;
+	private String username;
+	private String avatar;
 	
 	public Player(){
-		this.name = "";
+		this.username = "";
 		this.avatar = null;
 	}
-	public Player(String name, Uri avatar){
-		this.name = name;
+	public Player(String name, String avatar){
+		this.username = name;
 		this.avatar = avatar;
 	}
 	public String getName() {
-		return name;
+		return username;
 	}
 	public void setName(String name) {
-		this.name = name;
+		this.username = name;
 	}
-	public Uri getAvatar() {
+	public String getAvatar() {
 		return avatar;
 	}
-	public void setAvatar(Uri avatar) {
+	public void setAvatar(String avatar) {
 		this.avatar = avatar;
-	}
-	
+	}	
 	
 }

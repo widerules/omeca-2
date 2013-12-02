@@ -17,6 +17,7 @@
         android:icon="@drawable/ic_launcher"
         android:label="@string/app_name"
         android:theme="@style/AppTheme" >
+        
         <activity
             android:name="com.ensibs.omeca.MainActivity"
             android:label="@string/app_name"
@@ -26,6 +27,11 @@
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
+        </activity>
+
+		<activity
+            android:name="com.ensibs.omeca.AvatarActivity"
+            android:screenOrientation="landscape">
         </activity>
     </application>
 
