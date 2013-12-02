@@ -12,13 +12,16 @@ public class Card{
 	public static int[] VALUES;
 	public static String[] COLORS;
 	public static String[] JOKERS;
+	public static String CARDBACK;
 	
 	private int value;
 	private String color;
+	private boolean isFaceUp;
 	
 	public Card(int val, String col){
 		this.value = val;
 		this.color = col;
+		this.isFaceUp = true;
 	}
 
 	public int getValue() {
@@ -48,6 +51,7 @@ public class Card{
 			Element colors = rootNode.getChild("colors");
 			Element cards = rootNode.getChild("cards");
 			Element jokers = rootNode.getChild("jokers");
+			Element cardback = rootNode.getChild("cardback");
 			
 			if(colors == null || cards == null || jokers == null)
 				throw new Exception("Error while parsing config file. (No cards or values)");
@@ -57,6 +61,7 @@ public class Card{
 			VALUES = new int[cards.getChildren().size()];
 			COLORS = new String[colors.getChildren().size()];
 			JOKERS = new String[jokers.getChildren().size()];
+			CARDBACK = cardback.getAttributeValue("name");
 			
 			for (int i = 0; i < colors.getChildren().size(); i++) {
 			   node = (Element) colors.getChildren().get(i);
@@ -94,6 +99,14 @@ public class Card{
 	
 	public static int getNumberOfCards(){
 		return VALUES.length*COLORS.length;
+	}
+
+	public boolean isFaceUp() {
+		return isFaceUp;
+	}
+
+	public void setFaceUp(boolean isFaceUp) {
+		this.isFaceUp = isFaceUp;
 	}
 	
 }

@@ -11,27 +11,50 @@ import android.widget.ImageView;
 import android.widget.RelativeLayout;
 
 public class CardView extends ImageView{
-	Card card;
+	private Card card;
+	private Context context;
+
 	private static final float ratio = 1.452f;
 
 	public CardView(Context context, Card card) {
 		super(context);
+		this.context = context;
 		this.card = card;
-		setImageDrawable(
-				context.getResources().getDrawable(
-						context.getResources().getIdentifier(
-								card.getColor()+card.getValue(),
-								"drawable",
-								context.getApplicationContext().getPackageName()
-						)
-				)
-		);
+		turnCard();
 		DisplayMetrics metrics = context.getApplicationContext().getResources().getDisplayMetrics();
 		int height = metrics.heightPixels/4;
 		int width = (int) (height/ratio);
 		setLayoutParams(new RelativeLayout.LayoutParams(width, height));
 		setOnTouchListener(new CardTouchListener());
+		setOnLongClickListener(new CardLongClickListener());
 				
+	}
+	
+	public void turnCard(){
+		if(card.isFaceUp()){
+			setImageDrawable(
+					context.getResources().getDrawable(
+							context.getResources().getIdentifier(
+									Card.CARDBACK,
+									"drawable",
+									context.getApplicationContext().getPackageName()
+							)
+					)
+			);
+			card.setFaceUp(false);
+		}
+		else{
+			setImageDrawable(
+					context.getResources().getDrawable(
+							context.getResources().getIdentifier(
+									card.getColor()+card.getValue(),
+									"drawable",
+									context.getApplicationContext().getPackageName()
+							)
+					)
+			);
+			card.setFaceUp(true);
+		}
 	}
 	
 	private class CardTouchListener implements OnTouchListener{
@@ -39,19 +62,37 @@ public class CardView extends ImageView{
 		@Override
 		public boolean onTouch(View view, MotionEvent motionEvent) {
 			if (motionEvent.getAction() == MotionEvent.ACTION_DOWN) {
-		        ClipData data = ClipData.newPlainText("", "");
-		        DragShadowBuilder shadowBuilder = new View.DragShadowBuilder(view);
-		        view.startDrag(data, shadowBuilder, view, 0);
-		        view.setVisibility(View.INVISIBLE);
-		        return true;
+		        return false;
 			}else if(motionEvent.getAction() == MotionEvent.ACTION_UP){
+				turnCard();
 				view.setVisibility(View.VISIBLE);
-				return true;
+				return false;
 		    }
 			else
-				return false;
+				return true;
 		}
 		
+	}
+	
+	private class CardLongClickListener implements OnLongClickListener{
+
+		@Override
+		public boolean onLongClick(View view) {
+			ClipData data = ClipData.newPlainText("", "");
+	        DragShadowBuilder shadowBuilder = new View.DragShadowBuilder(view);
+	        view.startDrag(data, shadowBuilder, view, 0);
+	        view.setVisibility(View.INVISIBLE);
+	        return true;
+		}
+		
+	}
+	
+	public Card getCard() {
+		return card;
+	}
+
+	public void setCard(Card card) {
+		this.card = card;
 	}
 	
 
