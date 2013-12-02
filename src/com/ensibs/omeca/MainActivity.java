@@ -21,6 +21,7 @@ import com.ensibs.omeca.utils.OmecaPopupMenu;
 import com.ensibs.omeca.view.BoardDragListener;
 import com.ensibs.omeca.view.CardView;
 import com.ensibs.omeca.view.PlayerDragListener;
+import com.ensibs.omeca.view.SlidebarDragListener;
 import com.ensibs.omeca.wifidirect.WifiDirectManager;
 import com.ensibs.omeca.wifidirect.event.ConnectionWifiDirectEvent;
 
@@ -148,6 +149,7 @@ public class MainActivity extends Activity implements Observer {
 		boardView.addView(cardView4);
 		boardView.findViewById(R.id.dropzone).setOnDragListener(new PlayerDragListener());
 		boardView.setOnDragListener(new BoardDragListener());
+		gameView.findViewById(R.id.view_slidebar).setOnDragListener(new SlidebarDragListener());
 	}
 
 	/**
