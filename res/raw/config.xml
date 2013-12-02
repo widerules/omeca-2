@@ -25,4 +25,5 @@
 	    <joker name="redjoker"></joker>
 	    <joker name="blackjoker"></joker>
 	</jokers>
+	<cardback name="cardback"></cardback>
 </deck>

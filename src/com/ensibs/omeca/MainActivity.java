@@ -17,11 +17,12 @@ import android.view.WindowManager;
 import android.widget.RelativeLayout;
 import android.widget.Toast;
 
+import com.ensibs.omeca.model.entities.Board;
 import com.ensibs.omeca.model.entities.Card;
 import com.ensibs.omeca.utils.OmecaPopupMenu;
 import com.ensibs.omeca.view.BoardDragListener;
-import com.ensibs.omeca.view.CardView;
-import com.ensibs.omeca.view.PlayerDragListener;
+import com.ensibs.omeca.view.DiscardPileView;
+import com.ensibs.omeca.view.DrawPileView;
 import com.ensibs.omeca.view.SlidebarDragListener;
 import com.ensibs.omeca.wifidirect.WifiDirectManager;
 import com.ensibs.omeca.wifidirect.event.ConnectionWifiDirectEvent;
@@ -114,23 +115,16 @@ public class MainActivity extends Activity implements Observer {
 		View gameView = inflater.inflate(R.layout.view_game, null);
 		setContentView(gameView);
 		RelativeLayout boardView = (RelativeLayout)(gameView.findViewById(R.id.view_board));
-		Card aCard = new Card(8, "ofhearts");
-		Card aCard2 = new Card(1, "ofhearts");
-		Card aCard3 = new Card(1, "ofclubs");
-		Card aCard4 = new Card(9, "ofspades");
+		Board board = new Board();
+		board.initDrawPile(true);
 		
-		CardView cardView = new CardView(this, aCard);
-		CardView cardView2 = new CardView(this, aCard2);
-		CardView cardView3 = new CardView(this, aCard3);
-		CardView cardView4 = new CardView(this, aCard4);
+		DrawPileView drawPileView = new DrawPileView(this, board.getDrawPile());
+		DiscardPileView discardPileView = new DiscardPileView(this);
 		
-		boardView.addView(cardView);
-		boardView.addView(cardView2);
-		boardView.addView(cardView3);
-		boardView.addView(cardView4);
-		boardView.findViewById(R.id.dropzone).setOnDragListener(new PlayerDragListener());
 		boardView.setOnDragListener(new BoardDragListener());
 		gameView.findViewById(R.id.view_slidebar).setOnDragListener(new SlidebarDragListener());
+		boardView.addView(drawPileView);
+		boardView.addView(discardPileView);
 	}
 
 	/**

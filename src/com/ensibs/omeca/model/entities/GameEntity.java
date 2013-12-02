@@ -5,7 +5,7 @@ import java.util.Random;
 
 public abstract class GameEntity {
 	protected ArrayList<Card> cards;
-	
+
 	public GameEntity(){
 		cards = new ArrayList<Card>();
 	}
@@ -34,5 +34,13 @@ public abstract class GameEntity {
 	
 	public int getNumberOfCards(){
 		return cards.size();
+	}
+	
+	public ArrayList<Card> getCards() {
+		return cards;
+	}
+
+	public void setCards(ArrayList<Card> cards) {
+		this.cards = cards;
 	}
 }

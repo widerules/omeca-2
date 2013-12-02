@@ -3,16 +3,28 @@ package com.ensibs.omeca.model.entities;
 import java.util.Hashtable;
 
 public class Board extends GameEntity{
-	int cardsToDeal;
-	Hashtable<Integer, Player> players;
-	DrawPile drawPile;
-	DiscardPile discardPile;
+	private int cardsToDeal;
+	private Hashtable<Integer, Player> players;
+	private DrawPile drawPile;
+	private DiscardPile discardPile;
 	
 	public Board(){
 		this.players = new Hashtable<Integer, Player>();
 		this.drawPile = new DrawPile();
 		this.discardPile = new DiscardPile();
 		cardsToDeal = 0;
+	}
+	
+	public void initDrawPile(boolean shuffle){
+		Card tmp;
+		for(String c : Card.COLORS){
+			for(int v : Card.VALUES){
+				tmp = new Card(v, c);
+				drawPile.addCard(tmp);
+			}
+		}
+		if(shuffle)
+			drawPile.shuffle();
 	}
 	
 	public Hashtable<Integer, Player> getPlayers() {
