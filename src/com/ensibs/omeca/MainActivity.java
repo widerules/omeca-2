@@ -5,6 +5,7 @@ import java.util.Observer;
 
 import android.app.Activity;
 import android.app.AlertDialog;
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.KeyEvent;
@@ -26,6 +27,7 @@ import com.ensibs.omeca.wifidirect.WifiDirectManager;
 import com.ensibs.omeca.wifidirect.event.ConnectionWifiDirectEvent;
 
 public class MainActivity extends Activity implements Observer {
+	private static final int EDIT_AVATAR = 2;
 
 	WifiDirectManager wifiDirectManager;
 	ControlerView controler;
@@ -52,28 +54,7 @@ public class MainActivity extends Activity implements Observer {
 		// Launches the stuff
 		setContentView(R.layout.view_homescreen);
 	}
-
-	/*@Override
-	public boolean onCreateOptionsMenu(Menu menu) {
-		// Inflate the menu; this adds items to the action bar if it is present.
-		getMenuInflater().inflate(R.menu.main, menu);
-		return true;
-	}*/
-
-	/*@Override
-	public boolean onOptionsItemSelected(MenuItem item) {
-		// Handle item selection
-		switch (item.getItemId()) {
-			case R.id.action_settings:
-				wifiDirectManager.removeWifiDirect();
-				this.finish();
-				return true;
-			
-			default:
-				return super.onOptionsItemSelected(item);
-		}
-	}*/
-
+	
 	@Override
 	public void update(Observable observable, Object data) {
 		if (data instanceof ConnectionWifiDirectEvent) {
@@ -180,7 +161,8 @@ public class MainActivity extends Activity implements Observer {
 	 * @param view
 	 */
 	public void avatar(View view) {
-		Toast.makeText(this, "Avatar...", Toast.LENGTH_SHORT).show();
+		Intent editProfilActivityIntent = new Intent(this, AvatarActivity.class);
+    	startActivityForResult(editProfilActivityIntent, EDIT_AVATAR);
 		OmecaPopupMenu.dismiss();
 	}
 

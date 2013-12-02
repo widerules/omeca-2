@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:orientation="vertical"
+    android:background="@drawable/background">
+	
+	<TextView
+	    android:layout_width="wrap_content"
+    	android:layout_height="wrap_content"
+    	android:layout_marginTop="5dip"
+    	android:layout_marginLeft="5dip"
+    	android:textColor="@android:color/white"
+    	android:textSize="16dip"
+    	android:textStyle="bold"
+    	android:text="@string/choose_avatar">	    
+	</TextView>
+	
+	<LinearLayout
+	    android:layout_width="fill_parent"
+    	android:layout_height="wrap_content"
+	    android:layout_weight="1">
+	    
+		<Gallery
+	    	android:id="@+id/avatar_gallery"
+	    	android:layout_width="fill_parent"
+	    	android:layout_height="wrap_content"
+	    	android:spacing="0dip"
+	    	android:layout_gravity="center">
+		</Gallery>
+		
+	</LinearLayout>
+	
+	<LinearLayout
+	    android:layout_width="fill_parent"
+	    android:layout_height="wrap_content"
+	    android:layout_marginBottom="10dip"
+	    android:orientation="horizontal"
+	    android:layout_weight="1"
+    	android:layout_gravity="center">
+	    
+	    <TextView
+		    android:layout_width="wrap_content"
+	    	android:layout_height="fill_parent"
+	    	android:layout_marginLeft="5dip"
+	    	android:layout_marginRight="5dip"
+	    	android:gravity="center"
+	    	android:textColor="@android:color/white"
+	    	android:textSize="16dip"
+	    	android:textStyle="bold"
+	    	android:text="@string/choose_username">	    
+		</TextView>
+		
+		<EditText
+	    	android:id="@+id/name"
+		    android:layout_width="fill_parent"
+	    	android:layout_height="wrap_content"
+	    	android:hint="@string/username">	    
+		</EditText>
+    
+    </LinearLayout>
+    
+	<LinearLayout
+	    android:layout_width="fill_parent"
+	    android:layout_height="wrap_content"
+	    android:layout_marginBottom="5dip"
+    	android:layout_marginLeft="4dip"
+    	android:layout_marginRight="4dip"
+	    android:orientation="horizontal">
+	    
+	    <Button
+	        android:layout_width="fill_parent"
+	    	android:layout_height="wrap_content"
+	    	android:layout_marginRight="2dip"
+	    	android:layout_weight="1"
+	    	android:text="@string/save"
+	    	android:onClick="saveAvatar">
+	    </Button>
+	       
+		<Button
+	        android:layout_width="fill_parent"
+	    	android:layout_height="wrap_content"
+	    	android:layout_marginLeft="2dip"
+	    	android:layout_weight="1"
+	    	android:text="@string/cancel"
+	    	android:onClick="cancelAvatar">
+	    </Button>
+	
+	</LinearLayout>
+    
+</LinearLayout>
