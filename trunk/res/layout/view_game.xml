@@ -20,7 +20,7 @@
             android:orientation="vertical">
 
            	<include  
-		        layout="@layout/view_slidebar" 
+		        layout="@layout/view_slidebar_board" 
 		        android:id="@+id/view_slidebar" />
             
 	        <include  
