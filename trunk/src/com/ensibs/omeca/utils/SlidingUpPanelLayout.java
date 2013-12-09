@@ -636,7 +636,9 @@ public class SlidingUpPanelLayout extends ViewGroup {
                     if (!isExpanded() && !isAnchored()) {
                         expandPane(mSlideableView, 0, mAnchorPoint);
                     } else {
-                        collapsePane();
+                    	//Commenter pour désactiver le click sur la partie main qui retournait automatiquement 
+                    	//a la vue board
+                        //collapsePane();
                     }
                     break;
                 }
