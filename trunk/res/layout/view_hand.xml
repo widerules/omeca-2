@@ -7,11 +7,14 @@
     android:orientation="vertical"
 	android:background="#cccccc">
     
-    <TextView
-        android:id="@+id/TextView01"
-        android:text="@string/tmp_hand"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-	    style="@style/home_AppTitle" />
+      
+    <TableLayout
+        android:id="@+id/handTable"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+     >
+     </TableLayout>
+     
+
 
 </LinearLayout>
