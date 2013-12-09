@@ -6,7 +6,6 @@
     android:layout_weight="1"
     android:orientation="vertical"
 	android:background="#cccccc">
-    
       
     <TableLayout
         android:id="@+id/handTable"
@@ -14,7 +13,5 @@
         android:layout_height="match_parent"
      >
      </TableLayout>
-     
-
 
 </LinearLayout>
