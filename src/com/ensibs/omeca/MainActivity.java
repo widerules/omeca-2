@@ -123,14 +123,20 @@ public class MainActivity extends Activity implements Observer {
 		Board board = new Board();
 		board.initDrawPile(true);
 		
-		SlidingUpPanelLayout slide = (SlidingUpPanelLayout) findViewById(R.id.sliding_layout);
+    	SlidingUpPanelLayout slide = (SlidingUpPanelLayout) findViewById(R.id.sliding_layout);
+
 		slide.setPanelSlideListener(new PanelSlideListener() {
-			
+
 			private boolean isExpanded = false;
+			private int height = -1;
 
             @Override
             public void onPanelSlide(View panel, float slideOffset) {
-
+            	if(height == -1){
+            		if(findViewById(R.id.view_slidebar) != null){
+            			height = findViewById(R.id.view_slidebar).getHeight();
+            		}
+            	}
             }
 
             @Override
@@ -141,7 +147,7 @@ public class MainActivity extends Activity implements Observer {
 	            	linear.removeView(findViewById(R.id.view_slidebar));
 	            	linear.removeView(findViewById(R.id.linear_slidebar_board));
 	            	linear.addView(View.inflate(panel.getContext(), R.layout.view_slidebar_hand, null),0,new LinearLayout.LayoutParams(LayoutParams.MATCH_PARENT, 
-	            			68+68*linear.getChildCount()));
+	            			height));
 	            	isExpanded = true;
             	}
             }
@@ -151,11 +157,10 @@ public class MainActivity extends Activity implements Observer {
             	//Log.i("OMECA", "Board");
             	if(isExpanded){
 	            	LinearLayout linear = (LinearLayout) findViewById(R.id.linear_slidinguppanel);
-	            	//linear.removeView(findViewById(R.id.view_slidebar));
 	            	linear.removeView(findViewById(R.id.view_slidebar));
 	            	linear.removeView(findViewById(R.id.linear_slidebar_hand));
 	            	linear.addView(View.inflate(panel.getContext(), R.layout.view_slidebar_board, null),0,new LinearLayout.LayoutParams(LayoutParams.MATCH_PARENT, 
-	            			68+68*linear.getChildCount()));
+	            			height));
 	            	isExpanded = false;
             	}
             }
