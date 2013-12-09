@@ -4,13 +4,14 @@
     android:layout_width="match_parent"
     android:layout_height="68dp"
     android:orientation="vertical"
+    android:id="@+id/linear_slidebar_hand"
 	android:background="#ffffff">
     
    <TextView
 	   android:layout_width="match_parent"
 	   android:layout_height="34dp"
 	   android:gravity="center|bottom"
-	   android:text="@string/tmp_slidebar"
+	   android:text="@string/tmp_slidebar_down"
 	   android:textSize="16sp" />
 
 </LinearLayout>

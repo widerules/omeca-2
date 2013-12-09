@@ -634,7 +634,7 @@ public class SlidingUpPanelLayout extends ViewGroup {
                     View v = mDragView != null ? mDragView : mSlideableView;
                     v.playSoundEffect(SoundEffectConstants.CLICK);
                     if (!isExpanded() && !isAnchored()) {
-                        expandPane(mSlideableView, 0, mAnchorPoint);
+                        //expandPane(mSlideableView, 0, mAnchorPoint);
                     } else {
                     	//Commenter pour désactiver le click sur la partie main qui retournait automatiquement 
                     	//a la vue board

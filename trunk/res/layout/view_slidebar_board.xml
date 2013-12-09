@@ -4,9 +4,11 @@
     android:layout_width="match_parent"
     android:layout_height="68dp"
     android:orientation="vertical"
+    android:id="@+id/linear_slidebar_board"
 	android:background="#ffffff">
     
    <TextView
+       android:id="@+id/text_slidebar_board"
 	   android:layout_width="match_parent"
 	   android:layout_height="34dp"
 	   android:gravity="center|bottom"

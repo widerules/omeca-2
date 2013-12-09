@@ -7,19 +7,24 @@ import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.Layout;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.view.ViewGroup.LayoutParams;
 import android.view.Window;
 import android.view.WindowManager;
+import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.Toast;
 
 import com.ensibs.omeca.model.entities.Board;
 import com.ensibs.omeca.model.entities.Card;
 import com.ensibs.omeca.utils.OmecaPopupMenu;
+import com.ensibs.omeca.utils.SlidingUpPanelLayout;
+import com.ensibs.omeca.utils.SlidingUpPanelLayout.PanelSlideListener;
 import com.ensibs.omeca.view.BoardDragListener;
 import com.ensibs.omeca.view.DiscardPileView;
 import com.ensibs.omeca.view.DrawPileView;
@@ -117,6 +122,49 @@ public class MainActivity extends Activity implements Observer {
 		RelativeLayout boardView = (RelativeLayout)(gameView.findViewById(R.id.view_board));
 		Board board = new Board();
 		board.initDrawPile(true);
+		
+		SlidingUpPanelLayout slide = (SlidingUpPanelLayout) findViewById(R.id.sliding_layout);
+		slide.setPanelSlideListener(new PanelSlideListener() {
+			
+			private boolean isExpanded = false;
+
+            @Override
+            public void onPanelSlide(View panel, float slideOffset) {
+
+            }
+
+            @Override
+            public void onPanelExpanded(View panel) {
+            	//Log.i("OMECA", "Hand");
+            	if(!isExpanded){
+	            	LinearLayout linear = (LinearLayout) findViewById(R.id.linear_slidinguppanel);
+	            	linear.removeView(findViewById(R.id.view_slidebar));
+	            	linear.removeView(findViewById(R.id.linear_slidebar_board));
+	            	linear.addView(View.inflate(panel.getContext(), R.layout.view_slidebar_hand, null),0,new LinearLayout.LayoutParams(LayoutParams.MATCH_PARENT, 
+	            			68+68*linear.getChildCount()));
+	            	isExpanded = true;
+            	}
+            }
+
+            @Override
+            public void onPanelCollapsed(View panel) {
+            	//Log.i("OMECA", "Board");
+            	if(isExpanded){
+	            	LinearLayout linear = (LinearLayout) findViewById(R.id.linear_slidinguppanel);
+	            	//linear.removeView(findViewById(R.id.view_slidebar));
+	            	linear.removeView(findViewById(R.id.view_slidebar));
+	            	linear.removeView(findViewById(R.id.linear_slidebar_hand));
+	            	linear.addView(View.inflate(panel.getContext(), R.layout.view_slidebar_board, null),0,new LinearLayout.LayoutParams(LayoutParams.MATCH_PARENT, 
+	            			68+68*linear.getChildCount()));
+	            	isExpanded = false;
+            	}
+            }
+
+            @Override
+            public void onPanelAnchored(View panel) {
+
+            }
+        });
 		
 		DrawPileView drawPileView = new DrawPileView(this, board.getDrawPile());
 		DiscardPileView discardPileView = new DiscardPileView(this);
