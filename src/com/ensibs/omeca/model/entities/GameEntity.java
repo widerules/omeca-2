@@ -32,6 +32,10 @@ public abstract class GameEntity {
 		return cards.remove(card);
 	}
 	
+	public Card removeLastCard(){
+		return cards.remove(cards.size()-1);
+	}
+	
 	public int getNumberOfCards(){
 		return cards.size();
 	}
