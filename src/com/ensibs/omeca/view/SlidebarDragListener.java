@@ -4,10 +4,9 @@ import android.view.DragEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.View.OnDragListener;
-import android.view.ViewGroup.MarginLayoutParams;
-import android.widget.RelativeLayout;
 
 public class SlidebarDragListener implements OnDragListener{
+	
 
 	@Override
     public boolean onDrag(View v, DragEvent event) {
@@ -20,7 +19,8 @@ public class SlidebarDragListener implements OnDragListener{
 				break;
 			case DragEvent.ACTION_DROP:
 				View view = (View) event.getLocalState();
-				view.setVisibility(View.VISIBLE);
+				ViewGroup parent = (ViewGroup)(view.getParent());
+		        parent.addView(view);
 				break;
 			case DragEvent.ACTION_DRAG_ENDED:
 				break;

@@ -7,6 +7,7 @@ import android.content.Context;
 import android.util.DisplayMetrics;
 import android.view.MotionEvent;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 
@@ -20,7 +21,10 @@ public class CardView extends ImageView{
 		super(context);
 		this.context = context;
 		this.card = card;
-		turnCard();
+		if(card.isFaceUp())
+			setFaceUpBackground();
+		else
+			setBackBackground();
 		DisplayMetrics metrics = context.getApplicationContext().getResources().getDisplayMetrics();
 		int height = metrics.heightPixels/4;
 		int width = (int) (height/ratio);
@@ -31,30 +35,36 @@ public class CardView extends ImageView{
 	}
 	
 	public void turnCard(){
-		if(card.isFaceUp()){
-			setImageDrawable(
-					context.getResources().getDrawable(
-							context.getResources().getIdentifier(
-									Card.CARDBACK,
-									"drawable",
-									context.getApplicationContext().getPackageName()
-							)
-					)
-			);
-			card.setFaceUp(false);
-		}
-		else{
-			setImageDrawable(
-					context.getResources().getDrawable(
-							context.getResources().getIdentifier(
-									card.getColor()+card.getValue(),
-									"drawable",
-									context.getApplicationContext().getPackageName()
-							)
-					)
-			);
-			card.setFaceUp(true);
-		}
+		if(card.isFaceUp())
+			setBackBackground();
+		else
+			setFaceUpBackground();
+		
+		card.setFaceUp(!card.isFaceUp());
+	}
+	
+	private void setBackBackground(){
+		setImageDrawable(
+				context.getResources().getDrawable(
+						context.getResources().getIdentifier(
+								Card.CARDBACK,
+								"drawable",
+								context.getApplicationContext().getPackageName()
+						)
+				)
+		);
+	}
+	
+	private void setFaceUpBackground(){
+		setImageDrawable(
+				context.getResources().getDrawable(
+						context.getResources().getIdentifier(
+								card.getColor()+card.getValue(),
+								"drawable",
+								context.getApplicationContext().getPackageName()
+						)
+				)
+		);
 	}
 	
 	private class CardTouchListener implements OnTouchListener{
@@ -78,10 +88,11 @@ public class CardView extends ImageView{
 
 		@Override
 		public boolean onLongClick(View view) {
+			view.setVisibility(View.INVISIBLE);
 			ClipData data = ClipData.newPlainText("", "");
 	        DragShadowBuilder shadowBuilder = new View.DragShadowBuilder(view);
 	        view.startDrag(data, shadowBuilder, view, 0);
-	        view.setVisibility(View.INVISIBLE);
+	        
 	        return true;
 		}
 		

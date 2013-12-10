@@ -1,31 +1,33 @@
 package com.ensibs.omeca.view;
 
-import com.ensibs.omeca.R;
-import com.ensibs.omeca.model.entities.Card;
-import com.ensibs.omeca.model.entities.DrawPile;
-
 import android.content.Context;
 import android.util.DisplayMetrics;
 import android.view.DragEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
-import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
+import android.widget.Toast;
 
-public class DrawPileView extends FrameLayout{
+import com.ensibs.omeca.R;
+import com.ensibs.omeca.model.entities.Card;
+import com.ensibs.omeca.model.entities.DrawPile;
+
+public class DrawPileView extends FrameLayout {
 	private static final float ratio = 1.452f;
 	private DrawPile drawpile;
 	private Context context;
-	
+
 	public DrawPileView(Context context, DrawPile drawpile) {
 		super(context);
 		this.drawpile = drawpile;
 		this.context = context;
-		DisplayMetrics metrics = context.getApplicationContext().getResources().getDisplayMetrics();
-		int height = 2+metrics.heightPixels/4;
-		int width = (int) (2+(height/ratio));
-		RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(width, height);
+		DisplayMetrics metrics = context.getApplicationContext().getResources()
+				.getDisplayMetrics();
+		int height = 2 + metrics.heightPixels / 4;
+		int width = (int) (2 + (height / ratio));
+		RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(
+				width, height);
 		params.addRule(RelativeLayout.ALIGN_PARENT_BOTTOM);
 		params.addRule(RelativeLayout.ALIGN_PARENT_RIGHT);
 		params.bottomMargin = 15;
@@ -35,44 +37,53 @@ public class DrawPileView extends FrameLayout{
 		setOnDragListener(new DrawPileDragListener());
 		updateView();
 	}
-	
-	public void updateView(){
+
+	public void updateView() {
 		this.removeAllViews();
-		for(Card c : drawpile.getCards()){
+		for (Card c : drawpile.getCards()) {
 			addView(new CardView(context, c));
 		}
 	}
-	
-	private class DrawPileDragListener implements OnDragListener{
 
+	private class DrawPileDragListener implements OnDragListener {
+		
+private boolean hasExited = false;
+		
 		@Override
 		public boolean onDrag(View v, DragEvent event) {
+			View view = (View) event.getLocalState();
+			ViewGroup owner = (ViewGroup) view.getParent();
+			
 			switch (event.getAction()) {
 			case DragEvent.ACTION_DRAG_STARTED:
 				break;
 			case DragEvent.ACTION_DRAG_ENTERED:
+				if(hasExited || owner != DrawPileView.this){
+					drawpile.addCard(((CardView) view).getCard());
+					hasExited = false;
+				}
+				
 				break;
 			case DragEvent.ACTION_DRAG_EXITED:
+				drawpile.removeLastCard();
+				hasExited = true;
 				break;
 			case DragEvent.ACTION_DROP:
-				View view = (View) event.getLocalState();
-				ViewGroup owner = (ViewGroup) view.getParent();
-				owner.removeView(view);
-				if(view instanceof CardView){
-					drawpile.addCard(((CardView)view).getCard());
+				if(owner != DrawPileView.this){
+					owner.removeView(view);
 					updateView();
 				}
-				else
-					view.setVisibility(View.VISIBLE);
+				view.setVisibility(View.VISIBLE);
 				break;
 			case DragEvent.ACTION_DRAG_ENDED:
+				hasExited = false;
 				break;
 			default:
 				break;
+			}
+			return true;
 		}
-		return true;
-		}
-		
+
 	}
 
 }
