@@ -21,7 +21,7 @@ public class Card{
 	public Card(int val, String col){
 		this.value = val;
 		this.color = col;
-		this.isFaceUp = true;
+		this.isFaceUp = false;
 	}
 
 	public int getValue() {
