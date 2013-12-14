@@ -5,11 +5,11 @@ import com.ensibs.omeca.model.entities.Player;
 
 
 public class ControlerView {
-	public MainActivity maActivity;
+	public OmecaApplication maActivity;
 	public Board board;
 	public int myId;
-	public ControlerView(MainActivity ma) {
-		this.maActivity= ma;
+	public ControlerView(OmecaApplication omecaApplication) {
+		this.maActivity= omecaApplication;
 		board = new Board();
 		//TODO set the userID 
 		myId= 1;
