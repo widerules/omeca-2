@@ -72,7 +72,9 @@ public class BoardView extends RelativeLayout{
 					int bottom = (int)(((View)view.getParent()).getHeight() - top + view.getHeight());
 					marginParams.setMargins(left, top, right,bottom);
 					view.setLayoutParams(new RelativeLayout.LayoutParams(marginParams));
-					view.setVisibility(View.VISIBLE);
+					for(int i=0;i<getChildCount();i++){
+						getChildAt(i).setVisibility(View.VISIBLE);
+					}
 					break;
 				case DragEvent.ACTION_DRAG_ENDED:
 					break;
