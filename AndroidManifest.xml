@@ -16,7 +16,8 @@
         android:allowBackup="true"
         android:icon="@drawable/ic_launcher"
         android:label="@string/app_name"
-        android:theme="@style/AppTheme" >
+        android:theme="@style/AppTheme"
+        android:name="com.ensibs.omeca.OmecaApplication" >"
         
         <activity
             android:name="com.ensibs.omeca.MainActivity"
@@ -27,6 +28,11 @@
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
+        </activity>
+
+		<activity
+            android:name="com.ensibs.omeca.GameActivity"
+            android:screenOrientation="landscape">
         </activity>
 
 		<activity
