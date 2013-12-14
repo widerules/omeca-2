@@ -2,12 +2,9 @@ package com.ensibs.omeca.view;
 
 import android.content.Context;
 import android.util.DisplayMetrics;
-import android.view.DragEvent;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.FrameLayout;
 import android.widget.RelativeLayout;
-import android.widget.Toast;
 
 import com.ensibs.omeca.R;
 import com.ensibs.omeca.model.entities.Card;
@@ -34,56 +31,28 @@ public class DrawPileView extends FrameLayout {
 		params.rightMargin = 15;
 		setLayoutParams(params);
 		setBackgroundDrawable(getResources().getDrawable(R.drawable.drawpile));
-		setOnDragListener(new DrawPileDragListener());
+		setOnDragListener(new PileDragListener(this));
 		updateView();
+	}
+	
+	@Override
+	public void removeView(View view) {
+		drawpile.removeLastCard();
+		super.removeView(view);
+		
+	}
+	
+	@Override
+	public void addView(View child) {
+		drawpile.addCard(((CardView)child).getCard());
+		super.addView(child);
 	}
 
 	public void updateView() {
 		this.removeAllViews();
 		for (Card c : drawpile.getCards()) {
-			addView(new CardView(context, c));
+			super.addView(new CardView(context, c));
 		}
-	}
-
-	private class DrawPileDragListener implements OnDragListener {
-		
-private boolean hasExited = false;
-		
-		@Override
-		public boolean onDrag(View v, DragEvent event) {
-			View view = (View) event.getLocalState();
-			ViewGroup owner = (ViewGroup) view.getParent();
-			
-			switch (event.getAction()) {
-			case DragEvent.ACTION_DRAG_STARTED:
-				break;
-			case DragEvent.ACTION_DRAG_ENTERED:
-				if(hasExited || owner != DrawPileView.this){
-					drawpile.addCard(((CardView) view).getCard());
-					hasExited = false;
-				}
-				
-				break;
-			case DragEvent.ACTION_DRAG_EXITED:
-				drawpile.removeLastCard();
-				hasExited = true;
-				break;
-			case DragEvent.ACTION_DROP:
-				if(owner != DrawPileView.this){
-					owner.removeView(view);
-					updateView();
-				}
-				view.setVisibility(View.VISIBLE);
-				break;
-			case DragEvent.ACTION_DRAG_ENDED:
-				hasExited = false;
-				break;
-			default:
-				break;
-			}
-			return true;
-		}
-
 	}
 
 }
