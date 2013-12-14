@@ -7,25 +7,25 @@ import android.app.Application;
 public class OmecaApplication extends Application {
 
 	private WifiDirectManager wifiDirectManager;
-	private ControlerView controler;
+	private ControllerView controler;
 	
 	@Override
 	public void onCreate() {
 		super.onCreate();
 		
-		//create controler 
-		setControler(new ControlerView(this));
+		//create controller 
+		setController(new ControllerView(this));
 
 		// Creates the WifiDirectManager
 		setWifiDirectManager(new WifiDirectManager(this));
 		
 	}
 
-	public ControlerView getControler() {
+	public ControllerView getControler() {
 		return controler;
 	}
 
-	public void setControler(ControlerView controler) {
+	public void setController(ControllerView controler) {
 		this.controler = controler;
 	}
 

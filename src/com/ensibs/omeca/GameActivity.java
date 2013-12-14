@@ -28,7 +28,7 @@ import com.ensibs.omeca.wifidirect.event.ConnectionWifiDirectEvent;
 
 public class GameActivity extends Activity implements Observer {
 	WifiDirectManager wifiDirectManager;
-	ControlerView controler;
+	ControllerView controler;
 	AlertDialog popupMenu;
 	OmecaApplication app;
 
@@ -39,7 +39,7 @@ public class GameActivity extends Activity implements Observer {
 		// Retrieve application 
 		app = (OmecaApplication) getApplication();
 
-		// Create controler 
+		// Create controller 
 		controler = app.getControler();
 
 		// Creates the WifiDirectManager

@@ -22,7 +22,7 @@ public class MainActivity extends Activity implements Observer{
 	private static final int EDIT_AVATAR = 2;
 
 	WifiDirectManager wifiDirectManager;
-	ControlerView controler;
+	ControllerView controler;
 	AlertDialog popupMenu;
 	OmecaApplication app;
 
