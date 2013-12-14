@@ -4,11 +4,11 @@ import com.ensibs.omeca.model.entities.Board;
 import com.ensibs.omeca.model.entities.Player;
 
 
-public class ControlerView {
+public class ControllerView {
 	public OmecaApplication maActivity;
 	public Board board;
 	public int myId;
-	public ControlerView(OmecaApplication omecaApplication) {
+	public ControllerView(OmecaApplication omecaApplication) {
 		this.maActivity= omecaApplication;
 		board = new Board();
 		//TODO set the userID 
