@@ -11,11 +11,9 @@ import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
-import android.view.ViewGroup.LayoutParams;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.LinearLayout;
-import android.widget.RelativeLayout;
 import android.widget.Toast;
 
 import com.ensibs.omeca.model.entities.Board;
@@ -24,8 +22,6 @@ import com.ensibs.omeca.utils.OmecaPopupMenu;
 import com.ensibs.omeca.utils.SlidingUpPanelLayout;
 import com.ensibs.omeca.utils.SlidingUpPanelLayout.PanelSlideListener;
 import com.ensibs.omeca.view.BoardView;
-import com.ensibs.omeca.view.DiscardPileView;
-import com.ensibs.omeca.view.DrawPileView;
 import com.ensibs.omeca.view.SlidebarDragListener;
 import com.ensibs.omeca.wifidirect.WifiDirectManager;
 import com.ensibs.omeca.wifidirect.event.ConnectionWifiDirectEvent;
@@ -49,6 +45,8 @@ public class GameActivity extends Activity implements Observer {
 		// Creates the WifiDirectManager
 		wifiDirectManager = app.getWifiDirectManager();
 		wifiDirectManager.addObserver(this);
+		wifiDirectManager.setRole(true);
+		wifiDirectManager.discoverPeers();
 
 		// Hides titlebar and actionbar
 		requestWindowFeature(Window.FEATURE_NO_TITLE);
@@ -58,16 +56,7 @@ public class GameActivity extends Activity implements Observer {
 		Card.loadConfig(getApplicationContext().getResources().openRawResource(R.raw.config));
 		Log.w("GameActivity", Card.getCardsConfig());
 
-		initializes();
-
 		// Launches the stuff
-		setContentView(R.layout.view_game);
-	}
-
-
-	private void initializes() {
-		wifiDirectManager.setRole(true);
-		wifiDirectManager.discoverPeers();
 		LayoutInflater inflater = this.getLayoutInflater();
 		View gameView = inflater.inflate(R.layout.view_game, null);
 		setContentView(gameView);
@@ -125,7 +114,6 @@ public class GameActivity extends Activity implements Observer {
         });
 
 		gameView.findViewById(R.id.view_slidebar).setOnDragListener(new SlidebarDragListener());
-		
 	}
 
 
