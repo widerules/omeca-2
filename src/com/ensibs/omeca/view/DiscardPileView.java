@@ -11,7 +11,6 @@ import com.ensibs.omeca.model.entities.Card;
 import com.ensibs.omeca.model.entities.DiscardPile;
 
 public class DiscardPileView extends FrameLayout{
-	private static final float ratio = 1.452f;
 	private DiscardPile discardPile;
 	private Context context;
 	
@@ -20,8 +19,8 @@ public class DiscardPileView extends FrameLayout{
 		this.discardPile = discardPile;
 		this.context = context;
 		DisplayMetrics metrics = context.getApplicationContext().getResources().getDisplayMetrics();
-		int height = 2+metrics.heightPixels/4;
-		int width = (int) (2+(height/ratio));
+		int height = 2+metrics.heightPixels/CardView.SIZE;
+		int width = (int) (2+(height/CardView.RATIO));
 		RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(width, height);
 		params.addRule(RelativeLayout.ALIGN_PARENT_BOTTOM);
 		params.bottomMargin = 15;

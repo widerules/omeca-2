@@ -1,21 +1,21 @@
 package com.ensibs.omeca.view;
 
-import com.ensibs.omeca.model.entities.Card;
-
 import android.content.ClipData;
 import android.content.Context;
 import android.util.DisplayMetrics;
 import android.view.MotionEvent;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
+
+import com.ensibs.omeca.model.entities.Card;
 
 public class CardView extends ImageView{
 	private Card card;
 	private Context context;
 
-	private static final float ratio = 1.452f;
+	public static final float RATIO = 1.452f;
+	public static final int SIZE = 5;
 
 	public CardView(Context context, Card card) {
 		super(context);
@@ -26,8 +26,8 @@ public class CardView extends ImageView{
 		else
 			setBackBackground();
 		DisplayMetrics metrics = context.getApplicationContext().getResources().getDisplayMetrics();
-		int height = metrics.heightPixels/4;
-		int width = (int) (height/ratio);
+		int height = metrics.heightPixels/SIZE;
+		int width = (int) (height/RATIO);
 		setLayoutParams(new RelativeLayout.LayoutParams(width, height));
 		setOnTouchListener(new CardTouchListener());
 		setOnLongClickListener(new CardLongClickListener());

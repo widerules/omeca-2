@@ -5,6 +5,7 @@ import java.util.Observer;
 
 import android.app.Activity;
 import android.app.AlertDialog;
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.KeyEvent;
@@ -27,6 +28,8 @@ import com.ensibs.omeca.wifidirect.WifiDirectManager;
 import com.ensibs.omeca.wifidirect.event.ConnectionWifiDirectEvent;
 
 public class GameActivity extends Activity implements Observer {
+	private static final int EDIT_AVATAR = 2;
+	
 	WifiDirectManager wifiDirectManager;
 	ControllerView controler;
 	AlertDialog popupMenu;
@@ -173,6 +176,17 @@ public class GameActivity extends Activity implements Observer {
 	public void options(View view) {
 		System.out.println("Options !!!");
 		OmecaPopupMenu.show(this);
+	}
+	
+	/**
+	 * Jumps to the avatar creation/modification after
+	 * the corresponding menu button have been pressed
+	 * @param view
+	 */
+	public void avatar(View view) {
+		Intent editProfilActivityIntent = new Intent(this, AvatarActivity.class);
+    	startActivityForResult(editProfilActivityIntent, EDIT_AVATAR);
+		OmecaPopupMenu.dismiss();
 	}
 
 
