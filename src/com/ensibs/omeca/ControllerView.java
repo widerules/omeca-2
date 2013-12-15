@@ -10,7 +10,7 @@ public class ControllerView {
 	public OmecaApplication maActivity;
 	public Board board;
 	public int myId;
-	public Player user;
+	public static Player user;
 	public ControllerView(OmecaApplication omecaApplication) {
 		
 		this.maActivity= omecaApplication;

@@ -8,6 +8,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.RelativeLayout;
 
+import com.ensibs.omeca.ControllerView;
 import com.ensibs.omeca.R;
 import com.ensibs.omeca.model.entities.Board;
 
@@ -57,6 +58,7 @@ public class BoardView extends RelativeLayout{
 		params.addRule(CENTER_IN_PARENT, RelativeLayout.TRUE);
 		params.addRule(ALIGN_PARENT_LEFT, RelativeLayout.TRUE);
 		players_left.addView(player, params);
+		player.setPlayer(ControllerView.user);
 		
 		
 		//Player 2
