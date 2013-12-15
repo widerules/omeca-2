@@ -11,7 +11,6 @@ import com.ensibs.omeca.model.entities.Card;
 import com.ensibs.omeca.model.entities.DrawPile;
 
 public class DrawPileView extends FrameLayout {
-	private static final float ratio = 1.452f;
 	private DrawPile drawpile;
 	private Context context;
 
@@ -21,8 +20,8 @@ public class DrawPileView extends FrameLayout {
 		this.context = context;
 		DisplayMetrics metrics = context.getApplicationContext().getResources()
 				.getDisplayMetrics();
-		int height = 2 + metrics.heightPixels / 4;
-		int width = (int) (2 + (height / ratio));
+		int height = 2 + metrics.heightPixels / CardView.SIZE;
+		int width = (int) (2 + (height / CardView.RATIO));
 		RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(
 				width, height);
 		params.addRule(RelativeLayout.ALIGN_PARENT_BOTTOM);
