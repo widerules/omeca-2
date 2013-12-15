@@ -1,21 +1,26 @@
 package com.ensibs.omeca.view;
 
 import android.content.Context;
+import android.graphics.Color;
+import android.text.Layout;
 import android.util.AttributeSet;
 import android.util.DisplayMetrics;
+import android.util.TypedValue;
+import android.view.Gravity;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.ensibs.omeca.R;
 import com.ensibs.omeca.model.entities.Player;
+import com.ensibs.omeca.utils.AvatarsList;
 
 public class PlayerView extends RelativeLayout{
 	
 	private Player player;
 	private Context context;
 	
-	public static final int SIZE = 8;
+	public static final int SIZE = 7;
 
 	public PlayerView(Context context) {
 	    super(context);
@@ -35,15 +40,29 @@ public class PlayerView extends RelativeLayout{
 	private void init(Context context) {
 		this.context = context;
 		DisplayMetrics metrics = context.getApplicationContext().getResources().getDisplayMetrics();
-		RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(metrics.heightPixels/SIZE, metrics.heightPixels/SIZE);
+		RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(metrics.heightPixels/(SIZE), metrics.heightPixels/SIZE);
 		setLayoutParams(params);
 		setBackgroundResource(R.drawable.player);
+	}
+	
+	public void setPlayer(Player player){
+		this.player = player;
+		RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams((int)(getLayoutParams().width*0.9), (int)(getLayoutParams().height*0.9));
+		params.addRule(ALIGN_PARENT_BOTTOM, TRUE);
+		params.addRule(CENTER_HORIZONTAL);
 		ImageView image = new ImageView(context);
-		image.setImageResource(R.drawable.avatar_alien);
-		addView(image);
+		image.setImageResource(AvatarsList.get(player.getAvatar()));
+		addView(image, params);
+		
+		params = new RelativeLayout.LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT);
+		params.addRule(ALIGN_PARENT_TOP, TRUE);
+		
 		TextView textView = new TextView(context);
-		textView.setText("Nom de joueur");
-		addView(textView);
+		textView.setText(player.getName());
+		textView.setGravity(Gravity.CENTER_HORIZONTAL);
+		textView.setTextColor(Color.WHITE);
+		textView.setTextSize(TypedValue.COMPLEX_UNIT_SP, 8);
+		addView(textView, params);
 	}
 
 }
