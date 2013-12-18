@@ -11,6 +11,7 @@ import android.widget.RelativeLayout;
 import com.ensibs.omeca.ControllerView;
 import com.ensibs.omeca.R;
 import com.ensibs.omeca.model.entities.Board;
+import com.ensibs.omeca.model.entities.Player;
 
 public class BoardView extends RelativeLayout{
 	private Board board;
@@ -52,13 +53,16 @@ public class BoardView extends RelativeLayout{
 		PlayerView player = new PlayerView(context);
 		RelativeLayout.LayoutParams params;
 		
+		Player p = null;
+		
 		//Player 1
 		player = new PlayerView(context);
 		params = (RelativeLayout.LayoutParams) player.getLayoutParams();
 		params.addRule(CENTER_IN_PARENT, RelativeLayout.TRUE);
 		params.addRule(ALIGN_PARENT_LEFT, RelativeLayout.TRUE);
-		players_left.addView(player, params);
-		player.setPlayer(ControllerView.user);
+		players_left.addView(player, params);		
+		p = new Player("Jean", 5);
+		player.setPlayer(p);
 		
 		
 		//Player 2
@@ -66,42 +70,54 @@ public class BoardView extends RelativeLayout{
 		params = (RelativeLayout.LayoutParams) player.getLayoutParams();
 		params.addRule(ALIGN_PARENT_TOP, RelativeLayout.TRUE);
 		params.addRule(ALIGN_PARENT_LEFT, RelativeLayout.TRUE);
-		players_left.addView(player, params);
+		players_left.addView(player, params);		
+		p = new Player("Emile", 7);
+		player.setPlayer(p);
 		
 		//Player 3
 		player = new PlayerView(context);
 		params = (RelativeLayout.LayoutParams) player.getLayoutParams();
 		params.addRule(CENTER_IN_PARENT, RelativeLayout.TRUE);
 		params.addRule(ALIGN_PARENT_TOP, RelativeLayout.TRUE);
-		players_left.addView(player, params);
+		players_left.addView(player, params);	
+		p = new Player("Etienne", 2);
+		player.setPlayer(p);
 		
 		//Player 4
 		player = new PlayerView(context);
 		params = (RelativeLayout.LayoutParams) player.getLayoutParams();
 		params.addRule(ALIGN_PARENT_TOP, RelativeLayout.TRUE);
 		params.addRule(CENTER_IN_PARENT, RelativeLayout.TRUE);
-		addView(player, params);
+		addView(player, params);	
+		p = new Player("Lucienne", 14);
+		player.setPlayer(p);
 		
 		//Player 5
 		player = new PlayerView(context);
 		params = (RelativeLayout.LayoutParams) player.getLayoutParams();
 		params.addRule(CENTER_IN_PARENT, RelativeLayout.TRUE);
 		params.addRule(ALIGN_PARENT_TOP, RelativeLayout.TRUE);
-		players_right.addView(player, params);
+		players_right.addView(player, params);	
+		p = new Player("Jacquie", 10);
+		player.setPlayer(p);
 		
 		//Player 6
 		player = new PlayerView(context);
 		params = (RelativeLayout.LayoutParams) player.getLayoutParams();
 		params.addRule(ALIGN_PARENT_RIGHT, RelativeLayout.TRUE);
 		params.addRule(ALIGN_PARENT_TOP, RelativeLayout.TRUE);
-		players_right.addView(player, params);
+		players_right.addView(player, params);	
+		p = new Player("Michel", 12);
+		player.setPlayer(p);
 				
 		//Player 7
 		player = new PlayerView(context);
 		params = (RelativeLayout.LayoutParams) player.getLayoutParams();
 		params.addRule(CENTER_IN_PARENT, RelativeLayout.TRUE);
 		params.addRule(ALIGN_PARENT_RIGHT, RelativeLayout.TRUE);
-		players_right.addView(player, params);
+		players_right.addView(player, params);	
+		p = new Player("Louise", 13);
+		player.setPlayer(p);
 	}
 	
 	private class BoardDragListener implements OnDragListener{

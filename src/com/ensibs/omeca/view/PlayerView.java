@@ -41,6 +41,7 @@ public class PlayerView extends RelativeLayout{
 		this.context = context;
 		DisplayMetrics metrics = context.getApplicationContext().getResources().getDisplayMetrics();
 		RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(metrics.heightPixels/(SIZE), metrics.heightPixels/SIZE);
+		
 		setLayoutParams(params);
 		setBackgroundResource(R.drawable.player);
 	}
@@ -60,7 +61,7 @@ public class PlayerView extends RelativeLayout{
 		TextView textView = new TextView(context);
 		textView.setText(player.getName());
 		textView.setGravity(Gravity.CENTER_HORIZONTAL);
-		textView.setTextColor(Color.WHITE);
+		textView.setTextColor(Color.DKGRAY);
 		textView.setTextSize(TypedValue.COMPLEX_UNIT_SP, 8);
 		addView(textView, params);
 	}
