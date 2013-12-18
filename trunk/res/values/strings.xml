@@ -24,7 +24,7 @@
     
     <string name="tmp_board">Board</string>
     <string name="tmp_hand">Hand</string>
-    <string name="tmp_slidebar">Barre du haut</string>
-    <string name="tmp_slidebar_down">Barre du bas</string>
+    <string name="tmp_slidebar">Board View</string>
+    <string name="tmp_slidebar_down">Hand View</string>
 
 </resources>

@@ -23,6 +23,7 @@ import com.ensibs.omeca.utils.OmecaPopupMenu;
 import com.ensibs.omeca.utils.SlidingUpPanelLayout;
 import com.ensibs.omeca.utils.SlidingUpPanelLayout.PanelSlideListener;
 import com.ensibs.omeca.view.BoardView;
+import com.ensibs.omeca.view.PlayerView;
 import com.ensibs.omeca.view.SlidebarDragListener;
 import com.ensibs.omeca.wifidirect.WifiDirectManager;
 import com.ensibs.omeca.wifidirect.event.ConnectionWifiDirectEvent;
@@ -94,6 +95,7 @@ public class GameActivity extends Activity implements Observer {
 	            	linear.addView(View.inflate(panel.getContext(), R.layout.view_slidebar_hand, null),0,new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, 
 	            			height));
 	            	isExpanded = true;
+	            	((PlayerView)(findViewById(R.id.playerview_slidebar_hand))).setPlayer(ControllerView.user);
             	}
             }
 
@@ -107,6 +109,7 @@ public class GameActivity extends Activity implements Observer {
 	            	linear.addView(View.inflate(panel.getContext(), R.layout.view_slidebar_board, null),0,new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, 
 	            			height));
 	            	isExpanded = false;
+	            	((PlayerView)(findViewById(R.id.playerview_slidebar_board))).setPlayer(ControllerView.user);
             	}
             }
 
@@ -115,7 +118,9 @@ public class GameActivity extends Activity implements Observer {
 
             }
         });
-
+		
+		((PlayerView)(slide.findViewById(R.id.playerview_slidebar_board))).setPlayer(ControllerView.user);
+		
 		gameView.findViewById(R.id.view_slidebar).setOnDragListener(new SlidebarDragListener());
 	}
 
