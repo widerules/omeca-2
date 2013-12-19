@@ -10,16 +10,21 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.view.View.OnTouchListener;
 import android.view.Window;
 import android.view.WindowManager;
+import android.widget.Gallery;
 import android.widget.LinearLayout;
 import android.widget.Toast;
 
 import com.ensibs.omeca.model.entities.Board;
 import com.ensibs.omeca.model.entities.Card;
+import com.ensibs.omeca.utils.AvatarGallery;
 import com.ensibs.omeca.utils.OmecaPopupMenu;
+import com.ensibs.omeca.utils.SliderbarCardGallery;
 import com.ensibs.omeca.utils.SlidingUpPanelLayout;
 import com.ensibs.omeca.utils.SlidingUpPanelLayout.PanelSlideListener;
 import com.ensibs.omeca.view.BoardView;
@@ -35,10 +40,17 @@ public class GameActivity extends Activity implements Observer {
 	ControllerView controler;
 	AlertDialog popupMenu;
 	OmecaApplication app;
+	private static Activity instance;
+	
+	public static Activity getActivity(){
+		
+		return instance;
+	}
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
+		instance = this;
 
 		// Retrieve application 
 		app = (OmecaApplication) getApplication();
@@ -70,7 +82,7 @@ public class GameActivity extends Activity implements Observer {
 		boardView.builtBoard(board);
 
 		SlidingUpPanelLayout slide = (SlidingUpPanelLayout) findViewById(R.id.sliding_layout);
-
+		slide.setDragView(findViewById(R.id.view_hand));
 		slide.setPanelSlideListener(new PanelSlideListener() {
 
 			private boolean isExpanded = false;
@@ -120,7 +132,16 @@ public class GameActivity extends Activity implements Observer {
         });
 		
 		((PlayerView)(slide.findViewById(R.id.playerview_slidebar_board))).setPlayer(ControllerView.user);
-		
+		Gallery g = (Gallery) findViewById(R.id.playerview_slider_board_cardgallery);
+		g.setAdapter(new SliderbarCardGallery(this));
+		/*g.setOnTouchListener(new OnTouchListener() {
+			
+			@Override
+			public boolean onTouch(View v, MotionEvent event) {
+				Log.i("Omeca", "Je suis attrape");
+				return true;
+			}
+		});*/
 		gameView.findViewById(R.id.view_slidebar).setOnDragListener(new SlidebarDragListener());
 	}
 
