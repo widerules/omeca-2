@@ -16,7 +16,7 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 
 /**
- * @author Sébastien Batézat <sebastien.batezat@gmail.com>
+ * @author Sï¿½bastien Batï¿½zat <sebastien.batezat@gmail.com>
  */
 public class SliderbarCardGallery extends BaseAdapter {
 	
@@ -48,16 +48,16 @@ public class SliderbarCardGallery extends BaseAdapter {
     
 
     public View getView(int position, View convertView, ViewGroup parent) {
-    	
+
         CardView cv = new CardView(mContext, ControllerView.user.getCards().get(position));
-        View tmp = GameActivity.getActivity().findViewById(R.id.linear_slidebar_board);
-        int height = (int)(tmp.getHeight()*0.9);
-        Log.i("height", ""+height);
-        Log.i("child", ""+((LinearLayout)tmp.getParent()).getChildCount());
-        cv.setLayoutParams(new Gallery.LayoutParams(60, 100));
-        cv.setOnTouchListener(null);
-        //cv.turnCard();
-        return cv; 
+        View tmp = GameActivity.getActivity().findViewById(R.id.playerview_slidebar_board);
+        Log.i("height", ""+(tmp==null));
+	        int height = (int)(tmp.getHeight()*0.9);
+	        Log.i("height", ""+height);
+	        cv.setLayoutParams(new Gallery.LayoutParams((int)(height/CardView.RATIO), height));
+	        cv.setOnTouchListener(null);
+	        cv.turnCard();
+	        return cv; 
     
     }
     

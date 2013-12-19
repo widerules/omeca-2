@@ -134,14 +134,7 @@ public class GameActivity extends Activity implements Observer {
 		((PlayerView)(slide.findViewById(R.id.playerview_slidebar_board))).setPlayer(ControllerView.user);
 		Gallery g = (Gallery) findViewById(R.id.playerview_slider_board_cardgallery);
 		g.setAdapter(new SliderbarCardGallery(this));
-		/*g.setOnTouchListener(new OnTouchListener() {
-			
-			@Override
-			public boolean onTouch(View v, MotionEvent event) {
-				Log.i("Omeca", "Je suis attrape");
-				return true;
-			}
-		});*/
+		g.setSelection(controler.user.getNumberOfCards()/2);
 		gameView.findViewById(R.id.view_slidebar).setOnDragListener(new SlidebarDragListener());
 	}
 
