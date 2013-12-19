@@ -30,7 +30,6 @@ public class CardView extends ImageView{
 		int width = (int) (height/RATIO);
 		setLayoutParams(new RelativeLayout.LayoutParams(width, height));
 		setOnTouchListener(new CardTouchListener());
-		setOnLongClickListener(new CardLongClickListener());
 				
 	}
 	
@@ -68,32 +67,39 @@ public class CardView extends ImageView{
 	}
 	
 	private class CardTouchListener implements OnTouchListener{
-
-		@Override
-		public boolean onTouch(View view, MotionEvent motionEvent) {
-			if (motionEvent.getAction() == MotionEvent.ACTION_DOWN) {
-		        return false;
-			}else if(motionEvent.getAction() == MotionEvent.ACTION_UP){
-				turnCard();
-				view.setVisibility(View.VISIBLE);
-				return false;
-		    }
-			else
-				return true;
-		}
+		private float x;
+		private float y;
+		private final float SCROLL_THRESHOLD = 10;
+		private boolean isOnClick;
 		
-	}
-	
-	private class CardLongClickListener implements OnLongClickListener{
-
 		@Override
-		public boolean onLongClick(View view) {
-			view.setVisibility(View.INVISIBLE);
-			ClipData data = ClipData.newPlainText("", "");
-	        DragShadowBuilder shadowBuilder = new View.DragShadowBuilder(view);
-	        view.startDrag(data, shadowBuilder, view, 0);
-	        
-	        return true;
+		public boolean onTouch(View view, MotionEvent mE) {
+			switch (mE.getAction()){
+				case MotionEvent.ACTION_DOWN:
+					x = mE.getX();
+					y = mE.getY();
+					isOnClick = true;
+					break;
+				case MotionEvent.ACTION_UP:
+					if(isOnClick){
+						turnCard();
+						view.setVisibility(View.VISIBLE);
+					}
+					break;
+				case MotionEvent.ACTION_MOVE:
+					if(isOnClick && 
+							Math.sqrt((x-mE.getX())*(x-mE.getX()) + (y-mE.getY())*(y-mE.getY())) > SCROLL_THRESHOLD){
+						view.setVisibility(View.INVISIBLE);
+						ClipData data = ClipData.newPlainText("", "");
+				        DragShadowBuilder shadowBuilder = new View.DragShadowBuilder(view);
+				        view.startDrag(data, shadowBuilder, view, 0);
+				        isOnClick = false;
+					}
+					break;
+				default:
+					break;
+			}	
+			return true;
 		}
 		
 	}

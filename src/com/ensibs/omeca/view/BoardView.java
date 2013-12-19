@@ -135,8 +135,7 @@ public class BoardView extends RelativeLayout{
 					View view = (View) event.getLocalState();
 					ViewGroup parent = (ViewGroup)(view.getParent());
 			        parent.removeView(view);
-					RelativeLayout container = (RelativeLayout) v;
-					container.addView(view);
+					addView(view);
 					MarginLayoutParams marginParams = new MarginLayoutParams(view.getLayoutParams());
 					int left = (int)(event.getX() - (view.getWidth()/2));
 					int top = (int)(event.getY() - (view.getHeight()/2));
