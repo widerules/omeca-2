@@ -26,7 +26,7 @@ public class ControllerView {
 				profilPreferences.getString(AvatarActivity.SHARED_PREFERENCES_PLAYER_NAME, ""),
 				profilPreferences.getInt(AvatarActivity.SHARED_PREFERENCES_AVATAR_ID_NAME, 0));
 		for (int i=1; i<10; i++) {
-			user.addCard(new Card(i, "ofspade"));
+			user.addCard(new Card(i, "ofspades"));
 		}
 		board.addPlayer(0, user);
 	}
