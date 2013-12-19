@@ -45,10 +45,7 @@ public class AvatarGallery extends BaseAdapter {
     	
         ImageView imageView = new ImageView(this.mContext);
         imageView.setImageResource(AvatarsList.get(position));
-        imageView.setLayoutParams(new Gallery.LayoutParams(
-    		this.mContext.getResources().getDimensionPixelSize(R.dimen.avatar_width),
-    		this.mContext.getResources().getDimensionPixelSize(R.dimen.avatar_height))
-        );
+        imageView.setLayoutParams(new Gallery.LayoutParams(60,60));
         //imageView.setBackgroundResource(R.drawable.avatar);
         
         return imageView;

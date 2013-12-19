@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.SharedPreferences;
 
 import com.ensibs.omeca.model.entities.Board;
+import com.ensibs.omeca.model.entities.Card;
 import com.ensibs.omeca.model.entities.Player;
 
 public class ControllerView {
@@ -24,6 +25,9 @@ public class ControllerView {
 		user = new Player(
 				profilPreferences.getString(AvatarActivity.SHARED_PREFERENCES_PLAYER_NAME, ""),
 				profilPreferences.getInt(AvatarActivity.SHARED_PREFERENCES_AVATAR_ID_NAME, 0));
+		for (int i=1; i<10; i++) {
+			user.addCard(new Card(i, "ofspade"));
+		}
 		board.addPlayer(0, user);
 	}
 
