@@ -6,12 +6,18 @@ import android.text.Layout;
 import android.util.AttributeSet;
 import android.util.DisplayMetrics;
 import android.util.TypedValue;
+import android.view.DragEvent;
 import android.view.Gravity;
+import android.view.View;
+import android.view.ViewGroup;
+import android.view.View.OnDragListener;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.ensibs.omeca.R;
+import com.ensibs.omeca.model.entities.Card;
 import com.ensibs.omeca.model.entities.Player;
 import com.ensibs.omeca.utils.AvatarsList;
 
@@ -43,7 +49,7 @@ public class PlayerView extends RelativeLayout{
 		RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(metrics.heightPixels/(SIZE), metrics.heightPixels/SIZE);
 		
 		setLayoutParams(params);
-		setBackgroundResource(R.drawable.player);
+		setOnDragListener(new PlayerDragListener());
 	}
 	
 	public void setPlayer(Player player){
@@ -65,5 +71,34 @@ public class PlayerView extends RelativeLayout{
 		textView.setTextSize(TypedValue.COMPLEX_UNIT_SP, 8);
 		addView(textView, params);
 	}
+	
+	private class PlayerDragListener implements OnDragListener{
 
+		@Override
+	    public boolean onDrag(View v, DragEvent event) {
+			switch (event.getAction()) {
+				case DragEvent.ACTION_DRAG_STARTED:
+					break;
+				case DragEvent.ACTION_DRAG_ENTERED:
+					setBackgroundResource(R.drawable.player);
+					break;
+				case DragEvent.ACTION_DRAG_EXITED:
+					setBackgroundColor(Color.TRANSPARENT);
+					break;
+				case DragEvent.ACTION_DROP:
+					CardView view = (CardView) event.getLocalState();
+					ViewGroup parent = (ViewGroup)(view.getParent());
+					Card c = view.getCard();
+					player.addCard(c);
+					setBackgroundColor(Color.TRANSPARENT);
+			        parent.removeView(view);
+					break;
+				case DragEvent.ACTION_DRAG_ENDED:
+					break;
+				default:
+					break;
+			}
+			return true;
+	    }
+	}
 }
