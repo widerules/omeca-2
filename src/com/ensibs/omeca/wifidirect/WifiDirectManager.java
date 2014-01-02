@@ -1,9 +1,15 @@
 package com.ensibs.omeca.wifidirect;
 
 import java.util.Observable;
+import java.util.Observer;
 
 import com.ensibs.omeca.wifidirect.event.ConnectionWifiDirectEvent;
+import com.ensibs.omeca.wifidirect.event.WifiDirectEvent;
+import com.ensibs.omeca.wifidirect.exchange.WifiDirectClientExchange;
+import com.ensibs.omeca.wifidirect.exchange.WifiDirectIExchange;
+import com.ensibs.omeca.wifidirect.exchange.WifiDirectServerExchange;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.IntentFilter;
 import android.net.wifi.WifiManager;
@@ -13,12 +19,14 @@ import android.net.wifi.p2p.WifiP2pDeviceList;
 import android.net.wifi.p2p.WifiP2pManager;
 import android.net.wifi.p2p.WifiP2pManager.Channel;
 
-public class WifiDirectManager extends Observable{
+//TODO : meilleur mode, deconnexion, continuer event, mettre en place echange, correction bug + stabilite
+
+public class WifiDirectManager extends Observable implements Observer {
 	
 	//Wifi direct system service
 	private WifiP2pManager wifiP2pManager; 
 	private Channel wifiDirectChannel;
-	//Application context
+	//Activity context
 	private static Context applicationContext;
 	//Different listener
 	private WifiDirectChannelListener channelListener;
@@ -35,6 +43,8 @@ public class WifiDirectManager extends Observable{
 	//Attribut for host or client
 	private boolean isHost;
 	private boolean connected = false;
+	//Exchange class
+	WifiDirectIExchange exchangeClass;
 	
 	public WifiDirectManager(Context ctx){
 		//set context of the application for get system service
@@ -52,7 +62,7 @@ public class WifiDirectManager extends Observable{
 	    p2pEnabled = new IntentFilter(WifiP2pManager.WIFI_P2P_STATE_CHANGED_ACTION);
 	    ownDeviceFilter = new IntentFilter(WifiP2pManager.WIFI_P2P_THIS_DEVICE_CHANGED_ACTION);
 		//enable wifi on the device
-		//this.enableWifi();
+		this.enableWifi();
 		this.initializeWiFiDirect();
 	}
 	
@@ -67,6 +77,7 @@ public class WifiDirectManager extends Observable{
 	
 	public void removeWifiDirect(){
 		//this.disableWifi();
+		this.unregistred();
 	}
 	
 	//Active wifi on device
@@ -90,14 +101,15 @@ public class WifiDirectManager extends Observable{
 	}
 	
 	//TODO : unregistred service better
-
+	@SuppressLint("NewApi")
 	public void stopDiscoverPeers(){
-		//wifiP2pManager.stopPeerDiscovery(wifiDirectChannel, actionListener);
+		//((WifiP2pManager) wifiP2pManager).stopPeerDiscovery(wifiDirectChannel, actionListener);
 	}
 	
-	public void connectTo(WifiP2pDevice device) {
+	public synchronized void connectTo(WifiP2pDevice device) {
 		WifiP2pConfig config = new WifiP2pConfig();
 		config.deviceAddress = device.deviceAddress;
+		config.groupOwnerIntent = 0;
 		wifiP2pManager.connect(wifiDirectChannel, config, actionListener);
 		this.connected = true;
 	}
@@ -121,6 +133,16 @@ public class WifiDirectManager extends Observable{
 		applicationContext.registerReceiver(connectionListener, connectionfilter);
 		applicationContext.registerReceiver(statusReceiver, p2pEnabled);
 		applicationContext.registerReceiver(deviceChanged, ownDeviceFilter);
+	}
+	
+	public void createExchange(String ip){
+		if(isHost){
+			exchangeClass = new WifiDirectServerExchange();
+		}else{
+			exchangeClass = new WifiDirectClientExchange(ip);
+		}
+		exchangeClass.addObserver(this);
+		exchangeClass.startExchange();
 	}
 
 	public WifiP2pManager getWifiP2pManager() {
@@ -154,5 +176,19 @@ public class WifiDirectManager extends Observable{
 	public void notifyConnection(){
 		  setChanged();
 	      notifyObservers(new ConnectionWifiDirectEvent());
+	}
+	
+	public void notifyEvent(WifiDirectEvent event){
+		  setChanged();
+	      notifyObservers(event);
+	}
+	
+	public void sendEvent(WifiDirectEvent event){
+		exchangeClass.sendEvent(event);
+	}
+
+	@Override
+	public void update(Observable observable, Object data) {
+		notifyEvent((WifiDirectEvent) data);
 	}
 }
