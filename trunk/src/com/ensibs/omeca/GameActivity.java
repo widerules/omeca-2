@@ -6,23 +6,24 @@ import java.util.Observer;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
-import android.view.MotionEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
-import android.view.View.OnTouchListener;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Gallery;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
+import android.widget.TextView;
 import android.widget.Toast;
+import android.widget.RelativeLayout.LayoutParams;
 
 import com.ensibs.omeca.model.entities.Board;
 import com.ensibs.omeca.model.entities.Card;
-import com.ensibs.omeca.utils.AvatarGallery;
 import com.ensibs.omeca.utils.OmecaPopupMenu;
 import com.ensibs.omeca.utils.SliderbarCardGallery;
 import com.ensibs.omeca.utils.SlidingUpPanelLayout;
@@ -82,7 +83,13 @@ public class GameActivity extends Activity implements Observer {
 		boardView.builtBoard(board);
 
 		SlidingUpPanelLayout slide = (SlidingUpPanelLayout) findViewById(R.id.sliding_layout);
-		slide.setDragView(findViewById(R.id.view_hand));
+		
+		((PlayerView)(slide.findViewById(R.id.playerview_slidebar_board))).setPlayer(ControllerView.user);
+		Gallery g = (Gallery) findViewById(R.id.playerview_slider_board_cardgallery);
+		g.setAdapter(new SliderbarCardGallery(this));
+		g.setSelection(ControllerView.user.getNumberOfCards()/2);
+		gameView.findViewById(R.id.view_slidebar).setOnDragListener(new SlidebarDragListener());
+		slide.setDragView(slide.findViewById(R.id.playerview_slidebar_board));
 		slide.setPanelSlideListener(new PanelSlideListener() {
 
 			private boolean isExpanded = false;
@@ -99,43 +106,48 @@ public class GameActivity extends Activity implements Observer {
 
             @Override
             public void onPanelExpanded(View panel) {
-            	//Log.i("OMECA", "Hand");
             	if(!isExpanded){
 	            	LinearLayout linear = (LinearLayout) findViewById(R.id.linear_slidinguppanel);
 	            	linear.removeView(findViewById(R.id.view_slidebar));
 	            	linear.removeView(findViewById(R.id.linear_slidebar_board));
+	            	
 	            	linear.addView(View.inflate(panel.getContext(), R.layout.view_slidebar_hand, null),0,new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, 
 	            			height));
-	            	isExpanded = true;
+	            	
 	            	((PlayerView)(findViewById(R.id.playerview_slidebar_hand))).setPlayer(ControllerView.user);
+	            	
+	            	isExpanded = true;
             	}
             }
 
             @Override
             public void onPanelCollapsed(View panel) {
-            	//Log.i("OMECA", "Board");
             	if(isExpanded){
 	            	LinearLayout linear = (LinearLayout) findViewById(R.id.linear_slidinguppanel);
 	            	linear.removeView(findViewById(R.id.view_slidebar));
-	            	linear.removeView(findViewById(R.id.linear_slidebar_hand));
+	            	linear.removeView(findViewById(R.id.linear_slidebar_hand)); 
 	            	linear.addView(View.inflate(panel.getContext(), R.layout.view_slidebar_board, null),0,new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, 
 	            			height));
-	            	isExpanded = false;
 	            	((PlayerView)(findViewById(R.id.playerview_slidebar_board))).setPlayer(ControllerView.user);
+	            	
+	            	Gallery g = (Gallery) findViewById(R.id.playerview_slider_board_cardgallery);
+	            	LinearLayout.LayoutParams params = (LinearLayout.LayoutParams)g.getLayoutParams();
+	            	params.width = Gallery.LayoutParams.WRAP_CONTENT;
+	            	params.height = Gallery.LayoutParams.MATCH_PARENT;
+	            	params.weight = 3.0f;
+	            	g.setLayoutParams(params);
+	        		g.setAdapter(new SliderbarCardGallery(panel.getContext()));
+	        		g.setSelection(ControllerView.user.getNumberOfCards()/2);
+	        		
+	            	isExpanded = false;
             	}
             }
 
             @Override
             public void onPanelAnchored(View panel) {
-
             }
         });
 		
-		((PlayerView)(slide.findViewById(R.id.playerview_slidebar_board))).setPlayer(ControllerView.user);
-		Gallery g = (Gallery) findViewById(R.id.playerview_slider_board_cardgallery);
-		g.setAdapter(new SliderbarCardGallery(this));
-		g.setSelection(controler.user.getNumberOfCards()/2);
-		gameView.findViewById(R.id.view_slidebar).setOnDragListener(new SlidebarDragListener());
 	}
 
 

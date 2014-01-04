@@ -1,22 +1,19 @@
 package com.ensibs.omeca.utils;
 
-import com.ensibs.omeca.ControllerView;
-import com.ensibs.omeca.GameActivity;
-import com.ensibs.omeca.R;
-import com.ensibs.omeca.view.CardView;
-
 import android.content.Context;
 import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.Gallery;
-import android.widget.ImageView;
-import android.widget.LinearLayout;
-import android.widget.RelativeLayout;
+
+import com.ensibs.omeca.ControllerView;
+import com.ensibs.omeca.GameActivity;
+import com.ensibs.omeca.R;
+import com.ensibs.omeca.view.CardView;
 
 /**
- * @author S�bastien Bat�zat <sebastien.batezat@gmail.com>
+ * @author Raphael GICQUIAUX
  */
 public class SliderbarCardGallery extends BaseAdapter {
 	
@@ -48,18 +45,19 @@ public class SliderbarCardGallery extends BaseAdapter {
     
 
     public View getView(int position, View convertView, ViewGroup parent) {
-
-    	if(convertView == null || convertView.getHeight() ==0 ){
-    		CardView cv = new CardView(mContext, ControllerView.user.getCards().get(position));
-    		View tmp = GameActivity.getActivity().findViewById(R.id.playerview_slidebar_board);
-    		int height = (int)(tmp.getHeight()*0.9);
+    	if(parent.getHeight() == 0)
+    		notifyDataSetChanged();
+    	CardView cv = (CardView)convertView;
+    	if(cv == null){
+    		cv = new CardView(mContext, ControllerView.user.getCards().get(position));
+    		int height = (int)(parent.getHeight()*0.9);
     		cv.setLayoutParams(new Gallery.LayoutParams((int)(height/CardView.RATIO), height));
     		cv.setOnTouchListener(null);
     		if(!cv.getCard().isFaceUp())
     			cv.turnCard();
     		return cv; 
     	}
-    	return convertView;
+    	return cv;
     }
     
 }
