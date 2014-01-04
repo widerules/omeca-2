@@ -42,11 +42,17 @@ public class AvatarGallery extends BaseAdapter {
     
 
     public View getView(int position, View convertView, ViewGroup parent) {
-    	
-        ImageView imageView = new ImageView(this.mContext);
-        imageView.setImageResource(AvatarsList.get(position));
-        imageView.setLayoutParams(new Gallery.LayoutParams(60,60));
-        //imageView.setBackgroundResource(R.drawable.avatar);
+    	ImageView imageView = (ImageView)convertView;
+    	if(convertView == null){
+    		imageView = new ImageView(this.mContext);
+    		imageView.setImageResource(AvatarsList.get(position));
+    		imageView.setLayoutParams(new Gallery.LayoutParams(
+    	    		this.mContext.getResources().getDimensionPixelSize(R.dimen.avatar_width),
+    	    		this.mContext.getResources().getDimensionPixelSize(R.dimen.avatar_height))
+    	        );
+    		//imageView.setBackgroundResource(R.drawable.avatar);
+    	}
+
         
         return imageView;
     

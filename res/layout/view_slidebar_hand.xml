@@ -11,15 +11,16 @@
         android:id="@+id/playerview_slidebar_hand"
         android:layout_width="68dp"
 	   	android:layout_height="68dp"
-	    >
+	   	android:layout_weight="1">
         
     </com.ensibs.omeca.view.PlayerView>
-    
-   <TextView
-	   android:layout_width="match_parent"
-	   android:layout_height="34dp"
-	   android:gravity="center|bottom"
-	   android:text="@string/tmp_slidebar_down"
-	   android:textSize="16sp" />
-
+	
+ 	<TextView
+ 	   android:id="@+id/hand_actions"
+        android:layout_width="68dp"
+	   	android:layout_height="68dp"
+	   	android:layout_weight="4"
+	    android:text="@string/tmp_slidebar"
+	    android:gravity="center">
+ 	  </TextView>
 </LinearLayout>
