@@ -46,6 +46,15 @@ public class HandView extends Gallery{
         this.setUnselectedAlpha((float) 1);
         this.setSelection(ControllerView.user.getNumberOfCards()/2);
         this.setOnDragListener(new HandViewCardGalleryDragListener());
+        this.setOnTouchListener(new OnTouchListener() {
+
+        	  @Override
+        	  public boolean onTouch(View v, MotionEvent event) {
+
+        	     return true;
+        	  }
+        	 });
+
 	}
 	
 
@@ -102,8 +111,8 @@ public class HandView extends Gallery{
 		    	if(cv == null){
 		    		DisplayMetrics metrics = mContext.getApplicationContext().getResources().getDisplayMetrics();
 		    		cv = new CardView(mContext, ControllerView.user.getCards().get(position));
-		    		int height = (int)(metrics.heightPixels /(this.getCount() * 0.5));
-		    		int width = (int) (metrics.widthPixels/(this.getCount()*0.8));
+		    		int width = (int)(metrics.widthPixels/(this.getCount()*1.1));
+		    		int height = (int)(width*CardView.RATIO);
 		    		cv.setLayoutParams(new Gallery.LayoutParams( width, height));
 		    		cv.setOnTouchListener(null);
 		    		if(!cv.getCard().isFaceUp())
