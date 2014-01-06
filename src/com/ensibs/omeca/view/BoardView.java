@@ -7,7 +7,7 @@ import android.util.Log;
 import android.view.DragEvent;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.LinearLayout;
+import android.widget.Gallery;
 import android.widget.RelativeLayout;
 
 import com.ensibs.omeca.ControllerView;
@@ -15,10 +15,9 @@ import com.ensibs.omeca.GameActivity;
 import com.ensibs.omeca.R;
 import com.ensibs.omeca.model.entities.Board;
 import com.ensibs.omeca.model.entities.Player;
-import com.ensibs.omeca.view.CardView.CardTouchListener;
+import com.ensibs.omeca.view.HandView.HandCardsAdapter;
 
 public class BoardView extends RelativeLayout{
-	private Board board;
 	private Context context;
 	
 	public BoardView(Context context) {
@@ -66,7 +65,7 @@ public class BoardView extends RelativeLayout{
 		params.addRule(ALIGN_PARENT_LEFT, RelativeLayout.TRUE);
 		players_left.addView(player, params);		
 		p = new Player("Jean", 5);
-		player.setPlayer(p);
+		player.setPlayer(p, false);
 		
 		
 		//Player 2
@@ -76,7 +75,7 @@ public class BoardView extends RelativeLayout{
 		params.addRule(ALIGN_PARENT_LEFT, RelativeLayout.TRUE);
 		players_left.addView(player, params);		
 		p = new Player("Emile", 7);
-		player.setPlayer(p);
+		player.setPlayer(p, false);
 		
 		//Player 3
 		player = new PlayerView(context);
@@ -85,7 +84,7 @@ public class BoardView extends RelativeLayout{
 		params.addRule(ALIGN_PARENT_TOP, RelativeLayout.TRUE);
 		players_left.addView(player, params);	
 		p = new Player("Etienne", 2);
-		player.setPlayer(p);
+		player.setPlayer(p, false);
 		
 		//Player 4
 		player = new PlayerView(context);
@@ -94,7 +93,7 @@ public class BoardView extends RelativeLayout{
 		params.addRule(CENTER_IN_PARENT, RelativeLayout.TRUE);
 		addView(player, params);	
 		p = new Player("Lucienne", 14);
-		player.setPlayer(p);
+		player.setPlayer(p, false);
 		
 		//Player 5
 		player = new PlayerView(context);
@@ -103,7 +102,7 @@ public class BoardView extends RelativeLayout{
 		params.addRule(ALIGN_PARENT_TOP, RelativeLayout.TRUE);
 		players_right.addView(player, params);	
 		p = new Player("Jacquie", 10);
-		player.setPlayer(p);
+		player.setPlayer(p, false);
 		
 		//Player 6
 		player = new PlayerView(context);
@@ -112,7 +111,7 @@ public class BoardView extends RelativeLayout{
 		params.addRule(ALIGN_PARENT_TOP, RelativeLayout.TRUE);
 		players_right.addView(player, params);	
 		p = new Player("Michel", 12);
-		player.setPlayer(p);
+		player.setPlayer(p, false);
 				
 		//Player 7
 		player = new PlayerView(context);
@@ -121,7 +120,7 @@ public class BoardView extends RelativeLayout{
 		params.addRule(ALIGN_PARENT_RIGHT, RelativeLayout.TRUE);
 		players_right.addView(player, params);	
 		p = new Player("Louise", 13);
-		player.setPlayer(p);
+		player.setPlayer(p, false);
 	}
 	
 	private class BoardDragListener implements OnDragListener{
@@ -136,11 +135,17 @@ public class BoardView extends RelativeLayout{
 				case DragEvent.ACTION_DRAG_EXITED:
 					break;
 				case DragEvent.ACTION_DROP:
-					View view = (View) event.getLocalState();
+					CardView view = (CardView) event.getLocalState();
 					ViewGroup parent = (ViewGroup)(view.getParent());
+
 			        parent.removeViewInLayout(view);
 					addView(view);
 					if(parent instanceof HandView){
+						ControllerView.user.removeCard(view.getCard());
+						Gallery g = (Gallery)parent;
+						HandCardsAdapter a = (HandCardsAdapter)g.getAdapter();
+						a.notifyDataSetChanged();
+						g.setSelection(ControllerView.user.getNumberOfCards()/2);
 						DisplayMetrics metrics = GameActivity.getActivity().getApplicationContext().getResources().getDisplayMetrics();
 						int height = 2+metrics.heightPixels/CardView.SIZE;
 						int width = (int) (2+(height/CardView.RATIO));

@@ -6,23 +6,16 @@ import java.util.Observer;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Intent;
-import android.graphics.Color;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.DragEvent;
-import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
-import android.view.View.OnDragListener;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Gallery;
 import android.widget.LinearLayout;
-import android.widget.RelativeLayout;
-import android.widget.TextView;
 import android.widget.Toast;
-import android.widget.RelativeLayout.LayoutParams;
 
 import com.ensibs.omeca.model.entities.Board;
 import com.ensibs.omeca.model.entities.Card;
@@ -65,7 +58,7 @@ public class GameActivity extends Activity implements Observer {
 		/*wifiDirectManager = app.getWifiDirectManager();
 		wifiDirectManager.addObserver(this);
 		wifiDirectManager.setRole(true);
-		wifiDirectManager.discoverPeers()*/;
+		wifiDirectManager.discoverPeers();*/
 
 		// Hides titlebar and actionbar
 		requestWindowFeature(Window.FEATURE_NO_TITLE);
@@ -86,12 +79,12 @@ public class GameActivity extends Activity implements Observer {
 
 		SlidingUpPanelLayout slide = (SlidingUpPanelLayout) findViewById(R.id.sliding_layout);
 		
-		((PlayerView)(slide.findViewById(R.id.playerview_slidebar_board))).setPlayer(ControllerView.user);
+		((PlayerView)(slide.findViewById(R.id.playerview_slidebar_board))).setPlayer(ControllerView.user, true);
+		
 		Gallery g = (Gallery) findViewById(R.id.playerview_slider_board_cardgallery);
 		g.setAdapter(new SliderbarCardGallery(this));
 		g.setSelection(ControllerView.user.getNumberOfCards()/2);
 		g.setOnDragListener(new SlideBarCardGalleryDragListener());
-		gameView.findViewById(R.id.view_slidebar).setOnDragListener(new SlidebarDragListener());
 		slide.setDragView(slide.findViewById(R.id.playerview_slidebar_board));
 		slide.setPanelSlideListener(new PanelSlideListener() {
 
@@ -113,12 +106,10 @@ public class GameActivity extends Activity implements Observer {
 	            	LinearLayout linear = (LinearLayout) findViewById(R.id.linear_slidinguppanel);
 	            	linear.removeView(findViewById(R.id.view_slidebar));
 	            	linear.removeView(findViewById(R.id.linear_slidebar_board));
-	            	
 	            	linear.addView(View.inflate(panel.getContext(), R.layout.view_slidebar_hand, null),0,new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, 
 	            			height));
-	            	
-	            	((PlayerView)(findViewById(R.id.playerview_slidebar_hand))).setPlayer(ControllerView.user);
-	            	
+	            	linear.findViewById(R.id.hand_actions).setOnDragListener(new SlidebarDragListener());
+	            	((PlayerView)(findViewById(R.id.playerview_slidebar_hand))).setPlayer(ControllerView.user, true);
 	            	isExpanded = true;
             	}
             }
@@ -131,7 +122,7 @@ public class GameActivity extends Activity implements Observer {
 	            	linear.removeView(findViewById(R.id.linear_slidebar_hand)); 
 	            	linear.addView(View.inflate(panel.getContext(), R.layout.view_slidebar_board, null),0,new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, 
 	            			height));
-	            	((PlayerView)(findViewById(R.id.playerview_slidebar_board))).setPlayer(ControllerView.user);
+	            	((PlayerView)(findViewById(R.id.playerview_slidebar_board))).setPlayer(ControllerView.user, true);
 	            	
 	            	Gallery g = (Gallery) findViewById(R.id.playerview_slider_board_cardgallery);
 	            	LinearLayout.LayoutParams params = (LinearLayout.LayoutParams)g.getLayoutParams();

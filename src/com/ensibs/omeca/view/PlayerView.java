@@ -2,7 +2,6 @@ package com.ensibs.omeca.view;
 
 import android.content.Context;
 import android.graphics.Color;
-import android.text.Layout;
 import android.util.AttributeSet;
 import android.util.DisplayMetrics;
 import android.util.TypedValue;
@@ -10,9 +9,7 @@ import android.view.DragEvent;
 import android.view.Gravity;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.View.OnDragListener;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -25,6 +22,7 @@ public class PlayerView extends RelativeLayout{
 	
 	private Player player;
 	private Context context;
+	private TextView name;
 	
 	public static final int SIZE = 7;
 
@@ -45,6 +43,7 @@ public class PlayerView extends RelativeLayout{
 	
 	private void init(Context context) {
 		this.context = context;
+		name = new TextView(context);
 		DisplayMetrics metrics = context.getApplicationContext().getResources().getDisplayMetrics();
 		RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(metrics.heightPixels/(SIZE), metrics.heightPixels/SIZE);
 		
@@ -52,7 +51,9 @@ public class PlayerView extends RelativeLayout{
 		setOnDragListener(new PlayerDragListener());
 	}
 	
-	public void setPlayer(Player player){
+	public void setPlayer(Player player, boolean isMe){
+		if(isMe)
+			setOnDragListener(null);
 		this.player = player;
 		RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams((int)(getLayoutParams().width*0.9), (int)(getLayoutParams().height*0.9));
 		params.addRule(ALIGN_PARENT_BOTTOM, TRUE);
@@ -64,12 +65,11 @@ public class PlayerView extends RelativeLayout{
 		params = new RelativeLayout.LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT);
 		params.addRule(ALIGN_PARENT_TOP, TRUE);
 		
-		TextView textView = new TextView(context);
-		textView.setText(player.getName());
-		textView.setGravity(Gravity.CENTER_HORIZONTAL);
-		textView.setTextColor(Color.DKGRAY);
-		textView.setTextSize(TypedValue.COMPLEX_UNIT_SP, 8);
-		addView(textView, params);
+		name.setText(player.getName());
+		name.setGravity(Gravity.CENTER_HORIZONTAL);
+		name.setTextColor(Color.DKGRAY);
+		name.setTextSize(TypedValue.COMPLEX_UNIT_SP, 8);
+		addView(name, params);
 	}
 	
 	private class PlayerDragListener implements OnDragListener{
@@ -81,19 +81,22 @@ public class PlayerView extends RelativeLayout{
 					break;
 				case DragEvent.ACTION_DRAG_ENTERED:
 					setBackgroundResource(R.drawable.player);
+					name.setTextColor(Color.WHITE);
 					break;
 				case DragEvent.ACTION_DRAG_EXITED:
 					setBackgroundColor(Color.TRANSPARENT);
+					name.setTextColor(Color.DKGRAY);
 					break;
 				case DragEvent.ACTION_DROP:
 					CardView view = (CardView) event.getLocalState();
 					ViewGroup parent = (ViewGroup)(view.getParent());
 					Card c = view.getCard();
 					player.addCard(c);
-					setBackgroundColor(Color.TRANSPARENT);
 			        parent.removeView(view);
 					break;
 				case DragEvent.ACTION_DRAG_ENDED:
+					setBackgroundColor(Color.TRANSPARENT);
+					name.setTextColor(Color.DKGRAY);
 					break;
 				default:
 					break;

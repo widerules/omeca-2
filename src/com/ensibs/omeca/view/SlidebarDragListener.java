@@ -1,9 +1,12 @@
 package com.ensibs.omeca.view;
 
+import com.ensibs.omeca.utils.SlidingUpPanelLayout;
+
+import android.util.Log;
 import android.view.DragEvent;
 import android.view.View;
-import android.view.ViewGroup;
 import android.view.View.OnDragListener;
+import android.view.ViewGroup;
 
 public class SlidebarDragListener implements OnDragListener{
 	
@@ -14,6 +17,11 @@ public class SlidebarDragListener implements OnDragListener{
 			case DragEvent.ACTION_DRAG_STARTED:
 				break;
 			case DragEvent.ACTION_DRAG_ENTERED:
+				Log.w("Text", "entered");
+				SlidingUpPanelLayout slidebar = (SlidingUpPanelLayout)v.getParent().getParent().getParent();
+				if(slidebar.isExpanded())
+					slidebar.collapsePane();
+					
 				break;
 			case DragEvent.ACTION_DRAG_EXITED:
 				break;

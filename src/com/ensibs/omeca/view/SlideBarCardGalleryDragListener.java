@@ -1,16 +1,16 @@
 package com.ensibs.omeca.view;
 
-import com.ensibs.omeca.ControllerView;
-import com.ensibs.omeca.GameActivity;
-import com.ensibs.omeca.model.entities.Card;
-import com.ensibs.omeca.model.entities.Player;
-
-import android.graphics.Color;
 import android.view.DragEvent;
 import android.view.View;
-import android.view.ViewGroup;
 import android.view.View.OnDragListener;
-import android.widget.Toast;
+import android.view.ViewGroup;
+import android.widget.Gallery;
+
+import com.ensibs.omeca.ControllerView;
+import com.ensibs.omeca.R;
+import com.ensibs.omeca.model.entities.Card;
+import com.ensibs.omeca.model.entities.Player;
+import com.ensibs.omeca.utils.SliderbarCardGallery;
 
 public class SlideBarCardGalleryDragListener implements OnDragListener{
 
@@ -20,12 +20,10 @@ public class SlideBarCardGalleryDragListener implements OnDragListener{
 			case DragEvent.ACTION_DRAG_STARTED:
 				break;
 			case DragEvent.ACTION_DRAG_ENTERED:
-				Toast.makeText(GameActivity.getActivity(), "Poueeeeeeet",
-						   Toast.LENGTH_SHORT).show();
+				v.setBackgroundResource(R.drawable.gallery_background_hover);
 				break;
 			case DragEvent.ACTION_DRAG_EXITED:
-				Toast.makeText(GameActivity.getActivity(), "Patamoueeeeeette",
-						   Toast.LENGTH_SHORT).show();
+				v.setBackgroundResource(R.drawable.gallery_background);
 				break;
 			case DragEvent.ACTION_DROP:
 				CardView view = (CardView) event.getLocalState();
@@ -34,8 +32,13 @@ public class SlideBarCardGalleryDragListener implements OnDragListener{
 				Player p = ControllerView.user;
 				p.addCard(c);
 		        parent.removeView(view);
+		        Gallery g = (Gallery)v;
+		        SliderbarCardGallery l = (SliderbarCardGallery)g.getAdapter();
+		        l.notifyDataSetChanged();
+		        	g.setSelection(ControllerView.user.getNumberOfCards()-1);
 				break;
 			case DragEvent.ACTION_DRAG_ENDED:
+				v.setBackgroundResource(R.drawable.gallery_background);
 				break;
 			default:
 				break;
