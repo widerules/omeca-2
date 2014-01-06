@@ -46,8 +46,7 @@ public class GameActivity extends Activity implements Observer {
 	OmecaApplication app;
 	private static Activity instance;
 	
-	public static Activity getActivity(){
-		
+	public static Activity getActivity(){		
 		return instance;
 	}
 
