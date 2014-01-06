@@ -6,6 +6,5 @@
 	<classpathentry excluding="com/ensibs/omeca/MainActivity3.java" kind="src" path="src"/>
 	<classpathentry kind="src" path="gen"/>
 	<classpathentry kind="lib" path="libs/gama_carousel_v1.0.jar"/>
-	<classpathentry kind="lib" path="C:/Users/lindsay/Downloads/carousel-api-v1.jar"/>
 	<classpathentry kind="output" path="bin/classes"/>
 </classpath>
