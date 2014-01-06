@@ -29,6 +29,11 @@ public class ControllerView {
 			user.addCard(new Card(i, "ofspades"));
 		}
 		board.addPlayer(0, user);
+		user.addCard(new Card(10, "ofhearts"));
+		user.addCard(new Card(5, "ofhearts"));
+		user.addCard(new Card(2, "ofhearts"));
+		user.addCard(new Card(1, "ofhearts"));
+		user.addCard(new Card(3, "ofhearts"));
 	}
 
 	public void dealCard(int nbToDeal){
