@@ -2,16 +2,20 @@ package com.ensibs.omeca.view;
 
 import android.content.Context;
 import android.util.AttributeSet;
+import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.DragEvent;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 
 import com.ensibs.omeca.ControllerView;
+import com.ensibs.omeca.GameActivity;
 import com.ensibs.omeca.R;
 import com.ensibs.omeca.model.entities.Board;
 import com.ensibs.omeca.model.entities.Player;
+import com.ensibs.omeca.view.CardView.CardTouchListener;
 
 public class BoardView extends RelativeLayout{
 	private Board board;
@@ -134,8 +138,16 @@ public class BoardView extends RelativeLayout{
 				case DragEvent.ACTION_DROP:
 					View view = (View) event.getLocalState();
 					ViewGroup parent = (ViewGroup)(view.getParent());
-			        parent.removeView(view);
+			        parent.removeViewInLayout(view);
 					addView(view);
+					if(parent instanceof HandView){
+						DisplayMetrics metrics = GameActivity.getActivity().getApplicationContext().getResources().getDisplayMetrics();
+						int height = 2+metrics.heightPixels/CardView.SIZE;
+						int width = (int) (2+(height/CardView.RATIO));
+						view.setLayoutParams(new RelativeLayout.LayoutParams(width, height));
+						CardView card = (CardView) view;
+						card.setOnTouchListener(card.new CardTouchListener());
+					}
 					MarginLayoutParams marginParams = new MarginLayoutParams(view.getLayoutParams());
 					int left = (int)(event.getX() - (view.getWidth()/2));
 					int top = (int)(event.getY() - (view.getHeight()/2));
