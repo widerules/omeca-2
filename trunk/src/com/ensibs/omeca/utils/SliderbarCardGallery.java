@@ -24,27 +24,19 @@ public class SliderbarCardGallery extends BaseAdapter {
     private Context mContext;
 
     public SliderbarCardGallery(Context c) {
-    	
     	this.mContext = c;
-    
     }
 
     public int getCount() {
-    	
-        return ControllerView.user.getCards().size();
-        
+        return ControllerView.user.getCards().size();        
     }
 
     public Object getItem(int position) {
-    	
         return position;
-    
     }
 
     public long getItemId(int position) {
-    	
-        return position;
-        
+        return position;    
     }
     
 

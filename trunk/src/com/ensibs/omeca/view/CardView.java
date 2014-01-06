@@ -5,6 +5,8 @@ import android.content.Context;
 import android.util.DisplayMetrics;
 import android.view.MotionEvent;
 import android.view.View;
+import android.view.View.DragShadowBuilder;
+import android.view.View.OnTouchListener;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 
@@ -31,6 +33,44 @@ public class CardView extends ImageView{
 		setLayoutParams(new RelativeLayout.LayoutParams(width, height));
 		setOnTouchListener(new CardTouchListener());
 				
+	}
+	public void onHand(boolean hand){ 
+		 if (hand = true)
+			 this.setOnTouchListener(new CardTouchListenerHand());
+		 else 
+			 this.setOnTouchListener(new CardTouchListener());
+	}
+	private class CardTouchListenerHand implements OnTouchListener{
+		private float y;
+		private final float SCROLL_THRESHOLD = 30 ;
+		private boolean isOnClick;
+		
+		@Override
+		public boolean onTouch(View view, MotionEvent mE) {
+			switch (mE.getAction()){
+				case MotionEvent.ACTION_DOWN:
+					y = mE.getY();
+					isOnClick = true;
+					break;
+				case MotionEvent.ACTION_MOVE:
+					if(isOnClick && ( y - mE.getY()) > SCROLL_THRESHOLD){
+						view.setVisibility(View.INVISIBLE);
+						ClipData data = ClipData.newPlainText("", "");
+				        DragShadowBuilder shadowBuilder = new View.DragShadowBuilder(view);
+				        view.startDrag(data, shadowBuilder, view, 0);
+				        isOnClick = false;
+					}
+					break;
+				case MotionEvent.ACTION_UP:
+					if(!isOnClick){
+						view.setVisibility(View.VISIBLE);
+					}
+					break;
+				default:
+					break;
+			}	
+			return true;
+		}
 	}
 	
 	public void turnCard(){

@@ -31,8 +31,7 @@ public class HandView extends Gallery{
 		init();
 		liste = new ArrayList<CardView>();
 	}
-	private void init()
-    {        
+	private void init(){        
         // configurations for the carousel.
         this.setClickable(false);
         this.setSpacing(-30);
@@ -40,19 +39,22 @@ public class HandView extends Gallery{
         // set images for the carousel.
         adapter = new ImageAdapter(c);
         this.setAdapter(adapter);
-               
+        this.setSelection(ControllerView.user.getNumberOfCards()/2);          
+        this.setUnselectedAlpha((float) 1);
     }
+	
 
+	@Override
+	public boolean onScroll(MotionEvent e1, MotionEvent e2, float distanceX,
+			float distanceY) {
+		return super.onScroll(e1, e2, 0, 0);
+	}
 	public HandView(Context context, AttributeSet attrs) {
 		super(context, attrs);
 		c= context;
 		init();
 		liste = new ArrayList<CardView>();
 	}
-	/*public void addCardToHand(CardView cv){
-		liste.add(cv);
-		this.addView(cv);
-	}*/
 	
 	   public class ImageAdapter extends BaseAdapter {
 	    	private Context mContext;
@@ -87,18 +89,21 @@ public class HandView extends Gallery{
 					view.setLayoutParams(new Carousel.LayoutParams(width, height));
 				}				
 				return view;
-			}*/
+			} */
 			public View getView(int position, View convertView, ViewGroup parent) {
 		    	if(parent.getHeight() == 0)
 		    		notifyDataSetChanged();
 		    	CardView cv = (CardView)convertView;
 		    	if(cv == null){
+		    		DisplayMetrics metrics = mContext.getApplicationContext().getResources().getDisplayMetrics();
 		    		cv = new CardView(mContext, ControllerView.user.getCards().get(position));
 		    		int height = (int)(parent.getHeight()*0.9);
-		    		cv.setLayoutParams(new Gallery.LayoutParams((int)(height/CardView.RATIO), height));
+		    		int width = (int) (metrics.widthPixels/(this.getCount()*0.8));
+		    		cv.setLayoutParams(new Gallery.LayoutParams(width, height));
 		    		cv.setOnTouchListener(null);
 		    		if(!cv.getCard().isFaceUp())
 		    			cv.turnCard();
+		    		cv.onHand(true);
 		    		return cv; 
 		    	}
 		    	return cv;
