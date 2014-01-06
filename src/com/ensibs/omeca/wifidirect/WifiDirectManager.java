@@ -49,7 +49,7 @@ public class WifiDirectManager extends Observable implements Observer {
 	public WifiDirectManager(Context ctx){
 		//set context of the application for get system service
 		applicationContext = ctx;
-		//init different listener
+		/*//init different listener
 		channelListener = new WifiDirectChannelListener(this);
 		actionListener = new WifiDirectManagerActionListener();
 		statusReceiver = new WifiDirectManagerStatusReceiver();
@@ -57,13 +57,13 @@ public class WifiDirectManager extends Observable implements Observer {
 		connectionListener = new WifiDirectConnectionListener(this);
 		deviceChanged = new WifiDirectDeviceChanged();
 		//create intent filter
-		peerfilter = new IntentFilter(WifiP2pManager.WIFI_P2P_PEERS_CHANGED_ACTION);
-	    connectionfilter = new IntentFilter(WifiP2pManager.WIFI_P2P_CONNECTION_CHANGED_ACTION);
-	    p2pEnabled = new IntentFilter(WifiP2pManager.WIFI_P2P_STATE_CHANGED_ACTION);
-	    ownDeviceFilter = new IntentFilter(WifiP2pManager.WIFI_P2P_THIS_DEVICE_CHANGED_ACTION);
+		peerfilter = new IntentFilter(WifiP2pManager.WIFI_P2P_PEERS_CHANGED_ACTION);*/
+	    //connectionfilter = new IntentFilter(WifiP2pManager.WIFI_P2P_CONNECTION_CHANGED_ACTION);
+	    //p2pEnabled = new IntentFilter(WifiP2pManager.WIFI_P2P_STATE_CHANGED_ACTION);
+	    //ownDeviceFilter = new IntentFilter(WifiP2pManager.WIFI_P2P_THIS_DEVICE_CHANGED_ACTION);
 		//enable wifi on the device
-		this.enableWifi();
-		this.initializeWiFiDirect();
+		//this.enableWifi();
+		//this.initializeWiFiDirect();
 	}
 	
 	public void initializeWiFiDirect() {

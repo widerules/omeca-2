@@ -53,15 +53,10 @@ public class MainActivity extends Activity implements Observer{
 	}
 	
 	
-	@Override
-	public boolean onKeyDown(int keyCode, KeyEvent event) {
-		if (keyCode == KeyEvent.KEYCODE_BACK
-				|| keyCode == KeyEvent.KEYCODE_MENU
-				|| keyCode == KeyEvent.KEYCODE_HOME) {
-			OmecaPopupMenu.show(this);
-		}
-		
-		return super.onKeyDown(keyCode, event);
+	//@Override
+	public void onBackPressed() {
+		OmecaPopupMenu.show(this);
+
 	}
 
 	
@@ -133,8 +128,9 @@ public class MainActivity extends Activity implements Observer{
 	 * @param view
 	 */
 	public void exit(View view) {
+		OmecaPopupMenu.dismiss();
 		System.out.println("Exit !!!");
-		wifiDirectManager.removeWifiDirect();
+		//wifiDirectManager.removeWifiDirect();
 		this.finish();
 	}
 
