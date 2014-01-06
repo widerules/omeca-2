@@ -9,10 +9,12 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.DragEvent;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.view.View.OnDragListener;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Gallery;
@@ -30,6 +32,7 @@ import com.ensibs.omeca.utils.SlidingUpPanelLayout;
 import com.ensibs.omeca.utils.SlidingUpPanelLayout.PanelSlideListener;
 import com.ensibs.omeca.view.BoardView;
 import com.ensibs.omeca.view.PlayerView;
+import com.ensibs.omeca.view.SlideBarCardGalleryDragListener;
 import com.ensibs.omeca.view.SlidebarDragListener;
 import com.ensibs.omeca.wifidirect.WifiDirectManager;
 import com.ensibs.omeca.wifidirect.event.ConnectionWifiDirectEvent;
@@ -88,6 +91,7 @@ public class GameActivity extends Activity implements Observer {
 		Gallery g = (Gallery) findViewById(R.id.playerview_slider_board_cardgallery);
 		g.setAdapter(new SliderbarCardGallery(this));
 		g.setSelection(ControllerView.user.getNumberOfCards()/2);
+		g.setOnDragListener(new SlideBarCardGalleryDragListener());
 		gameView.findViewById(R.id.view_slidebar).setOnDragListener(new SlidebarDragListener());
 		slide.setDragView(slide.findViewById(R.id.playerview_slidebar_board));
 		slide.setPanelSlideListener(new PanelSlideListener() {
@@ -138,6 +142,7 @@ public class GameActivity extends Activity implements Observer {
 	            	g.setLayoutParams(params);
 	        		g.setAdapter(new SliderbarCardGallery(panel.getContext()));
 	        		g.setSelection(ControllerView.user.getNumberOfCards()/2);
+	        		g.setOnDragListener(new SlideBarCardGalleryDragListener());
 	        		
 	            	isExpanded = false;
             	}
