@@ -5,6 +5,5 @@
 	<classpathentry exported="true" kind="con" path="com.android.ide.eclipse.adt.DEPENDENCIES"/>
 	<classpathentry excluding="com/ensibs/omeca/MainActivity3.java" kind="src" path="src"/>
 	<classpathentry kind="src" path="gen"/>
-	<classpathentry kind="lib" path="libs/gama_carousel_v1.0.jar"/>
 	<classpathentry kind="output" path="bin/classes"/>
 </classpath>
