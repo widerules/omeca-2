@@ -7,11 +7,5 @@
     android:orientation="vertical"
 	android:background="#cccccc">
       
-    <com.ensibs.omeca.view.HandView
-        android:id="@+id/handTable"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-     >
-     </com.ensibs.omeca.view.HandView>
 
 </LinearLayout>
