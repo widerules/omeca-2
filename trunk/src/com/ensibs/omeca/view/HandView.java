@@ -15,7 +15,6 @@ import android.widget.AdapterView.OnItemClickListener;
 import android.widget.BaseAdapter;
 import android.widget.Gallery;
 
-import com.digitalaria.gama.carousel.Carousel;
 import com.ensibs.omeca.ControllerView;
 
 

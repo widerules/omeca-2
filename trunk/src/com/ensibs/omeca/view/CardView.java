@@ -106,7 +106,7 @@ public class CardView extends ImageView{
 		);
 	}
 	
-	private class CardTouchListener implements OnTouchListener{
+	class CardTouchListener implements OnTouchListener{
 		private float x;
 		private float y;
 		private final float SCROLL_THRESHOLD = 10;
