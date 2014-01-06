@@ -2,16 +2,12 @@ package com.ensibs.omeca.view;
 
 import java.util.ArrayList;
 
-import android.content.ClipData;
 import android.content.Context;
 import android.util.AttributeSet;
 import android.util.DisplayMetrics;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.View.DragShadowBuilder;
-import android.view.View.OnTouchListener;
-import android.widget.AdapterView.OnItemClickListener;
 import android.widget.BaseAdapter;
 import android.widget.Gallery;
 
@@ -21,7 +17,7 @@ import com.ensibs.omeca.ControllerView;
 public class HandView extends Gallery{
 	 
 	ArrayList<CardView> liste;
-	private ImageAdapter adapter;
+	private HandCardsAdapter adapter;
 	Context c;
 		
 	public HandView(Context context) {
@@ -40,7 +36,7 @@ public class HandView extends Gallery{
         this.setSpacing(1);
    
         // set images for the carousel.
-        adapter = new ImageAdapter(c);
+        adapter = new HandCardsAdapter(c);
         this.setAdapter(adapter);
         this.setUnselectedAlpha((float) 1);
         this.setSelection(ControllerView.user.getNumberOfCards()/2);
@@ -69,9 +65,9 @@ public class HandView extends Gallery{
 		liste = new ArrayList<CardView>();
 	}
 	
-	   public class ImageAdapter extends BaseAdapter {
+	   public class HandCardsAdapter extends BaseAdapter {
 	    	private Context mContext;
-	    	public ImageAdapter(Context c){
+	    	public HandCardsAdapter(Context c){
 	    		mContext = c;
 	    	}
 	    	@Override
@@ -110,7 +106,7 @@ public class HandView extends Gallery{
 		    	if(cv == null){
 		    		DisplayMetrics metrics = mContext.getApplicationContext().getResources().getDisplayMetrics();
 		    		cv = new CardView(mContext, ControllerView.user.getCards().get(position));
-		    		int width = (int)(metrics.widthPixels/(this.getCount()*1.1));
+		    		int width = (int)(metrics.widthPixels/this.getCount());
 		    		int height = (int)(width*CardView.RATIO);
 		    		cv.setLayoutParams(new Gallery.LayoutParams( width, height));
 		    		cv.setOnTouchListener(null);
