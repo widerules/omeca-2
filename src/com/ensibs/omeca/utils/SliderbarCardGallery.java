@@ -1,15 +1,19 @@
 package com.ensibs.omeca.utils;
 
 import android.content.Context;
+import android.graphics.Color;
 import android.util.Log;
+import android.view.DragEvent;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.View.OnDragListener;
 import android.widget.BaseAdapter;
 import android.widget.Gallery;
 
 import com.ensibs.omeca.ControllerView;
 import com.ensibs.omeca.GameActivity;
 import com.ensibs.omeca.R;
+import com.ensibs.omeca.model.entities.Card;
 import com.ensibs.omeca.view.CardView;
 
 /**
