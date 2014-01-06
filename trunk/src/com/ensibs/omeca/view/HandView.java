@@ -31,17 +31,22 @@ public class HandView extends Gallery{
 		init();
 		liste = new ArrayList<CardView>();
 	}
+	
+	public void updateView(){
+		this.init();
+	}
 	private void init(){        
         // configurations for the carousel.
         this.setClickable(false);
-        this.setSpacing(-30);
+        this.setSpacing(1);
    
         // set images for the carousel.
         adapter = new ImageAdapter(c);
         this.setAdapter(adapter);
-        this.setSelection(ControllerView.user.getNumberOfCards()/2);          
         this.setUnselectedAlpha((float) 1);
-    }
+        this.setSelection(ControllerView.user.getNumberOfCards()/2);
+        this.setOnDragListener(new HandViewCardGalleryDragListener());
+	}
 	
 
 	@Override
@@ -97,9 +102,9 @@ public class HandView extends Gallery{
 		    	if(cv == null){
 		    		DisplayMetrics metrics = mContext.getApplicationContext().getResources().getDisplayMetrics();
 		    		cv = new CardView(mContext, ControllerView.user.getCards().get(position));
-		    		int height = (int)(parent.getHeight()*0.9);
+		    		int height = (int)(metrics.heightPixels /(this.getCount() * 0.5));
 		    		int width = (int) (metrics.widthPixels/(this.getCount()*0.8));
-		    		cv.setLayoutParams(new Gallery.LayoutParams(width, height));
+		    		cv.setLayoutParams(new Gallery.LayoutParams( width, height));
 		    		cv.setOnTouchListener(null);
 		    		if(!cv.getCard().isFaceUp())
 		    			cv.turnCard();
