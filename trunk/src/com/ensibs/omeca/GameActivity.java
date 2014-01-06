@@ -63,10 +63,10 @@ public class GameActivity extends Activity implements Observer {
 		controler = app.getControler();
 
 		// Creates the WifiDirectManager
-		wifiDirectManager = app.getWifiDirectManager();
+		/*wifiDirectManager = app.getWifiDirectManager();
 		wifiDirectManager.addObserver(this);
 		wifiDirectManager.setRole(true);
-		wifiDirectManager.discoverPeers();
+		wifiDirectManager.discoverPeers()*/;
 
 		// Hides titlebar and actionbar
 		requestWindowFeature(Window.FEATURE_NO_TITLE);
@@ -167,14 +167,8 @@ public class GameActivity extends Activity implements Observer {
 
 
 	@Override
-	public boolean onKeyDown(int keyCode, KeyEvent event) {
-		if (keyCode == KeyEvent.KEYCODE_BACK
-				|| keyCode == KeyEvent.KEYCODE_MENU
-				|| keyCode == KeyEvent.KEYCODE_HOME) {
+	public void onBackPressed() {
 			OmecaPopupMenu.show(this);
-		}
-
-		return super.onKeyDown(keyCode, event);
 	}
 
 
@@ -233,6 +227,8 @@ public class GameActivity extends Activity implements Observer {
 	 */
 	public void disconnect(View view) {
 		System.out.println("Disconnecting !!!");
+		OmecaPopupMenu.dismiss();
+
 		this.finish();
 	}
 
@@ -243,8 +239,10 @@ public class GameActivity extends Activity implements Observer {
 	 * @param view
 	 */
 	public void exit(View view) {
+		OmecaPopupMenu.dismiss();
+
 		System.out.println("Exit !!!");
-		wifiDirectManager.removeWifiDirect();
+		//wifiDirectManager.removeWifiDirect();
 		this.finish();
 	}
 
