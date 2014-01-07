@@ -92,7 +92,7 @@ public class PlayerView extends RelativeLayout{
 					ViewGroup parent = (ViewGroup)(view.getParent());
 					Card c = view.getCard();
 					player.addCard(c);
-			        parent.removeView(view);
+			        parent.removeViewInLayout(view);
 					break;
 				case DragEvent.ACTION_DRAG_ENDED:
 					setBackgroundColor(Color.TRANSPARENT);

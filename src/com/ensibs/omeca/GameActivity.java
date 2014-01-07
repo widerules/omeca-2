@@ -133,7 +133,6 @@ public class GameActivity extends Activity implements Observer {
 	        		g.setAdapter(new SliderbarCardGallery(panel.getContext()));
 	        		g.setSelection(ControllerView.user.getNumberOfCards()/2);
 	        		g.setOnDragListener(new SlideBarCardGalleryDragListener());
-	        		
 	            	isExpanded = false;
             	}
             }
