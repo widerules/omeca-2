@@ -15,6 +15,7 @@ import com.ensibs.omeca.GameActivity;
 import com.ensibs.omeca.R;
 import com.ensibs.omeca.model.entities.Board;
 import com.ensibs.omeca.model.entities.Player;
+import com.ensibs.omeca.utils.SliderbarCardGallery;
 import com.ensibs.omeca.view.HandView.HandCardsAdapter;
 
 public class BoardView extends RelativeLayout{
@@ -152,6 +153,9 @@ public class BoardView extends RelativeLayout{
 						view.setLayoutParams(new RelativeLayout.LayoutParams(width, height));
 						CardView card = (CardView) view;
 						card.setOnTouchListener(card.new CardTouchListener());
+						Gallery g2 = ((Gallery)((View)v.getParent()).findViewById(R.id.playerview_slider_board_cardgallery));
+						SliderbarCardGallery a2 = (SliderbarCardGallery) g2.getAdapter();
+						a2.notifyDataSetChanged();
 					}
 					MarginLayoutParams marginParams = new MarginLayoutParams(view.getLayoutParams());
 					int left = (int)(event.getX() - (view.getWidth()/2));

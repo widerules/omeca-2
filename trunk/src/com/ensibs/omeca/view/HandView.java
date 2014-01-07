@@ -108,7 +108,7 @@ public class HandView extends Gallery{
 		    		cv = new CardView(mContext, ControllerView.user.getCards().get(position));
 		    		int width = (int)(metrics.widthPixels/this.getCount());
 		    		int height = (int)(width*CardView.RATIO);
-		    		cv.setLayoutParams(new Gallery.LayoutParams( width, height));
+		    		cv.setLayoutParams(new Gallery.LayoutParams(width, height));
 		    		cv.setOnTouchListener(null);
 		    		if(!cv.getCard().isFaceUp())
 		    			cv.turnCard();
