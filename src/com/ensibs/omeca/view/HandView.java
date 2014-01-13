@@ -23,7 +23,7 @@ import com.ensibs.omeca.model.entities.Card;
 public class HandView extends Gallery{
 	 
 	ArrayList<Card> liste;
-	private ImageAdapter adapter;
+	private HandCardsAdapter adapter;
 	Context c;
 		
 	public HandView(Context context) {
@@ -72,7 +72,7 @@ public class HandView extends Gallery{
         this.setSpacing(1);
    
         // set images for the carousel.
-        adapter = new ImageAdapter(c);
+        adapter = new HandCardsAdapter(c);
         this.setAdapter(adapter);
         this.setUnselectedAlpha((float) 1);
         this.setSelection(ControllerView.user.getNumberOfCards()/2);
@@ -100,9 +100,9 @@ public class HandView extends Gallery{
 		liste = new ArrayList<Card>();
 	}
 	
-	   public class ImageAdapter extends BaseAdapter {
+	   public class HandCardsAdapter extends BaseAdapter {
 	    	private Context mContext;
-	    	public ImageAdapter(Context c){
+	    	public HandCardsAdapter(Context c){
 	    		mContext = c;
 	    	}
 	    	@Override
