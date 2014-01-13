@@ -8,6 +8,7 @@
 	android:background="#157c15">
 	
     <com.ensibs.omeca.view.HandView 
+        android:id="@+id/view_hand_slidebar"
         android:layout_width="match_parent"
         android:layout_height="match_parent"/>
       

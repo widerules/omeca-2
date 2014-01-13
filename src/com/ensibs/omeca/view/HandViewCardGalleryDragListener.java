@@ -1,22 +1,13 @@
 package com.ensibs.omeca.view;
 
-import com.ensibs.omeca.ControllerView;
-import com.ensibs.omeca.GameActivity;
-import com.ensibs.omeca.R;
-import com.ensibs.omeca.model.entities.Card;
-import com.ensibs.omeca.model.entities.Player;
-import com.ensibs.omeca.utils.SlidingUpPanelLayout;
-
-import android.graphics.Color;
-import android.util.DisplayMetrics;
-import android.util.Log;
 import android.view.DragEvent;
 import android.view.View;
-import android.view.ViewGroup;
 import android.view.View.OnDragListener;
-import android.widget.LinearLayout;
-import android.widget.RelativeLayout;
 import android.widget.Toast;
+
+import com.ensibs.omeca.GameActivity;
+import com.ensibs.omeca.R;
+import com.ensibs.omeca.utils.SlidingUpPanelLayout;
 
 public class HandViewCardGalleryDragListener implements OnDragListener{
 	boolean exited = false;
@@ -24,8 +15,6 @@ public class HandViewCardGalleryDragListener implements OnDragListener{
     public boolean onDrag(View v, DragEvent event) {
 		switch (event.getAction()) {
 			case DragEvent.ACTION_DRAG_ENTERED:
-				Toast.makeText(GameActivity.getActivity(), "Poueeeeeeet",
-						   Toast.LENGTH_SHORT).show();
 				exited = false;
 				break;
 			case DragEvent.ACTION_DRAG_EXITED:
@@ -33,8 +22,6 @@ public class HandViewCardGalleryDragListener implements OnDragListener{
 				View slidebar = GameActivity.getActivity().findViewById(R.id.playerview_slidebar_hand);
 				if(slide.isExpanded() && event.getY()< slidebar.getHeight() ){
 					slide.collapsePane();
-					Toast.makeText(GameActivity.getActivity(), "Patamoueeeeeette",
-						   Toast.LENGTH_SHORT).show();
 					exited=true;
 				}
 				break;
