@@ -45,7 +45,7 @@ public class BoardView extends RelativeLayout{
 		
 	}
 	
-	public void builtBoard(Board board){
+	public void buildBoard(Board board){
 		Log.w("context",context.toString());
 		DrawPileView drawPileView = new DrawPileView(context, board.getDrawPile());
 		DiscardPileView discardPileView = new DiscardPileView(context, board.getDiscardPile());
@@ -65,7 +65,7 @@ public class BoardView extends RelativeLayout{
 		params.addRule(CENTER_IN_PARENT, RelativeLayout.TRUE);
 		params.addRule(ALIGN_PARENT_LEFT, RelativeLayout.TRUE);
 		players_left.addView(player, params);		
-		p = new Player("Jean", 5);
+		p = new Player("Jean", 5, 1);
 		player.setPlayer(p, false);
 		
 		
@@ -75,7 +75,7 @@ public class BoardView extends RelativeLayout{
 		params.addRule(ALIGN_PARENT_TOP, RelativeLayout.TRUE);
 		params.addRule(ALIGN_PARENT_LEFT, RelativeLayout.TRUE);
 		players_left.addView(player, params);		
-		p = new Player("Emile", 7);
+		p = new Player("Emile", 7, 2);
 		player.setPlayer(p, false);
 		
 		//Player 3
@@ -84,7 +84,7 @@ public class BoardView extends RelativeLayout{
 		params.addRule(CENTER_IN_PARENT, RelativeLayout.TRUE);
 		params.addRule(ALIGN_PARENT_TOP, RelativeLayout.TRUE);
 		players_left.addView(player, params);	
-		p = new Player("Etienne", 2);
+		p = new Player("Etienne", 2, 3);
 		player.setPlayer(p, false);
 		
 		//Player 4
@@ -93,7 +93,7 @@ public class BoardView extends RelativeLayout{
 		params.addRule(ALIGN_PARENT_TOP, RelativeLayout.TRUE);
 		params.addRule(CENTER_IN_PARENT, RelativeLayout.TRUE);
 		addView(player, params);	
-		p = new Player("Lucienne", 14);
+		p = new Player("Lucienne", 14, 4);
 		player.setPlayer(p, false);
 		
 		//Player 5
@@ -102,7 +102,7 @@ public class BoardView extends RelativeLayout{
 		params.addRule(CENTER_IN_PARENT, RelativeLayout.TRUE);
 		params.addRule(ALIGN_PARENT_TOP, RelativeLayout.TRUE);
 		players_right.addView(player, params);	
-		p = new Player("Jacquie", 10);
+		p = new Player("Jacquie", 10, 5);
 		player.setPlayer(p, false);
 		
 		//Player 6
@@ -111,7 +111,7 @@ public class BoardView extends RelativeLayout{
 		params.addRule(ALIGN_PARENT_RIGHT, RelativeLayout.TRUE);
 		params.addRule(ALIGN_PARENT_TOP, RelativeLayout.TRUE);
 		players_right.addView(player, params);	
-		p = new Player("Michel", 12);
+		p = new Player("Michel", 12, 6);
 		player.setPlayer(p, false);
 				
 		//Player 7
@@ -120,7 +120,7 @@ public class BoardView extends RelativeLayout{
 		params.addRule(CENTER_IN_PARENT, RelativeLayout.TRUE);
 		params.addRule(ALIGN_PARENT_RIGHT, RelativeLayout.TRUE);
 		players_right.addView(player, params);	
-		p = new Player("Louise", 13);
+		p = new Player("Louise", 13, 7);
 		player.setPlayer(p, false);
 	}
 	
