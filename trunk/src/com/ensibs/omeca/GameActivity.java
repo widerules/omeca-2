@@ -17,7 +17,6 @@ import android.widget.LinearLayout;
 import android.widget.Toast;
 
 import com.ensibs.omeca.model.entities.Board;
-import com.ensibs.omeca.model.entities.Card;
 import com.ensibs.omeca.utils.OmecaPopupMenu;
 import com.ensibs.omeca.utils.SliderbarCardGallery;
 import com.ensibs.omeca.utils.SlidingUpPanelLayout;
@@ -241,11 +240,6 @@ public class GameActivity extends Activity implements Observer {
 		System.out.println("Exit !!!");
 		// wifiDirectManager.removeWifiDirect();
 		this.finish();
-	}
-
-	@Override
-	protected void onSaveInstanceState(Bundle outState) {
-		super.onSaveInstanceState(outState);
 	}
 
 }
