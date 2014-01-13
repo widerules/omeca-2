@@ -3,8 +3,6 @@ package com.ensibs.omeca.view;
 import android.view.DragEvent;
 import android.view.View;
 import android.view.View.OnDragListener;
-import android.widget.Toast;
-
 import com.ensibs.omeca.GameActivity;
 import com.ensibs.omeca.R;
 import com.ensibs.omeca.utils.SlidingUpPanelLayout;
