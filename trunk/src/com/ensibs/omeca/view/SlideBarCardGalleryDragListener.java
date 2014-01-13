@@ -36,10 +36,11 @@ public class SlideBarCardGalleryDragListener implements OnDragListener{
 		        Gallery g = (Gallery)v;
 		        SliderbarCardGallery l = (SliderbarCardGallery)g.getAdapter();
 		        l.notifyDataSetChanged();
-		        	g.setSelection(ControllerView.user.getNumberOfCards()-1);
+		        g.setSelection(ControllerView.user.getNumberOfCards()-1);
 		        Gallery g2 = ((Gallery)((View)v.getParent().getParent()).findViewById(R.id.view_hand_slidebar));
 		        HandCardsAdapter a2 = (HandCardsAdapter) g2.getAdapter();
 				a2.notifyDataSetChanged();
+				g2.setSelection(ControllerView.user.getNumberOfCards()/2);
 				break;
 			case DragEvent.ACTION_DRAG_ENDED:
 				v.setBackgroundResource(R.drawable.gallery_background);
