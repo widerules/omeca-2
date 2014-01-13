@@ -2,20 +2,15 @@ package com.ensibs.omeca.view;
 
 import java.util.ArrayList;
 
-import android.content.ClipData;
 import android.content.Context;
 import android.util.AttributeSet;
 import android.util.DisplayMetrics;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.View.DragShadowBuilder;
-import android.view.View.OnTouchListener;
-import android.widget.AdapterView.OnItemClickListener;
 import android.widget.BaseAdapter;
 import android.widget.Gallery;
 
-import com.digitalaria.gama.carousel.Carousel;
 import com.ensibs.omeca.ControllerView;
 import com.ensibs.omeca.model.entities.Card;
 

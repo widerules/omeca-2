@@ -3,7 +3,6 @@ package com.ensibs.omeca.view;
 import android.content.Context;
 import android.util.AttributeSet;
 import android.util.DisplayMetrics;
-import android.util.Log;
 import android.view.DragEvent;
 import android.view.View;
 import android.view.ViewGroup;
@@ -46,7 +45,6 @@ public class BoardView extends RelativeLayout{
 	}
 	
 	public void buildBoard(Board board){
-		Log.w("context",context.toString());
 		DrawPileView drawPileView = new DrawPileView(context, board.getDrawPile());
 		DiscardPileView discardPileView = new DiscardPileView(context, board.getDiscardPile());
 		addView(drawPileView);
