@@ -36,7 +36,9 @@
 
 		<activity
             android:name="com.ensibs.omeca.GameActivity"
-            android:screenOrientation="landscape">
+            android:screenOrientation="landscape" 
+    		android:configChanges="orientation|screenSize"
+            >
         </activity>
 
 		<activity
