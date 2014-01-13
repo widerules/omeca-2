@@ -2,29 +2,65 @@ package com.ensibs.omeca.view;
 
 import java.util.ArrayList;
 
+import android.content.ClipData;
 import android.content.Context;
 import android.util.AttributeSet;
 import android.util.DisplayMetrics;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.View.DragShadowBuilder;
+import android.view.View.OnTouchListener;
+import android.widget.AdapterView.OnItemClickListener;
 import android.widget.BaseAdapter;
 import android.widget.Gallery;
 
+import com.digitalaria.gama.carousel.Carousel;
 import com.ensibs.omeca.ControllerView;
+import com.ensibs.omeca.model.entities.Card;
 
 
 public class HandView extends Gallery{
 	 
-	ArrayList<CardView> liste;
-	private HandCardsAdapter adapter;
+	ArrayList<Card> liste;
+	private ImageAdapter adapter;
 	Context c;
 		
 	public HandView(Context context) {
 		super(context);	
 		c= context;
 		init();
-		liste = new ArrayList<CardView>();
+		liste = new ArrayList<Card>();
+		this.orderCard();
+		init();
+	}
+	public void orderCard(){
+		liste = ControllerView.user.getCards();
+		ArrayList<Card> lOfdiamonds = new ArrayList<Card>() ;
+		ArrayList<Card> lOfspades = new ArrayList<Card>();
+		ArrayList<Card> lOfhearts = new ArrayList<Card>();
+		ArrayList<Card> lOfclubs = new ArrayList<Card>();
+		for( int i = 0; ControllerView.user.getCards().size()>i ; i++ ){
+			if(liste.get(i).getColor().equals("ofdiamonds"))
+				lOfdiamonds.add(liste.get(i).getValue(), liste.get(i));
+			else if(liste.get(i).getColor().equals("ofspades"))
+				lOfspades.add(liste.get(i).getValue(), liste.get(i));
+			else if(liste.get(i).getColor().equals("ofhearts"))
+				lOfhearts.add(liste.get(i).getValue(), liste.get(i));
+			else 
+				lOfclubs.add(liste.get(i).getValue(), liste.get(i));
+		}
+		liste.clear();
+		lOfdiamonds.removeAll(null);
+		lOfspades.removeAll(null);
+		lOfhearts.removeAll(null);
+		lOfclubs.removeAll(null);
+		liste.addAll(lOfdiamonds);
+		liste.addAll(lOfclubs);
+		liste.addAll(lOfhearts);
+		liste.addAll(lOfspades);
+		ControllerView.user.setCards(liste);
+		
 	}
 	
 	public void updateView(){
@@ -36,7 +72,7 @@ public class HandView extends Gallery{
         this.setSpacing(1);
    
         // set images for the carousel.
-        adapter = new HandCardsAdapter(c);
+        adapter = new ImageAdapter(c);
         this.setAdapter(adapter);
         this.setUnselectedAlpha((float) 1);
         this.setSelection(ControllerView.user.getNumberOfCards()/2);
@@ -49,7 +85,6 @@ public class HandView extends Gallery{
         	     return true;
         	  }
         	 });
-
 	}
 	
 
@@ -62,12 +97,12 @@ public class HandView extends Gallery{
 		super(context, attrs);
 		c= context;
 		init();
-		liste = new ArrayList<CardView>();
+		liste = new ArrayList<Card>();
 	}
 	
-	   public class HandCardsAdapter extends BaseAdapter {
+	   public class ImageAdapter extends BaseAdapter {
 	    	private Context mContext;
-	    	public HandCardsAdapter(Context c){
+	    	public ImageAdapter(Context c){
 	    		mContext = c;
 	    	}
 	    	@Override
@@ -83,22 +118,6 @@ public class HandView extends Gallery{
 				return position;
 			}
 			
-			@Override
-			/*public View getView(int position, View convertView, ViewGroup parent) {
-				DisplayMetrics metrics = mContext.getApplicationContext().getResources().getDisplayMetrics();
-				int width = (int) (metrics.widthPixels/(this.getCount()*0.85));
-				int height = (int) (width*CardView.RATIO);
-				View view = convertView;
-				if (view == null) {
-					CardView cv = new CardView(mContext , ControllerView.user.getCards().get(position));
-					cv.onHand(true);
-					if(!cv.getCard().isFaceUp())
-						cv.turnCard();
-					view = cv;			
-					view.setLayoutParams(new Carousel.LayoutParams(width, height));
-				}				
-				return view;
-			} */
 			public View getView(int position, View convertView, ViewGroup parent) {
 		    	if(parent.getHeight() == 0)
 		    		notifyDataSetChanged();
@@ -106,9 +125,10 @@ public class HandView extends Gallery{
 		    	if(cv == null){
 		    		DisplayMetrics metrics = mContext.getApplicationContext().getResources().getDisplayMetrics();
 		    		cv = new CardView(mContext, ControllerView.user.getCards().get(position));
-		    		int width = (int)(metrics.widthPixels/this.getCount());
+		    		int width = (int)(metrics.widthPixels/
+		    				(this.getCount()<3 ? 3 : this.getCount() *1.1));
 		    		int height = (int)(width*CardView.RATIO);
-		    		cv.setLayoutParams(new Gallery.LayoutParams(width, height));
+		    		cv.setLayoutParams(new Gallery.LayoutParams( width, height));
 		    		cv.setOnTouchListener(null);
 		    		if(!cv.getCard().isFaceUp())
 		    			cv.turnCard();
