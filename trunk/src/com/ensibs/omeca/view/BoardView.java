@@ -154,8 +154,10 @@ public class BoardView extends RelativeLayout{
 						CardView card = (CardView) view;
 						card.setOnTouchListener(card.new CardTouchListener());
 						Gallery g2 = ((Gallery)((View)v.getParent()).findViewById(R.id.playerview_slider_board_cardgallery));
-						SliderbarCardGallery a2 = (SliderbarCardGallery) g2.getAdapter();
-						a2.notifyDataSetChanged();
+						if(g2 != null){
+							SliderbarCardGallery a2 = (SliderbarCardGallery) g2.getAdapter();
+							a2.notifyDataSetChanged();
+						}
 					}
 					MarginLayoutParams marginParams = new MarginLayoutParams(view.getLayoutParams());
 					int left = (int)(event.getX() - (view.getWidth()/2));

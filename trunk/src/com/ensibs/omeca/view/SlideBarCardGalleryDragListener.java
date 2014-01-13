@@ -11,6 +11,7 @@ import com.ensibs.omeca.R;
 import com.ensibs.omeca.model.entities.Card;
 import com.ensibs.omeca.model.entities.Player;
 import com.ensibs.omeca.utils.SliderbarCardGallery;
+import com.ensibs.omeca.view.HandView.HandCardsAdapter;
 
 public class SlideBarCardGalleryDragListener implements OnDragListener{
 
@@ -36,6 +37,9 @@ public class SlideBarCardGalleryDragListener implements OnDragListener{
 		        SliderbarCardGallery l = (SliderbarCardGallery)g.getAdapter();
 		        l.notifyDataSetChanged();
 		        	g.setSelection(ControllerView.user.getNumberOfCards()-1);
+		        Gallery g2 = ((Gallery)((View)v.getParent().getParent()).findViewById(R.id.view_hand_slidebar));
+		        HandCardsAdapter a2 = (HandCardsAdapter) g2.getAdapter();
+				a2.notifyDataSetChanged();
 				break;
 			case DragEvent.ACTION_DRAG_ENDED:
 				v.setBackgroundResource(R.drawable.gallery_background);
