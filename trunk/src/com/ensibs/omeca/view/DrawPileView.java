@@ -35,7 +35,7 @@ public class DrawPileView extends FrameLayout {
 	}
 	
 	@Override
-	public void removeView(View view) {
+	public void removeViewInLayout(View view) {
 		drawpile.removeLastCard();
 		super.removeView(view);
 		
@@ -54,4 +54,8 @@ public class DrawPileView extends FrameLayout {
 		}
 	}
 
+	public DrawPile getDrawpile() {
+		return drawpile;
+	}
+	
 }

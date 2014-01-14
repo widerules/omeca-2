@@ -1,9 +1,12 @@
 package com.ensibs.omeca.view;
 
+import com.ensibs.omeca.R;
+
 import android.view.DragEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.View.OnDragListener;
+import android.widget.TextView;
 
 public class PileDragListener implements OnDragListener {
 	private ViewGroup pile;
@@ -23,13 +26,34 @@ public class PileDragListener implements OnDragListener {
 		case DragEvent.ACTION_DRAG_ENTERED:
 			break;
 		case DragEvent.ACTION_DRAG_EXITED:
+			
 			break;
 		case DragEvent.ACTION_DROP:
-			owner.removeView(view);
+			owner.removeViewInLayout(view);
 			pile.addView(view);
 			view.setVisibility(View.VISIBLE);
+			if(v instanceof DiscardPileView){
+				DiscardPileView pile = (DiscardPileView)v;
+				TextView text = (TextView)((View)v.getParent()).findViewById(R.id.nbDiscardPileCards);
+				text.setText("x"+(pile.getDiscardPile().getNumberOfCards()));
+			}
+			else if(v instanceof DrawPileView){
+				DrawPileView pile = (DrawPileView)v;
+				TextView text = (TextView)((View)v.getParent()).findViewById(R.id.nbDrawPileCards);
+				text.setText("x"+(pile.getDrawpile().getNumberOfCards()));
+			}
 			break;
 		case DragEvent.ACTION_DRAG_ENDED:
+			if(v instanceof DiscardPileView){
+				DiscardPileView pile = (DiscardPileView)v;
+				TextView text = (TextView)((View)v.getParent()).findViewById(R.id.nbDiscardPileCards);
+				text.setText("x"+(pile.getDiscardPile().getNumberOfCards()));
+			}
+			else if(v instanceof DrawPileView){
+				DrawPileView pile = (DrawPileView)v;
+				TextView text = (TextView)((View)v.getParent()).findViewById(R.id.nbDrawPileCards);
+				text.setText("x"+(pile.getDrawpile().getNumberOfCards()));
+			}
 			break;
 		default:
 			break;
