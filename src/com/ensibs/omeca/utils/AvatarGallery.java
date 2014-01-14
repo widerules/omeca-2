@@ -50,7 +50,7 @@ public class AvatarGallery extends BaseAdapter {
     	    		this.mContext.getResources().getDimensionPixelSize(R.dimen.avatar_width),
     	    		this.mContext.getResources().getDimensionPixelSize(R.dimen.avatar_height))
     	        );
-    		//imageView.setBackgroundResource(R.drawable.avatar);
+    		imageView.setBackgroundResource(R.drawable.avatar);
     	}
 
         
