@@ -1,0 +1,14 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content">
+    
+    <Button
+        android:id="@+id/popupMenuDisconnect"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:onClick="disconnect"
+        android:text="@string/button_disconnect"
+        android:background="@android:color/white" />
+    
+</LinearLayout>
