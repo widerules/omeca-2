@@ -5,6 +5,7 @@ import android.util.DisplayMetrics;
 import android.view.View;
 import android.widget.FrameLayout;
 import android.widget.RelativeLayout;
+import android.widget.Toast;
 
 import com.ensibs.omeca.R;
 import com.ensibs.omeca.model.entities.Card;
@@ -32,7 +33,7 @@ public class DiscardPileView extends FrameLayout{
 	}
 	
 	@Override
-	public void removeView(View view) {
+	public void removeViewInLayout(View view) {
 		discardPile.removeLastCard();
 		super.removeView(view);
 		
@@ -49,5 +50,9 @@ public class DiscardPileView extends FrameLayout{
 		for (Card c : discardPile.getCards()) {
 			super.addView(new CardView(context, c));
 		}
-	}	
+	}
+
+	public DiscardPile getDiscardPile() {
+		return discardPile;
+	}
 }
