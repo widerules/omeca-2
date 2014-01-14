@@ -8,6 +8,7 @@ import android.app.AlertDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
+import android.view.Menu;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.Window;
@@ -146,10 +147,17 @@ public class GameActivity extends Activity implements Observer {
 
 			@Override
 			public void onPanelAnchored(View panel) {
+			
 			}
 		});
 	}
 
+	@Override
+	public boolean onPrepareOptionsMenu(Menu menu) {
+		OmecaPopupMenu.show(this);
+	    return false;
+	}
+	
 	@Override
 	public void update(Observable observable, Object data) {
 		if (data instanceof ConnectionWifiDirectEvent) {
@@ -204,18 +212,6 @@ public class GameActivity extends Activity implements Observer {
 	}
 
 	/**
-	 * Jumps to the avatar creation/modification after the corresponding menu
-	 * button have been pressed
-	 * 
-	 * @param view
-	 */
-	public void avatar(View view) {
-		Intent editProfilActivityIntent = new Intent(this, AvatarActivity.class);
-		startActivityForResult(editProfilActivityIntent, EDIT_AVATAR);
-		OmecaPopupMenu.dismiss();
-	}
-
-	/**
 	 * Exits the current game after the corresponding menu button have been
 	 * pressed
 	 * 
@@ -225,20 +221,6 @@ public class GameActivity extends Activity implements Observer {
 		System.out.println("Disconnecting !!!");
 		OmecaPopupMenu.dismiss();
 
-		this.finish();
-	}
-
-	/**
-	 * Exits properly the program after the corresponding menu button have been
-	 * pressed
-	 * 
-	 * @param view
-	 */
-	public void exit(View view) {
-		OmecaPopupMenu.dismiss();
-
-		System.out.println("Exit !!!");
-		// wifiDirectManager.removeWifiDirect();
 		this.finish();
 	}
 

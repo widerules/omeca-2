@@ -7,6 +7,7 @@ import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.Menu;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
@@ -48,6 +49,12 @@ public class MainActivity extends Activity implements Observer {
 		// Launches the stuff
 		setContentView(R.layout.view_homescreen);
 
+	}
+
+	@Override
+	public boolean onPrepareOptionsMenu(Menu menu) {
+		OmecaPopupMenu.show(this);
+	    return false;
 	}
 
 	// @Override
@@ -102,17 +109,6 @@ public class MainActivity extends Activity implements Observer {
 	public void avatar(View view) {
 		Intent editProfilActivityIntent = new Intent(this, AvatarActivity.class);
 		startActivityForResult(editProfilActivityIntent, EDIT_AVATAR);
-		OmecaPopupMenu.dismiss();
-	}
-
-	/**
-	 * Exits the current game after the corresponding menu button have been
-	 * pressed
-	 * 
-	 * @param view
-	 */
-	public void disconnect(View view) {
-		// TODO CREATE a new popup
 		OmecaPopupMenu.dismiss();
 	}
 
