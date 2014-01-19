@@ -3,11 +3,14 @@ package com.ensibs.omeca.view;
 import android.content.ClipData;
 import android.content.Context;
 import android.util.DisplayMetrics;
+import android.view.DragEvent;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
+import android.widget.Toast;
 
+import com.ensibs.omeca.ControllerView;
 import com.ensibs.omeca.model.entities.Card;
 
 public class CardView extends ImageView{
@@ -30,46 +33,22 @@ public class CardView extends ImageView{
 		int width = (int) (height/RATIO);
 		setLayoutParams(new RelativeLayout.LayoutParams(width, height));
 		setOnTouchListener(new CardTouchListener());
+		setOnDragListener(null);
 				
 	}
-	public void onHand(boolean hand){ 
-		 if (hand = true)
-			 this.setOnTouchListener(new CardTouchListenerHand());
-		 else 
+	/*public void onHand(boolean hand){ 
+		 if (hand == true){
+			this.setOnTouchListener(new CardTouchListenerHand());
+		 	this.setOnDragListener(new OnDragListenerHand());
+		 	//Toast.makeText(context,"hand", Toast.LENGTH_SHORT).show();
+		 }else {
 			 this.setOnTouchListener(new CardTouchListener());
-	}
-	private class CardTouchListenerHand implements OnTouchListener{
-		private float y;
-		private final float SCROLL_THRESHOLD = 30 ;
-		private boolean isOnClick;
-		
-		@Override
-		public boolean onTouch(View view, MotionEvent mE) {
-			switch (mE.getAction()){
-				case MotionEvent.ACTION_DOWN:
-					y = mE.getY();
-					isOnClick = true;
-					break;
-				case MotionEvent.ACTION_MOVE:
-					if(isOnClick && ( y - mE.getY()) > SCROLL_THRESHOLD){
-						view.setVisibility(View.INVISIBLE);
-						ClipData data = ClipData.newPlainText("", "");
-				        DragShadowBuilder shadowBuilder = new View.DragShadowBuilder(view);
-				        view.startDrag(data, shadowBuilder, view, 0);
-				        isOnClick = false;
-					}
-					break;
-				case MotionEvent.ACTION_UP:
-					if(!isOnClick){
-						view.setVisibility(View.VISIBLE);
-					}
-					break;
-				default:
-					break;
-			}	
-			return true;
-		}
-	}
+		 	this.setOnDragListener(null);
+		 }
+	}*/
+	
+
+
 	
 	public void turnCard(){
 		if(card.isFaceUp())
