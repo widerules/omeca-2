@@ -2,14 +2,20 @@ package com.ensibs.omeca.view;
 
 import java.util.ArrayList;
 
+import android.content.ClipData;
 import android.content.Context;
 import android.util.AttributeSet;
 import android.util.DisplayMetrics;
+import android.view.DragEvent;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.View.DragShadowBuilder;
+import android.view.View.OnDragListener;
+import android.view.View.OnTouchListener;
 import android.widget.BaseAdapter;
 import android.widget.Gallery;
+import android.widget.Toast;
 
 import com.ensibs.omeca.ControllerView;
 import com.ensibs.omeca.model.entities.Card;
@@ -20,14 +26,14 @@ public class HandView extends Gallery{
 	ArrayList<Card> liste;
 	private HandCardsAdapter adapter;
 	Context c;
+	HandViewCardGalleryDragListener hvcgdl = new HandViewCardGalleryDragListener();
 		
 	public HandView(Context context) {
 		super(context);	
 		c= context;
-		init();
 		liste = new ArrayList<Card>();
-		this.orderCard();
 		init();
+		//this.orderCard();
 	}
 	public void orderCard(){
 		liste = ControllerView.user.getCards();
@@ -50,12 +56,12 @@ public class HandView extends Gallery{
 		lOfspades.removeAll(null);
 		lOfhearts.removeAll(null);
 		lOfclubs.removeAll(null);
+		liste.addAll(lOfhearts);
 		liste.addAll(lOfdiamonds);
 		liste.addAll(lOfclubs);
-		liste.addAll(lOfhearts);
 		liste.addAll(lOfspades);
 		ControllerView.user.setCards(liste);
-		
+		init();
 	}
 	
 	public void updateView(){
@@ -71,15 +77,16 @@ public class HandView extends Gallery{
         this.setAdapter(adapter);
         this.setUnselectedAlpha((float) 1);
         this.setSelection(ControllerView.user.getNumberOfCards()/2);
-        this.setOnDragListener(new HandViewCardGalleryDragListener());
+        this.setOnDragListener(hvcgdl);
+       
+        /*block le slider
         this.setOnTouchListener(new OnTouchListener() {
-
         	  @Override
         	  public boolean onTouch(View v, MotionEvent event) {
-
         	     return true;
         	  }
-        	 });
+        	 });*/
+        	
 	}
 	
 
@@ -121,17 +128,93 @@ public class HandView extends Gallery{
 		    		DisplayMetrics metrics = mContext.getApplicationContext().getResources().getDisplayMetrics();
 		    		cv = new CardView(mContext, ControllerView.user.getCards().get(position));
 		    		int width = (int)(metrics.widthPixels/
-		    				(this.getCount()<3 ? 3 : this.getCount() *1.1));
+		    				(this.getCount()<5 ? 5 : this.getCount() *1.1));
+		    		hvcgdl.setWidth(width);
 		    		int height = (int)(width*CardView.RATIO);
 		    		cv.setLayoutParams(new Gallery.LayoutParams( width, height));
 		    		cv.setOnTouchListener(null);
 		    		if(!cv.getCard().isFaceUp())
 		    			cv.turnCard();
-		    		cv.onHand(true);
+		    		//cv.onHand(true);
+		    		cv.setOnDragListener(new OnDragListenerHand() );
+		    		cv.setOnTouchListener(new CardTouchListenerHand());
 		    		return cv; 
 		    	}
 		    	return cv;
 		    }
 	    }
+	   
+		private class OnDragListenerHand implements OnDragListener{
+			@Override
+			public boolean onDrag(View v, DragEvent event) {
+				switch (event.getAction()){
+					case DragEvent.ACTION_DRAG_ENTERED:
+						CardView cv = (CardView) v;	
+						HandView hv = (HandView) v.getParent();
+						cv.setRotationY(-20);
+						int j = ControllerView.user.getCards().indexOf(cv.getCard());
+						//Toast.makeText(c ,"hh"+j, Toast.LENGTH_SHORT).show();
+						if(j>0){
+							cv = (CardView) hv.getItemAtPosition(j-1);
+							Toast.makeText(c ,"hh"+cv.getCard().getColor(), Toast.LENGTH_SHORT).show();
+							//hv.removeViewAt(j-1);
+							//cv.setRotationY(20);
+							//hv.addView(cv, j-1);
+						}
+						break;
+					case DragEvent.ACTION_DROP:
+						CardView holdPositionCard = (CardView) v;
+						int i = ControllerView.user.getCards().indexOf(holdPositionCard.getCard());
+						HandView hv1 = (HandView) v.getParent();
+						CardView cardToMove1 =(CardView) event.getLocalState();
+					 	Toast.makeText(c ,"hh"+i, Toast.LENGTH_SHORT).show();
+						ControllerView.user.getCards().remove(cardToMove1.getCard());
+						ControllerView.user.getCards().add(i,cardToMove1.getCard());
+						hv1.updateView();
+						break;
+						
+					case DragEvent.ACTION_DRAG_EXITED :
+						CardView cv2 = (CardView) v;	
+						cv2.setRotationY(0);		
+						break;
+					default:
+						break;
+				}
+				return true;
+			}
+			
+		}
+		public class CardTouchListenerHand implements OnTouchListener{
+			private float y;
+			private final float SCROLL_THRESHOLD = 30 ;
+			private boolean isOnClick;
+			
+			@Override
+			public boolean onTouch(View view, MotionEvent mE) {
+				switch (mE.getAction()){
+					case MotionEvent.ACTION_DOWN:
+						y = mE.getY();
+						isOnClick = true;
+						break;
+					case MotionEvent.ACTION_MOVE:
+						if(isOnClick && ( y - mE.getY()) > SCROLL_THRESHOLD){
+							view.setVisibility(View.INVISIBLE);
+							ClipData data = ClipData.newPlainText("", "");
+					        DragShadowBuilder shadowBuilder = new View.DragShadowBuilder(view);
+					        view.startDrag(data, shadowBuilder, view, 0);
+					        isOnClick = false;
+						}
+						break;
+					case MotionEvent.ACTION_UP:
+						if(!isOnClick){
+							view.setVisibility(View.VISIBLE);
+						}
+						break;
+					default:
+						break;
+				}	
+				return true;
+			}
+		}
 	
 }
