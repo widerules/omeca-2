@@ -14,7 +14,7 @@ import android.widget.BaseAdapter;
 import android.widget.Gallery;
 import android.widget.Toast;
 
-import com.ensibs.omeca.ControllerView;
+import com.ensibs.omeca.controller.ActionController;
 import com.ensibs.omeca.model.entities.Card;
 
 
@@ -33,12 +33,12 @@ public class HandView extends Gallery{
 		//this.orderCard();
 	}
 	public void orderCard(){
-		liste = ControllerView.user.getCards();
+		liste = ActionController.user.getCards();
 		ArrayList<Card> lOfdiamonds = new ArrayList<Card>() ;
 		ArrayList<Card> lOfspades = new ArrayList<Card>();
 		ArrayList<Card> lOfhearts = new ArrayList<Card>();
 		ArrayList<Card> lOfclubs = new ArrayList<Card>();
-		for( int i = 0; ControllerView.user.getCards().size()>i ; i++ ){
+		for( int i = 0; ActionController.user.getCards().size()>i ; i++ ){
 			if(liste.get(i).getColor().equals("ofdiamonds"))
 				lOfdiamonds.add(liste.get(i).getValue(), liste.get(i));
 			else if(liste.get(i).getColor().equals("ofspades"))
@@ -57,7 +57,7 @@ public class HandView extends Gallery{
 		liste.addAll(lOfdiamonds);
 		liste.addAll(lOfclubs);
 		liste.addAll(lOfspades);
-		ControllerView.user.setCards(liste);
+		ActionController.user.setCards(liste);
 		init();
 	}
 
@@ -73,7 +73,7 @@ public class HandView extends Gallery{
 		adapter = new HandCardsAdapter(c);
 		this.setAdapter(adapter);
 		this.setUnselectedAlpha((float) 1);
-		this.setSelection(ControllerView.user.getNumberOfCards()/2);
+		this.setSelection(ActionController.user.getNumberOfCards()/2);
 		this.setOnDragListener(hvcgdl);
 
 		/*block le slider
@@ -92,6 +92,8 @@ public class HandView extends Gallery{
 			float distanceY) {
 		return super.onScroll(e1, e2, 0, 0);
 	}
+	
+	
 	public HandView(Context context, AttributeSet attrs) {
 		super(context, attrs);
 		c= context;
@@ -107,7 +109,7 @@ public class HandView extends Gallery{
 		}
 		@Override
 		public int getCount() {
-			return ControllerView.user.getCards().size();
+			return ActionController.user.getCards().size();
 		}
 		@Override
 		public Object getItem(int position) {
@@ -127,7 +129,7 @@ public class HandView extends Gallery{
 			CardView cv = (CardView)convertView;
 			if(cv == null){
 				DisplayMetrics metrics = mContext.getApplicationContext().getResources().getDisplayMetrics();
-				cv = new CardView(mContext, ControllerView.user.getCards().get(position));
+				cv = new CardView(mContext, ActionController.user.getCards().get(position));
 				Toast.makeText(c , position +" "+ cv.getCard().getValue(), Toast.LENGTH_SHORT).show();
 				liste.add(position, cv);
 				int width = (int)(metrics.widthPixels/
@@ -154,7 +156,7 @@ public class HandView extends Gallery{
 				CardView cv = (CardView) v;	
 				HandView hv = (HandView) v.getParent();
 				cv.setRotationY(-20);
-				int j = ControllerView.user.getCards().indexOf(cv.getCard());
+				int j = ActionController.user.getCards().indexOf(cv.getCard());
 				if(j>0){
 					cv = (CardView) hv.getItemAtPosition(j);
 					cv.setRotationY(20);
@@ -162,12 +164,12 @@ public class HandView extends Gallery{
 				break;
 			case DragEvent.ACTION_DROP:				
 				CardView holdPositionCard = (CardView) v;
-				int i = ControllerView.user.getCards().indexOf(holdPositionCard.getCard());
+				int i = ActionController.user.getCards().indexOf(holdPositionCard.getCard());
 				Toast.makeText(c ,i, Toast.LENGTH_SHORT).show();
 				HandView hv1 = (HandView) v.getParent();
 				CardView cardToMove1 =(CardView) event.getLocalState();
-				ControllerView.user.getCards().remove(cardToMove1.getCard());
-				ControllerView.user.getCards().add(i,cardToMove1.getCard());
+				ActionController.user.getCards().remove(cardToMove1.getCard());
+				ActionController.user.getCards().add(i,cardToMove1.getCard());
 				hv1.updateView();
 				break;
 
@@ -175,7 +177,7 @@ public class HandView extends Gallery{
 				CardView cv2 = (CardView) v;	
 				cv2.setRotationY(0);
 				HandView hv2 = (HandView) v.getParent();
-				int k = ControllerView.user.getCards().indexOf(cv2.getCard());
+				int k = ActionController.user.getCards().indexOf(cv2.getCard());
 				cv2 = (CardView) hv2.getItemAtPosition(k);
 				cv2.setRotationY(0);
 				break;
@@ -187,14 +189,12 @@ public class HandView extends Gallery{
 
 	}
 	public class CardTouchListenerHand implements OnTouchListener{
-		private float y;
 		private boolean isOnClick;
 
 		@Override
 		public boolean onTouch(View view, MotionEvent mE) {
 			switch (mE.getAction()){
 			case MotionEvent.ACTION_DOWN:
-				y = mE.getY();
 				isOnClick = true;
 				break;
 			case MotionEvent.ACTION_MOVE:
