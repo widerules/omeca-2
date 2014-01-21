@@ -2,6 +2,7 @@ package com.ensibs.omeca.view;
 
 import android.content.Context;
 import android.graphics.Color;
+import android.graphics.Typeface;
 import android.util.AttributeSet;
 import android.util.DisplayMetrics;
 import android.util.TypedValue;
@@ -23,6 +24,7 @@ public class PlayerView extends RelativeLayout{
 	private Player player;
 	private Context context;
 	private TextView name;
+	private TextView cards;
 	
 	public static final int SIZE = 7;
 
@@ -44,6 +46,7 @@ public class PlayerView extends RelativeLayout{
 	private void init(Context context) {
 		this.context = context;
 		name = new TextView(context);
+		cards = new TextView(context);
 		DisplayMetrics metrics = context.getApplicationContext().getResources().getDisplayMetrics();
 		RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(metrics.heightPixels/(SIZE), metrics.heightPixels/SIZE);
 		
@@ -67,9 +70,27 @@ public class PlayerView extends RelativeLayout{
 		
 		name.setText(player.getName());
 		name.setGravity(Gravity.CENTER_HORIZONTAL);
-		name.setTextColor(Color.DKGRAY);
+		name.setTextColor(Color.LTGRAY);
+		name.setTypeface(null, Typeface.BOLD);
 		name.setTextSize(TypedValue.COMPLEX_UNIT_SP, 8);
+		
 		addView(name, params);
+		
+		if (!isMe) {			
+			params = new RelativeLayout.LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT);
+			params.addRule(ALIGN_PARENT_BOTTOM, TRUE);
+			
+			cards.setText("x" + player.getCards().size());
+			cards.setGravity(Gravity.CENTER_HORIZONTAL);
+			cards.setTextColor(Color.WHITE);
+			cards.setTypeface(null, Typeface.BOLD);
+			cards.setTextSize(TypedValue.COMPLEX_UNIT_SP, 10);
+			
+			addView(cards, params);
+		} else {
+			name.setTextColor(Color.DKGRAY);
+			name.setTextSize(TypedValue.COMPLEX_UNIT_SP, 14);
+		}
 	}
 	
 	private class PlayerDragListener implements OnDragListener{
@@ -92,6 +113,7 @@ public class PlayerView extends RelativeLayout{
 					ViewGroup parent = (ViewGroup)(view.getParent());
 					Card c = view.getCard();
 					player.addCard(c);
+					cards.setText("x" + player.getCards().size());
 			        parent.removeViewInLayout(view);
 					break;
 				case DragEvent.ACTION_DRAG_ENDED:
