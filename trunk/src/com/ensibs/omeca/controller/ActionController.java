@@ -1,18 +1,20 @@
-package com.ensibs.omeca;
+package com.ensibs.omeca.controller;
 
 import android.content.Context;
 import android.content.SharedPreferences;
 
+import com.ensibs.omeca.AvatarActivity;
+import com.ensibs.omeca.OmecaApplication;
 import com.ensibs.omeca.model.entities.Board;
 import com.ensibs.omeca.model.entities.Player;
 
-public class ControllerView {
+public class ActionController {
 	public OmecaApplication maActivity;
 	
 	public int myId;
 	public static Player user;
 	public static Board board;
-	public ControllerView(OmecaApplication omecaApplication) {
+	public ActionController(OmecaApplication omecaApplication) {
 		
 		this.maActivity= omecaApplication;
 		
@@ -29,6 +31,10 @@ public class ControllerView {
 		board.setCardsToDeal(nbToDeal);
 		board.dealCardsAutomatically(myId);
 	}
+	
+	/*public static sendCardAction(Player receiver){
+		
+	}*/
 	
 	
 	

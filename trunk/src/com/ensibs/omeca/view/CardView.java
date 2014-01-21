@@ -1,18 +1,17 @@
 package com.ensibs.omeca.view;
 
+import android.annotation.SuppressLint;
 import android.content.ClipData;
 import android.content.Context;
 import android.util.DisplayMetrics;
-import android.view.DragEvent;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
-import android.widget.Toast;
 
-import com.ensibs.omeca.ControllerView;
 import com.ensibs.omeca.model.entities.Card;
 
+@SuppressLint("ViewConstructor")
 public class CardView extends ImageView{
 	private Card card;
 	private Context context;

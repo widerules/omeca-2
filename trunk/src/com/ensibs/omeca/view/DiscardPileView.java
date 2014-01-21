@@ -1,16 +1,16 @@
 package com.ensibs.omeca.view;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.util.DisplayMetrics;
 import android.view.View;
 import android.widget.FrameLayout;
 import android.widget.RelativeLayout;
-import android.widget.Toast;
-
 import com.ensibs.omeca.R;
 import com.ensibs.omeca.model.entities.Card;
 import com.ensibs.omeca.model.entities.DiscardPile;
 
+@SuppressLint("ViewConstructor")
 public class DiscardPileView extends FrameLayout{
 	private DiscardPile discardPile;
 	private Context context;

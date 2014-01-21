@@ -1,16 +1,11 @@
 package com.ensibs.omeca.view;
 
-import android.support.v4.view.MotionEventCompat;
-import android.text.Layout;
 import android.view.DragEvent;
 import android.view.View;
 import android.view.View.OnDragListener;
-import android.view.ViewGroup;
 
-import com.ensibs.omeca.ControllerView;
 import com.ensibs.omeca.GameActivity;
 import com.ensibs.omeca.R;
-import com.ensibs.omeca.model.entities.Card;
 import com.ensibs.omeca.utils.SlidingUpPanelLayout;
 
 public class HandViewCardGalleryDragListener implements OnDragListener{

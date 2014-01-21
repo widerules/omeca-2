@@ -9,9 +9,9 @@ import android.view.ViewGroup;
 import android.widget.Gallery;
 import android.widget.RelativeLayout;
 
-import com.ensibs.omeca.ControllerView;
 import com.ensibs.omeca.GameActivity;
 import com.ensibs.omeca.R;
+import com.ensibs.omeca.controller.ActionController;
 import com.ensibs.omeca.model.entities.Board;
 import com.ensibs.omeca.model.entities.Player;
 import com.ensibs.omeca.utils.SliderbarCardGallery;
@@ -140,11 +140,11 @@ public class BoardView extends RelativeLayout{
 			        parent.removeViewInLayout(view);
 					addView(view);
 					if(parent instanceof HandView){
-						ControllerView.user.removeCard(view.getCard());
+						ActionController.user.removeCard(view.getCard());
 						Gallery g = (Gallery)parent;
 						HandCardsAdapter a = (HandCardsAdapter)g.getAdapter();
 						a.notifyDataSetChanged();
-						g.setSelection(ControllerView.user.getNumberOfCards()/2);
+						g.setSelection(ActionController.user.getNumberOfCards()/2);
 						DisplayMetrics metrics = GameActivity.getActivity().getApplicationContext().getResources().getDisplayMetrics();
 						int height = 2+metrics.heightPixels/CardView.SIZE;
 						int width = (int) (2+(height/CardView.RATIO));

@@ -1,5 +1,6 @@
-package com.ensibs.omeca;
+package com.ensibs.omeca.view;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.widget.Button;
 import android.widget.LinearLayout;
@@ -7,6 +8,7 @@ import android.widget.SeekBar;
 import android.widget.SeekBar.OnSeekBarChangeListener;
 import android.widget.TextView;
 
+@SuppressLint("ViewConstructor")
 public class DealView extends LinearLayout{
 	public Button buttonSave;
 	public Button buttonCancle;

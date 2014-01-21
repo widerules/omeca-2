@@ -5,7 +5,6 @@ import java.util.Observer;
 
 import android.app.Activity;
 import android.app.AlertDialog;
-import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -17,12 +16,14 @@ import android.widget.Gallery;
 import android.widget.LinearLayout;
 import android.widget.Toast;
 
+import com.ensibs.omeca.controller.ActionController;
 import com.ensibs.omeca.model.entities.Board;
 import com.ensibs.omeca.utils.OmecaPopupMenu;
 import com.ensibs.omeca.utils.SliderbarCardGallery;
 import com.ensibs.omeca.utils.SlidingUpPanelLayout;
 import com.ensibs.omeca.utils.SlidingUpPanelLayout.PanelSlideListener;
 import com.ensibs.omeca.view.BoardView;
+import com.ensibs.omeca.view.DealView;
 import com.ensibs.omeca.view.PlayerView;
 import com.ensibs.omeca.view.SlideBarCardGalleryDragListener;
 import com.ensibs.omeca.view.SlidebarDragListener;
@@ -30,10 +31,9 @@ import com.ensibs.omeca.wifidirect.WifiDirectManager;
 import com.ensibs.omeca.wifidirect.event.ConnectionWifiDirectEvent;
 
 public class GameActivity extends Activity implements Observer {
-	private static final int EDIT_AVATAR = 2;
 
 	WifiDirectManager wifiDirectManager;
-	ControllerView controler;
+	ActionController controler;
 	AlertDialog popupMenu;
 	OmecaApplication app;
 	private static Activity instance;
@@ -77,11 +77,11 @@ public class GameActivity extends Activity implements Observer {
 		SlidingUpPanelLayout slide = (SlidingUpPanelLayout) findViewById(R.id.sliding_layout);
 
 		((PlayerView) (slide.findViewById(R.id.playerview_slidebar_board)))
-				.setPlayer(ControllerView.user, true);
+				.setPlayer(ActionController.user, true);
 
 		Gallery g = (Gallery) findViewById(R.id.playerview_slider_board_cardgallery);
 		g.setAdapter(new SliderbarCardGallery(this));
-		g.setSelection(ControllerView.user.getNumberOfCards() / 2);
+		g.setSelection(ActionController.user.getNumberOfCards() / 2);
 		g.setOnDragListener(new SlideBarCardGalleryDragListener());
 		slide.setDragView(slide.findViewById(R.id.playerview_slidebar_board));
 		slide.setPanelSlideListener(new PanelSlideListener() {
@@ -112,7 +112,7 @@ public class GameActivity extends Activity implements Observer {
 					linear.findViewById(R.id.hand_actions).setOnDragListener(
 							new SlidebarDragListener());
 					((PlayerView) (findViewById(R.id.playerview_slidebar_hand)))
-							.setPlayer(ControllerView.user, true);
+							.setPlayer(ActionController.user, true);
 					isExpanded = true;
 				}
 			}
@@ -129,7 +129,7 @@ public class GameActivity extends Activity implements Observer {
 									LinearLayout.LayoutParams.MATCH_PARENT,
 									height));
 					((PlayerView) (findViewById(R.id.playerview_slidebar_board)))
-							.setPlayer(ControllerView.user, true);
+							.setPlayer(ActionController.user, true);
 
 					Gallery g = (Gallery) findViewById(R.id.playerview_slider_board_cardgallery);
 					LinearLayout.LayoutParams params = (LinearLayout.LayoutParams) g
@@ -139,7 +139,7 @@ public class GameActivity extends Activity implements Observer {
 					params.weight = 3.0f;
 					g.setLayoutParams(params);
 					g.setAdapter(new SliderbarCardGallery(panel.getContext()));
-					g.setSelection(ControllerView.user.getNumberOfCards() / 2);
+					g.setSelection(ActionController.user.getNumberOfCards() / 2);
 					g.setOnDragListener(new SlideBarCardGalleryDragListener());
 					isExpanded = false;
 				}
@@ -173,9 +173,9 @@ public class GameActivity extends Activity implements Observer {
 	}
 
 	public void showDealPopup() {
-		if (ControllerView.board.getDrawPile().getNumberOfCards() > 0) {
-			final DealView dv = new DealView(ControllerView.board.getDrawPile()
-					.getNumberOfCards(), ControllerView.board.getPlayers()
+		if (ActionController.board.getDrawPile().getNumberOfCards() > 0) {
+			final DealView dv = new DealView(ActionController.board.getDrawPile()
+					.getNumberOfCards(), ActionController.board.getPlayers()
 					.size(), this.getApplicationContext());
 			AlertDialog.Builder builder = new AlertDialog.Builder(
 					GameActivity.this);

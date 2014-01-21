@@ -6,8 +6,8 @@ import android.view.View.OnDragListener;
 import android.view.ViewGroup;
 import android.widget.Gallery;
 
-import com.ensibs.omeca.ControllerView;
 import com.ensibs.omeca.R;
+import com.ensibs.omeca.controller.ActionController;
 import com.ensibs.omeca.model.entities.Card;
 import com.ensibs.omeca.model.entities.Player;
 import com.ensibs.omeca.utils.SliderbarCardGallery;
@@ -30,17 +30,17 @@ public class SlideBarCardGalleryDragListener implements OnDragListener{
 				CardView view = (CardView) event.getLocalState();
 				ViewGroup parent = (ViewGroup)(view.getParent());
 				Card c = view.getCard();
-				Player p = ControllerView.user;
+				Player p = ActionController.user;
 				p.addCard(c);
 		        parent.removeView(view);
 		        Gallery g = (Gallery)v;
 		        SliderbarCardGallery l = (SliderbarCardGallery)g.getAdapter();
 		        l.notifyDataSetChanged();
-		        g.setSelection(ControllerView.user.getNumberOfCards()-1);
+		        g.setSelection(ActionController.user.getNumberOfCards()-1);
 		        Gallery g2 = ((Gallery)((View)v.getParent().getParent()).findViewById(R.id.view_hand_slidebar));
 		        HandCardsAdapter a2 = (HandCardsAdapter) g2.getAdapter();
 				a2.notifyDataSetChanged();
-				g2.setSelection(ControllerView.user.getNumberOfCards()/2);
+				g2.setSelection(ActionController.user.getNumberOfCards()/2);
 				break;
 			case DragEvent.ACTION_DRAG_ENDED:
 				v.setBackgroundResource(R.drawable.gallery_background);

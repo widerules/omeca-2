@@ -13,6 +13,7 @@ import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Toast;
 
+import com.ensibs.omeca.controller.ActionController;
 import com.ensibs.omeca.model.entities.Card;
 import com.ensibs.omeca.utils.OmecaPopupMenu;
 import com.ensibs.omeca.wifidirect.WifiDirectManager;
@@ -21,7 +22,7 @@ public class MainActivity extends Activity implements Observer {
 	private static final int EDIT_AVATAR = 2;
 
 	WifiDirectManager wifiDirectManager;
-	ControllerView controler;
+	ActionController controler;
 	AlertDialog popupMenu;
 	OmecaApplication app;
 
