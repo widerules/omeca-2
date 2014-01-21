@@ -41,22 +41,24 @@
     	android:layout_gravity="center">
 	    
 	    <TextView
-		    android:layout_width="wrap_content"
-	    	android:layout_height="fill_parent"
-	    	android:layout_marginLeft="5dip"
-	    	android:layout_marginRight="5dip"
-	    	android:gravity="center"
-	    	android:textColor="@android:color/white"
-	    	android:textSize="16dip"
-	    	android:textStyle="bold"
-	    	android:text="@string/choose_username">	    
+	        android:layout_width="wrap_content"
+	        android:layout_height="fill_parent"
+	        android:layout_marginLeft="5dip"
+	        android:layout_marginRight="5dip"
+	        android:gravity="center"
+	        android:text="@string/choose_username"
+	        android:textColor="@android:color/white"
+	        android:textSize="16dip"
+	        android:textStyle="bold" >
+	    
 		</TextView>
 		
 		<EditText
-	    	android:id="@+id/name"
-		    android:layout_width="fill_parent"
-	    	android:layout_height="wrap_content"
-	    	android:hint="@string/username">	    
+		    android:id="@+id/name"
+		    android:layout_width="wrap_content"
+		    android:layout_height="wrap_content"
+		    android:hint="@string/username" >
+	    
 		</EditText>
     
     </LinearLayout>
