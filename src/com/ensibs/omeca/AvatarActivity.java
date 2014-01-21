@@ -1,5 +1,6 @@
 package com.ensibs.omeca;
 
+import com.ensibs.omeca.controller.ActionController;
 import com.ensibs.omeca.utils.AvatarGallery;
 
 import android.app.Activity;
@@ -87,6 +88,7 @@ public class AvatarActivity extends Activity{
 			editor.putString(SHARED_PREFERENCES_PLAYER_NAME, pseudo);
 			editor.putInt(SHARED_PREFERENCES_AVATAR_ID_NAME, this.avatarGallery.getSelectedItemPosition());
 			editor.commit();
+			ActionController.updateUser();
 			finish();
 			
 		}		
@@ -115,6 +117,7 @@ public class AvatarActivity extends Activity{
 			editor.putString(SHARED_PREFERENCES_PLAYER_NAME, pseudo);
 			editor.putInt(SHARED_PREFERENCES_AVATAR_ID_NAME, this.avatarGallery.getSelectedItemPosition());
 			editor.commit();
+			ActionController.updateUser();
 			finish();
 			
 		}	

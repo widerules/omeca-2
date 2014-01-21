@@ -9,7 +9,7 @@ import com.ensibs.omeca.model.entities.Board;
 import com.ensibs.omeca.model.entities.Player;
 
 public class ActionController {
-	public OmecaApplication maActivity;
+	public static OmecaApplication maActivity;
 	
 	public int myId;
 	public static Player user;
@@ -20,8 +20,9 @@ public class ActionController {
 		
 		board = new Board();
 		
-		SharedPreferences profilPreferences = omecaApplication.getSharedPreferences(
+		SharedPreferences profilPreferences = maActivity.getSharedPreferences(
 				AvatarActivity.SHARED_PREFERENCES_FILE_NAME, Context.MODE_PRIVATE);
+		
 		user = new Player(
 				profilPreferences.getString(AvatarActivity.SHARED_PREFERENCES_PLAYER_NAME, ""),
 				profilPreferences.getInt(AvatarActivity.SHARED_PREFERENCES_AVATAR_ID_NAME, 0), 0);
@@ -36,7 +37,12 @@ public class ActionController {
 		
 	}*/
 	
-	
+	public static void updateUser() {		
+		SharedPreferences profilPreferences = maActivity.getSharedPreferences(
+				AvatarActivity.SHARED_PREFERENCES_FILE_NAME, Context.MODE_PRIVATE);
+		user.setAvatar(profilPreferences.getInt(AvatarActivity.SHARED_PREFERENCES_AVATAR_ID_NAME, 0));
+		user.setName(profilPreferences.getString(AvatarActivity.SHARED_PREFERENCES_PLAYER_NAME, ""));
+	}
 	
 	
 }
