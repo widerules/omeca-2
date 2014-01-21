@@ -10,10 +10,13 @@ import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.view.ViewGroup;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Gallery;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
+import android.widget.RelativeLayout.LayoutParams;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -86,8 +89,15 @@ public class GameActivity extends Activity implements Observer {
 		g.setOnDragListener(new SlideBarCardGalleryDragListener());
 		
 		//Number of card initialization
-		((TextView) findViewById(R.id.nbDiscardPileCards)).setText("x"+board.getDiscardPile().getNumberOfCards());
-		((TextView) findViewById(R.id.nbDrawPileCards)).setText("x"+board.getDrawPile().getNumberOfCards());
+		TextView nbDis = ((TextView) findViewById(R.id.nbDiscardPileCards));
+		TextView nbDra = ((TextView) findViewById(R.id.nbDrawPileCards));
+		nbDis.setText("x"+board.getDiscardPile().getNumberOfCards());
+		nbDra.setText("x"+board.getDrawPile().getNumberOfCards());
+		ViewGroup parent = (ViewGroup)nbDis.getParent();
+		parent.removeViewInLayout(nbDis);
+		parent.addView(nbDis);
+		parent.removeViewInLayout(nbDra);
+		parent.addView(nbDra);
 		
 		// Setting up slider
 		slide.setDragView(slide.findViewById(R.id.playerview_slidebar_board));
