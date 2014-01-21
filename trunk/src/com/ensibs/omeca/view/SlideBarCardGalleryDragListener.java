@@ -32,7 +32,7 @@ public class SlideBarCardGalleryDragListener implements OnDragListener{
 				Card c = view.getCard();
 				Player p = ActionController.user;
 				p.addCard(c);
-		        parent.removeView(view);
+		        parent.removeViewInLayout(view);
 		        Gallery g = (Gallery)v;
 		        SliderbarCardGallery l = (SliderbarCardGallery)g.getAdapter();
 		        l.notifyDataSetChanged();
