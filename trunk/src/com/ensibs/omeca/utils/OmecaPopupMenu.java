@@ -21,13 +21,14 @@ public class OmecaPopupMenu {
 		
 		if (context instanceof	MainActivity) {
 			omecaPopupMenu.setView(inflater.inflate(R.layout.popup_menu_home, null));
+			omecaPopupMenu.show();
 		} else if (context instanceof GameActivity) {
 			omecaPopupMenu.setView(inflater.inflate(R.layout.popup_menu_game, null));
+			omecaPopupMenu.show();
 		} else {
 			omecaPopupMenu.cancel();
 		}
 		
-		omecaPopupMenu.show();
 	}
 	
 	public static void dismiss() {
