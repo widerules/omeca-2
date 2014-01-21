@@ -1,15 +1,16 @@
 package com.ensibs.omeca.view;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.util.DisplayMetrics;
 import android.view.View;
 import android.widget.FrameLayout;
 import android.widget.RelativeLayout;
-
 import com.ensibs.omeca.R;
 import com.ensibs.omeca.model.entities.Card;
 import com.ensibs.omeca.model.entities.DrawPile;
 
+@SuppressLint("ViewConstructor")
 public class DrawPileView extends FrameLayout {
 	private DrawPile drawpile;
 	private Context context;

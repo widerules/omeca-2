@@ -3,6 +3,11 @@ package com.ensibs.omeca.model.actions;
 import com.ensibs.omeca.model.entities.Card;
 
 public class PlayerCardsTransfertAction extends AbstractAction{
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -224075713812600286L;
+	
 	int source;
 	int target;
 	Card card;

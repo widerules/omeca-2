@@ -10,14 +10,11 @@ import android.view.DragEvent;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.View.DragShadowBuilder;
-import android.view.View.OnDragListener;
-import android.view.View.OnTouchListener;
 import android.widget.BaseAdapter;
 import android.widget.Gallery;
 import android.widget.Toast;
 
-import com.ensibs.omeca.ControllerView;
+import com.ensibs.omeca.controller.ActionController;
 import com.ensibs.omeca.model.entities.Card;
 
 
@@ -36,12 +33,12 @@ public class HandView extends Gallery{
 		//this.orderCard();
 	}
 	public void orderCard(){
-		liste = ControllerView.user.getCards();
+		liste = ActionController.user.getCards();
 		ArrayList<Card> lOfdiamonds = new ArrayList<Card>() ;
 		ArrayList<Card> lOfspades = new ArrayList<Card>();
 		ArrayList<Card> lOfhearts = new ArrayList<Card>();
 		ArrayList<Card> lOfclubs = new ArrayList<Card>();
-		for( int i = 0; ControllerView.user.getCards().size()>i ; i++ ){
+		for( int i = 0; ActionController.user.getCards().size()>i ; i++ ){
 			if(liste.get(i).getColor().equals("ofdiamonds"))
 				lOfdiamonds.add(liste.get(i).getValue(), liste.get(i));
 			else if(liste.get(i).getColor().equals("ofspades"))
@@ -60,7 +57,7 @@ public class HandView extends Gallery{
 		liste.addAll(lOfdiamonds);
 		liste.addAll(lOfclubs);
 		liste.addAll(lOfspades);
-		ControllerView.user.setCards(liste);
+		ActionController.user.setCards(liste);
 		init();
 	}
 	
@@ -76,7 +73,7 @@ public class HandView extends Gallery{
         adapter = new HandCardsAdapter(c);
         this.setAdapter(adapter);
         this.setUnselectedAlpha((float) 1);
-        this.setSelection(ControllerView.user.getNumberOfCards()/2);
+        this.setSelection(ActionController.user.getNumberOfCards()/2);
         this.setOnDragListener(hvcgdl);
        
         /*block le slider
@@ -109,7 +106,7 @@ public class HandView extends Gallery{
 	    	}
 	    	@Override
 	    	public int getCount() {
-	    		  return ControllerView.user.getCards().size();
+	    		  return ActionController.user.getCards().size();
 	    	}
 			@Override
 			public Object getItem(int position) {
@@ -126,7 +123,7 @@ public class HandView extends Gallery{
 		    	CardView cv = (CardView)convertView;
 		    	if(cv == null){
 		    		DisplayMetrics metrics = mContext.getApplicationContext().getResources().getDisplayMetrics();
-		    		cv = new CardView(mContext, ControllerView.user.getCards().get(position));
+		    		cv = new CardView(mContext, ActionController.user.getCards().get(position));
 		    		int width = (int)(metrics.widthPixels/
 		    				(this.getCount()<5 ? 5 : this.getCount() *1.1));
 		    		hvcgdl.setWidth(width);
@@ -152,7 +149,7 @@ public class HandView extends Gallery{
 						CardView cv = (CardView) v;	
 						HandView hv = (HandView) v.getParent();
 						cv.setRotationY(-20);
-						int j = ControllerView.user.getCards().indexOf(cv.getCard());
+						int j = ActionController.user.getCards().indexOf(cv.getCard());
 						//Toast.makeText(c ,"hh"+j, Toast.LENGTH_SHORT).show();
 						if(j>0){
 							cv = (CardView) hv.getItemAtPosition(j-1);
@@ -164,12 +161,12 @@ public class HandView extends Gallery{
 						break;
 					case DragEvent.ACTION_DROP:
 						CardView holdPositionCard = (CardView) v;
-						int i = ControllerView.user.getCards().indexOf(holdPositionCard.getCard());
+						int i = ActionController.user.getCards().indexOf(holdPositionCard.getCard());
 						HandView hv1 = (HandView) v.getParent();
 						CardView cardToMove1 =(CardView) event.getLocalState();
 					 	Toast.makeText(c ,"hh"+i, Toast.LENGTH_SHORT).show();
-						ControllerView.user.getCards().remove(cardToMove1.getCard());
-						ControllerView.user.getCards().add(i,cardToMove1.getCard());
+					 	ActionController.user.getCards().remove(cardToMove1.getCard());
+					 	ActionController.user.getCards().add(i,cardToMove1.getCard());
 						hv1.updateView();
 						break;
 						

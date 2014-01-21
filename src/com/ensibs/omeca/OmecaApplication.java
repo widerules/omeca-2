@@ -1,5 +1,6 @@
 package com.ensibs.omeca;
 
+import com.ensibs.omeca.controller.ActionController;
 import com.ensibs.omeca.wifidirect.WifiDirectManager;
 
 import android.app.Application;
@@ -7,25 +8,25 @@ import android.app.Application;
 public class OmecaApplication extends Application {
 
 	private WifiDirectManager wifiDirectManager;
-	private ControllerView controler;
+	private ActionController controler;
 	
 	@Override
 	public void onCreate() {
 		super.onCreate();
 		
 		//create controller 
-		setController(new ControllerView(this));
+		setController(new ActionController(this));
 
 		// Creates the WifiDirectManager
 		setWifiDirectManager(new WifiDirectManager(this));
 		
 	}
 
-	public ControllerView getControler() {
+	public ActionController getControler() {
 		return controler;
 	}
 
-	public void setController(ControllerView controler) {
+	public void setController(ActionController controler) {
 		this.controler = controler;
 	}
 
