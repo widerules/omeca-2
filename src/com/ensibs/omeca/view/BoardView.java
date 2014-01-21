@@ -19,6 +19,8 @@ import com.ensibs.omeca.view.HandView.HandCardsAdapter;
 
 public class BoardView extends RelativeLayout{
 	private Context context;
+	private DrawPileView drawPileView;
+	private DiscardPileView discardPileView;
 	
 	public BoardView(Context context) {
 	    super(context);
@@ -45,8 +47,8 @@ public class BoardView extends RelativeLayout{
 	}
 	
 	public void buildBoard(Board board){
-		DrawPileView drawPileView = new DrawPileView(context, board.getDrawPile());
-		DiscardPileView discardPileView = new DiscardPileView(context, board.getDiscardPile());
+		this.drawPileView = new DrawPileView(context, board.getDrawPile());
+		this.discardPileView = new DiscardPileView(context, board.getDiscardPile());
 		addView(drawPileView);
 		addView(discardPileView);
 		RelativeLayout players_left = (RelativeLayout)findViewById(R.id.players_left);
@@ -122,6 +124,14 @@ public class BoardView extends RelativeLayout{
 		player.setPlayer(p, false);
 	}
 	
+	public DrawPileView getDrawPileView() {
+		return drawPileView;
+	}
+
+	public DiscardPileView getDiscardPileView() {
+		return discardPileView;
+	}
+
 	private class BoardDragListener implements OnDragListener{
 
 		@Override

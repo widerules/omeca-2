@@ -14,6 +14,7 @@ import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Gallery;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.ensibs.omeca.controller.ActionController;
@@ -33,7 +34,7 @@ import com.ensibs.omeca.wifidirect.event.ConnectionWifiDirectEvent;
 public class GameActivity extends Activity implements Observer {
 
 	WifiDirectManager wifiDirectManager;
-	ActionController controler;
+	ActionController controller;
 	AlertDialog popupMenu;
 	OmecaApplication app;
 	private static Activity instance;
@@ -50,7 +51,7 @@ public class GameActivity extends Activity implements Observer {
 		app = (OmecaApplication) getApplication();
 
 		// Create controller
-		controler = app.getControler();
+		controller = app.getControler();
 
 		// Creates the WifiDirectManager
 		/*
@@ -83,6 +84,12 @@ public class GameActivity extends Activity implements Observer {
 		g.setAdapter(new SliderbarCardGallery(this));
 		g.setSelection(ActionController.user.getNumberOfCards() / 2);
 		g.setOnDragListener(new SlideBarCardGalleryDragListener());
+		
+		//Number of card initialization
+		((TextView) findViewById(R.id.nbDiscardPileCards)).setText("x"+board.getDiscardPile().getNumberOfCards());
+		((TextView) findViewById(R.id.nbDrawPileCards)).setText("x"+board.getDrawPile().getNumberOfCards());
+		
+		// Setting up slider
 		slide.setDragView(slide.findViewById(R.id.playerview_slidebar_board));
 		slide.setPanelSlideListener(new PanelSlideListener() {
 
@@ -185,7 +192,7 @@ public class GameActivity extends Activity implements Observer {
 			alert.show();
 			dv.buttonSave.setOnClickListener(new OnClickListener() {
 				public void onClick(View v) {
-					controler.dealCard(dv.getDealNumber());
+					controller.dealCard(dv.getDealNumber());
 					alert.dismiss();
 				}
 			});
