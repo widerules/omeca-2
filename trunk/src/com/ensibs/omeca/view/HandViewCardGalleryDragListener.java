@@ -1,8 +1,10 @@
 package com.ensibs.omeca.view;
 
+import android.util.Log;
 import android.view.DragEvent;
 import android.view.View;
 import android.view.View.OnDragListener;
+import android.widget.Toast;
 
 import com.ensibs.omeca.GameActivity;
 import com.ensibs.omeca.R;
@@ -27,9 +29,11 @@ public class HandViewCardGalleryDragListener implements OnDragListener{
 			case DragEvent.ACTION_DROP:
 				CardView view = (CardView) event.getLocalState();
 				HandView hv =(HandView) view.getParent();
-				if(exited){
+				/*if(exited){
+					
 					hv.removeView(view);
-				}
+					Log.i("handView", "sortie de handView");
+				}*/
 				hv.updateView();
 				break;
 			default:
