@@ -24,8 +24,8 @@ public class DiscardPileView extends FrameLayout{
 		int width = (int) (2+(height/CardView.RATIO));
 		RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(width, height);
 		params.addRule(RelativeLayout.ALIGN_PARENT_BOTTOM);
-		params.bottomMargin = 15;
-		params.leftMargin = 15;
+		params.bottomMargin = 5;
+		params.leftMargin = 5;
 		setLayoutParams(params);
 		setBackgroundDrawable(getResources().getDrawable(R.drawable.discardpile));
 		setOnDragListener(new PileDragListener(this));

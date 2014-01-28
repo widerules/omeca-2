@@ -12,8 +12,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.Gallery;
-import android.widget.Toast;
-
 import com.ensibs.omeca.controller.ActionController;
 import com.ensibs.omeca.model.entities.Card;
 
@@ -63,6 +61,7 @@ public class HandView extends Gallery{
 	public void updateView(){
 		this.init();
 	}
+	
 	private void init(){        
 		// configurations for the carousel.
 		this.setClickable(false);

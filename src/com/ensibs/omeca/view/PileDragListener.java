@@ -35,24 +35,24 @@ public class PileDragListener implements OnDragListener {
 			if(v instanceof DiscardPileView){
 				DiscardPileView pile = (DiscardPileView)v;
 				TextView text = (TextView)((View)v.getParent()).findViewById(R.id.nbDiscardPileCards);
-				text.setText("x"+(pile.getDiscardPile().getNumberOfCards()));
+				text.setText(""+pile.getDiscardPile().getNumberOfCards());
 			}
 			else if(v instanceof DrawPileView){
 				DrawPileView pile = (DrawPileView)v;
 				TextView text = (TextView)((View)v.getParent()).findViewById(R.id.nbDrawPileCards);
-				text.setText("x"+(pile.getDrawpile().getNumberOfCards()));
+				text.setText(""+pile.getDrawpile().getNumberOfCards());
 			}
 			break;
 		case DragEvent.ACTION_DRAG_ENDED:
 			if(v instanceof DiscardPileView){
 				DiscardPileView pile = (DiscardPileView)v;
 				TextView text = (TextView)((View)v.getParent()).findViewById(R.id.nbDiscardPileCards);
-				text.setText("x"+(pile.getDiscardPile().getNumberOfCards()));
+				text.setText(""+pile.getDiscardPile().getNumberOfCards());
 			}
 			else if(v instanceof DrawPileView){
 				DrawPileView pile = (DrawPileView)v;
 				TextView text = (TextView)((View)v.getParent()).findViewById(R.id.nbDrawPileCards);
-				text.setText("x"+(pile.getDrawpile().getNumberOfCards()));
+				text.setText(""+pile.getDrawpile().getNumberOfCards());
 			}
 			break;
 		default:
