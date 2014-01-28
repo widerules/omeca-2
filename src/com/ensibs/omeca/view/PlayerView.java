@@ -25,6 +25,7 @@ public class PlayerView extends RelativeLayout{
 	private Context context;
 	private TextView name;
 	private TextView cards;
+	private ImageView avatar;
 	
 	public static final int SIZE = 7;
 
@@ -45,8 +46,9 @@ public class PlayerView extends RelativeLayout{
 	
 	private void init(Context context) {
 		this.context = context;
-		name = new TextView(context);
-		cards = new TextView(context);
+		this.name = new TextView(context);
+		this.cards = new TextView(context);
+		this.avatar = new ImageView(context);
 		DisplayMetrics metrics = context.getApplicationContext().getResources().getDisplayMetrics();
 		RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(metrics.heightPixels/(SIZE), metrics.heightPixels/SIZE);
 		
@@ -55,25 +57,15 @@ public class PlayerView extends RelativeLayout{
 	}
 	
 	public void setPlayer(Player player, boolean isMe){
-		if(isMe)
-			setOnDragListener(null);
 		this.player = player;
-		RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams((int)(getLayoutParams().width*0.9), (int)(getLayoutParams().height*0.9));
-		params.addRule(ALIGN_PARENT_BOTTOM, TRUE);
-		params.addRule(CENTER_HORIZONTAL);
-		ImageView image = new ImageView(context);
-		image.setImageResource(AvatarsList.get(player.getAvatar()));
-		addView(image, params);
-		
-		params = new RelativeLayout.LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT);
+		RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT);
 		params.addRule(ALIGN_PARENT_TOP, TRUE);
 		
 		name.setText(player.getName());
 		name.setGravity(Gravity.CENTER_HORIZONTAL);
-		name.setTextColor(Color.LTGRAY);
+		name.setTextColor(Color.WHITE);
 		name.setTypeface(null, Typeface.BOLD);
 		name.setTextSize(TypedValue.COMPLEX_UNIT_SP, 8);
-		
 		addView(name, params);
 		
 		if (!isMe) {			
@@ -81,15 +73,33 @@ public class PlayerView extends RelativeLayout{
 			params.addRule(ALIGN_PARENT_BOTTOM, TRUE);
 			
 			cards.setText("x" + player.getCards().size());
-			cards.setGravity(Gravity.CENTER_HORIZONTAL);
+			cards.setGravity(Gravity.RIGHT);
 			cards.setTextColor(Color.WHITE);
 			cards.setTypeface(null, Typeface.BOLD);
 			cards.setTextSize(TypedValue.COMPLEX_UNIT_SP, 10);
 			
 			addView(cards, params);
+			
+			params = new RelativeLayout.LayoutParams((int)(getLayoutParams().width*0.85), (int)(getLayoutParams().height*0.85));
+			params.addRule(ALIGN_PARENT_BOTTOM, TRUE);
+			params.addRule(CENTER_HORIZONTAL);
+			
+			avatar.setImageResource(AvatarsList.get(player.getAvatar()));
+			addView(avatar, params);
+			
 		} else {
+			params = new RelativeLayout.LayoutParams((int)(getLayoutParams().width*0.80), (int)(getLayoutParams().height*0.80));
+			params.addRule(ALIGN_PARENT_BOTTOM, TRUE);
+			params.addRule(CENTER_HORIZONTAL);
+			
+			avatar.setImageResource(AvatarsList.get(player.getAvatar()));
+			addView(avatar, params);
+			
+			setOnDragListener(null);
+			
 			name.setTextColor(Color.DKGRAY);
 			name.setTextSize(TypedValue.COMPLEX_UNIT_SP, 14);
+			name.setGravity(Gravity.LEFT);
 		}
 	}
 	
@@ -102,11 +112,9 @@ public class PlayerView extends RelativeLayout{
 					break;
 				case DragEvent.ACTION_DRAG_ENTERED:
 					setBackgroundResource(R.drawable.player);
-					name.setTextColor(Color.WHITE);
 					break;
 				case DragEvent.ACTION_DRAG_EXITED:
 					setBackgroundColor(Color.TRANSPARENT);
-					name.setTextColor(Color.DKGRAY);
 					break;
 				case DragEvent.ACTION_DROP:
 					CardView view = (CardView) event.getLocalState();
@@ -118,7 +126,6 @@ public class PlayerView extends RelativeLayout{
 					break;
 				case DragEvent.ACTION_DRAG_ENDED:
 					setBackgroundColor(Color.TRANSPARENT);
-					name.setTextColor(Color.DKGRAY);
 					break;
 				default:
 					break;
