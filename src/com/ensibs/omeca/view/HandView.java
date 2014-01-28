@@ -30,7 +30,6 @@ public class HandView extends Gallery{
 		c= context;
 		liste = new ArrayList<Card>();
 		init();
-		//this.orderCard();
 	}
 	public void orderCard(){
 		liste = ActionController.user.getCards();
@@ -86,14 +85,6 @@ public class HandView extends Gallery{
 
 	}
 
-
-	@Override
-	public boolean onScroll(MotionEvent e1, MotionEvent e2, float distanceX,
-			float distanceY) {
-		return super.onScroll(e1, e2, 0, 0);
-	}
-	
-	
 	public HandView(Context context, AttributeSet attrs) {
 		super(context, attrs);
 		c= context;
@@ -113,10 +104,7 @@ public class HandView extends Gallery{
 		}
 		@Override
 		public Object getItem(int position) {
-			if (position<= getCount())
-				return liste.get(position);
-			else 
-				return null;
+			return null;
 		}
 		@Override
 		public long getItemId(int position) {
@@ -130,8 +118,6 @@ public class HandView extends Gallery{
 			if(cv == null){
 				DisplayMetrics metrics = mContext.getApplicationContext().getResources().getDisplayMetrics();
 				cv = new CardView(mContext, ActionController.user.getCards().get(position));
-				Toast.makeText(c , position +" "+ cv.getCard().getValue(), Toast.LENGTH_SHORT).show();
-				liste.add(position, cv);
 				int width = (int)(metrics.widthPixels/
 						(this.getCount()<5 ? 5 : this.getCount() *1.1));
 				int height = (int)(width*CardView.RATIO);
@@ -141,7 +127,7 @@ public class HandView extends Gallery{
 					cv.turnCard();
 				cv.setOnDragListener(new OnDragListenerHand() );
 				cv.setOnTouchListener(new CardTouchListenerHand());
-				liste.add(position, cv);
+				//liste.add(position, cv);
 				return cv; 
 			}
 			return cv;
@@ -154,39 +140,43 @@ public class HandView extends Gallery{
 			switch (event.getAction()){
 			case DragEvent.ACTION_DRAG_ENTERED:
 				CardView cv = (CardView) v;	
-				HandView hv = (HandView) v.getParent();
 				cv.setRotationY(-20);
-				int j = ActionController.user.getCards().indexOf(cv.getCard());
+				/*Rotater la carte de gauche
+				 HandView hv = (HandView) v.getParent();
+				 int j = ActionController.user.getCards().indexOf(cv.getCard());
+				Toast.makeText(c ,"j: "+j, Toast.LENGTH_SHORT).show();
 				if(j>0){
 					cv = (CardView) hv.getItemAtPosition(j);
+					Toast.makeText(c ,"j-1 :" + (j-1)+"    "+ "valeur"+cv.getCard().getValue(), Toast.LENGTH_SHORT).show();
 					cv.setRotationY(20);
-				}
+				}*/
 				break;
 			case DragEvent.ACTION_DROP:				
-				CardView holdPositionCard = (CardView) v;
-				int i = ActionController.user.getCards().indexOf(holdPositionCard.getCard());
-				Toast.makeText(c ,i, Toast.LENGTH_SHORT).show();
+				CardView newPositionCard = (CardView) v;
+				int i = ActionController.user.getCards().indexOf(newPositionCard.getCard());
 				HandView hv1 = (HandView) v.getParent();
 				CardView cardToMove1 =(CardView) event.getLocalState();
+				int exPosition = ActionController.user.getCards().indexOf(cardToMove1.getCard());
 				ActionController.user.getCards().remove(cardToMove1.getCard());
-				ActionController.user.getCards().add(i,cardToMove1.getCard());
+				if(i<exPosition)
+					ActionController.user.getCards().add(i,cardToMove1.getCard());
+				else 	ActionController.user.getCards().add(i-1,cardToMove1.getCard());
 				hv1.updateView();
 				break;
 
 			case DragEvent.ACTION_DRAG_EXITED :
 				CardView cv2 = (CardView) v;	
 				cv2.setRotationY(0);
-				HandView hv2 = (HandView) v.getParent();
+				/*HandView hv2 = (HandView) v.getParent();
 				int k = ActionController.user.getCards().indexOf(cv2.getCard());
 				cv2 = (CardView) hv2.getItemAtPosition(k);
-				cv2.setRotationY(0);
+				cv2.setRotationY(0);*/
 				break;
 			default:
 				break;
 			}
 			return true;
 		}
-
 	}
 	public class CardTouchListenerHand implements OnTouchListener{
 		private boolean isOnClick;
