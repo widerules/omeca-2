@@ -111,17 +111,13 @@ public class BoardView extends RelativeLayout{
 		params.addRule(ALIGN_PARENT_RIGHT, RelativeLayout.TRUE);
 		params.addRule(ALIGN_PARENT_TOP, RelativeLayout.TRUE);
 		players_right.addView(player, params);	
-		p = new Player("Michel", 12, 6);
-		player.setPlayer(p, false);
 				
 		//Player 7
 		player = new PlayerView(context);
 		params = (RelativeLayout.LayoutParams) player.getLayoutParams();
 		params.addRule(CENTER_IN_PARENT, RelativeLayout.TRUE);
 		params.addRule(ALIGN_PARENT_RIGHT, RelativeLayout.TRUE);
-		players_right.addView(player, params);	
-		p = new Player("Louise", 13, 7);
-		player.setPlayer(p, false);
+		players_right.addView(player, params);
 	}
 	
 	public DrawPileView getDrawPileView() {
@@ -146,7 +142,6 @@ public class BoardView extends RelativeLayout{
 				case DragEvent.ACTION_DROP:
 					CardView view = (CardView) event.getLocalState();
 					ViewGroup parent = (ViewGroup)(view.getParent());
-
 			        parent.removeViewInLayout(view);
 					addView(view);
 					if(parent instanceof HandView){
@@ -161,6 +156,7 @@ public class BoardView extends RelativeLayout{
 						view.setLayoutParams(new RelativeLayout.LayoutParams(width, height));
 						CardView card = (CardView) view;
 						card.setOnTouchListener(card.new CardTouchListener());
+						card.setOnDragListener(null);
 						Gallery g2 = ((Gallery)((View)v.getParent()).findViewById(R.id.playerview_slider_board_cardgallery));
 						if(g2 != null){
 							SliderbarCardGallery a2 = (SliderbarCardGallery) g2.getAdapter();
