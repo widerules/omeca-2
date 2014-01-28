@@ -15,8 +15,6 @@ import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Gallery;
 import android.widget.LinearLayout;
-import android.widget.RelativeLayout;
-import android.widget.RelativeLayout.LayoutParams;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -91,8 +89,8 @@ public class GameActivity extends Activity implements Observer {
 		//Number of card initialization
 		TextView nbDis = ((TextView) findViewById(R.id.nbDiscardPileCards));
 		TextView nbDra = ((TextView) findViewById(R.id.nbDrawPileCards));
-		nbDis.setText("x"+board.getDiscardPile().getNumberOfCards());
-		nbDra.setText("x"+board.getDrawPile().getNumberOfCards());
+		nbDis.setText(""+board.getDiscardPile().getNumberOfCards());
+		nbDra.setText(""+board.getDrawPile().getNumberOfCards());
 		ViewGroup parent = (ViewGroup)nbDis.getParent();
 		parent.removeViewInLayout(nbDis);
 		parent.addView(nbDis);

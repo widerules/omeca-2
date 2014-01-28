@@ -27,8 +27,8 @@ public class DrawPileView extends FrameLayout {
 				width, height);
 		params.addRule(RelativeLayout.ALIGN_PARENT_BOTTOM);
 		params.addRule(RelativeLayout.ALIGN_PARENT_RIGHT);
-		params.bottomMargin = 15;
-		params.rightMargin = 15;
+		params.bottomMargin = 5;
+		params.rightMargin = 5;
 		setLayoutParams(params);
 		setBackgroundDrawable(getResources().getDrawable(R.drawable.drawpile));
 		setOnDragListener(new PileDragListener(this));
