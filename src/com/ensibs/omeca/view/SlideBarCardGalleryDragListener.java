@@ -27,20 +27,26 @@ public class SlideBarCardGalleryDragListener implements OnDragListener{
 				v.setBackgroundResource(R.drawable.gallery_background);
 				break;
 			case DragEvent.ACTION_DROP:
-				CardView view = (CardView) event.getLocalState();
-				ViewGroup parent = (ViewGroup)(view.getParent());
-				Card c = view.getCard();
-				Player p = ActionController.user;
-				p.addCard(c);
-		        parent.removeViewInLayout(view);
-		        Gallery g = (Gallery)v;
-		        SliderbarCardGallery l = (SliderbarCardGallery)g.getAdapter();
-		        l.notifyDataSetChanged();
-		        g.setSelection(ActionController.user.getNumberOfCards()-1);
-		        Gallery g2 = ((Gallery)((View)v.getParent().getParent()).findViewById(R.id.view_hand_slidebar));
-		        HandCardsAdapter a2 = (HandCardsAdapter) g2.getAdapter();
-				a2.notifyDataSetChanged();
-				g2.setSelection(ActionController.user.getNumberOfCards()/2);
+				View vTmp = (View) event.getLocalState();
+				
+				if (vTmp instanceof CardView) {
+					CardView view = (CardView) vTmp;
+					ViewGroup parent = (ViewGroup)(view.getParent());
+					Card c = view.getCard();
+					Player p = ActionController.user;
+					p.addCard(c);
+			        parent.removeViewInLayout(view);
+			        Gallery g = (Gallery)v;
+			        SliderbarCardGallery l = (SliderbarCardGallery)g.getAdapter();
+			        l.notifyDataSetChanged();
+			        g.setSelection(ActionController.user.getNumberOfCards()-1);
+			        Gallery g2 = ((Gallery)((View)v.getParent().getParent()).findViewById(R.id.view_hand_slidebar));
+			        HandCardsAdapter a2 = (HandCardsAdapter) g2.getAdapter();
+					a2.notifyDataSetChanged();
+					g2.setSelection(ActionController.user.getNumberOfCards()/2);
+				} else {
+					vTmp.setVisibility(View.VISIBLE);
+				}
 				break;
 			case DragEvent.ACTION_DRAG_ENDED:
 				v.setBackgroundResource(R.drawable.gallery_background);

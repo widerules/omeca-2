@@ -140,38 +140,43 @@ public class BoardView extends RelativeLayout{
 				case DragEvent.ACTION_DRAG_EXITED:
 					break;
 				case DragEvent.ACTION_DROP:
-					CardView view = (CardView) event.getLocalState();
-					ViewGroup parent = (ViewGroup)(view.getParent());
-			        parent.removeViewInLayout(view);
-					addView(view);
-					if(parent instanceof HandView){
-						ActionController.user.removeCard(view.getCard());
-						Gallery g = (Gallery)parent;
-						HandCardsAdapter a = (HandCardsAdapter)g.getAdapter();
-						a.notifyDataSetChanged();
-						g.setSelection(ActionController.user.getNumberOfCards()/2);
-						DisplayMetrics metrics = GameActivity.getActivity().getApplicationContext().getResources().getDisplayMetrics();
-						int height = 2+metrics.heightPixels/CardView.SIZE;
-						int width = (int) (2+(height/CardView.RATIO));
-						view.setLayoutParams(new RelativeLayout.LayoutParams(width, height));
-						CardView card = (CardView) view;
-						card.setOnTouchListener(card.new CardTouchListener());
-						card.setOnDragListener(null);
-						Gallery g2 = ((Gallery)((View)v.getParent()).findViewById(R.id.playerview_slider_board_cardgallery));
-						if(g2 != null){
-							SliderbarCardGallery a2 = (SliderbarCardGallery) g2.getAdapter();
-							a2.notifyDataSetChanged();
+					View vTmp = (View) event.getLocalState();
+					if (vTmp instanceof CardView) {
+						CardView view = (CardView) vTmp;
+						ViewGroup parent = (ViewGroup)(view.getParent());
+				        parent.removeViewInLayout(view);
+						addView(view);
+						if(parent instanceof HandView){
+							ActionController.user.removeCard(view.getCard());
+							Gallery g = (Gallery)parent;
+							HandCardsAdapter a = (HandCardsAdapter)g.getAdapter();
+							a.notifyDataSetChanged();
+							g.setSelection(ActionController.user.getNumberOfCards()/2);
+							DisplayMetrics metrics = GameActivity.getActivity().getApplicationContext().getResources().getDisplayMetrics();
+							int height = 2+metrics.heightPixels/CardView.SIZE;
+							int width = (int) (2+(height/CardView.RATIO));
+							view.setLayoutParams(new RelativeLayout.LayoutParams(width, height));
+							CardView card = (CardView) view;
+							card.setOnTouchListener(card.new CardTouchListener());
+							card.setOnDragListener(null);
+							Gallery g2 = ((Gallery)((View)v.getParent()).findViewById(R.id.playerview_slider_board_cardgallery));
+							if(g2 != null){
+								SliderbarCardGallery a2 = (SliderbarCardGallery) g2.getAdapter();
+								a2.notifyDataSetChanged();
+							}
 						}
-					}
-					MarginLayoutParams marginParams = new MarginLayoutParams(view.getLayoutParams());
-					int left = (int)(event.getX() - (view.getWidth()/2));
-					int top = (int)(event.getY() - (view.getHeight()/2));
-					int right = (int)(((View)view.getParent()).getWidth() - left + view.getWidth());
-					int bottom = (int)(((View)view.getParent()).getHeight() - top + view.getHeight());
-					marginParams.setMargins(left, top, right,bottom);
-					view.setLayoutParams(new RelativeLayout.LayoutParams(marginParams));
-					for(int i=0;i<getChildCount();i++){
-						getChildAt(i).setVisibility(View.VISIBLE);
+						MarginLayoutParams marginParams = new MarginLayoutParams(view.getLayoutParams());
+						int left = (int)(event.getX() - (view.getWidth()/2));
+						int top = (int)(event.getY() - (view.getHeight()/2));
+						int right = (int)(((View)view.getParent()).getWidth() - left + view.getWidth());
+						int bottom = (int)(((View)view.getParent()).getHeight() - top + view.getHeight());
+						marginParams.setMargins(left, top, right,bottom);
+						view.setLayoutParams(new RelativeLayout.LayoutParams(marginParams));
+						for(int i=0;i<getChildCount();i++){
+							getChildAt(i).setVisibility(View.VISIBLE);
+						}
+					} else {
+						vTmp.setVisibility(View.VISIBLE);
 					}
 					break;
 				case DragEvent.ACTION_DRAG_ENDED:
