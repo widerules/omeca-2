@@ -50,7 +50,7 @@
                         android:layout_marginRight="5dp"
                         android:textSize="40sp"
                         android:textStyle="bold"
-                        android:textColor="#AA000000" />
+                        android:textColor="#AA333333" />
             <TextView
                         android:id="@+id/nbDiscardPileCards"
                         android:layout_width="wrap_content"
@@ -61,7 +61,7 @@
                         android:layout_marginLeft="5sp"
                         android:textSize="40sp"
                         android:textStyle="bold"
-                        android:textColor="#AA000000" />
+                        android:textColor="#AA333333" />
         </com.ensibs.omeca.view.BoardView>
 
         <LinearLayout

@@ -128,5 +128,4 @@ public class CardView extends ImageView{
 		this.card = card;
 	}
 	
-
 }
