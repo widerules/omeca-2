@@ -12,6 +12,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.Gallery;
+import android.widget.Toast;
+
 import com.ensibs.omeca.controller.ActionController;
 import com.ensibs.omeca.model.entities.Card;
 
@@ -26,40 +28,85 @@ public class HandView extends Gallery{
 	public HandView(Context context) {
 		super(context);	
 		c= context;
-		liste = new ArrayList<Card>();
 		init();
 	}
-	public void orderCard(){
+	public void totalOrderCard(){
 		liste = ActionController.user.getCards();
-		ArrayList<Card> lOfdiamonds = new ArrayList<Card>() ;
+		Card[] lOfspades = new Card[13];
+		Card[] lOfhearts = new Card[13];
+		Card[] lOfclubs =new Card[13];
+		Card[] lOfdiamonds = new Card[13];
+		for( int i = 0; ActionController.user.getCards().size()>i ; i++ ){
+			if(liste.get(i).getColor().equals("ofdiamonds"))
+				lOfdiamonds[liste.get(i).getValue()]=liste.get(i);
+			else if(liste.get(i).getColor().equals("ofspades"))
+				lOfspades[liste.get(i).getValue()]= liste.get(i);
+			else if(liste.get(i).getColor().equals("ofhearts"))
+				lOfhearts[liste.get(i).getValue()]= liste.get(i);
+			else if(liste.get(i).getColor().equals("ofclubs"))
+				lOfclubs[liste.get(i).getValue()]=liste.get(i);
+		}
+		liste.clear();
+		for(int i=0; i<13; i++)
+			if (lOfdiamonds[i]!=null)
+			liste.add(lOfdiamonds[i]);
+		for(int i=0; i<13; i++)
+			if (lOfspades[i]!= null)
+			liste.add(lOfspades[i]);
+		for(int i=0; i<13; i++)
+			if (lOfhearts[i]!= null)
+			liste.add(lOfhearts[i]);
+		for(int i=0; i<13; i++)
+			if (lOfclubs[i]!= null)
+			liste.add(lOfclubs[i]);
+		ActionController.user.setCards(liste);
+		updateView();
+	}
+	
+	public void colorOrderCard(){
+		liste = ActionController.user.getCards();
 		ArrayList<Card> lOfspades = new ArrayList<Card>();
 		ArrayList<Card> lOfhearts = new ArrayList<Card>();
 		ArrayList<Card> lOfclubs = new ArrayList<Card>();
+		ArrayList<Card> lOfdiamonds = new ArrayList<Card>();
 		for( int i = 0; ActionController.user.getCards().size()>i ; i++ ){
 			if(liste.get(i).getColor().equals("ofdiamonds"))
-				lOfdiamonds.add(liste.get(i).getValue(), liste.get(i));
+				lOfdiamonds.add(liste.get(i));
 			else if(liste.get(i).getColor().equals("ofspades"))
-				lOfspades.add(liste.get(i).getValue(), liste.get(i));
+				lOfspades.add(liste.get(i));
 			else if(liste.get(i).getColor().equals("ofhearts"))
-				lOfhearts.add(liste.get(i).getValue(), liste.get(i));
-			else 
-				lOfclubs.add(liste.get(i).getValue(), liste.get(i));
+				lOfhearts.add( liste.get(i));
+			else if(liste.get(i).getColor().equals("ofclubs"))
+				lOfclubs.add(liste.get(i));
 		}
 		liste.clear();
-		lOfdiamonds.removeAll(null);
-		lOfspades.removeAll(null);
-		lOfhearts.removeAll(null);
-		lOfclubs.removeAll(null);
-		liste.addAll(lOfhearts);
 		liste.addAll(lOfdiamonds);
-		liste.addAll(lOfclubs);
 		liste.addAll(lOfspades);
+		liste.addAll(lOfhearts);
+		liste.addAll(lOfclubs);
 		ActionController.user.setCards(liste);
-		init();
+		updateView();
 	}
 
+	public void valueOrderCard(){
+		liste = ActionController.user.getCards();
+		ArrayList<Card> finalOrder = new ArrayList<Card>();
+		finalOrder.add(liste.get(0));
+		if(liste.size()>1)
+		for(int i =1; i<liste.size()-1; i++){
+			int j =0;
+			while(liste.get(i).getValue()>finalOrder.get(j).getValue())
+				j++;
+			finalOrder.add(j, liste.get(i));
+		}
+		ActionController.user.setCards(finalOrder);
+		this.updateView();
+	}
+	
 	public void updateView(){
-		this.init();
+		adapter = new HandCardsAdapter(c);
+		this.setAdapter(adapter);
+		this.setSelection(ActionController.user.getNumberOfCards()/2);
 	}
 	
 	private void init(){        
