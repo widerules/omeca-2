@@ -14,17 +14,40 @@
 	   	android:layout_weight="1">
         
     </com.ensibs.omeca.view.PlayerView>
-	
+
  	<RelativeLayout
  	   android:id="@+id/hand_actions"
         android:layout_width="68dp"
 	   	android:layout_height="match_parent"
 	   	android:layout_weight="4">
+		<LinearLayout 
+ 	      android:id="@+id/hand_actions"
+ 	      android:layout_width="wrap_content"
+ 	      android:layout_height="68dp"
+ 	      android:orientation="horizontal"
+ 	      android:layout_weight="4"
+ 	      >
+		<ImageButton 
+ 	          android:src="@drawable/color_order"
+ 	          android:layout_width="wrap_content"
+ 	          android:layout_height="68dp"
+ 	       />
+ 	      <ImageButton 
+ 	          android:src="@drawable/number_order"
+ 	          android:layout_width="wrap_content"
+ 	          android:layout_height="68dp"
+ 	       />
+ 	      <ImageButton 
+ 	          android:src="@drawable/total_order"
+ 	          android:layout_width="wrap_content"
+ 	          android:layout_height="68dp"
+ 	       />
 	   	<ImageView 
 	   	    android:src="@drawable/arrow_down"
 	   	    android:layout_height="68dp"
 	   	    android:layout_width="68dp"
 	   	    android:layout_alignParentRight="true"
 	   	    />
+			</LinearLayout>
  	  </RelativeLayout>
 </LinearLayout>
