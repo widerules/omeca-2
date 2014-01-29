@@ -30,7 +30,6 @@ public class HandViewCardGalleryDragListener implements OnDragListener{
 				CardView view = (CardView) event.getLocalState();
 				HandView hv =(HandView) view.getParent();
 				/*if(exited){
-					
 					hv.removeView(view);
 					Log.i("handView", "sortie de handView");
 				}*/
