@@ -111,7 +111,7 @@ public class PlayerView extends RelativeLayout{
 				params.addRule(ALIGN_PARENT_RIGHT, TRUE);
 
 				addView(cardsImages, params);
-				
+
 				switch(player.getNumberOfCards()){
 				case 0:	
 					cardsImages.setBackgroundColor(Color.TRANSPARENT);
@@ -142,6 +142,7 @@ public class PlayerView extends RelativeLayout{
 				name.setTextColor(Color.DKGRAY);
 				name.setTextSize(TypedValue.COMPLEX_UNIT_SP, 14);
 				name.setGravity(Gravity.LEFT);
+				name.setPadding(5, 0, 0, 0);
 			}
 		}
 	}
@@ -163,16 +164,18 @@ public class PlayerView extends RelativeLayout{
 					setBackgroundResource(R.drawable.player_empty);
 				break;
 			case DragEvent.ACTION_DROP:
-				if (event.getLocalState() instanceof PlayerView) {
-					PlayerView pv = (PlayerView) event.getLocalState();
+				View vTmp = (View)event.getLocalState();
+				if (vTmp instanceof PlayerView) {
+					PlayerView pv = (PlayerView)vTmp;
 
 					Player pvtmp = player;
 					setPlayer(pv.getPlayer(), false);
 					pv.setPlayer(pvtmp, false);
 					pv.setVisibility(View.VISIBLE);
+					setBackgroundColor(Color.TRANSPARENT);
 
-				} else {
-					CardView view = (CardView) event.getLocalState();
+				} else if(player != null){
+					CardView view = (CardView) vTmp;
 					ViewGroup parent = (ViewGroup)(view.getParent());
 					Card c = view.getCard();
 					player.addCard(c);
@@ -188,10 +191,14 @@ public class PlayerView extends RelativeLayout{
 						cards.setText("" + player.getCards().size());
 						break;
 					}
-					parent.removeViewInLayout(view);
-				}
 
-				setBackgroundColor(Color.TRANSPARENT);
+					parent.removeViewInLayout(view);
+					setBackgroundColor(Color.TRANSPARENT);
+				}
+				else{
+					vTmp.setVisibility(View.VISIBLE);
+					setBackgroundResource(R.drawable.player_empty);
+				}
 				break;
 			case DragEvent.ACTION_DRAG_ENDED:
 				break;

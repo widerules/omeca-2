@@ -29,30 +29,36 @@ public class PileDragListener implements OnDragListener {
 			
 			break;
 		case DragEvent.ACTION_DROP:
-			owner.removeViewInLayout(view);
-			pile.addView(view);
-			view.setVisibility(View.VISIBLE);
-			if(v instanceof DiscardPileView){
-				DiscardPileView pile = (DiscardPileView)v;
-				TextView text = (TextView)((View)v.getParent()).findViewById(R.id.nbDiscardPileCards);
-				text.setText(""+pile.getDiscardPile().getNumberOfCards());
+			if(view instanceof CardView){
+				owner.removeViewInLayout(view);
+				pile.addView(view);
+				view.setVisibility(View.VISIBLE);
+				if(v instanceof DiscardPileView){
+					DiscardPileView pile = (DiscardPileView)v;
+					TextView text = (TextView)((View)v.getParent()).findViewById(R.id.nbDiscardPileCards);
+					text.setText(""+pile.getDiscardPile().getNumberOfCards());
+				}
+				else if(v instanceof DrawPileView){
+					DrawPileView pile = (DrawPileView)v;
+					TextView text = (TextView)((View)v.getParent()).findViewById(R.id.nbDrawPileCards);
+					text.setText(""+pile.getDrawpile().getNumberOfCards());
+				}
 			}
-			else if(v instanceof DrawPileView){
-				DrawPileView pile = (DrawPileView)v;
-				TextView text = (TextView)((View)v.getParent()).findViewById(R.id.nbDrawPileCards);
-				text.setText(""+pile.getDrawpile().getNumberOfCards());
-			}
+			else
+				view.setVisibility(View.VISIBLE);
 			break;
 		case DragEvent.ACTION_DRAG_ENDED:
-			if(v instanceof DiscardPileView){
-				DiscardPileView pile = (DiscardPileView)v;
-				TextView text = (TextView)((View)v.getParent()).findViewById(R.id.nbDiscardPileCards);
-				text.setText(""+pile.getDiscardPile().getNumberOfCards());
-			}
-			else if(v instanceof DrawPileView){
-				DrawPileView pile = (DrawPileView)v;
-				TextView text = (TextView)((View)v.getParent()).findViewById(R.id.nbDrawPileCards);
-				text.setText(""+pile.getDrawpile().getNumberOfCards());
+			if(view instanceof CardView){
+				if(v instanceof DiscardPileView){
+					DiscardPileView pile = (DiscardPileView)v;
+					TextView text = (TextView)((View)v.getParent()).findViewById(R.id.nbDiscardPileCards);
+					text.setText(""+pile.getDiscardPile().getNumberOfCards());
+				}
+				else if(v instanceof DrawPileView){
+					DrawPileView pile = (DrawPileView)v;
+					TextView text = (TextView)((View)v.getParent()).findViewById(R.id.nbDrawPileCards);
+					text.setText(""+pile.getDrawpile().getNumberOfCards());
+				}
 			}
 			break;
 		default:

@@ -7,6 +7,7 @@ import android.view.DragEvent;
 import android.view.View;
 import android.view.View.OnDragListener;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 public class SlidebarDragListener implements OnDragListener{
 	
@@ -17,7 +18,6 @@ public class SlidebarDragListener implements OnDragListener{
 			case DragEvent.ACTION_DRAG_STARTED:
 				break;
 			case DragEvent.ACTION_DRAG_ENTERED:
-				Log.w("Text", "entered");
 				SlidingUpPanelLayout slidebar = (SlidingUpPanelLayout)v.getParent().getParent().getParent();
 				if(slidebar.isExpanded())
 					slidebar.collapsePane();
@@ -26,6 +26,7 @@ public class SlidebarDragListener implements OnDragListener{
 			case DragEvent.ACTION_DRAG_EXITED:
 				break;
 			case DragEvent.ACTION_DROP:
+				Log.w("dropped", "dropped");
 				View view = (View) event.getLocalState();
 				ViewGroup parent = (ViewGroup)(view.getParent());
 		        parent.addView(view);
