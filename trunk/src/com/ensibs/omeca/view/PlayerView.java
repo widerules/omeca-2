@@ -6,15 +6,12 @@ import android.graphics.Color;
 import android.graphics.Typeface;
 import android.util.AttributeSet;
 import android.util.DisplayMetrics;
-import android.util.Log;
 import android.util.TypedValue;
 import android.view.DragEvent;
 import android.view.Gravity;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.View.DragShadowBuilder;
-import android.view.View.OnTouchListener;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -32,6 +29,7 @@ public class PlayerView extends RelativeLayout{
 	private TextView cards;
 	private ImageView avatar;
 	private ImageView cardsImages;
+	private boolean isMe;
 
 	public static final int SIZE = 7;
 
@@ -62,7 +60,6 @@ public class PlayerView extends RelativeLayout{
 		setLayoutParams(params);
 		setBackgroundResource(R.drawable.player_empty);
 		setOnDragListener(new PlayerDragListener());
-		setOnTouchListener(new PlayerTouchListener());
 	}
 
 	public Player getPlayer() {
@@ -71,12 +68,14 @@ public class PlayerView extends RelativeLayout{
 
 	public void setPlayer(Player player, boolean isMe){
 		this.player = player;
+		this.isMe = isMe;
 		removeAllViews();
 		if (player == null) { 
 			setBackgroundResource(R.drawable.player_empty);
-
+			setOnTouchListener(null);
 		} else { 
 			setBackgroundColor(Color.TRANSPARENT);
+			setOnTouchListener(new PlayerTouchListener());
 
 			RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT);
 			params.addRule(ALIGN_PARENT_TOP, TRUE);
@@ -89,16 +88,6 @@ public class PlayerView extends RelativeLayout{
 			addView(name, params);
 
 			if (!isMe) {			
-				params = new RelativeLayout.LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT);
-				params.addRule(CENTER_VERTICAL, TRUE);
-
-				cards.setGravity(Gravity.RIGHT);
-				cards.setTextColor(Color.WHITE);
-				cards.setTypeface(null, Typeface.BOLD);
-				cards.setTextSize(TypedValue.COMPLEX_UNIT_SP, 10);
-
-				addView(cards, params);
-
 				params = new RelativeLayout.LayoutParams((int)(getLayoutParams().width*0.85), (int)(getLayoutParams().height*0.85));
 				params.addRule(ALIGN_PARENT_BOTTOM, TRUE);
 				params.addRule(CENTER_HORIZONTAL);
@@ -112,10 +101,10 @@ public class PlayerView extends RelativeLayout{
 
 				addView(cardsImages, params);
 
+				cards.setText("");
 				switch(player.getNumberOfCards()){
 				case 0:	
 					cardsImages.setBackgroundColor(Color.TRANSPARENT);
-					cards.setText("");
 					break;
 				case 1:
 					cardsImages.setBackgroundResource(R.drawable.cardsx1);
@@ -128,16 +117,25 @@ public class PlayerView extends RelativeLayout{
 					cards.setText("" + player.getCards().size());
 					break;
 				}
+				
+				params = new RelativeLayout.LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT);
+				params.addRule(CENTER_VERTICAL, TRUE);
 
+				cards.setGravity(Gravity.RIGHT);
+				cards.setTextColor(Color.WHITE);
+				cards.setTypeface(null, Typeface.BOLD);
+				cards.setTextSize(TypedValue.COMPLEX_UNIT_SP, 10);
+
+				addView(cards, params);
+				
 			} else {
+				setOnTouchListener(null);
 				params = new RelativeLayout.LayoutParams((int)(getLayoutParams().width*0.80), (int)(getLayoutParams().height*0.80));
 				params.addRule(ALIGN_PARENT_BOTTOM, TRUE);
 				params.addRule(CENTER_HORIZONTAL);
 
 				avatar.setImageResource(AvatarsList.get(player.getAvatar()));
 				addView(avatar, params);
-
-				setOnDragListener(null);
 
 				name.setTextColor(Color.DKGRAY);
 				name.setTextSize(TypedValue.COMPLEX_UNIT_SP, 14);
@@ -155,50 +153,57 @@ public class PlayerView extends RelativeLayout{
 			case DragEvent.ACTION_DRAG_STARTED:
 				break;
 			case DragEvent.ACTION_DRAG_ENTERED:
-				setBackgroundResource(R.drawable.player);
+				if(!isMe)
+					setBackgroundResource(R.drawable.player);
 				break;
 			case DragEvent.ACTION_DRAG_EXITED:
-				if(player != null)
-					setBackgroundColor(Color.TRANSPARENT);
-				else
-					setBackgroundResource(R.drawable.player_empty);
+				if(!isMe){
+					if(player != null)
+						setBackgroundColor(Color.TRANSPARENT);
+					else
+						setBackgroundResource(R.drawable.player_empty);
+				}
 				break;
 			case DragEvent.ACTION_DROP:
 				View vTmp = (View)event.getLocalState();
-				if (vTmp instanceof PlayerView) {
-					PlayerView pv = (PlayerView)vTmp;
+				if(!isMe){
+					if (vTmp instanceof PlayerView) {
+						PlayerView pv = (PlayerView)vTmp;
 
-					Player pvtmp = player;
-					setPlayer(pv.getPlayer(), false);
-					pv.setPlayer(pvtmp, false);
-					pv.setVisibility(View.VISIBLE);
-					setBackgroundColor(Color.TRANSPARENT);
+						Player pvtmp = player;
+						setPlayer(pv.getPlayer(), false);
+						pv.setPlayer(pvtmp, false);
+						pv.setVisibility(View.VISIBLE);
+						setBackgroundColor(Color.TRANSPARENT);
 
-				} else if(player != null){
-					CardView view = (CardView) vTmp;
-					ViewGroup parent = (ViewGroup)(view.getParent());
-					Card c = view.getCard();
-					player.addCard(c);
-					switch(player.getNumberOfCards()){
-					case 1:
-						cardsImages.setBackgroundResource(R.drawable.cardsx1);
-						break;
-					case 2:
-						cardsImages.setBackgroundResource(R.drawable.cardsx2);
-						break;
-					default:
-						cardsImages.setBackgroundResource(R.drawable.cardsx3);
-						cards.setText("" + player.getCards().size());
-						break;
+					} else if(player != null){
+						CardView view = (CardView) vTmp;
+						ViewGroup parent = (ViewGroup)(view.getParent());
+						Card c = view.getCard();
+						player.addCard(c);
+						switch(player.getNumberOfCards()){
+						case 1:
+							cardsImages.setBackgroundResource(R.drawable.cardsx1);
+							break;
+						case 2:
+							cardsImages.setBackgroundResource(R.drawable.cardsx2);
+							break;
+						default:
+							cardsImages.setBackgroundResource(R.drawable.cardsx3);
+							cards.setText("" + player.getCards().size());
+							break;
+						}
+
+						parent.removeViewInLayout(view);
+						setBackgroundColor(Color.TRANSPARENT);
 					}
-
-					parent.removeViewInLayout(view);
-					setBackgroundColor(Color.TRANSPARENT);
+					else{
+						vTmp.setVisibility(View.VISIBLE);
+						setBackgroundResource(R.drawable.player_empty);
+					}
 				}
-				else{
+				else
 					vTmp.setVisibility(View.VISIBLE);
-					setBackgroundResource(R.drawable.player_empty);
-				}
 				break;
 			case DragEvent.ACTION_DRAG_ENDED:
 				break;
