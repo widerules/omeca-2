@@ -47,7 +47,7 @@
                         android:layout_alignParentRight="true"
                         android:text=""
                         android:gravity="left"
-                        android:layout_marginRight="5dp"
+                        android:layout_marginRight="6sp"
                         android:textSize="40sp"
                         android:textStyle="bold"
                         android:textColor="#AA333333" />
@@ -58,7 +58,7 @@
                         android:layout_alignParentBottom="true"
                         android:text=""
                         android:gravity="right"
-                        android:layout_marginLeft="5sp"
+                        android:layout_marginLeft="6sp"
                         android:textSize="40sp"
                         android:textStyle="bold"
                         android:textColor="#AA333333" />
