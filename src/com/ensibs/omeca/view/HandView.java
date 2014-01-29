@@ -12,8 +12,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.Gallery;
-import android.widget.Toast;
-
 import com.ensibs.omeca.controller.ActionController;
 import com.ensibs.omeca.model.entities.Card;
 
@@ -165,7 +163,7 @@ public class HandView extends Gallery{
 				DisplayMetrics metrics = mContext.getApplicationContext().getResources().getDisplayMetrics();
 				cv = new CardView(mContext, ActionController.user.getCards().get(position));
 				int width = (int)(metrics.widthPixels/
-						(this.getCount()<5 ? 5 : this.getCount() *1.1));
+						(this.getCount()<5 ? 6 : this.getCount() *1.2));
 				int height = (int)(width*CardView.RATIO);
 				cv.setLayoutParams(new Gallery.LayoutParams( width, height));
 				cv.setOnTouchListener(null);
@@ -180,13 +178,17 @@ public class HandView extends Gallery{
 		}
 	}
 
-	private class OnDragListenerHand implements OnDragListener{
+	class OnDragListenerHand implements OnDragListener{
 		@Override
 		public boolean onDrag(View v, DragEvent event) {
 			switch (event.getAction()){
 			case DragEvent.ACTION_DRAG_ENTERED:
-				CardView cv = (CardView) v;	
-				cv.setRotationY(-20);
+				CardView cv = (CardView) v;
+				/*TranslateAnimation trans = new TranslateAnimation(0, 100, 0, 100);
+				trans.setDuration(250);
+				trans.setInterpolator(new AccelerateInterpolator(1.0f));
+				cv.startAnimation(trans);*/
+				cv.setAlpha(0.5f);
 				/*Rotater la carte de gauche
 				 HandView hv = (HandView) v.getParent();
 				 int j = ActionController.user.getCards().indexOf(cv.getCard());
@@ -210,9 +212,10 @@ public class HandView extends Gallery{
 				hv1.updateView();
 				break;
 
-			case DragEvent.ACTION_DRAG_EXITED :
-				CardView cv2 = (CardView) v;	
-				cv2.setRotationY(0);
+			case DragEvent.ACTION_DRAG_EXITED:
+				CardView cv2 = (CardView) v;
+				//cv2.setRotationY(0);
+				cv2.setAlpha(1f);
 				/*HandView hv2 = (HandView) v.getParent();
 				int k = ActionController.user.getCards().indexOf(cv2.getCard());
 				cv2 = (CardView) hv2.getItemAtPosition(k);
@@ -224,7 +227,8 @@ public class HandView extends Gallery{
 			return true;
 		}
 	}
-	public class CardTouchListenerHand implements OnTouchListener{
+	
+	class CardTouchListenerHand implements OnTouchListener{
 		private boolean isOnClick;
 
 		@Override

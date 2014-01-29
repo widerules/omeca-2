@@ -75,6 +75,9 @@ public class GameActivity extends Activity implements Observer {
 		Board board = new Board();
 		board.initDrawPile(true);
 		boardView.buildBoard(board);
+		
+		findViewById(R.id.board_actions).setOnDragListener(
+				new SlidebarDragListener());
 
 		SlidingUpPanelLayout slide = (SlidingUpPanelLayout) findViewById(R.id.sliding_layout);
 
@@ -98,7 +101,6 @@ public class GameActivity extends Activity implements Observer {
 		parent.addView(nbDra);
 		
 		// Setting up slider
-		slide.setDragView(slide.findViewById(R.id.playerview_slidebar_board));
 		slide.setPanelSlideListener(new PanelSlideListener() {
 
 			private boolean isExpanded = false;
@@ -128,6 +130,8 @@ public class GameActivity extends Activity implements Observer {
 							new SlidebarDragListener());
 					((PlayerView) (findViewById(R.id.playerview_slidebar_hand)))
 							.setPlayer(ActionController.user, true);
+					SlidingUpPanelLayout slide = (SlidingUpPanelLayout) findViewById(R.id.sliding_layout);
+					slide.setDragView(findViewById(R.id.hand_actions));
 					isExpanded = true;
 				}
 			}
@@ -143,6 +147,8 @@ public class GameActivity extends Activity implements Observer {
 							new LinearLayout.LayoutParams(
 									LinearLayout.LayoutParams.MATCH_PARENT,
 									height));
+					linear.findViewById(R.id.board_actions).setOnDragListener(
+							new SlidebarDragListener());
 					((PlayerView) (findViewById(R.id.playerview_slidebar_board)))
 							.setPlayer(ActionController.user, true);
 
@@ -156,6 +162,8 @@ public class GameActivity extends Activity implements Observer {
 					g.setAdapter(new SliderbarCardGallery(panel.getContext()));
 					g.setSelection(ActionController.user.getNumberOfCards() / 2);
 					g.setOnDragListener(new SlideBarCardGalleryDragListener());
+					SlidingUpPanelLayout slide = (SlidingUpPanelLayout) findViewById(R.id.sliding_layout);
+					slide.setDragView(findViewById(R.id.board_actions));
 					isExpanded = false;
 				}
 			}

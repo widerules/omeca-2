@@ -74,9 +74,7 @@ public class BoardView extends RelativeLayout{
 		params = (RelativeLayout.LayoutParams) player.getLayoutParams();
 		params.addRule(ALIGN_PARENT_TOP, RelativeLayout.TRUE);
 		params.addRule(ALIGN_PARENT_LEFT, RelativeLayout.TRUE);
-		players_left.addView(player, params);		
-		p = new Player("Emile", 7, 2);
-		player.setPlayer(p, false);
+		players_left.addView(player, params);	
 		
 		//Player 3
 		player = new PlayerView(context);
