@@ -12,14 +12,18 @@ import android.view.Gravity;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Gallery;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.ensibs.omeca.GameActivity;
 import com.ensibs.omeca.R;
+import com.ensibs.omeca.controller.ActionController;
 import com.ensibs.omeca.model.entities.Card;
 import com.ensibs.omeca.model.entities.Player;
 import com.ensibs.omeca.utils.AvatarsList;
+import com.ensibs.omeca.utils.SliderbarCardGallery;
 
 public class PlayerView extends RelativeLayout{
 
@@ -195,6 +199,11 @@ public class PlayerView extends RelativeLayout{
 						}
 
 						parent.removeViewInLayout(view);
+						Gallery g2 = (Gallery)GameActivity.getActivity().findViewById(R.id.playerview_slider_board_cardgallery);
+						if(g2 != null){
+							SliderbarCardGallery a2 = (SliderbarCardGallery) g2.getAdapter();
+							a2.notifyDataSetChanged();
+						}
 						setBackgroundColor(Color.TRANSPARENT);
 					}
 					else{

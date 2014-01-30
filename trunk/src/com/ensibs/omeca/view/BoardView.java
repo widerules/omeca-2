@@ -145,7 +145,6 @@ public class BoardView extends RelativeLayout{
 				        parent.removeViewInLayout(view);
 						addView(view);
 						if(parent instanceof HandView){
-							ActionController.user.removeCard(view.getCard());
 							Gallery g = (Gallery)parent;
 							HandCardsAdapter a = (HandCardsAdapter)g.getAdapter();
 							a.notifyDataSetChanged();
@@ -157,7 +156,7 @@ public class BoardView extends RelativeLayout{
 							CardView card = (CardView) view;
 							card.setOnTouchListener(card.new CardTouchListener());
 							card.setOnDragListener(null);
-							Gallery g2 = ((Gallery)((View)v.getParent()).findViewById(R.id.playerview_slider_board_cardgallery));
+							Gallery g2 = (Gallery)GameActivity.getActivity().findViewById(R.id.playerview_slider_board_cardgallery);
 							if(g2 != null){
 								SliderbarCardGallery a2 = (SliderbarCardGallery) g2.getAdapter();
 								a2.notifyDataSetChanged();

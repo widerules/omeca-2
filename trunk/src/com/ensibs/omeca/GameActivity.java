@@ -5,11 +5,14 @@ import java.util.Observer;
 
 import android.app.Activity;
 import android.app.AlertDialog;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.Menu;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.view.View.OnTouchListener;
 import android.view.ViewGroup;
 import android.view.Window;
 import android.view.WindowManager;
@@ -76,7 +79,7 @@ public class GameActivity extends Activity implements Observer {
 		board.initDrawPile(true);
 		boardView.buildBoard(board);
 		
-		findViewById(R.id.board_actions).setOnDragListener(
+		findViewById(R.id.expand).setOnDragListener(
 				new SlidebarDragListener());
 
 		SlidingUpPanelLayout slide = (SlidingUpPanelLayout) findViewById(R.id.sliding_layout);
@@ -88,6 +91,7 @@ public class GameActivity extends Activity implements Observer {
 		g.setAdapter(new SliderbarCardGallery(this));
 		g.setSelection(ActionController.user.getNumberOfCards() / 2);
 		g.setOnDragListener(new SlideBarCardGalleryDragListener());
+		
 		
 		//Number of card initialization
 		TextView nbDis = ((TextView) findViewById(R.id.nbDiscardPileCards));
@@ -131,7 +135,7 @@ public class GameActivity extends Activity implements Observer {
 					((PlayerView) (findViewById(R.id.playerview_slidebar_hand)))
 							.setPlayer(ActionController.user, true);
 					SlidingUpPanelLayout slide = (SlidingUpPanelLayout) findViewById(R.id.sliding_layout);
-					slide.setDragView(findViewById(R.id.hand_actions));
+					slide.setDragView(slide.findViewById(R.id.collapse));
 					isExpanded = true;
 				}
 			}
@@ -147,7 +151,7 @@ public class GameActivity extends Activity implements Observer {
 							new LinearLayout.LayoutParams(
 									LinearLayout.LayoutParams.MATCH_PARENT,
 									height));
-					linear.findViewById(R.id.board_actions).setOnDragListener(
+					linear.findViewById(R.id.expand).setOnDragListener(
 							new SlidebarDragListener());
 					((PlayerView) (findViewById(R.id.playerview_slidebar_board)))
 							.setPlayer(ActionController.user, true);
@@ -163,7 +167,7 @@ public class GameActivity extends Activity implements Observer {
 					g.setSelection(ActionController.user.getNumberOfCards() / 2);
 					g.setOnDragListener(new SlideBarCardGalleryDragListener());
 					SlidingUpPanelLayout slide = (SlidingUpPanelLayout) findViewById(R.id.sliding_layout);
-					slide.setDragView(findViewById(R.id.board_actions));
+					slide.setDragView(findViewById(R.id.collapse));
 					isExpanded = false;
 				}
 			}
