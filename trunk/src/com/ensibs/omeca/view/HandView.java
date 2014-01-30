@@ -92,7 +92,7 @@ public class HandView extends Gallery{
 		ArrayList<Card> finalOrder = new ArrayList<Card>();
 		finalOrder.add(liste.get(0));
 		if(liste.size()>1)
-		for(int i =1; i<liste.size()-1; i++){
+		for(int i =1; i<liste.size(); i++){
 			int j =0;
 			while(liste.get(i).getValue()>finalOrder.get(j).getValue())
 				j++;
