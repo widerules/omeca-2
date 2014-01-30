@@ -12,6 +12,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.Gallery;
+
 import com.ensibs.omeca.controller.ActionController;
 import com.ensibs.omeca.model.entities.Card;
 
@@ -102,8 +103,7 @@ public class HandView extends Gallery{
 	}
 	
 	public void updateView(){
-		adapter = new HandCardsAdapter(c);
-		this.setAdapter(adapter);
+		adapter.notifyDataSetChanged();
 		this.setSelection(ActionController.user.getNumberOfCards()/2);
 	}
 	
@@ -118,14 +118,6 @@ public class HandView extends Gallery{
 		this.setUnselectedAlpha((float) 1);
 		this.setSelection(ActionController.user.getNumberOfCards()/2);
 		this.setOnDragListener(hvcgdl);
-
-		/*block le slider
-        this.setOnTouchListener(new OnTouchListener() {
-        	  @Override
-        	  public boolean onTouch(View v, MotionEvent event) {
-        	     return true;
-        	  }
-        	 });*/
 
 	}
 
@@ -254,6 +246,16 @@ public class HandView extends Gallery{
 			}	
 			return true;
 		}
+	}
+	
+	@Override
+	public void removeViewInLayout(View view) {
+		if(view instanceof CardView){
+			ActionController.user.removeCard(((CardView)view).getCard());
+			super.removeViewInLayout(view);
+		}
+		
+		
 	}
 
 }

@@ -35,7 +35,7 @@ public class DiscardPileView extends FrameLayout{
 	@Override
 	public void removeViewInLayout(View view) {
 		discardPile.removeLastCard();
-		super.removeView(view);
+		super.removeViewInLayout(view);
 		
 	}
 	

@@ -27,9 +27,9 @@
 	</Gallery>
 	
  	<RelativeLayout
- 	   android:id="@+id/board_actions"
+ 	   android:id="@+id/expand"
         android:layout_width="68dp"
-	   	android:layout_height="match_parent"
+	   	android:layout_height="68dp"
 	   	android:layout_weight="1">
 	   	<ImageView 
 	   	    android:src="@drawable/arrow_up"
