@@ -17,6 +17,7 @@ import android.view.ViewGroup;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Gallery;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -29,6 +30,7 @@ import com.ensibs.omeca.utils.SlidingUpPanelLayout;
 import com.ensibs.omeca.utils.SlidingUpPanelLayout.PanelSlideListener;
 import com.ensibs.omeca.view.BoardView;
 import com.ensibs.omeca.view.DealView;
+import com.ensibs.omeca.view.HandView;
 import com.ensibs.omeca.view.PlayerView;
 import com.ensibs.omeca.view.SlideBarCardGalleryDragListener;
 import com.ensibs.omeca.view.SlidebarDragListener;
@@ -78,21 +80,21 @@ public class GameActivity extends Activity implements Observer {
 		Board board = new Board();
 		board.initDrawPile(true);
 		boardView.buildBoard(board);
-		
+
 		findViewById(R.id.expand).setOnDragListener(
 				new SlidebarDragListener());
 
 		SlidingUpPanelLayout slide = (SlidingUpPanelLayout) findViewById(R.id.sliding_layout);
 
 		((PlayerView) (slide.findViewById(R.id.playerview_slidebar_board)))
-				.setPlayer(ActionController.user, true);
+		.setPlayer(ActionController.user, true);
 
 		Gallery g = (Gallery) findViewById(R.id.playerview_slider_board_cardgallery);
 		g.setAdapter(new SliderbarCardGallery(this));
 		g.setSelection(ActionController.user.getNumberOfCards() / 2);
 		g.setOnDragListener(new SlideBarCardGalleryDragListener());
-		
-		
+
+
 		//Number of card initialization
 		TextView nbDis = ((TextView) findViewById(R.id.nbDiscardPileCards));
 		TextView nbDra = ((TextView) findViewById(R.id.nbDrawPileCards));
@@ -103,8 +105,9 @@ public class GameActivity extends Activity implements Observer {
 		parent.addView(nbDis);
 		parent.removeViewInLayout(nbDra);
 		parent.addView(nbDra);
-		
+
 		// Setting up slider
+		slide.setDragView(findViewById(R.id.expand));
 		slide.setPanelSlideListener(new PanelSlideListener() {
 
 			private boolean isExpanded = false;
@@ -133,9 +136,13 @@ public class GameActivity extends Activity implements Observer {
 					linear.findViewById(R.id.hand_actions).setOnDragListener(
 							new SlidebarDragListener());
 					((PlayerView) (findViewById(R.id.playerview_slidebar_hand)))
-							.setPlayer(ActionController.user, true);
+					.setPlayer(ActionController.user, true);
 					SlidingUpPanelLayout slide = (SlidingUpPanelLayout) findViewById(R.id.sliding_layout);
 					slide.setDragView(slide.findViewById(R.id.collapse));
+					HandView handView = (HandView)findViewById(R.id.view_hand_slidebar);
+					((ImageView)(linear.findViewById(R.id.button_value_order))).setOnTouchListener(handView.new OrderByValueTouchListener());
+					((ImageView)(linear.findViewById(R.id.button_total_order))).setOnTouchListener(handView.new TotalOrderTouchListener());
+					((ImageView)(linear.findViewById(R.id.button_color_order))).setOnTouchListener(handView.new OrderByColorTouchListener());
 					isExpanded = true;
 				}
 			}
@@ -154,7 +161,7 @@ public class GameActivity extends Activity implements Observer {
 					linear.findViewById(R.id.expand).setOnDragListener(
 							new SlidebarDragListener());
 					((PlayerView) (findViewById(R.id.playerview_slidebar_board)))
-							.setPlayer(ActionController.user, true);
+					.setPlayer(ActionController.user, true);
 
 					Gallery g = (Gallery) findViewById(R.id.playerview_slider_board_cardgallery);
 					LinearLayout.LayoutParams params = (LinearLayout.LayoutParams) g
@@ -167,14 +174,14 @@ public class GameActivity extends Activity implements Observer {
 					g.setSelection(ActionController.user.getNumberOfCards() / 2);
 					g.setOnDragListener(new SlideBarCardGalleryDragListener());
 					SlidingUpPanelLayout slide = (SlidingUpPanelLayout) findViewById(R.id.sliding_layout);
-					slide.setDragView(findViewById(R.id.collapse));
+					slide.setDragView(findViewById(R.id.expand));
 					isExpanded = false;
 				}
 			}
 
 			@Override
 			public void onPanelAnchored(View panel) {
-			
+
 			}
 		});
 	}
@@ -182,9 +189,9 @@ public class GameActivity extends Activity implements Observer {
 	@Override
 	public boolean onPrepareOptionsMenu(Menu menu) {
 		OmecaPopupMenu.show(this);
-	    return false;
+		return false;
 	}
-	
+
 	@Override
 	public void update(Observable observable, Object data) {
 		if (data instanceof ConnectionWifiDirectEvent) {

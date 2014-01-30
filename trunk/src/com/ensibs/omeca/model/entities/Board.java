@@ -23,6 +23,8 @@ public class Board extends GameEntity{
 				drawPile.addCard(tmp);
 			}
 		}
+		drawPile.addCard(new Card(0, Card.JOKERS[0]));
+		drawPile.addCard(new Card(0, Card.JOKERS[1]));
 		if(shuffle)
 			drawPile.shuffle();
 	}
