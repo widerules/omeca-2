@@ -10,7 +10,21 @@
     <com.ensibs.omeca.view.HandView 
         android:id="@+id/view_hand_slidebar"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"/>
+        android:layout_height="match_parent"
+        android:layout_weight="3"/>
+    
+    <SeekBar 
+        android:id="@+id/cards_zoom_seekbar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:background="#FFFFFF"
+        android:paddingLeft="20dp"
+        android:paddingRight="20dp"
+        android:paddingBottom="15dp"
+        android:paddingTop="5dp"
+        android:max="20"
+        />
       
 
 </LinearLayout>

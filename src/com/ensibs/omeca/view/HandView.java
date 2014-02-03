@@ -7,23 +7,23 @@ import android.content.Context;
 import android.graphics.Color;
 import android.util.AttributeSet;
 import android.util.DisplayMetrics;
-import android.util.Log;
 import android.view.DragEvent;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.animation.AccelerateInterpolator;
-import android.view.animation.RotateAnimation;
 import android.widget.BaseAdapter;
 import android.widget.Gallery;
+import android.widget.SeekBar;
+import android.widget.SeekBar.OnSeekBarChangeListener;
 
 import com.ensibs.omeca.R;
 import com.ensibs.omeca.controller.ActionController;
 import com.ensibs.omeca.model.entities.Card;
 
 public class HandView extends Gallery {
-
-	public static final int CARDS_TO_DISPLAY = 10;
+	public static final int CARDS_TO_DISPLAY_ORIGIN = 5;
+	public static int CARDS_TO_DISPLAY = 5;
+	
 	ArrayList<Card> list;
 	private HandCardsAdapter adapter;
 	Context c;
@@ -128,8 +128,9 @@ public class HandView extends Gallery {
 		adapter.notifyDataSetChanged();
 		DisplayMetrics metrics = c.getApplicationContext().getResources()
 				.getDisplayMetrics();
-		int spacing = (ActionController.user.getNumberOfCards() > CARDS_TO_DISPLAY) ? (int)((metrics.heightPixels / CardView.SIZE) / (-3*CardView.RATIO))
-				: 1;
+		int cardWidth = (int)(metrics.heightPixels / CARDS_TO_DISPLAY);
+		int nbUserCards = ActionController.user.getNumberOfCards();
+		int spacing = (nbUserCards > CARDS_TO_DISPLAY) ? (int)((-2*cardWidth*(nbUserCards-CARDS_TO_DISPLAY)) / (nbUserCards+1)) : 1;
 		setSpacing(spacing);
 		if (backToTheMiddle)
 			this.setSelection(ActionController.user.getNumberOfCards() / 2);
@@ -146,14 +147,13 @@ public class HandView extends Gallery {
 		this.setUnselectedAlpha((float) 1);
 		this.setSelection(ActionController.user.getNumberOfCards() / 2);
 		this.setOnDragListener(hvcgdl);
-
+		list = new ArrayList<Card>();
 	}
 
 	public HandView(Context context, AttributeSet attrs) {
 		super(context, attrs);
 		c = context;
 		init();
-		list = new ArrayList<Card>();
 	}
 
 	public class HandCardsAdapter extends BaseAdapter {
@@ -188,8 +188,7 @@ public class HandView extends Gallery {
 						.getResources().getDisplayMetrics();
 				cv = new CardView(mContext, ActionController.user.getCards()
 						.get(position));
-				int width = (ActionController.user.getNumberOfCards() > CARDS_TO_DISPLAY) ? (int) (metrics.widthPixels / (CARDS_TO_DISPLAY)) : (int) (metrics.widthPixels / (ActionController.user.getNumberOfCards()));
-				width = (width > (metrics.widthPixels/(CARDS_TO_DISPLAY/2))) ? (int)(metrics.widthPixels/(CARDS_TO_DISPLAY/2)) : width;
+				int width = (int) (metrics.widthPixels / (CARDS_TO_DISPLAY));
 				int height = (int) (width * CardView.RATIO);
 				cv.setLayoutParams(new Gallery.LayoutParams(width, height));
 				cv.setOnTouchListener(null);
@@ -296,6 +295,27 @@ public class HandView extends Gallery {
 			ActionController.user.removeCard(((CardView) view).getCard());
 			updateView(true);
 		}
+	}
+	
+	
+	public class CardsZoomSeekbarChangeListener implements OnSeekBarChangeListener{
+
+		@Override
+		public void onProgressChanged(SeekBar seekBar, int progress,
+				boolean fromUser) {
+			CARDS_TO_DISPLAY = (int)(((1.0+progress)/10)*CARDS_TO_DISPLAY_ORIGIN)+CARDS_TO_DISPLAY_ORIGIN;
+			updateView(false);
+			
+		}
+
+		@Override
+		public void onStartTrackingTouch(SeekBar seekBar) {
+		}
+
+		@Override
+		public void onStopTrackingTouch(SeekBar seekBar) {
+		}
+		
 	}
 
 	public class OrderByValueTouchListener implements OnTouchListener {
