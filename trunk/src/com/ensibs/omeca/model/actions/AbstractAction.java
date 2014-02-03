@@ -2,7 +2,7 @@ package com.ensibs.omeca.model.actions;
 
 import com.ensibs.omeca.model.entities.Board;
 
-public abstract class AbstractAction implements ActionEvent{
+public abstract class AbstractAction {//implements ActionEvent{
 	/**
 	 * 
 	 */
