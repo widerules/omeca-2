@@ -6,7 +6,9 @@ import android.util.DisplayMetrics;
 import android.view.View;
 import android.widget.FrameLayout;
 import android.widget.RelativeLayout;
+
 import com.ensibs.omeca.R;
+import com.ensibs.omeca.controller.ActionController;
 import com.ensibs.omeca.model.entities.Card;
 import com.ensibs.omeca.model.entities.DiscardPile;
 
@@ -35,6 +37,7 @@ public class DiscardPileView extends FrameLayout{
 	@Override
 	public void removeViewInLayout(View view) {
 		discardPile.removeLastCard();
+		ActionController.board.setDiscardPile(discardPile);
 		super.removeViewInLayout(view);
 		
 	}
@@ -42,6 +45,7 @@ public class DiscardPileView extends FrameLayout{
 	@Override
 	public void addView(View child) {
 		discardPile.addCard(((CardView)child).getCard());
+		ActionController.board.setDiscardPile(discardPile);
 		super.addView(child);
 	}
 
