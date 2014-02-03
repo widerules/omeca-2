@@ -18,7 +18,7 @@ public class PlayerCardsTransfertAction extends AbstractAction{
 		this.card = card;
 	}
 	
-	@Override
+	/*@Override
 	public Event getEvent() {
 		return Event.ACTION;
 	}
@@ -34,6 +34,6 @@ public class PlayerCardsTransfertAction extends AbstractAction{
 		
 	}
 	
-
+*/
 
 }

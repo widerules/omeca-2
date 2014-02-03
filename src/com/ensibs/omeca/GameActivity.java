@@ -34,7 +34,8 @@ import com.ensibs.omeca.view.PlayerView;
 import com.ensibs.omeca.view.SlideBarCardGalleryDragListener;
 import com.ensibs.omeca.view.SlidebarDragListener;
 import com.ensibs.omeca.wifidirect.WifiDirectManager;
-import com.ensibs.omeca.wifidirect.event.ConnectionWifiDirectEvent;
+import com.ensibs.omeca.wifidirect.event.WifiDirectEvent;
+import com.ensibs.omeca.wifidirect.event.WifiDirectEventImpl;
 
 public class GameActivity extends Activity implements Observer {
 
@@ -198,10 +199,11 @@ public class GameActivity extends Activity implements Observer {
 	
 	@Override
 	public void update(Observable observable, Object data) {
-		if (data instanceof ConnectionWifiDirectEvent) {
-			if (!wifiDirectManager.isHost()) {
-				setContentView(R.layout.view_game);
-			}
+		if (data instanceof WifiDirectEventImpl && ((WifiDirectEventImpl)data).getEvent() == WifiDirectEvent.CONNECTED) {
+			//Utilise ?
+			//if (!wifiDirectManager.isHost()) {
+				//setContentView(R.layout.view_game);
+			//}
 		}
 	}
 
