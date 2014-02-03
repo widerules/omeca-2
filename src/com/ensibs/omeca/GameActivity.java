@@ -14,6 +14,7 @@ import android.view.ViewGroup;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Gallery;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -27,6 +28,7 @@ import com.ensibs.omeca.utils.SlidingUpPanelLayout;
 import com.ensibs.omeca.utils.SlidingUpPanelLayout.PanelSlideListener;
 import com.ensibs.omeca.view.BoardView;
 import com.ensibs.omeca.view.DealView;
+import com.ensibs.omeca.view.HandView;
 import com.ensibs.omeca.view.PlayerView;
 import com.ensibs.omeca.view.SlideBarCardGalleryDragListener;
 import com.ensibs.omeca.view.SlidebarDragListener;
@@ -130,10 +132,16 @@ public class GameActivity extends Activity implements Observer {
 									height));
 					linear.findViewById(R.id.hand_actions).setOnDragListener(
 							new SlidebarDragListener());
+					linear.findViewById(R.id.collapse).setOnDragListener(
+							new SlidebarDragListener());
 					((PlayerView) (findViewById(R.id.playerview_slidebar_hand)))
 							.setPlayer(ActionController.user, true);
 					SlidingUpPanelLayout slide = (SlidingUpPanelLayout) findViewById(R.id.sliding_layout);
-					slide.setDragView(findViewById(R.id.hand_actions));
+					slide.setDragView(findViewById(R.id.collapse));
+					HandView handView = (HandView)findViewById(R.id.view_hand_slidebar);
+					((ImageView)(linear.findViewById(R.id.button_value_order))).setOnTouchListener(handView.new OrderByValueTouchListener());
+					((ImageView)(linear.findViewById(R.id.button_total_order))).setOnTouchListener(handView.new TotalOrderTouchListener());
+					((ImageView)(linear.findViewById(R.id.button_color_order))).setOnTouchListener(handView.new OrderByColorTouchListener());
 					isExpanded = true;
 				}
 			}

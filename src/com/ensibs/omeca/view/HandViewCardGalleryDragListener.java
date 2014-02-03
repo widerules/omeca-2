@@ -9,9 +9,10 @@ public class HandViewCardGalleryDragListener implements OnDragListener{
     public boolean onDrag(View v, DragEvent event) {
 		switch (event.getAction()) {
 			case DragEvent.ACTION_DROP:
-				CardView view = (CardView) event.getLocalState();
+				View view = (View) event.getLocalState();
 				HandView hv =(HandView) view.getParent();
-				hv.updateView();
+				hv.updateView(false);
+				view.setVisibility(View.VISIBLE);
 				break;
 			default:
 				break;

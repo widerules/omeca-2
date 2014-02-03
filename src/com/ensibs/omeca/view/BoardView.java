@@ -145,10 +145,6 @@ public class BoardView extends RelativeLayout{
 				        parent.removeViewInLayout(view);
 						addView(view);
 						if(parent instanceof HandView){
-							Gallery g = (Gallery)parent;
-							HandCardsAdapter a = (HandCardsAdapter)g.getAdapter();
-							a.notifyDataSetChanged();
-							g.setSelection(ActionController.user.getNumberOfCards()/2);
 							DisplayMetrics metrics = GameActivity.getActivity().getApplicationContext().getResources().getDisplayMetrics();
 							int height = 2+metrics.heightPixels/CardView.SIZE;
 							int width = (int) (2+(height/CardView.RATIO));
