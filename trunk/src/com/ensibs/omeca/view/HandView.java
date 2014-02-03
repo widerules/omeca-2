@@ -7,18 +7,23 @@ import android.content.Context;
 import android.graphics.Color;
 import android.util.AttributeSet;
 import android.util.DisplayMetrics;
+import android.util.Log;
 import android.view.DragEvent;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.AccelerateInterpolator;
+import android.view.animation.RotateAnimation;
 import android.widget.BaseAdapter;
 import android.widget.Gallery;
 
+import com.ensibs.omeca.R;
 import com.ensibs.omeca.controller.ActionController;
 import com.ensibs.omeca.model.entities.Card;
 
 public class HandView extends Gallery {
 
+	public static final int CARDS_TO_DISPLAY = 9;
 	ArrayList<Card> list;
 	private HandCardsAdapter adapter;
 	Context c;
@@ -39,20 +44,18 @@ public class HandView extends Gallery {
 		Card[] jokers = new Card[Card.JOKERS.length];
 		for (int i = 0; ActionController.user.getCards().size() > i; i++) {
 			if (list.get(i).getColor().equals(Card.COLORS[0]))
-				lOfdiamonds[list.get(i).getValue()-1] = list.get(i);
+				lOfdiamonds[list.get(i).getValue() - 1] = list.get(i);
 			else if (list.get(i).getColor().equals(Card.COLORS[1]))
-				lOfspades[list.get(i).getValue()-1] = list.get(i);
+				lOfspades[list.get(i).getValue() - 1] = list.get(i);
 			else if (list.get(i).getColor().equals(Card.COLORS[2]))
-				lOfhearts[list.get(i).getValue()-1] = list.get(i);
+				lOfhearts[list.get(i).getValue() - 1] = list.get(i);
 			else if (list.get(i).getColor().equals(Card.COLORS[3]))
-				lOfclubs[list.get(i).getValue()-1] = list.get(i);
-			else if(list.get(i).getColor().equals(Card.JOKERS[0])) {
+				lOfclubs[list.get(i).getValue() - 1] = list.get(i);
+			else if (list.get(i).getColor().equals(Card.JOKERS[0])) {
 				jokers[0] = list.get(i);
-			}
-			else
+			} else
 				jokers[1] = list.get(i);
-				
-			
+
 		}
 		list.clear();
 		for (int i = 0; i < Card.JOKERS.length; i++)
@@ -71,7 +74,7 @@ public class HandView extends Gallery {
 			if (lOfclubs[i] != null)
 				list.add(lOfclubs[i]);
 		ActionController.user.setCards(list);
-		updateView();
+		updateView(true);
 	}
 
 	public void colorOrderCard() {
@@ -100,7 +103,7 @@ public class HandView extends Gallery {
 		list.addAll(lOfhearts);
 		list.addAll(lOfclubs);
 		ActionController.user.setCards(list);
-		updateView();
+		updateView(true);
 	}
 
 	public void valueOrderCard() {
@@ -118,12 +121,18 @@ public class HandView extends Gallery {
 			ActionController.user.removeCard(min);
 		}
 		ActionController.user.setCards(finalOrder);
-		this.updateView();
+		this.updateView(true);
 	}
 
-	public void updateView() {
+	public void updateView(boolean backToTheMiddle) {
 		adapter.notifyDataSetChanged();
-		this.setSelection(ActionController.user.getNumberOfCards() / 2);
+		DisplayMetrics metrics = c.getApplicationContext().getResources()
+				.getDisplayMetrics();
+		int spacing = (ActionController.user.getNumberOfCards() > CARDS_TO_DISPLAY) ? (int)((metrics.heightPixels / CardView.SIZE) / (-2*CardView.RATIO))
+				: 1;
+		setSpacing(spacing);
+		if (backToTheMiddle)
+			this.setSelection(ActionController.user.getNumberOfCards() / 2);
 	}
 
 	private void init() {
@@ -149,7 +158,6 @@ public class HandView extends Gallery {
 
 	public class HandCardsAdapter extends BaseAdapter {
 		private Context mContext;
-		private ArrayList<CardView> liste = new ArrayList<CardView>();
 
 		public HandCardsAdapter(Context c) {
 			mContext = c;
@@ -157,12 +165,13 @@ public class HandView extends Gallery {
 
 		@Override
 		public int getCount() {
-			return ActionController.user.getCards().size();
+			return ActionController.user.getNumberOfCards();
 		}
 
 		@Override
 		public Object getItem(int position) {
-			return null;
+			return new CardView(c, ActionController.user.getCards()
+					.get(position));
 		}
 
 		@Override
@@ -179,7 +188,7 @@ public class HandView extends Gallery {
 						.getResources().getDisplayMetrics();
 				cv = new CardView(mContext, ActionController.user.getCards()
 						.get(position));
-				int width = (int) (metrics.widthPixels / CardView.SIZE+2);
+				int width = (int) (metrics.widthPixels / (CARDS_TO_DISPLAY));
 				int height = (int) (width * CardView.RATIO);
 				cv.setLayoutParams(new Gallery.LayoutParams(width, height));
 				cv.setOnTouchListener(null);
@@ -187,8 +196,6 @@ public class HandView extends Gallery {
 					cv.turnCard();
 				cv.setOnDragListener(new OnDragListenerHand());
 				cv.setOnTouchListener(new CardTouchListenerHand());
-				// liste.add(position, cv);
-				return cv;
 			}
 			return cv;
 		}
@@ -200,12 +207,10 @@ public class HandView extends Gallery {
 			switch (event.getAction()) {
 			case DragEvent.ACTION_DRAG_ENTERED:
 				CardView cv = (CardView) v;
-				/*
-				 * TranslateAnimation trans = new TranslateAnimation(0, 100, 0,
-				 * 100); trans.setDuration(250); trans.setInterpolator(new
-				 * AccelerateInterpolator(1.0f)); cv.startAnimation(trans);
-				 */
-				cv.setAlpha(0.5f);
+				cv.setRotationY(-10);
+				cv.setBackgroundResource(R.drawable.sorting_card_background);
+				cv.setPadding(5, 0 ,0 ,0);
+				
 				/*
 				 * Rotater la carte de gauche HandView hv = (HandView)
 				 * v.getParent(); int j =
@@ -232,13 +237,15 @@ public class HandView extends Gallery {
 				else
 					ActionController.user.getCards().add(i - 1,
 							cardToMove1.getCard());
-				hv1.updateView();
+				hv1.updateView(false);
 				break;
 
 			case DragEvent.ACTION_DRAG_EXITED:
 				CardView cv2 = (CardView) v;
-				// cv2.setRotationY(0);
-				cv2.setAlpha(1f);
+				cv2.setRotationY(0);
+				cv2.setPadding(0, 0 ,0 ,0);
+				cv2.setBackgroundColor(Color.TRANSPARENT);
+				//cv2.setAlpha(1f);
 				/*
 				 * HandView hv2 = (HandView) v.getParent(); int k =
 				 * ActionController.user.getCards().indexOf(cv2.getCard()); cv2
@@ -284,8 +291,9 @@ public class HandView extends Gallery {
 	@Override
 	public void removeViewInLayout(View view) {
 		if (view instanceof CardView) {
-			ActionController.user.removeCard(((CardView) view).getCard());
 			super.removeViewInLayout(view);
+			ActionController.user.removeCard(((CardView) view).getCard());
+			updateView(true);
 		}
 	}
 
@@ -295,12 +303,11 @@ public class HandView extends Gallery {
 		public boolean onTouch(View v, MotionEvent mE) {
 			switch (mE.getAction()) {
 			case MotionEvent.ACTION_DOWN:
-				v.setBackgroundColor(Color.BLUE);
+				v.setBackgroundResource(R.drawable.action_down);
 				break;
 			case MotionEvent.ACTION_UP:
 				valueOrderCard();
-				v.setBackgroundColor(Color.TRANSPARENT);
-
+				v.setBackgroundResource(R.drawable.action_background);
 				break;
 			default:
 				break;
@@ -316,12 +323,11 @@ public class HandView extends Gallery {
 		public boolean onTouch(View v, MotionEvent mE) {
 			switch (mE.getAction()) {
 			case MotionEvent.ACTION_DOWN:
-				v.setBackgroundColor(Color.BLUE);
+				v.setBackgroundResource(R.drawable.action_down);
 				break;
 			case MotionEvent.ACTION_UP:
 				colorOrderCard();
-				v.setBackgroundColor(Color.TRANSPARENT);
-
+				v.setBackgroundResource(R.drawable.action_background);
 				break;
 			default:
 				break;
@@ -337,12 +343,11 @@ public class HandView extends Gallery {
 		public boolean onTouch(View v, MotionEvent mE) {
 			switch (mE.getAction()) {
 			case MotionEvent.ACTION_DOWN:
-				v.setBackgroundColor(Color.BLUE);
+				v.setBackgroundResource(R.drawable.action_down);
 				break;
 			case MotionEvent.ACTION_UP:
 				totalOrderCard();
-				v.setBackgroundColor(Color.TRANSPARENT);
-
+				v.setBackgroundResource(R.drawable.action_background);
 				break;
 			default:
 				break;

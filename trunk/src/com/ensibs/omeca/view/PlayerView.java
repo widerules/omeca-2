@@ -153,12 +153,20 @@ public class PlayerView extends RelativeLayout{
 
 		@Override
 		public boolean onDrag(View v, DragEvent event) {
+			View vTmp = (View)event.getLocalState();
 			switch (event.getAction()) {
 			case DragEvent.ACTION_DRAG_STARTED:
 				break;
 			case DragEvent.ACTION_DRAG_ENTERED:
-				if(!isMe)
-					setBackgroundResource(R.drawable.player);
+				if(!isMe){
+					if(vTmp instanceof PlayerView)
+						setBackgroundResource(R.drawable.player);
+					else{
+						if(player != null)
+							setBackgroundResource(R.drawable.player);
+					}
+						
+				}
 				break;
 			case DragEvent.ACTION_DRAG_EXITED:
 				if(!isMe){
@@ -169,7 +177,6 @@ public class PlayerView extends RelativeLayout{
 				}
 				break;
 			case DragEvent.ACTION_DROP:
-				View vTmp = (View)event.getLocalState();
 				if(!isMe){
 					if (vTmp instanceof PlayerView) {
 						PlayerView pv = (PlayerView)vTmp;

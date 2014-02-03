@@ -40,10 +40,8 @@ public class SlideBarCardGalleryDragListener implements OnDragListener{
 			        SliderbarCardGallery l = (SliderbarCardGallery)g.getAdapter();
 			        l.notifyDataSetChanged();
 			        g.setSelection(ActionController.user.getNumberOfCards()-1);
-			        Gallery g2 = ((Gallery)((View)v.getParent().getParent()).findViewById(R.id.view_hand_slidebar));
-			        HandCardsAdapter a2 = (HandCardsAdapter) g2.getAdapter();
-					a2.notifyDataSetChanged();
-					g2.setSelection(ActionController.user.getNumberOfCards()/2);
+			        HandView hv = ((HandView)((View)v.getParent().getParent()).findViewById(R.id.view_hand_slidebar));
+			        hv.updateView(true);
 				} else {
 					vTmp.setVisibility(View.VISIBLE);
 				}
