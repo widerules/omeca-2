@@ -172,6 +172,7 @@ public class GameActivity extends Activity implements Observer {
 					g.setAdapter(new SliderbarCardGallery(panel.getContext()));
 					g.setSelection(ActionController.user.getNumberOfCards() / 2);
 					g.setOnDragListener(new SlideBarCardGalleryDragListener());
+					
 					SlidingUpPanelLayout slide = (SlidingUpPanelLayout) findViewById(R.id.sliding_layout);
 					slide.setDragView(findViewById(R.id.expand));
 					isExpanded = false;

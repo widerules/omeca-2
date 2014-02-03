@@ -23,7 +23,7 @@ import com.ensibs.omeca.model.entities.Card;
 
 public class HandView extends Gallery {
 
-	public static final int CARDS_TO_DISPLAY = 9;
+	public static final int CARDS_TO_DISPLAY = 10;
 	ArrayList<Card> list;
 	private HandCardsAdapter adapter;
 	Context c;
@@ -128,7 +128,7 @@ public class HandView extends Gallery {
 		adapter.notifyDataSetChanged();
 		DisplayMetrics metrics = c.getApplicationContext().getResources()
 				.getDisplayMetrics();
-		int spacing = (ActionController.user.getNumberOfCards() > CARDS_TO_DISPLAY) ? (int)((metrics.heightPixels / CardView.SIZE) / (-2*CardView.RATIO))
+		int spacing = (ActionController.user.getNumberOfCards() > CARDS_TO_DISPLAY) ? (int)((metrics.heightPixels / CardView.SIZE) / (-3*CardView.RATIO))
 				: 1;
 		setSpacing(spacing);
 		if (backToTheMiddle)
@@ -188,7 +188,8 @@ public class HandView extends Gallery {
 						.getResources().getDisplayMetrics();
 				cv = new CardView(mContext, ActionController.user.getCards()
 						.get(position));
-				int width = (int) (metrics.widthPixels / (CARDS_TO_DISPLAY));
+				int width = (ActionController.user.getNumberOfCards() > CARDS_TO_DISPLAY) ? (int) (metrics.widthPixels / (CARDS_TO_DISPLAY)) : (int) (metrics.widthPixels / (ActionController.user.getNumberOfCards()));
+				width = (width > (metrics.widthPixels/(CARDS_TO_DISPLAY/2))) ? (int)(metrics.widthPixels/(CARDS_TO_DISPLAY/2)) : width;
 				int height = (int) (width * CardView.RATIO);
 				cv.setLayoutParams(new Gallery.LayoutParams(width, height));
 				cv.setOnTouchListener(null);

@@ -25,39 +25,43 @@
 
         <ImageView
             android:id="@+id/button_color_order"
-            android:layout_height="match_parent"
-            android:layout_width="68dp"
+            android:layout_height="60dp"
+            android:layout_width="60dp"
             android:paddingBottom="5dp"
             android:paddingLeft="5dp"
             android:paddingRight="5dp"
             android:paddingTop="5dp"
             android:src="@drawable/color_order"
             android:background="@drawable/action_background"
-            android:layout_marginRight="5dp" />
+            android:layout_marginRight="5dp"
+            android:layout_gravity="center_vertical"
+             />
       
 
         <ImageView
             android:id="@+id/button_value_order"
-            android:layout_height="match_parent"
-            android:layout_width="68dp"
+            android:layout_height="60dp"
+            android:layout_width="60dp"
             android:paddingBottom="5dp"
             android:paddingLeft="5dp"
             android:paddingRight="5dp"
             android:paddingTop="5dp"
             android:src="@drawable/value_order"
             android:background="@drawable/action_background"
-            android:layout_marginRight="5dp" />
+            android:layout_marginRight="5dp"
+            android:layout_gravity="center_vertical" />
 
         <ImageView
             android:id="@+id/button_total_order"
-            android:layout_height="match_parent"
-            android:layout_width="68dp"
+            android:layout_height="60dp"
+            android:layout_width="60dp"
             android:paddingBottom="5dp"
             android:paddingLeft="5dp"
             android:paddingRight="5dp"
             android:paddingTop="5dp"
             android:src="@drawable/total_order"
-            android:background="@drawable/action_background" />
+            android:background="@drawable/action_background"
+            android:layout_gravity="center_vertical" />
         
     </LinearLayout>
     <RelativeLayout
