@@ -16,6 +16,7 @@ import android.view.WindowManager;
 import android.widget.Gallery;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.SeekBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -102,6 +103,9 @@ public class GameActivity extends Activity implements Observer {
 		parent.addView(nbDis);
 		parent.removeViewInLayout(nbDra);
 		parent.addView(nbDra);
+		
+		HandView handView = (HandView)findViewById(R.id.view_hand_slidebar);
+		((SeekBar)findViewById(R.id.cards_zoom_seekbar)).setOnSeekBarChangeListener(handView.new CardsZoomSeekbarChangeListener());
 		
 		// Setting up slider
 		slide.setDragView(findViewById(R.id.expand));
