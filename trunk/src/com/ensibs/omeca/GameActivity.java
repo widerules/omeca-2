@@ -65,7 +65,7 @@ public class GameActivity extends Activity implements Observer {
 		// Creates the WifiDirectManager
 		 wifiDirectManager = app.getWifiDirectManager();
 		 wifiDirectManager.addObserver(this);
-		 wifiDirectManager.setApplicationContext(this);
+		 //wifiDirectManager.setApplicationContext(this);
 
 		// Hides titlebar and actionbar
 		requestWindowFeature(Window.FEATURE_NO_TITLE);

@@ -81,6 +81,7 @@ public class WifiDirectSendThread extends Thread{
 			}
 		}
 		this.run = false;
+		Log.i(WifiDirectProperty.TAG, "Thread envoi fini");
 	}
 
 	public synchronized void sendEvent(WifiDirectEventImpl event){
@@ -94,5 +95,6 @@ public class WifiDirectSendThread extends Thread{
 
 	public synchronized void stopThread(){
 		this.run = false;
+		this.interrupt();
 	}
 }
