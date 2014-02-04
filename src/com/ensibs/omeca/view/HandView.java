@@ -34,6 +34,11 @@ public class HandView extends Gallery {
 		c = context;
 		init();
 	}
+	
+	public void addCard(CardView cv){
+		ActionController.user.addCard(cv.getCard());
+		updateView(true);
+	}
 
 	public void totalOrderCard() {
 		list = ActionController.user.getCards();
