@@ -34,8 +34,7 @@ import com.ensibs.omeca.view.PlayerView;
 import com.ensibs.omeca.view.SlideBarCardGalleryDragListener;
 import com.ensibs.omeca.view.SlidebarDragListener;
 import com.ensibs.omeca.wifidirect.WifiDirectManager;
-import com.ensibs.omeca.wifidirect.event.WifiDirectEvent;
-import com.ensibs.omeca.wifidirect.event.WifiDirectEventImpl;
+import com.ensibs.omeca.wifidirect.event.ConnectionWifiDirectEvent;
 
 public class GameActivity extends Activity implements Observer {
 
@@ -104,9 +103,6 @@ public class GameActivity extends Activity implements Observer {
 		parent.addView(nbDis);
 		parent.removeViewInLayout(nbDra);
 		parent.addView(nbDra);
-		
-		HandView handView = (HandView)findViewById(R.id.view_hand_slidebar);
-		((SeekBar)findViewById(R.id.cards_zoom_seekbar)).setOnSeekBarChangeListener(handView.new CardsZoomSeekbarChangeListener());
 		
 		// Setting up slider
 		slide.setDragView(findViewById(R.id.expand));
@@ -199,11 +195,10 @@ public class GameActivity extends Activity implements Observer {
 	
 	@Override
 	public void update(Observable observable, Object data) {
-		if (data instanceof WifiDirectEventImpl && ((WifiDirectEventImpl)data).getEvent() == WifiDirectEvent.CONNECTED) {
-			//Utilise ?
-			//if (!wifiDirectManager.isHost()) {
-				//setContentView(R.layout.view_game);
-			//}
+		if (data instanceof ConnectionWifiDirectEvent) {
+			if (!wifiDirectManager.isHost()) {
+				setContentView(R.layout.view_game);
+			}
 		}
 	}
 

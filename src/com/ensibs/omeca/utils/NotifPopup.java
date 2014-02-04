@@ -8,7 +8,6 @@ import java.util.Stack;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
-import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -17,41 +16,44 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.ensibs.omeca.R;
-import com.ensibs.omeca.controller.ActionController;
 import com.ensibs.omeca.model.entities.Notif;
+import com.ensibs.omeca.model.entities.Player;
+import com.ensibs.omeca.view.PlayerView;
 
 public class NotifPopup {
 	private static AlertDialog.Builder notifPopup = null;
+	private static Stack<Notif> notifs = new Stack<Notif>();
 
 	public static void show(Context context) {
-
-		Stack<Notif> notifs = generateNotifs();
-
-		notifPopup = new AlertDialog.Builder(context);
-		LayoutInflater inflater = (LayoutInflater) context.getSystemService( Context.LAYOUT_INFLATER_SERVICE );
-		View notifView = inflater.inflate(R.layout.popup_notifs, null);
-
-		for (Notif n : notifs) {
-			View v = inflater.inflate(R.layout.view_notif, null);
-			TextView tvDate = (TextView) v.findViewById(R.id.notifs_date);
-			ImageView ivSrc = (ImageView) v.findViewById(R.id.notifs_src);
-			TextView tvEvent = (TextView) v.findViewById(R.id.notifs_event);
-			ImageView ivTarget = (ImageView) v.findViewById(R.id.notifs_target);
-			
-			notifGenerator(n, tvDate, ivSrc, tvEvent, ivTarget);
-
-            LinearLayout ll = (LinearLayout) notifView.findViewById(R.id.notif_wrapper);
-			((ViewGroup) ll).addView(v);
-		}
-
-		notifPopup.setView(notifView);
-		notifPopup.setNegativeButton("OK", new DialogInterface.OnClickListener() {
-			public void onClick(DialogInterface popup, int arg1) {
-				popup.dismiss();
+		
+		if (notifs.size() > 0) {
+			notifPopup = new AlertDialog.Builder(context);
+			LayoutInflater inflater = (LayoutInflater) context.getSystemService( Context.LAYOUT_INFLATER_SERVICE );
+			View notifView = inflater.inflate(R.layout.popup_notifs, null);
+	
+			for (Notif n : notifs) {
+				View v = inflater.inflate(R.layout.view_notif, null);
+				TextView tvDate = (TextView) v.findViewById(R.id.notifs_date);
+				ImageView ivSrc = (ImageView) v.findViewById(R.id.notifs_src);
+				TextView tvEvent = (TextView) v.findViewById(R.id.notifs_event);
+				ImageView ivTarget = (ImageView) v.findViewById(R.id.notifs_target);
+				
+				notifGenerator(n, tvDate, ivSrc, tvEvent, ivTarget);
+	
+	            LinearLayout ll = (LinearLayout) notifView.findViewById(R.id.notif_wrapper);
+				((ViewGroup) ll).addView(v);
 			}
-		});
-
-		notifPopup.show();
+	
+			notifPopup.setView(notifView);
+			notifPopup.setNegativeButton("OK", new DialogInterface.OnClickListener() {
+				public void onClick(DialogInterface popup, int arg1) {
+					popup.dismiss();
+					flushNotifs();
+				}
+			});
+	
+			notifPopup.show();
+		}
 
 	}
 
@@ -84,41 +86,38 @@ public class NotifPopup {
 			}
 		}
 	}
-
-
+	
+	
 	/**
-	 * TEMP!!!
-	 * A remplacer par les vraies gestions de notifs ASAP
-	 * @return
+	 * Adds a notif
+	 * @param src
+	 * @param tgt
+	 * @param event
 	 */
-	private static Stack<Notif> generateNotifs() {
-		Stack<Notif> notifs = new Stack<Notif>();
+	public static void addNotif(Player src, Player tgt, String event) {
 		Notif notif = new Notif();
+		
 		SimpleDateFormat formatter = new SimpleDateFormat("hh:mm:ss", Locale.FRANCE);
 		String date = formatter.format(new Date());
 		
 		notif.setDate(date);
-		notif.setSource(ActionController.user);
-		notif.setTarget(null);
-		notif.setEvent("pioche");
+		notif.setSource(src);
+		notif.setTarget(tgt);
+		notif.setEvent(event);
+		
 		notifs.push(notif);
 		
-		notif = new Notif();
-		notif.setDate(date);
-		notif.setSource(ActionController.user);
-		notif.setTarget(ActionController.user);
-		notif.setEvent("donne une carte à");
-		notifs.push(notif);
-		notifs.push(notif);
-		notifs.push(notif);
-		notifs.push(notif);
-		notifs.push(notif);
-		notifs.push(notif);
-		notifs.push(notif);
-		notifs.push(notif);
-		notifs.push(notif);
-
-		return notifs;
+		PlayerView.updateNotifs(notifs.size());
+	}
+	
+	
+	/**
+	 * Remove all notifs
+	 */
+	public static void flushNotifs() {
+		notifs.removeAllElements();
+		
+		PlayerView.updateNotifs(notifs.size());
 	}
 
 }
