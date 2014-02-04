@@ -21,6 +21,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.ensibs.omeca.controller.ActionController;
+import com.ensibs.omeca.model.actions.DisconnectionAction;
 import com.ensibs.omeca.model.entities.Board;
 import com.ensibs.omeca.utils.OmecaPopupMenu;
 import com.ensibs.omeca.utils.SliderbarCardGallery;
@@ -42,9 +43,9 @@ public class GameActivity extends Activity implements Observer {
 	ActionController controller;
 	AlertDialog popupMenu;
 	OmecaApplication app;
-	private static Activity instance;
+	private static GameActivity instance;
 
-	public static Activity getActivity() {
+	public static GameActivity getActivity() {
 		return instance;
 	}
 
@@ -59,11 +60,9 @@ public class GameActivity extends Activity implements Observer {
 		controller = app.getControler();
 
 		// Creates the WifiDirectManager
-		/*
-		 * wifiDirectManager = app.getWifiDirectManager();
-		 * wifiDirectManager.addObserver(this); wifiDirectManager.setRole(true);
-		 * wifiDirectManager.discoverPeers();
-		 */
+		 wifiDirectManager = app.getWifiDirectManager();
+		 wifiDirectManager.addObserver(this);
+		 wifiDirectManager.setApplicationContext(this);
 
 		// Hides titlebar and actionbar
 		requestWindowFeature(Window.FEATURE_NO_TITLE);
@@ -199,11 +198,11 @@ public class GameActivity extends Activity implements Observer {
 	
 	@Override
 	public void update(Observable observable, Object data) {
-		if (data instanceof WifiDirectEventImpl && ((WifiDirectEventImpl)data).getEvent() == WifiDirectEvent.CONNECTED) {
-			//if (!wifiDirectManager.isHost()) {
-				//setContentView(R.layout.view_game);
-			//}
-
+		if (data instanceof WifiDirectEventImpl && ((WifiDirectEventImpl)data).getEvent() == WifiDirectEvent.EVENT) {
+			WifiDirectEventImpl event = (WifiDirectEventImpl)data;
+			if(event.getData() instanceof DisconnectionAction){
+				Toast.makeText(this, "Deconnection", Toast.LENGTH_LONG);
+			}
 		}
 	}
 
@@ -238,6 +237,12 @@ public class GameActivity extends Activity implements Observer {
 			Toast.makeText(getApplicationContext(), "La pile est vide",
 					Toast.LENGTH_LONG).show();
 
+	}
+	
+	public void finishGameActivity(){
+		this.wifiDirectManager.sendEvent(new WifiDirectEventImpl(WifiDirectEvent.EVENT, new DisconnectionAction(ActionController.user.getId())));
+		this.wifiDirectManager.disconnect();
+		this.finish();
 	}
 
 }
