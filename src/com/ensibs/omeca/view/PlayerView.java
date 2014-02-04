@@ -136,19 +136,19 @@ public class PlayerView extends RelativeLayout{
 				addView(cards, params);
 
 			} else {
-				params = new RelativeLayout.LayoutParams((int)(getLayoutParams().width*0.80), (int)(getLayoutParams().height*0.80));
+				params = new RelativeLayout.LayoutParams((int)(getLayoutParams().width*0.8), (int)(getLayoutParams().height*0.8));
 				params.addRule(ALIGN_PARENT_BOTTOM, TRUE);
 				params.addRule(CENTER_HORIZONTAL);
 
 				avatar.setImageResource(AvatarsList.get(player.getAvatar()));
 				addView(avatar, params);
 				
-				params = new RelativeLayout.LayoutParams(40, 40);
+				params = new RelativeLayout.LayoutParams((int)(getLayoutParams().width*0.4), (int)(getLayoutParams().width*0.4));
 				params.leftMargin = 10;
 				params.addRule(CENTER_VERTICAL, TRUE);
 				params.addRule(ALIGN_RIGHT);
 				
-				notifs.setText("0");
+				notifs.setText(""+ NotifPopup.getNumberOfNofifs());
 				notifs.setTextColor(Color.WHITE);
 				notifs.setTextSize(TypedValue.COMPLEX_UNIT_SP, 16);
 				notifs.setGravity(Gravity.CENTER);

@@ -1,42 +1,50 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="68dp"
-    android:orientation="horizontal"
-    android:id="@+id/linear_slidebar_board"
-	android:background="#ffffff">
-	
+    android:background="#ffffff"
+    android:orientation="horizontal" >
+
     <com.ensibs.omeca.view.PlayerView
-        android:id="@+id/playerview_slidebar_board"
+        android:id="@+id/playerview"
         android:layout_width="68dp"
-	   	android:layout_height="68dp"
-	   	android:layout_weight="1">
-        
+        android:layout_height="68dp"
+        android:layout_weight="1" >
     </com.ensibs.omeca.view.PlayerView>
+
+    <LinearLayout
+        android:id="@+id/board_rightpart"
+        android:layout_width="0dp"
+        android:layout_height="68dp"
+        android:layout_weight="4"
+        android:orientation="horizontal" >
+
+        <Gallery
+            android:id="@+id/playerview_slider_board_cardgallery"
+            android:layout_width="0dp"
+            android:layout_height="68dp"
+            android:layout_weight="3"
+            android:background="@drawable/gallery_background"
+            android:spacing="2dp" >
+        </Gallery>
+
+        <RelativeLayout
+            android:id="@+id/expand"
+            android:layout_width="0dp"
+            android:layout_height="68dp"
+            android:layout_weight="2" >
+
+            <ImageView
+                android:layout_width="68dp"
+                android:layout_height="68dp"
+                android:layout_alignParentRight="true"
+                android:src="@drawable/arrow_up" />
+        </RelativeLayout>
+    </LinearLayout>
     
- 	<Gallery
-  		android:id="@+id/playerview_slider_board_cardgallery"
-  		android:layout_width="wrap_content"
-  		android:layout_height="match_parent"
-  		android:background="@drawable/gallery_background"
-  		android:spacing="2dp"
-  		android:layout_weight="3"
-  		android:layout_gravity="center"
-  		>
-	</Gallery>
-	
- 	<RelativeLayout
- 	   android:id="@+id/expand"
-        android:layout_width="68dp"
-	   	android:layout_height="68dp"
-	   	android:layout_weight="1">
-	   	<ImageView 
-	   	    android:src="@drawable/arrow_up"
-	   	    android:layout_height="68dp"
-	   	    android:layout_width="68dp"
-	   	    android:layout_alignParentRight="true"
-	   	    />
- 	  </RelativeLayout>
+	<include
+	    android:visibility="gone"
+	    android:id="@+id/linear_slidebar_hand"
+	    layout="@layout/view_slidebar_hand" />
 
 </LinearLayout>

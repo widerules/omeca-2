@@ -54,6 +54,7 @@ public class DiscardPileView extends FrameLayout{
 		for (Card c : discardPile.getCards()) {
 			super.addView(new CardView(context, c));
 		}
+		ActionController.board.setDiscardPile(discardPile);
 	}
 
 	public DiscardPile getDiscardPile() {

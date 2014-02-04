@@ -119,5 +119,9 @@ public class NotifPopup {
 		
 		PlayerView.updateNotifs(notifs.size());
 	}
+	
+	public static int getNumberOfNofifs(){
+		return notifs.size();
+	}
 
 }
