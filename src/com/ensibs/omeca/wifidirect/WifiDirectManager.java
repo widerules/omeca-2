@@ -299,7 +299,7 @@ public class WifiDirectManager extends Observable implements Observer{
 			notifyObservers(p2pEvent);
 			//Resend if host
 			if(this.mod == WifiDirectMod.HOST){
-				
+				this.sendEvent(p2pEvent);
 			}
 		}else if(p2pEvent.getEvent() == WifiDirectEvent.RECEIVED_P2P_LIST){
 			this.wifiP2pManager.requestPeers(wifiP2PChannel, new PeerListListener() {
