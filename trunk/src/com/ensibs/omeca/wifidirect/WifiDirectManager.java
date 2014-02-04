@@ -109,8 +109,12 @@ public class WifiDirectManager extends Observable implements Observer{
 	 * 
 	 */
 	private void unregistred(){
+		try{
 		WifiDirectManager.applicationContext.unregisterReceiver(statusReceiver);
 		WifiDirectManager.applicationContext.unregisterReceiver(connectionListener);
+		}catch(Exception e){
+			e.printStackTrace();
+		}
 	}
 	
 	/**
