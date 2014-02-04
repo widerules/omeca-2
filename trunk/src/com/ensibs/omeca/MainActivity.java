@@ -33,12 +33,12 @@ public class MainActivity extends Activity implements Observer {
 		
 		// Retrieve application
 		app = (OmecaApplication) getApplication();
-
 		// Create controler
 		controler = app.getControler();
 
 		// Creates the WifiDirectManager
 		wifiDirectManager = app.getWifiDirectManager();
+		wifiDirectManager.setApplicationContext(this);
 		wifiDirectManager.addObserver(this);
 		Card.loadConfig(getApplicationContext().getResources().openRawResource(
 				R.raw.config));
