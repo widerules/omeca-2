@@ -8,6 +8,7 @@ import java.util.TimerTask;
 
 import android.content.Context;
 import android.content.IntentFilter;
+import android.net.wifi.WifiInfo;
 import android.net.wifi.p2p.WifiP2pConfig;
 import android.net.wifi.p2p.WifiP2pDevice;
 import android.net.wifi.p2p.WifiP2pDeviceList;
@@ -18,6 +19,7 @@ import android.net.wifi.p2p.WifiP2pManager.ConnectionInfoListener;
 import android.net.wifi.p2p.WifiP2pManager.PeerListListener;
 import android.util.Log;
 
+import com.ensibs.omeca.controller.ActionController;
 import com.ensibs.omeca.wifidirect.event.WifiDirectEvent;
 import com.ensibs.omeca.wifidirect.event.WifiDirectEventImpl;
 import com.ensibs.omeca.wifidirect.exchange.WifiDirectExchangeClient;
@@ -247,7 +249,9 @@ public class WifiDirectManager extends Observable implements Observer{
 	 */
 	public void sendEvent(WifiDirectEventImpl event){
 		if(this.wifiDirectIExchange != null){
-			this.wifiDirectIExchange.sendEvent(event);
+			WifiDirectEventImpl tmp = event;
+			tmp.setSource(ActionController.user.getId());
+			this.wifiDirectIExchange.sendEvent(tmp);
 		}
 	}
 
@@ -295,11 +299,13 @@ public class WifiDirectManager extends Observable implements Observer{
 			//Resends event or not ? Close game ?
 		}else if(p2pEvent.getEvent() == WifiDirectEvent.EVENT){
 			Log.i(WifiDirectProperty.TAG, "Event");
-			setChanged();
-			notifyObservers(p2pEvent);
+			if(p2pEvent.getSource() != ActionController.user.getId()){
+				setChanged();
+				notifyObservers(p2pEvent);
+			}
 			//Resend if host
 			if(this.mod == WifiDirectMod.HOST){
-				this.sendEvent(p2pEvent);
+				this.wifiDirectIExchange.sendEvent(p2pEvent);
 			}
 		}else if(p2pEvent.getEvent() == WifiDirectEvent.RECEIVED_P2P_LIST){
 			this.wifiP2pManager.requestPeers(wifiP2PChannel, new PeerListListener() {
