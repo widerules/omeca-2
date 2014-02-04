@@ -59,6 +59,14 @@ public class WifiDirectManager extends Observable implements Observer{
 		this.initNotificator();
 		this.initP2P();
 	}
+	
+	/**
+	 * 
+	 * @param applicationContext
+	 */
+	public static void setApplicationContext(Context applicationContext) {
+		WifiDirectManager.applicationContext = applicationContext;
+	}
 
 	/**
 	 * 
