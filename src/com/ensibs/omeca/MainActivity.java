@@ -39,6 +39,8 @@ public class MainActivity extends Activity implements Observer {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		
+		instance = this;
+		
 		// Retrieve application
 		app = (OmecaApplication) getApplication();
 		// Create controler
@@ -70,7 +72,6 @@ public class MainActivity extends Activity implements Observer {
 	@Override
 	public void onBackPressed() {
 		OmecaPopupExit.show(this);
-
 	}
 
 	/**
@@ -139,7 +140,7 @@ public class MainActivity extends Activity implements Observer {
 	public void finishMainActivity(){
 		OmecaPopupExit.dismiss();
 		System.out.println("Exit !!!");
-		// wifiDirectManager.removeWifiDirect();
+		wifiDirectManager.stopP2P();
 		this.finish();
 	}
 

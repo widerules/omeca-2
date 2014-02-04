@@ -53,6 +53,8 @@ public class WifiDirectReceivedThread extends Thread{
 
 		}
 		this.run = false;
+		Log.i(WifiDirectProperty.TAG, "Thread recoi fini");
+
 	}
 
 	public synchronized boolean getRun(){

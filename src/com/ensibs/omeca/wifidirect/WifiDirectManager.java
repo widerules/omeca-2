@@ -89,6 +89,13 @@ public class WifiDirectManager extends Observable implements Observer{
 		this.wifiP2PChannel = this.wifiP2pManager.initialize(applicationContext, applicationContext.getMainLooper(), channelListener); 
 		this.registred();
 	}
+	
+	/**
+	 * 
+	 */
+	public void stopP2P(){
+		this.unregistred();
+	}
 
 	/**
 	 * 
@@ -168,8 +175,10 @@ public class WifiDirectManager extends Observable implements Observer{
 	
 	public void disconnect(){
 		Log.i(WifiDirectProperty.TAG,"Disconnection");
-		this.wifiDirectIExchange.stopExchange();
-		this.wifiP2pManager.cancelConnect(wifiP2PChannel, actionListener);
+		if(wifiDirectIExchange != null){
+			this.wifiDirectIExchange.stopExchange();
+			this.wifiP2pManager.cancelConnect(wifiP2PChannel, actionListener);
+		}
 		this.status = WifiDirectStatus.DISCONNECTED;
 		this.cancelConnection();
 	}
@@ -233,7 +242,9 @@ public class WifiDirectManager extends Observable implements Observer{
 	 * @param event
 	 */
 	public void sendEvent(WifiDirectEventImpl event){
-		this.wifiDirectIExchange.sendEvent(event);
+		if(this.wifiDirectIExchange != null){
+			this.wifiDirectIExchange.sendEvent(event);
+		}
 	}
 
 	/**
