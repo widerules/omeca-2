@@ -33,7 +33,6 @@ import com.ensibs.omeca.wifidirect.status.WifiDirectStatus;
  */
 public class WifiDirectManager extends Observable implements Observer{
 	//TODO methode deco client
-	//registred et unregitred if isonconnection
 	//Method send msg if host if client
 	private WifiDirectMod mod = null;
 	private WifiDirectNotificationCenter notificationCenter = null;
@@ -250,9 +249,9 @@ public class WifiDirectManager extends Observable implements Observer{
 							}
 						}
 					});
+				setChanged();
+				notifyObservers(p2pEvent);
 			}
-			setChanged();
-			notifyObservers(p2pEvent);
 		}else if(p2pEvent.getEvent() == WifiDirectEvent.CONNECTION){
 			//this.stopDiscoverPeers();
 			this.connectTo((WifiP2pDevice) p2pEvent.getData());
