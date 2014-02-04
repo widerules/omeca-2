@@ -175,7 +175,7 @@ public class WifiDirectManager extends Observable implements Observer{
 	
 	public void disconnect(){
 		Log.i(WifiDirectProperty.TAG,"Disconnection");
-		if(wifiDirectIExchange != null){
+		if(this.status == WifiDirectStatus.CONNECTED){
 			this.wifiDirectIExchange.stopExchange();
 			this.wifiP2pManager.cancelConnect(wifiP2PChannel, actionListener);
 		}

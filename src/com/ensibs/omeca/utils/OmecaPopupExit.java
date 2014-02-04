@@ -3,9 +3,11 @@ package com.ensibs.omeca.utils;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.util.Log;
 
 import com.ensibs.omeca.GameActivity;
 import com.ensibs.omeca.MainActivity;
+import com.ensibs.omeca.wifidirect.property.WifiDirectProperty;
 
 public class OmecaPopupExit {
 	private static AlertDialog omecaPopupMenu = null;
@@ -13,9 +15,15 @@ public class OmecaPopupExit {
 	private static String finishText = "Voulez-vous vraiment quitter l'application?";
 
 	public static void show(Context context) {
+		Log.i(WifiDirectProperty.TAG, context.toString());
 		if (context instanceof	GameActivity) {
 			isGameActivity = true;
 			finishText = "Voulez-vous vraiment quitter la partie?";
+			Log.i(WifiDirectProperty.TAG, "Game");
+		}
+		else{
+			isGameActivity = false;
+			finishText = "Voulez-vous vraiment quitter l'application?";
 		}
 
 		DialogInterface.OnClickListener dialogClickListener = new DialogInterface.OnClickListener() {
