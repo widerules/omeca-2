@@ -38,29 +38,23 @@ public class MainActivity extends Activity implements Observer {
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		
 		instance = this;
-		
 		// Retrieve application
 		app = (OmecaApplication) getApplication();
 		// Create controler
 		controler = app.getControler();
-
 		// Creates the WifiDirectManager
 		wifiDirectManager = app.getWifiDirectManager();
 		wifiDirectManager.setApplicationContext(this);
 		wifiDirectManager.addObserver(this);
 		Card.loadConfig(getApplicationContext().getResources().openRawResource(
 				R.raw.config));
-
 		// Hides titlebar and actionbar
 		requestWindowFeature(Window.FEATURE_NO_TITLE);
 		getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
 				WindowManager.LayoutParams.FLAG_FULLSCREEN);
-
 		// Launches the stuff
 		setContentView(R.layout.view_homescreen);
-
 	}
 
 	@Override
