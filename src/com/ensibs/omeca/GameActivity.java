@@ -154,7 +154,7 @@ public class GameActivity extends Activity implements Observer {
 		OmecaPopupExit.show(this);
 	}
 
-	public static void showDealPopup() {
+	public void showDealPopup() {
 		DealPopup.show(this);
 	}
 	
