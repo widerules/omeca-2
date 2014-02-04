@@ -159,7 +159,7 @@ public class WifiDirectManager extends Observable implements Observer{
 			public void run() {
 				Log.i("P2PTest", "Timer start");
 				if(status == WifiDirectStatus.DISCONNECTED){
-					disconnect();
+					cancelConnectionTo();
 					Log.i("P2PTest", "Cancel connection");
 				}
 			}
@@ -167,6 +167,13 @@ public class WifiDirectManager extends Observable implements Observer{
 	}
 	
 	public void disconnect(){
+		this.wifiDirectIExchange.stopExchange();
+		this.wifiP2pManager.cancelConnect(wifiP2PChannel, actionListener);
+		this.status = WifiDirectStatus.DISCONNECTED;
+		this.cancelConnection();
+	}
+	
+	public void cancelConnectionTo(){
 		this.wifiP2pManager.cancelConnect(wifiP2PChannel, actionListener);
 		this.status = WifiDirectStatus.DISCONNECTED;
 		this.cancelConnection();
@@ -271,6 +278,7 @@ public class WifiDirectManager extends Observable implements Observer{
 		}else if(p2pEvent.getEvent() == WifiDirectEvent.ERROR){
 			//Resends event or not ? Close game ?
 		}else if(p2pEvent.getEvent() == WifiDirectEvent.EVENT){
+			Log.i(WifiDirectProperty.TAG, "Event");
 			setChanged();
 			notifyObservers(p2pEvent);
 			//Resend if host
