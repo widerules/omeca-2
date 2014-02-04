@@ -59,7 +59,7 @@ public class MainActivity extends Activity implements Observer {
 	    return false;
 	}
 
-	// @Override
+	@Override
 	public void onBackPressed() {
 		OmecaPopupMenu.show(this);
 
@@ -87,8 +87,9 @@ public class MainActivity extends Activity implements Observer {
 	public void join(View view) {
 		System.out.println("Join !!!");
 		Toast.makeText(this, "Joining...", Toast.LENGTH_SHORT).show();
-		this.wifiDirectManager.setRole(false);
-		this.wifiDirectManager.discoverPeers();
+		this.wifiDirectManager.setMode(WifiDirectMod.CLIENT);
+		this.wifiDirectManager.startVisible();
+		this.wifiDirectManager.startDiscoverPeers();
 	}
 
 	/**
