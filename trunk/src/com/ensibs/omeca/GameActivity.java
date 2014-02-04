@@ -210,7 +210,7 @@ public class GameActivity extends Activity implements Observer {
 				Log.i(WifiDirectProperty.TAG,"Disconnection");
 				Toast.makeText(this, "Deconnection", Toast.LENGTH_LONG);
 			}
-			 Looper.loop();
+			 //Looper.loop();
 		}
 	}
 
@@ -248,9 +248,10 @@ public class GameActivity extends Activity implements Observer {
 	}
 	
 	public void finishGameActivity(){
-		Log.i(WifiDirectProperty.TAG, "End");
+		OmecaPopupExit.dismiss();
+		//Log.i(WifiDirectProperty.TAG, "End");
 		this.wifiDirectManager.sendEvent(new WifiDirectEventImpl(WifiDirectEvent.EVENT, new DisconnectionAction(ActionController.user.getId())));
 		this.wifiDirectManager.disconnect();
-		this.finish();
+		finish();
 	}
 }

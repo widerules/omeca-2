@@ -85,7 +85,6 @@ public class MainActivity extends Activity implements Observer {
 		this.wifiDirectManager.startVisible();
 		Intent intent = new Intent(this, GameActivity.class);
 		startActivity(intent);
-
 	}
 
 	/**
@@ -107,7 +106,6 @@ public class MainActivity extends Activity implements Observer {
 	 * @param view
 	 */
 	public void options(View view) {
-		System.out.println("Options !!!");
 		OmecaPopupExit.show(this);
 	}
 
@@ -139,7 +137,6 @@ public class MainActivity extends Activity implements Observer {
 	 */
 	public void finishMainActivity(){
 		OmecaPopupExit.dismiss();
-		System.out.println("Exit !!!");
 		wifiDirectManager.stopP2P();
 		this.finish();
 	}
