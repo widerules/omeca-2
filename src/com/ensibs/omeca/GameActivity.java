@@ -22,7 +22,6 @@ import android.widget.Toast;
 
 import com.ensibs.omeca.controller.ActionController;
 import com.ensibs.omeca.model.entities.Board;
-import com.ensibs.omeca.utils.NotifPopup;
 import com.ensibs.omeca.utils.OmecaPopupMenu;
 import com.ensibs.omeca.utils.SliderbarCardGallery;
 import com.ensibs.omeca.utils.SlidingUpPanelLayout;
@@ -239,41 +238,6 @@ public class GameActivity extends Activity implements Observer {
 			Toast.makeText(getApplicationContext(), "La pile est vide",
 					Toast.LENGTH_LONG).show();
 
-	}
-
-	/**
-	 * Opens the popup menu after the corresponding menu button have been
-	 * pressed
-	 * 
-	 * @param view
-	 */
-	public void options(View view) {
-		System.out.println("Options !!!");
-		OmecaPopupMenu.show(this);
-	}
-
-	/**
-	 * Exits the current game after the corresponding menu button have been
-	 * pressed
-	 * 
-	 * @param view
-	 */
-	public void disconnect(View view) {
-		System.out.println("Disconnecting !!!");
-		OmecaPopupMenu.dismiss();
-
-		this.finish();
-	}
-
-	/**
-	 * Opens the popup menu after the corresponding menu button have been
-	 * pressed
-	 * 
-	 * @param view
-	 */
-	public void notifs(View view) {
-		OmecaPopupMenu.dismiss();
-		NotifPopup.show(this);
 	}
 
 }
