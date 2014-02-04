@@ -48,6 +48,7 @@ public class WifiDirectManager extends Observable implements Observer{
 	private WifiDirectStatus status;
 	private boolean isOnConnection = false;
 	private WifiDirectIExchange wifiDirectIExchange = null;
+	private boolean isDiscoveryRegistred = false;
 
 	/**
 	 * 
@@ -110,6 +111,7 @@ public class WifiDirectManager extends Observable implements Observer{
 	 */
 	public void startDiscoverPeers(){
 		WifiDirectManager.applicationContext.registerReceiver(discoveryReceiver, new IntentFilter(WifiP2pManager.WIFI_P2P_PEERS_CHANGED_ACTION));
+		this.isDiscoveryRegistred = true;
 	}
 
 	/**
@@ -117,6 +119,7 @@ public class WifiDirectManager extends Observable implements Observer{
 	 */
 	public void stopDiscoverPeers(){
 		WifiDirectManager.applicationContext.unregisterReceiver(discoveryReceiver);
+		this.isDiscoveryRegistred = false;
 	} 
 
 	/**
@@ -149,12 +152,17 @@ public class WifiDirectManager extends Observable implements Observer{
 			public void run() {
 				Log.i("P2PTest", "Timer start");
 				if(status == WifiDirectStatus.DISCONNECTED){
-					wifiP2pManager.cancelConnect(wifiP2PChannel, actionListener);
-					cancelConnection();
+					disconnect();
 					Log.i("P2PTest", "Cancel connection");
 				}
 			}
 		}, new Date((new Date()).getTime()+15000));
+	}
+	
+	public void disconnect(){
+		this.wifiP2pManager.cancelConnect(wifiP2PChannel, actionListener);
+		this.status = WifiDirectStatus.DISCONNECTED;
+		this.cancelConnection();
 	}
 
 	/**
@@ -185,6 +193,14 @@ public class WifiDirectManager extends Observable implements Observer{
 	 * 
 	 * @return
 	 */
+	public boolean isDiscoveryRegistred() {
+		return isDiscoveryRegistred;
+	}
+
+	/**
+	 * 
+	 * @return
+	 */
 	public static Context getApplicationContext(){
 		return WifiDirectManager.applicationContext;
 	}
@@ -195,6 +211,14 @@ public class WifiDirectManager extends Observable implements Observer{
 	 */
 	public WifiDirectStatus getStatus() {
 		return this.status;
+	}
+	
+	/**
+	 * 
+	 * @param event
+	 */
+	public void sendEvent(WifiDirectEventImpl event){
+		this.wifiDirectIExchange.sendEvent(event);
 	}
 
 	/**
