@@ -15,11 +15,9 @@ public class OmecaPopupExit {
 	private static String finishText = "Voulez-vous vraiment quitter l'application?";
 
 	public static void show(Context context) {
-		Log.i(WifiDirectProperty.TAG, context.toString());
 		if (context instanceof	GameActivity) {
 			isGameActivity = true;
 			finishText = "Voulez-vous vraiment quitter la partie?";
-			Log.i(WifiDirectProperty.TAG, "Game");
 		}
 		else{
 			isGameActivity = false;
