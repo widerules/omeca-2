@@ -73,7 +73,8 @@ public class MainActivity extends Activity implements Observer {
 	public void host(View view) {
 		System.out.println("Host !!!");
 		Toast.makeText(this, "Hosting...", Toast.LENGTH_SHORT).show();
-
+		this.wifiDirectManager.setMode(WifiDirectMod.HOST);
+		this.wifiDirectManager.startVisible();
 		Intent intent = new Intent(this, GameActivity.class);
 		startActivity(intent);
 
