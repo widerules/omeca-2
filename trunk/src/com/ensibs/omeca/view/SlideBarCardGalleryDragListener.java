@@ -11,7 +11,6 @@ import com.ensibs.omeca.controller.ActionController;
 import com.ensibs.omeca.model.entities.Card;
 import com.ensibs.omeca.model.entities.Player;
 import com.ensibs.omeca.utils.SliderbarCardGallery;
-import com.ensibs.omeca.view.HandView.HandCardsAdapter;
 
 public class SlideBarCardGalleryDragListener implements OnDragListener{
 
@@ -40,7 +39,7 @@ public class SlideBarCardGalleryDragListener implements OnDragListener{
 			        SliderbarCardGallery l = (SliderbarCardGallery)g.getAdapter();
 			        l.notifyDataSetChanged();
 			        g.setSelection(ActionController.user.getNumberOfCards()-1);
-			        HandView hv = ((HandView)((View)v.getParent().getParent()).findViewById(R.id.view_hand_slidebar));
+			        HandView hv = ((HandView)((View)v.getParent().getParent().getParent()).findViewById(R.id.handview));
 			        hv.updateView(true);
 				} else {
 					vTmp.setVisibility(View.VISIBLE);

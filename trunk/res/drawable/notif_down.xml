@@ -6,19 +6,15 @@
     <gradient
 	    android:startColor="#CCCCCC"
 	    android:endColor="#FFFFFF"
-	    android:gradientRadius="20"
+	    android:gradientRadius="70"
 	    android:type="radial"/>
     
     <padding
     	android:left="2dp"
     	android:top="2dp"
     	android:right="2dp"
-		android:bottom="3dp">
+		android:bottom="2dp">
     </padding>
 	
-    <size
-	    android:width="20dp"
-	    android:height="20dp">
-	</size>
     
 </shape>

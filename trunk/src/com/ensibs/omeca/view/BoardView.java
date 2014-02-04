@@ -17,7 +17,6 @@ import com.ensibs.omeca.controller.ActionController;
 import com.ensibs.omeca.model.entities.Board;
 import com.ensibs.omeca.model.entities.Player;
 import com.ensibs.omeca.utils.SliderbarCardGallery;
-import com.ensibs.omeca.view.HandView.HandCardsAdapter;
 
 public class BoardView extends RelativeLayout {
 	private Context context;
@@ -78,6 +77,7 @@ public class BoardView extends RelativeLayout {
 		p = new Player("Jean", 5, 1);
 		player.setPlayer(p, false);
 		playerViews.put(0, player);
+		ActionController.board.addPlayer(0, p);
 
 		// Player 2
 		player = new PlayerView(context);

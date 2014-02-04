@@ -57,6 +57,7 @@ public class DrawPileView extends FrameLayout {
 		for (Card c : drawpile.getCards()) {
 			super.addView(new CardView(context, c));
 		}
+		ActionController.board.setDrawPile(drawpile);
 	}
 
 	public DrawPile getDrawpile() {
