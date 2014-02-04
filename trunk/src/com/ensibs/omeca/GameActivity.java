@@ -23,7 +23,7 @@ import android.widget.Toast;
 import com.ensibs.omeca.controller.ActionController;
 import com.ensibs.omeca.model.actions.DisconnectionAction;
 import com.ensibs.omeca.model.entities.Board;
-import com.ensibs.omeca.utils.OmecaPopupMenu;
+import com.ensibs.omeca.utils.OmecaPopupExit;
 import com.ensibs.omeca.utils.SliderbarCardGallery;
 import com.ensibs.omeca.utils.SlidingUpPanelLayout;
 import com.ensibs.omeca.utils.SlidingUpPanelLayout.PanelSlideListener;
@@ -192,7 +192,7 @@ public class GameActivity extends Activity implements Observer {
 
 	@Override
 	public boolean onPrepareOptionsMenu(Menu menu) {
-		OmecaPopupMenu.show(this);
+		OmecaPopupExit.show(this);
 	    return false;
 	}
 	
@@ -208,7 +208,7 @@ public class GameActivity extends Activity implements Observer {
 
 	@Override
 	public void onBackPressed() {
-		OmecaPopupMenu.show(this);
+		OmecaPopupExit.show(this);
 	}
 
 	public void showDealPopup() {

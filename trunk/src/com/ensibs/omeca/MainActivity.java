@@ -14,8 +14,9 @@ import android.view.WindowManager;
 import android.widget.Toast;
 
 import com.ensibs.omeca.controller.ActionController;
+import com.ensibs.omeca.model.actions.DisconnectionAction;
 import com.ensibs.omeca.model.entities.Card;
-import com.ensibs.omeca.utils.OmecaPopupMenu;
+import com.ensibs.omeca.utils.OmecaPopupExit;
 import com.ensibs.omeca.wifidirect.WifiDirectManager;
 import com.ensibs.omeca.wifidirect.event.WifiDirectEvent;
 import com.ensibs.omeca.wifidirect.event.WifiDirectEventImpl;
@@ -28,6 +29,11 @@ public class MainActivity extends Activity implements Observer {
 	ActionController controler;
 	AlertDialog popupMenu;
 	OmecaApplication app;
+	private static MainActivity instance;
+
+	public static MainActivity getActivity() {
+		return instance;
+	}
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -57,13 +63,13 @@ public class MainActivity extends Activity implements Observer {
 
 	@Override
 	public boolean onPrepareOptionsMenu(Menu menu) {
-		OmecaPopupMenu.show(this);
+		OmecaPopupExit.show(this);
 	    return false;
 	}
 
 	@Override
 	public void onBackPressed() {
-		OmecaPopupMenu.show(this);
+		OmecaPopupExit.show(this);
 
 	}
 
@@ -101,7 +107,7 @@ public class MainActivity extends Activity implements Observer {
 	 */
 	public void options(View view) {
 		System.out.println("Options !!!");
-		OmecaPopupMenu.show(this);
+		OmecaPopupExit.show(this);
 	}
 
 	/**
@@ -113,20 +119,7 @@ public class MainActivity extends Activity implements Observer {
 	public void avatar(View view) {
 		Intent editProfilActivityIntent = new Intent(this, AvatarActivity.class);
 		startActivityForResult(editProfilActivityIntent, EDIT_AVATAR);
-		OmecaPopupMenu.dismiss();
-	}
-
-	/**
-	 * Exits properly the program after the corresponding menu button have been
-	 * pressed
-	 * 
-	 * @param view
-	 */
-	public void exit(View view) {
-		OmecaPopupMenu.dismiss();
-		System.out.println("Exit !!!");
-		// wifiDirectManager.removeWifiDirect();
-		this.finish();
+		OmecaPopupExit.dismiss();
 	}
 
 	@Override
@@ -135,6 +128,19 @@ public class MainActivity extends Activity implements Observer {
 			Intent intent = new Intent(this, GameActivity.class);
 			startActivity(intent);
 		}
+	}
+	
+	/**
+	 * Exits properly the program after the corresponding menu button have been
+	 * pressed
+	 * 
+	 * @param view
+	 */
+	public void finishMainActivity(){
+		OmecaPopupExit.dismiss();
+		System.out.println("Exit !!!");
+		// wifiDirectManager.removeWifiDirect();
+		this.finish();
 	}
 
 }
