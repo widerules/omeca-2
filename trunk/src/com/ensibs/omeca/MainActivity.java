@@ -17,6 +17,8 @@ import com.ensibs.omeca.controller.ActionController;
 import com.ensibs.omeca.model.entities.Card;
 import com.ensibs.omeca.utils.OmecaPopupMenu;
 import com.ensibs.omeca.wifidirect.WifiDirectManager;
+import com.ensibs.omeca.wifidirect.event.WifiDirectEvent;
+import com.ensibs.omeca.wifidirect.event.WifiDirectEventImpl;
 import com.ensibs.omeca.wifidirect.mod.WifiDirectMod;
 
 public class MainActivity extends Activity implements Observer {
@@ -72,7 +74,6 @@ public class MainActivity extends Activity implements Observer {
 	 */
 	public void host(View view) {
 		System.out.println("Host !!!");
-		Toast.makeText(this, "Hosting...", Toast.LENGTH_SHORT).show();
 		this.wifiDirectManager.setMode(WifiDirectMod.HOST);
 		this.wifiDirectManager.startVisible();
 		Intent intent = new Intent(this, GameActivity.class);
@@ -87,7 +88,6 @@ public class MainActivity extends Activity implements Observer {
 	 */
 	public void join(View view) {
 		System.out.println("Join !!!");
-		Toast.makeText(this, "Joining...", Toast.LENGTH_SHORT).show();
 		this.wifiDirectManager.setMode(WifiDirectMod.CLIENT);
 		this.wifiDirectManager.startVisible();
 		this.wifiDirectManager.startDiscoverPeers();
@@ -130,8 +130,11 @@ public class MainActivity extends Activity implements Observer {
 	}
 
 	@Override
-	public void update(Observable arg0, Object arg1) {
-
+	public void update(Observable source, Object data) {
+		if (data instanceof WifiDirectEventImpl && ((WifiDirectEventImpl)data).getEvent() == WifiDirectEvent.CONNECTED) {
+			Intent intent = new Intent(this, GameActivity.class);
+			startActivity(intent);
+		}
 	}
 
 }
