@@ -2,19 +2,26 @@ package com.ensibs.omeca.view;
 
 import java.util.Hashtable;
 
+
 import android.content.Context;
 import android.util.AttributeSet;
 import android.util.DisplayMetrics;
 import android.view.DragEvent;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.Animation;
+import android.view.animation.Animation.AnimationListener;
+import android.view.animation.DecelerateInterpolator;
+import android.view.animation.TranslateAnimation;
 import android.widget.Gallery;
 import android.widget.RelativeLayout;
+import android.widget.Toast;
 
 import com.ensibs.omeca.GameActivity;
 import com.ensibs.omeca.R;
 import com.ensibs.omeca.controller.ActionController;
 import com.ensibs.omeca.model.entities.Board;
+import com.ensibs.omeca.model.entities.Card;
 import com.ensibs.omeca.model.entities.Player;
 import com.ensibs.omeca.utils.SliderbarCardGallery;
 
@@ -23,6 +30,7 @@ public class BoardView extends RelativeLayout {
 	private DrawPileView drawPileView;
 	private DiscardPileView discardPileView;
 	private Hashtable<Integer, PlayerView> playerViews;
+	private Boolean jeton= false;
 
 	public BoardView(Context context) {
 		super(context);
@@ -56,10 +64,20 @@ public class BoardView extends RelativeLayout {
 				board.getDiscardPile());
 		addView(drawPileView);
 		addView(discardPileView);
-		
+		this.setOnLongClickListener(new OnLongClickListener() {
+			@Override
+			public boolean onLongClick(View v) {
+				//GameActivity.showDealPopup();
+				jeton=true;
+				distribTo(1);
+				distribTo(ActionController.user.getId());
+				
+				return true;
+			}
+		});
 		displayPlayers();
-
 	}
+	
 
 	public void displayPlayers() {
 		RelativeLayout players_left = (RelativeLayout) findViewById(R.id.players_left);
@@ -76,7 +94,7 @@ public class BoardView extends RelativeLayout {
 		players_left.addView(player, params);
 		p = new Player("Jean", 5, 1);
 		player.setPlayer(p, false);
-		playerViews.put(0, player);
+		playerViews.put(1, player);
 		ActionController.board.addPlayer(0, p);
 
 		// Player 2
@@ -85,7 +103,7 @@ public class BoardView extends RelativeLayout {
 		params.addRule(ALIGN_PARENT_TOP, RelativeLayout.TRUE);
 		params.addRule(ALIGN_PARENT_LEFT, RelativeLayout.TRUE);
 		players_left.addView(player, params);
-		playerViews.put(1, player);
+		playerViews.put(7, player);
 
 		// Player 3
 		player = new PlayerView(context);
@@ -126,6 +144,8 @@ public class BoardView extends RelativeLayout {
 		params.addRule(ALIGN_PARENT_RIGHT, RelativeLayout.TRUE);
 		players_right.addView(player, params);
 		playerViews.put(6, player);
+		
+
 	}
 
 	public DrawPileView getDrawPileView() {
@@ -200,7 +220,53 @@ public class BoardView extends RelativeLayout {
 			}
 			return true;
 		}
-
 	}
+	
+	public void distribTo(final int idUser){
+		final CardView vToMove = (CardView) drawPileView.getChildAt(0);	
+		drawPileView.removeViewInLayout(vToMove);
+		addView(vToMove);
+		int x=0 , y =0;
+		if( idUser == ActionController.user.getId()){
+			x = this.getWidth()/2;
+			y= this.getHeight();
+		}else{
+			x = (int) playerViews.get(idUser).getX();
+			y= (int) playerViews.get(idUser).getY();
+			Toast.makeText(context, playerViews.get(idUser).getPlayer().getName()  ,Toast.LENGTH_LONG).show();
+		}
+			
+		TranslateAnimation anim=new TranslateAnimation( drawPileView.getX(), x, drawPileView.getY(), y);
+		anim.setAnimationListener(new AnimationListener() {
+			
+			@Override
+			public void onAnimationStart(Animation animation) {
+			}
+			
+			@Override
+			public void onAnimationRepeat(Animation animation) {
+			}
+			
+			@Override
+			public void onAnimationEnd(Animation animation) {
+				endAnim(idUser, vToMove);
+				jeton= false;
+			}
+		});
+		anim.setFillAfter(true);
+		anim.setInterpolator(new DecelerateInterpolator(1.0f));
+		anim.setDuration(400);
+		vToMove.startAnimation(anim);
+	}
+	public void endAnim(int idUser, CardView vToMove ){
+		if( idUser != ActionController.user.getId()){
+			playerViews.get(idUser).getPlayer().addCard(vToMove.getCard());
+			//TODO ajouter la fonction dans la player view pour lui ajouter une carte
+			playerViews.get(idUser).setPlayer(playerViews.get(idUser).getPlayer(), false);
+		}else
+			ActionController.user.addCard(vToMove.getCard()); //TODO updater la slidBar et handView
+		this.removeView(vToMove);
+	}
+	 
 
 }

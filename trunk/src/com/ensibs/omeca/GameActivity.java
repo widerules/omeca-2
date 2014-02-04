@@ -5,6 +5,7 @@ import java.util.Observer;
 
 import android.app.Activity;
 import android.app.AlertDialog;
+import android.content.Context;
 import android.os.Bundle;
 import android.os.Looper;
 import android.util.Log;
@@ -40,7 +41,7 @@ import com.ensibs.omeca.wifidirect.property.WifiDirectProperty;
 public class GameActivity extends Activity implements Observer {
 
 	WifiDirectManager wifiDirectManager;
-	ActionController controller;
+	static ActionController controller;
 	AlertDialog popupMenu;
 	OmecaApplication app;
 	private static GameActivity instance;
@@ -77,7 +78,7 @@ public class GameActivity extends Activity implements Observer {
 		// Built the board
 		BoardView boardView = (BoardView) (gameView
 				.findViewById(R.id.view_board));
-		Board board = new Board();
+		Board board = ActionController.board;
 		board.initDrawPile(true);
 		boardView.buildBoard(board);
 
@@ -153,7 +154,7 @@ public class GameActivity extends Activity implements Observer {
 		OmecaPopupExit.show(this);
 	}
 
-	public void showDealPopup() {
+	public static void showDealPopup() {
 		DealPopup.show(this);
 	}
 	
