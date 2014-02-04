@@ -7,25 +7,19 @@ public class WifiDirectEventImpl implements Serializable{
 	private static final long serialVersionUID = 1L;
 
 	private WifiDirectEvent event;
-	private String source;
+	private int source;
 	private Object data;
 	
 	public 	WifiDirectEventImpl(WifiDirectEvent event){
 		this.event = event;
 		this.data = null;
-		this.source = null;
+		this.source = -1;
 	}
 	
 	public 	WifiDirectEventImpl(WifiDirectEvent event, Object data){
 		this.event = event;
 		this.data = data;
-		this.source = null;
-	}
-	
-	public 	WifiDirectEventImpl(WifiDirectEvent event, Object data, String source){
-		this.event = event;
-		this.data = data;
-		this.source = source;
+		this.source = -1;
 	}
 
 	public WifiDirectEvent getEvent() {
@@ -36,7 +30,11 @@ public class WifiDirectEventImpl implements Serializable{
 		return data;
 	}
 
-	public String getSource() {
+	public int getSource() {
 		return source;
+	}
+
+	public void setSource(int i) {
+		this.source = i;
 	}	
 }
