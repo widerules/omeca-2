@@ -72,8 +72,8 @@ public class MainActivity extends Activity implements Observer {
 	 */
 	public void host(View view) {
 		System.out.println("Host !!!");
-		this.wifiDirectManager.setMode(WifiDirectMod.HOST);
-		this.wifiDirectManager.startVisible();
+		Toast.makeText(this, "Hosting...", Toast.LENGTH_SHORT).show();
+
 		Intent intent = new Intent(this, GameActivity.class);
 		startActivity(intent);
 
@@ -86,9 +86,9 @@ public class MainActivity extends Activity implements Observer {
 	 */
 	public void join(View view) {
 		System.out.println("Join !!!");
-		this.wifiDirectManager.setMode(WifiDirectMod.CLIENT);
-		this.wifiDirectManager.startVisible();
-		this.wifiDirectManager.stopDiscoverPeers();
+		Toast.makeText(this, "Joining...", Toast.LENGTH_SHORT).show();
+		this.wifiDirectManager.setRole(false);
+		this.wifiDirectManager.discoverPeers();
 	}
 
 	/**

@@ -19,9 +19,11 @@ import android.widget.TextView;
 
 import com.ensibs.omeca.GameActivity;
 import com.ensibs.omeca.R;
+import com.ensibs.omeca.controller.ActionController;
 import com.ensibs.omeca.model.entities.Card;
 import com.ensibs.omeca.model.entities.Player;
 import com.ensibs.omeca.utils.AvatarsList;
+import com.ensibs.omeca.utils.NotifPopup;
 import com.ensibs.omeca.utils.SliderbarCardGallery;
 
 public class PlayerView extends RelativeLayout{
@@ -30,6 +32,7 @@ public class PlayerView extends RelativeLayout{
 	private Context context;
 	private TextView name;
 	private TextView cards;
+	private static TextView notifs;
 	private ImageView avatar;
 	private ImageView cardsImages;
 	private boolean isMe;
@@ -57,6 +60,7 @@ public class PlayerView extends RelativeLayout{
 		this.avatar = new ImageView(context);
 		this.cardsImages = new ImageView(context);
 		this.cards = new TextView(context);
+		this.notifs = new TextView(context);
 		DisplayMetrics metrics = context.getApplicationContext().getResources().getDisplayMetrics();
 		RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(metrics.heightPixels/(SIZE), metrics.heightPixels/SIZE);
 
@@ -120,7 +124,7 @@ public class PlayerView extends RelativeLayout{
 					cards.setText("" + player.getCards().size());
 					break;
 				}
-				
+
 				params = new RelativeLayout.LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT);
 				params.addRule(CENTER_VERTICAL, TRUE);
 
@@ -130,25 +134,37 @@ public class PlayerView extends RelativeLayout{
 				cards.setTextSize(TypedValue.COMPLEX_UNIT_SP, 10);
 
 				addView(cards, params);
-				
+
 			} else {
-				setOnTouchListener(null);
 				params = new RelativeLayout.LayoutParams((int)(getLayoutParams().width*0.80), (int)(getLayoutParams().height*0.80));
 				params.addRule(ALIGN_PARENT_BOTTOM, TRUE);
 				params.addRule(CENTER_HORIZONTAL);
 
 				avatar.setImageResource(AvatarsList.get(player.getAvatar()));
 				addView(avatar, params);
+				
+				params = new RelativeLayout.LayoutParams(40, 40);
+				params.leftMargin = 10;
+				params.addRule(CENTER_VERTICAL, TRUE);
+				params.addRule(ALIGN_RIGHT);
+				
+				notifs.setText("0");
+				notifs.setTextColor(Color.WHITE);
+				notifs.setTextSize(TypedValue.COMPLEX_UNIT_SP, 16);
+				notifs.setGravity(Gravity.CENTER);
+				notifs.setTypeface(null, Typeface.BOLD);
+				notifs.setBackgroundResource(R.drawable.notif_down);
+				addView(notifs, params);
 
 				name.setTextColor(Color.DKGRAY);
 				name.setTextSize(TypedValue.COMPLEX_UNIT_SP, 14);
-				name.setGravity(Gravity.LEFT);
+				name.setGravity(Gravity.CENTER);
 				name.setPadding(5, 0, 0, 0);
 			}
 		}
 	}
 
-	private class PlayerDragListener implements OnDragListener{
+	private class PlayerDragListener implements OnDragListener {
 
 		@Override
 		public boolean onDrag(View v, DragEvent event) {
@@ -164,7 +180,7 @@ public class PlayerView extends RelativeLayout{
 						if(player != null)
 							setBackgroundResource(R.drawable.player);
 					}
-						
+
 				}
 				break;
 			case DragEvent.ACTION_DRAG_EXITED:
@@ -211,6 +227,8 @@ public class PlayerView extends RelativeLayout{
 							a2.notifyDataSetChanged();
 						}
 						setBackgroundColor(Color.TRANSPARENT);
+						
+						NotifPopup.addNotif(ActionController.user, player, "donne une carte à");
 					}
 					else{
 						vTmp.setVisibility(View.VISIBLE);
@@ -237,16 +255,26 @@ public class PlayerView extends RelativeLayout{
 
 		@Override
 		public boolean onTouch(View view, MotionEvent mE) {
+			
 			switch (mE.getAction()){
 			case MotionEvent.ACTION_DOWN:
-				x = mE.getX();
-				y = mE.getY();
-				isOnClick = true;
+				if (!isMe) {
+					x = mE.getX();
+					y = mE.getY();
+					isOnClick = true;
+				}
+				else
+					setBackgroundResource(R.drawable.player);
 				break;
 			case MotionEvent.ACTION_UP:
+				if (isMe) {
+					setBackgroundColor(Color.TRANSPARENT);
+					NotifPopup.show(context);
+					
+				}
 				break;
 			case MotionEvent.ACTION_MOVE:
-				if(isOnClick && 
+				if(!isMe && isOnClick && 
 						Math.sqrt((x-mE.getX())*(x-mE.getX()) + (y-mE.getY())*(y-mE.getY())) > SCROLL_THRESHOLD){
 					view.setVisibility(View.INVISIBLE);
 					ClipData data = ClipData.newPlainText("", "");
@@ -261,5 +289,18 @@ public class PlayerView extends RelativeLayout{
 			return true;
 		}
 
+	}
+
+	public TextView getNotifs() {
+		return notifs;
+	}
+
+	public void setNotifs(TextView notifs) {
+		this.notifs = notifs;
+	}
+	
+	public static void updateNotifs(int nb) {
+		notifs.setBackgroundResource((nb>0) ? R.drawable.notif_up : R.drawable.notif_down);
+		notifs.setText("" + nb);
 	}
 }
