@@ -5,16 +5,18 @@ import java.util.Observer;
 
 import android.app.Activity;
 import android.app.AlertDialog;
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.view.Window;
 import android.view.WindowManager;
-import android.widget.Toast;
+import android.widget.ToggleButton;
 
 import com.ensibs.omeca.controller.ActionController;
-import com.ensibs.omeca.model.actions.DisconnectionAction;
 import com.ensibs.omeca.model.entities.Card;
 import com.ensibs.omeca.utils.OmecaPopupExit;
 import com.ensibs.omeca.wifidirect.WifiDirectManager;
@@ -23,7 +25,14 @@ import com.ensibs.omeca.wifidirect.event.WifiDirectEventImpl;
 import com.ensibs.omeca.wifidirect.mod.WifiDirectMod;
 
 public class MainActivity extends Activity implements Observer {
-	private static final int EDIT_AVATAR = 2;
+	private final int EDIT_AVATAR = 2;
+	private final String SHARED_PREFERENCES_FILE_NAME = "OMECA Profile";
+	private final String SHARED_PREFERENCES_VIBRATION = "vibration";
+	private final String SHARED_PREFERENCES_SOUND = "sound";
+	private ToggleButton soundToggle = null;
+	private ToggleButton vibrationToggle = null;
+	
+	private SharedPreferences profilPreferences;
 
 	WifiDirectManager wifiDirectManager;
 	ActionController controler;
@@ -55,6 +64,10 @@ public class MainActivity extends Activity implements Observer {
 				WindowManager.LayoutParams.FLAG_FULLSCREEN);
 		// Launches the stuff
 		setContentView(R.layout.view_homescreen);
+		
+		// Retrieve options
+		retrieveOptions();
+		
 	}
 
 	@Override
@@ -112,7 +125,6 @@ public class MainActivity extends Activity implements Observer {
 	public void avatar(View view) {
 		Intent editProfilActivityIntent = new Intent(this, AvatarActivity.class);
 		startActivityForResult(editProfilActivityIntent, EDIT_AVATAR);
-		OmecaPopupExit.dismiss();
 	}
 
 	@Override
@@ -134,5 +146,29 @@ public class MainActivity extends Activity implements Observer {
 		wifiDirectManager.stopP2P();
 		this.finish();
 	}
+
+	/**
+	 * Retrieves options for music and vibration preferences
+	 */
+	private void retrieveOptions() {		
+		OnClickListener list = new OnClickListener() {
+			@Override
+			public void onClick(View v) {				
+				SharedPreferences.Editor editor = profilPreferences.edit();
+				editor.putBoolean(SHARED_PREFERENCES_SOUND, soundToggle.isChecked());
+				editor.putBoolean(SHARED_PREFERENCES_VIBRATION, vibrationToggle.isChecked());
+				editor.commit();
+			}
+		};
+		
+		profilPreferences = getSharedPreferences(SHARED_PREFERENCES_FILE_NAME, Context.MODE_PRIVATE);
+		soundToggle = (ToggleButton) this.findViewById(R.id.homescreen_options_sound_toggle);
+		soundToggle.setOnClickListener(list);
+		soundToggle.setChecked(this.profilPreferences.getBoolean(SHARED_PREFERENCES_SOUND, false));
+		vibrationToggle = (ToggleButton) this.findViewById(R.id.homescreen_options_vibration_toggle);		
+		vibrationToggle.setOnClickListener(list);		
+		vibrationToggle.setChecked(this.profilPreferences.getBoolean(SHARED_PREFERENCES_VIBRATION, false));
+		
+	}	
 
 }
