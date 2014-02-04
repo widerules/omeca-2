@@ -38,6 +38,7 @@ public class WifiDirectAcceptServer extends Thread{
 
 	public synchronized void stopAccept(){
 		this.run = false;
+		this.interrupt();
 	}	
 
 	public synchronized boolean getRun(){

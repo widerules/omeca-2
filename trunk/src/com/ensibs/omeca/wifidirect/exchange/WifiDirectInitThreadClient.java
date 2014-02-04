@@ -28,8 +28,10 @@ public class WifiDirectInitThreadClient extends Thread{
 			this.wifiDirectExchangeClient.getWifiDirectSendThread().start();
 		} catch (UnknownHostException e) {
 			// TODO Auto-generated catch block
+			e.printStackTrace();
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
 	}
 

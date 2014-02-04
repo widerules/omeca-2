@@ -5,7 +5,10 @@ import java.io.ObjectInputStream;
 import java.io.StreamCorruptedException;
 import java.net.Socket;
 
+import android.util.Log;
+
 import com.ensibs.omeca.wifidirect.event.WifiDirectEventImpl;
+import com.ensibs.omeca.wifidirect.property.WifiDirectProperty;
 
 /**
  * 
@@ -31,6 +34,7 @@ public class WifiDirectReceivedThread extends Thread{
 				Object obj;
 				obj = objectInputStream.readObject();
 				if (obj instanceof WifiDirectEventImpl && run) {
+					Log.i(WifiDirectProperty.TAG, "msg recu");
 					WifiDirectEventImpl event = (WifiDirectEventImpl) obj ;
 					wifiDirectIExchange.receivedEvent(event);
 				}
@@ -38,9 +42,15 @@ public class WifiDirectReceivedThread extends Thread{
 			}
 		}catch (StreamCorruptedException e) {
 			// TODO Auto-generated catch block
+			e.printStackTrace();
+
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
+			e.printStackTrace();
+
 		} catch (ClassNotFoundException e) {
+			e.printStackTrace();
+
 		}
 		this.run = false;
 	}
@@ -51,5 +61,6 @@ public class WifiDirectReceivedThread extends Thread{
 
 	public synchronized void stopThread(){
 		this.run = false;
+		this.interrupt();
 	}
 }

@@ -2,8 +2,11 @@ package com.ensibs.omeca.wifidirect.exchange;
 
 import java.net.Socket;
 
+import android.util.Log;
+
 import com.ensibs.omeca.wifidirect.WifiDirectNotificationCenter;
 import com.ensibs.omeca.wifidirect.event.WifiDirectEventImpl;
+import com.ensibs.omeca.wifidirect.property.WifiDirectProperty;
 
 /**
  * 
@@ -37,6 +40,7 @@ public class WifiDirectExchangeClient extends WifiDirectIExchange{
 	@Override
 	public void sendEvent(WifiDirectEventImpl event) {
 		if(this.wifiDirectSendThread != null && this.wifiDirectSendThread.getRun()){
+			Log.i(WifiDirectProperty.TAG, "J'envoi");
 			this.wifiDirectSendThread.sendEvent(event);
 		}
 	}

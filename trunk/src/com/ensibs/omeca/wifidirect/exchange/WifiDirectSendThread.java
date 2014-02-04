@@ -7,7 +7,10 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
 
+import android.util.Log;
+
 import com.ensibs.omeca.wifidirect.event.WifiDirectEventImpl;
+import com.ensibs.omeca.wifidirect.property.WifiDirectProperty;
 
 public class WifiDirectSendThread extends Thread{
 
@@ -21,6 +24,7 @@ public class WifiDirectSendThread extends Thread{
 			this.socket.put(socket.getInetAddress().getHostAddress(), socket);
 			this.client.put(socket.getInetAddress().getHostAddress(), new ObjectOutputStream(socket.getOutputStream()));
 		} catch (IOException e) {
+			e.printStackTrace();
 			this.removeSender(socket);
 		}
 	}
@@ -30,17 +34,17 @@ public class WifiDirectSendThread extends Thread{
 			this.client.get(socket.getInetAddress().getHostAddress()).close();
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
+			e.printStackTrace();
+
 		}
 		this.client.remove(socket.getInetAddress().getHostAddress());
 		this.socket.remove(socket.getInetAddress().getHostAddress());
 	}
 
-	public void run(){
+	public synchronized void run(){
 		this.run = true;
 		while(run & client.size() != 0){
 			try{
-				synchronized (this)
-				{
 					this.wait();
 					if(run && eventTmp != null){
 						Set<String> key = client.keySet();
@@ -48,9 +52,12 @@ public class WifiDirectSendThread extends Thread{
 							ObjectOutputStream tmp = client.get(s);
 							if(socket.get(s).isConnected()){
 								try {
+									Log.i(WifiDirectProperty.TAG, "msg en envoi");
 									tmp.writeObject(eventTmp);
 									tmp.flush();
 								} catch (IOException e) {
+									//TODO : send deco
+									this.removeSender(socket.get(s));
 									e.printStackTrace();
 								}
 							}
@@ -60,9 +67,11 @@ public class WifiDirectSendThread extends Thread{
 						}
 						this.eventTmp = null;
 					}
-				}
+				
 			}catch(InterruptedException exception){
 				//TODO
+				exception.printStackTrace();
+
 			}
 		}
 		if(client.size() != 0){

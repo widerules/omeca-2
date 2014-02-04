@@ -6,6 +6,8 @@ import java.util.Observer;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.os.Bundle;
+import android.os.Looper;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.View;
@@ -36,6 +38,7 @@ import com.ensibs.omeca.view.SlidebarDragListener;
 import com.ensibs.omeca.wifidirect.WifiDirectManager;
 import com.ensibs.omeca.wifidirect.event.WifiDirectEvent;
 import com.ensibs.omeca.wifidirect.event.WifiDirectEventImpl;
+import com.ensibs.omeca.wifidirect.property.WifiDirectProperty;
 
 public class GameActivity extends Activity implements Observer {
 
@@ -198,11 +201,16 @@ public class GameActivity extends Activity implements Observer {
 	
 	@Override
 	public void update(Observable observable, Object data) {
+		Log.i(WifiDirectProperty.TAG,"Update");
 		if (data instanceof WifiDirectEventImpl && ((WifiDirectEventImpl)data).getEvent() == WifiDirectEvent.EVENT) {
+			Looper.prepare();
 			WifiDirectEventImpl event = (WifiDirectEventImpl)data;
+			Log.i(WifiDirectProperty.TAG,"Event");
 			if(event.getData() instanceof DisconnectionAction){
+				Log.i(WifiDirectProperty.TAG,"Disconnection");
 				Toast.makeText(this, "Deconnection", Toast.LENGTH_LONG);
 			}
+			 Looper.loop();
 		}
 	}
 
@@ -240,9 +248,9 @@ public class GameActivity extends Activity implements Observer {
 	}
 	
 	public void finishGameActivity(){
+		Log.i(WifiDirectProperty.TAG, "End");
 		this.wifiDirectManager.sendEvent(new WifiDirectEventImpl(WifiDirectEvent.EVENT, new DisconnectionAction(ActionController.user.getId())));
 		this.wifiDirectManager.disconnect();
 		this.finish();
 	}
-
 }
