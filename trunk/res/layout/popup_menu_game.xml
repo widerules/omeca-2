@@ -16,12 +16,4 @@
 	    android:layout_height="1dp"
 	    android:background="#dddddd"/>
     
-    <Button
-        android:id="@+id/popupMenuNotifs"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:onClick="notifs"
-        android:text="@string/button_notifs"
-        android:background="@android:color/white" />
-    
 </LinearLayout>
