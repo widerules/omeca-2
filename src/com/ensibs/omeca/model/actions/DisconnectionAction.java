@@ -9,7 +9,7 @@ public class DisconnectionAction implements Serializable{
 	 */
 	private static final long serialVersionUID = 1L;
 	
-	public int idPlayer;
+	private int idPlayer;
 	
 	public DisconnectionAction(int idPlayer){
 		this.idPlayer = idPlayer;

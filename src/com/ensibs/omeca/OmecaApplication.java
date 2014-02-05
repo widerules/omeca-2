@@ -14,12 +14,11 @@ public class OmecaApplication extends Application {
 	public void onCreate() {
 		super.onCreate();
 		
-		//create controller 
-		setController(new ActionController(this));
-
 		// Creates the WifiDirectManager
 		setWifiDirectManager(new WifiDirectManager(this));
-		
+				
+		//create controller 
+		setController(new ActionController(this));
 	}
 
 	public ActionController getControler() {

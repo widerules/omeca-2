@@ -2,6 +2,7 @@ package com.ensibs.omeca;
 
 import java.util.Observable;
 import java.util.Observer;
+import java.util.ResourceBundle.Control;
 
 import android.app.Activity;
 import android.app.AlertDialog;
@@ -17,6 +18,7 @@ import android.view.WindowManager;
 import android.widget.ToggleButton;
 
 import com.ensibs.omeca.controller.ActionController;
+import com.ensibs.omeca.model.actions.ConnectionAction;
 import com.ensibs.omeca.model.entities.Card;
 import com.ensibs.omeca.utils.OmecaPopupExit;
 import com.ensibs.omeca.wifidirect.WifiDirectManager;
@@ -35,7 +37,6 @@ public class MainActivity extends Activity implements Observer {
 	private SharedPreferences profilPreferences;
 
 	WifiDirectManager wifiDirectManager;
-	ActionController controler;
 	AlertDialog popupMenu;
 	OmecaApplication app;
 	private static MainActivity instance;
@@ -50,11 +51,9 @@ public class MainActivity extends Activity implements Observer {
 		instance = this;
 		// Retrieve application
 		app = (OmecaApplication) getApplication();
-		// Create controler
-		controler = app.getControler();
 		// Creates the WifiDirectManager
 		wifiDirectManager = app.getWifiDirectManager();
-		wifiDirectManager.setApplicationContext(this);
+		WifiDirectManager.setApplicationContext(this);
 		wifiDirectManager.addObserver(this);
 		Card.loadConfig(getApplicationContext().getResources().openRawResource(
 				R.raw.config));
@@ -90,6 +89,7 @@ public class MainActivity extends Activity implements Observer {
 		System.out.println("Host !!!");
 		this.wifiDirectManager.setMode(WifiDirectMod.HOST);
 		this.wifiDirectManager.startVisible();
+		ActionController.board.addPlayer(0, ActionController.user);
 		Intent intent = new Intent(this, GameActivity.class);
 		startActivity(intent);
 	}

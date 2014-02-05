@@ -10,32 +10,28 @@ import com.ensibs.omeca.model.entities.Player;
 
 public class ActionController {
 	public static OmecaApplication maActivity;
-	
-	public int myId;
+
 	public static Player user;
 	public static Board board;
+	private static SharedPreferences profilPreferences;
+	
 	public ActionController(OmecaApplication omecaApplication) {
 		
-		this.maActivity= omecaApplication;
+		ActionController.maActivity = omecaApplication;
 		
-		board = new Board();
-		
-		SharedPreferences profilPreferences = maActivity.getSharedPreferences(
+		profilPreferences = maActivity.getSharedPreferences(
 				AvatarActivity.SHARED_PREFERENCES_FILE_NAME, Context.MODE_PRIVATE);
 		
+		init();
+	}
+	
+	public static void init(){
 		user = new Player(
 				profilPreferences.getString(AvatarActivity.SHARED_PREFERENCES_PLAYER_NAME, ""),
 				profilPreferences.getInt(AvatarActivity.SHARED_PREFERENCES_AVATAR_ID_NAME, 0), 0);
-	}
-
-	public void dealCard(int nbToDeal){
-		board.setCardsToDeal(nbToDeal);
-		board.dealCardsAutomatically(myId);
-	}
-	
-	/*public static sendCardAction(Player receiver){
 		
-	}*/
+		board = new Board();
+	}
 	
 	public static void updateUser() {		
 		SharedPreferences profilPreferences = maActivity.getSharedPreferences(
