@@ -1,6 +1,8 @@
 package com.ensibs.omeca.controller;
 
 import com.ensibs.omeca.GameActivity;
+import com.ensibs.omeca.R;
+import com.ensibs.omeca.view.BoardView;
 
 import android.os.Handler;
 import android.os.Looper;
@@ -15,6 +17,14 @@ public class OmecaHandler extends Handler{
 	public OmecaHandler(Looper looper){
 		super(looper);
 	}
+	
+	/**
+	 * Message msgObj = handler.obtainMessage();
+                            Bundle b = new Bundle();
+                            b.putString("message", msg);
+                            msgObj.setData(b);
+                            handler.sendMessage(msgObj);
+	 */
 	
 	@Override
 	public void handleMessage(Message msg) {
