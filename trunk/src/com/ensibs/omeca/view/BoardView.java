@@ -1,8 +1,6 @@
 package com.ensibs.omeca.view;
 
 import java.util.Hashtable;
-import java.util.Map.Entry;
-
 
 import android.content.Context;
 import android.os.AsyncTask;
@@ -23,9 +21,7 @@ import com.ensibs.omeca.GameActivity;
 import com.ensibs.omeca.R;
 import com.ensibs.omeca.controller.ActionController;
 import com.ensibs.omeca.model.entities.Board;
-import com.ensibs.omeca.model.entities.Card;
 import com.ensibs.omeca.model.entities.Player;
-import com.ensibs.omeca.utils.DealPopup;
 import com.ensibs.omeca.utils.SliderbarCardGallery;
 
 public class BoardView extends RelativeLayout {
@@ -81,22 +77,19 @@ public class BoardView extends RelativeLayout {
 	}
 	
 	public void displayPlayers() {
+		
 		RelativeLayout players_left = (RelativeLayout) findViewById(R.id.players_left);
 		RelativeLayout players_right = (RelativeLayout) findViewById(R.id.players_right);
 
 		PlayerView player = new PlayerView(context);
 		RelativeLayout.LayoutParams params;
-
-		Player p = null;
+		
 		player = new PlayerView(context);
 		params = (RelativeLayout.LayoutParams) player.getLayoutParams();
 		params.addRule(CENTER_IN_PARENT, RelativeLayout.TRUE);
 		params.addRule(ALIGN_PARENT_LEFT, RelativeLayout.TRUE);
 		players_left.addView(player, params);
-		p = new Player("Jean", 5, 1);
-		player.setPlayer(p, false);
 		playerViews.put(1, player);
-		ActionController.board.addPlayer(0, p);
 
 		// Player 2
 		player = new PlayerView(context);
@@ -104,9 +97,7 @@ public class BoardView extends RelativeLayout {
 		params.addRule(ALIGN_PARENT_TOP, RelativeLayout.TRUE);
 		params.addRule(ALIGN_PARENT_LEFT, RelativeLayout.TRUE);
 		players_left.addView(player, params);
-		p = new Player("michel",4, 2);
-		player.setPlayer(p, false);
-		playerViews.put(7, player);
+		playerViews.put(2, player);
 
 		// Player 3
 		player = new PlayerView(context);
@@ -114,9 +105,8 @@ public class BoardView extends RelativeLayout {
 		params.addRule(CENTER_IN_PARENT, RelativeLayout.TRUE);
 		params.addRule(ALIGN_PARENT_TOP, RelativeLayout.TRUE);
 		players_left.addView(player, params);
-		p = new Player("f", 2, 3);
-		player.setPlayer(p, false);
-		playerViews.put(2, player);
+		playerViews.put(3, player);
+
 
 		// Player 4
 		player = new PlayerView(context);
@@ -124,9 +114,7 @@ public class BoardView extends RelativeLayout {
 		params.addRule(ALIGN_PARENT_TOP, RelativeLayout.TRUE);
 		params.addRule(CENTER_IN_PARENT, RelativeLayout.TRUE);
 		addView(player, params);
-		p = new Player("a",1, 4);
-		player.setPlayer(p, false);
-		playerViews.put(3, player);
+		playerViews.put(4, player);
 
 		// Player 5
 		player = new PlayerView(context);
@@ -134,9 +122,7 @@ public class BoardView extends RelativeLayout {
 		params.addRule(CENTER_IN_PARENT, RelativeLayout.TRUE);
 		params.addRule(ALIGN_PARENT_TOP, RelativeLayout.TRUE);
 		players_right.addView(player, params);
-		p = new Player("Jean", 5, 1);
-		player.setPlayer(p, false);
-		playerViews.put(4, player);
+		playerViews.put(5, player);
 
 		// Player 6
 		player = new PlayerView(context);
@@ -144,7 +130,7 @@ public class BoardView extends RelativeLayout {
 		params.addRule(ALIGN_PARENT_RIGHT, RelativeLayout.TRUE);
 		params.addRule(ALIGN_PARENT_TOP, RelativeLayout.TRUE);
 		players_right.addView(player, params);
-		playerViews.put(5, player);
+		playerViews.put(6, player);
 
 		// Player 7
 		player = new PlayerView(context);
@@ -152,9 +138,20 @@ public class BoardView extends RelativeLayout {
 		params.addRule(CENTER_IN_PARENT, RelativeLayout.TRUE);
 		params.addRule(ALIGN_PARENT_RIGHT, RelativeLayout.TRUE);
 		players_right.addView(player, params);
-		playerViews.put(6, player);
+		playerViews.put(7, player);
 		
 
+	}
+	
+	public void updatePlayers(){
+		int myPlace = ActionController.board.getPlace(ActionController.user);
+		Player p;
+		for(int i=1; i<Board.NB_PLAYER_MAX;i++){
+			myPlace = (myPlace >=Board.NB_PLAYER_MAX-1) ? 0 : myPlace+1;
+			p = ActionController.board.getPlayers().get(myPlace);
+			playerViews.get(i).setPlayer(p, false);
+			
+		}
 	}
 
 	public DrawPileView getDrawPileView() {
