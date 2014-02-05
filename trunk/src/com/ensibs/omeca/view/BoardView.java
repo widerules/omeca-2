@@ -1,9 +1,11 @@
 package com.ensibs.omeca.view;
 
 import java.util.Hashtable;
+import java.util.Map.Entry;
 
 
 import android.content.Context;
+import android.os.AsyncTask;
 import android.util.AttributeSet;
 import android.util.DisplayMetrics;
 import android.view.DragEvent;
@@ -23,6 +25,7 @@ import com.ensibs.omeca.controller.ActionController;
 import com.ensibs.omeca.model.entities.Board;
 import com.ensibs.omeca.model.entities.Card;
 import com.ensibs.omeca.model.entities.Player;
+import com.ensibs.omeca.utils.DealPopup;
 import com.ensibs.omeca.utils.SliderbarCardGallery;
 
 public class BoardView extends RelativeLayout {
@@ -30,7 +33,6 @@ public class BoardView extends RelativeLayout {
 	private DrawPileView drawPileView;
 	private DiscardPileView discardPileView;
 	private Hashtable<Integer, PlayerView> playerViews;
-	private Boolean jeton= false;
 
 	public BoardView(Context context) {
 		super(context);
@@ -67,18 +69,17 @@ public class BoardView extends RelativeLayout {
 		this.setOnLongClickListener(new OnLongClickListener() {
 			@Override
 			public boolean onLongClick(View v) {
-				//GameActivity.showDealPopup();
-				jeton=true;
-				distribTo(1);
-				distribTo(ActionController.user.getId());
-				
+				//DealPopup.show(context);
+				distribTo(0, 4*2);
+				/*DistribTask dt = new DistribTask();
+				dt.setParameter(1, 5, (BoardView)v);
+				dt.execute();*/
 				return true;
 			}
 		});
 		displayPlayers();
 	}
 	
-
 	public void displayPlayers() {
 		RelativeLayout players_left = (RelativeLayout) findViewById(R.id.players_left);
 		RelativeLayout players_right = (RelativeLayout) findViewById(R.id.players_right);
@@ -103,6 +104,8 @@ public class BoardView extends RelativeLayout {
 		params.addRule(ALIGN_PARENT_TOP, RelativeLayout.TRUE);
 		params.addRule(ALIGN_PARENT_LEFT, RelativeLayout.TRUE);
 		players_left.addView(player, params);
+		p = new Player("michel",4, 2);
+		player.setPlayer(p, false);
 		playerViews.put(7, player);
 
 		// Player 3
@@ -111,6 +114,8 @@ public class BoardView extends RelativeLayout {
 		params.addRule(CENTER_IN_PARENT, RelativeLayout.TRUE);
 		params.addRule(ALIGN_PARENT_TOP, RelativeLayout.TRUE);
 		players_left.addView(player, params);
+		p = new Player("f", 2, 3);
+		player.setPlayer(p, false);
 		playerViews.put(2, player);
 
 		// Player 4
@@ -119,6 +124,8 @@ public class BoardView extends RelativeLayout {
 		params.addRule(ALIGN_PARENT_TOP, RelativeLayout.TRUE);
 		params.addRule(CENTER_IN_PARENT, RelativeLayout.TRUE);
 		addView(player, params);
+		p = new Player("a",1, 4);
+		player.setPlayer(p, false);
 		playerViews.put(3, player);
 
 		// Player 5
@@ -127,6 +134,8 @@ public class BoardView extends RelativeLayout {
 		params.addRule(CENTER_IN_PARENT, RelativeLayout.TRUE);
 		params.addRule(ALIGN_PARENT_TOP, RelativeLayout.TRUE);
 		players_right.addView(player, params);
+		p = new Player("Jean", 5, 1);
+		player.setPlayer(p, false);
 		playerViews.put(4, player);
 
 		// Player 6
@@ -154,6 +163,14 @@ public class BoardView extends RelativeLayout {
 
 	public DiscardPileView getDiscardPileView() {
 		return discardPileView;
+	}
+
+	public Hashtable<Integer, PlayerView> getPlayerViews() {
+		return playerViews;
+	}
+
+	public void setPlayerViews(Hashtable<Integer, PlayerView> playerViews) {
+		this.playerViews = playerViews;
 	}
 
 	private class BoardDragListener implements OnDragListener {
@@ -222,7 +239,7 @@ public class BoardView extends RelativeLayout {
 		}
 	}
 	
-	public void distribTo(final int idUser){
+	public void giveTo(final int idUser){
 		final CardView vToMove = (CardView) drawPileView.getChildAt(0);	
 		drawPileView.removeViewInLayout(vToMove);
 		addView(vToMove);
@@ -234,8 +251,7 @@ public class BoardView extends RelativeLayout {
 			x = (int) playerViews.get(idUser).getX();
 			y= (int) playerViews.get(idUser).getY();
 			Toast.makeText(context, playerViews.get(idUser).getPlayer().getName()  ,Toast.LENGTH_LONG).show();
-		}
-			
+		}	
 		TranslateAnimation anim=new TranslateAnimation( drawPileView.getX(), x, drawPileView.getY(), y);
 		anim.setAnimationListener(new AnimationListener() {
 			
@@ -250,7 +266,6 @@ public class BoardView extends RelativeLayout {
 			@Override
 			public void onAnimationEnd(Animation animation) {
 				endAnim(idUser, vToMove);
-				jeton= false;
 			}
 		});
 		anim.setFillAfter(true);
@@ -258,6 +273,7 @@ public class BoardView extends RelativeLayout {
 		anim.setDuration(400);
 		vToMove.startAnimation(anim);
 	}
+	
 	public void endAnim(int idUser, CardView vToMove ){
 		if( idUser != ActionController.user.getId()){
 			playerViews.get(idUser).getPlayer().addCard(vToMove.getCard());
@@ -268,5 +284,146 @@ public class BoardView extends RelativeLayout {
 		this.removeView(vToMove);
 	}
 	 
+	
+	private void distribTo( final int toId, final int nbCard) {
+		if(nbCard> 0){ // on a pas fini
+			//recupération de la cartes
+			final CardView vToMove = (CardView) drawPileView.getChildAt(0);	
+			drawPileView.removeViewInLayout(vToMove);
+			addView(vToMove);
+			
+			// on choisi ca direction 
+			int x=0 , y =0;
+			if( toId == ActionController.user.getId()){
+				x = this.getWidth()/2;
+				y= this.getHeight();
+			}else{
+				x = (int) playerViews.get(toId).getX();
+				y= (int) playerViews.get(toId).getY();
+				Toast.makeText(context, playerViews.get(toId).getPlayer().getName()  ,Toast.LENGTH_LONG).show();
+			}
+			TranslateAnimation anim=new TranslateAnimation( drawPileView.getX(), x, drawPileView.getY(), y);
+			anim.setAnimationListener(new AnimationListener() {
+				@Override
+				public void onAnimationStart(Animation animation) {
+				}
+				
+				@Override
+				public void onAnimationRepeat(Animation animation) {
+				}
+				
+				@Override
+				public void onAnimationEnd(Animation animation) {
+					newdistrib(toId, nbCard, vToMove);
+				}
+			});
+			anim.setFillAfter(true);
+			anim.setInterpolator(new DecelerateInterpolator(1.0f));
+			anim.setDuration(400);
+			vToMove.startAnimation(anim);
+			
+		}
+	}
+	
+	private void newdistrib(int toId, int nb, CardView vToMove ){	
+		// fin du traitement de la carte
+		if( toId != ActionController.user.getId()){
+			playerViews.get(toId).getPlayer().addCard(vToMove.getCard());
+			//TODO ajouter la fonction dans la player view pour lui ajouter une carte
+			playerViews.get(toId).setPlayer(playerViews.get(toId).getPlayer(), false);
+		}else
+			ActionController.user.addCard(vToMove.getCard()); //TODO updater la slidBar et handView
+		this.removeView(vToMove);
+		
+		int pos=ActionController.board.getPlace(playerViews.get(toId).getPlayer());
+		if(pos ==ActionController.board.getPlayers().size())
+			distribTo(ActionController.board.getPlayers().get(0).getId(), nb--);
+		else distribTo( ActionController.board.getPlayers().get(pos+1).getId()  , nb--);
+	}
+	
+	//L'AsyncTask de distribution
+		static class DistribTask extends AsyncTask<Void, Integer, Boolean> {
+			private int distributor;
+			private int numberCard; // numbre de carte par personne
+			private BoardView bv;
+			
+			public void setParameter( int from, int card, BoardView bv ) {
+				this.distributor = from;
+				numberCard = card;
+				this.bv = bv;
+			}
 
+			@Override
+			protected Boolean doInBackground(Void... params) {
+				for (int i = numberCard; i>0; i--){
+					/* un tour de distribution 
+					if(distributor == ActionController.user.getId()){ // distribution normal
+						for(Entry<Integer, PlayerView> e : bv.getPlayerViews().entrySet()){
+							if(e.getValue().getPlayer()!=null)
+								bv.giveTo(e.getValue().getPlayer().getId());
+						}
+						bv.giveTo(distributor);
+					}else{
+						for(Entry<Integer, PlayerView> e : bv.getPlayerViews().entrySet()){
+							if(e.getKey()> distributor && e.getValue().getPlayer()!=null)
+								bv.giveTo(e.getValue().getPlayer().getId());
+						}
+						bv.giveTo(distributor);
+						for(Entry<Integer, PlayerView> e : bv.getPlayerViews().entrySet()){
+							if(e.getKey()<= distributor && e.getValue().getPlayer()!=null)
+								bv.giveTo(e.getValue().getPlayer().getId());
+						}
+					}*/
+					bv.giveTo(ActionController.user.getId());
+				}
+				return null;
+			}
+			
+			public void giveTo(final int idUser){
+				final CardView vToMove = (CardView) bv.getDrawPileView().getChildAt(0);	
+				 bv.getDrawPileView().removeViewInLayout(vToMove);
+				bv.addView(vToMove);
+				int x=0 , y =0;
+				if( idUser == ActionController.user.getId()){
+					x = bv.getWidth()/2;
+					y= bv.getHeight();
+				}else{
+					x = (int) bv.getPlayerViews().get(idUser).getX();
+					y= (int) bv.getPlayerViews().get(idUser).getY();
+					Toast.makeText(bv.context, bv.getPlayerViews().get(idUser).getPlayer().getName()  ,Toast.LENGTH_LONG).show();
+				}	
+				TranslateAnimation anim=new TranslateAnimation(  bv.getDrawPileView().getX(), x,  bv.getDrawPileView().getY(), y);
+				anim.setAnimationListener(new AnimationListener() {
+					
+					@Override
+					public void onAnimationStart(Animation animation) {
+					}
+					
+					@Override
+					public void onAnimationRepeat(Animation animation) {
+					}
+					
+					@Override
+					public void onAnimationEnd(Animation animation) {
+						endAnim(idUser, vToMove);
+					}
+				});
+				anim.setFillAfter(true);
+				anim.setInterpolator(new DecelerateInterpolator(1.0f));
+				anim.setDuration(400);
+				vToMove.startAnimation(anim);
+			}
+			public void endAnim(int idUser, CardView vToMove ){
+				if( idUser != ActionController.user.getId()){
+					bv.getPlayerViews().get(idUser).getPlayer().addCard(vToMove.getCard());
+					//TODO ajouter la fonction dans la player view pour lui ajouter une carte
+					bv.getPlayerViews().get(idUser).setPlayer(bv.getPlayerViews().get(idUser).getPlayer(), false);
+				}else
+					ActionController.user.addCard(vToMove.getCard()); //TODO updater la slidBar et handView
+				bv.removeView(vToMove);
+			}
+			
+		}
+	
 }
+
