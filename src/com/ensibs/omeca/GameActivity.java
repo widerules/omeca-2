@@ -53,6 +53,10 @@ public class GameActivity extends Activity implements Observer {
 		return instance;
 	}
 
+	public OmecaHandler getOmecaHandler() {
+		return omecaHandler;
+	}
+
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
