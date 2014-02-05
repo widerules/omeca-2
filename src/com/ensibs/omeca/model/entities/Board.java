@@ -9,6 +9,7 @@ import java.util.Map.Entry;
  * 
  */
 public class Board extends GameEntity{
+	public static final int NB_PLAYER_MAX = 8;
 	private int cardsToDeal;
 	private Hashtable<Integer, Player> players;
 	private DrawPile drawPile;
@@ -124,6 +125,15 @@ public class Board extends GameEntity{
 		players.remove(p2Place);
 		addPlayer(p1Place, p2);
 		addPlayer(p2Place, p1);
+	}
+
+	public void addPlayerToTheFirstEmptyPlace(Player p) {
+		for(int i=0 ; i<NB_PLAYER_MAX; i++){
+			if(players.get(i) == null){
+				players.put(i, p);
+				break;
+			}
+		}
 	}
 
 }
