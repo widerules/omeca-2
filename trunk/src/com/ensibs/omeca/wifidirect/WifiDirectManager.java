@@ -9,6 +9,7 @@ import java.util.TimerTask;
 import android.content.Context;
 import android.content.IntentFilter;
 import android.net.wifi.WifiInfo;
+import android.net.wifi.WifiManager;
 import android.net.wifi.p2p.WifiP2pConfig;
 import android.net.wifi.p2p.WifiP2pDevice;
 import android.net.wifi.p2p.WifiP2pDeviceList;
@@ -68,6 +69,15 @@ public class WifiDirectManager extends Observable implements Observer{
 	 */
 	public static void setApplicationContext(Context applicationContext) {
 		WifiDirectManager.applicationContext = applicationContext;
+	}
+	
+	/**
+	 * Get MAC address of the device
+	 */
+	public static String getMACAddress(){
+		WifiManager manager = (WifiManager) WifiDirectManager.applicationContext.getSystemService(Context.WIFI_SERVICE);
+		WifiInfo info = manager.getConnectionInfo();
+		return info.getMacAddress();
 	}
 
 	/**

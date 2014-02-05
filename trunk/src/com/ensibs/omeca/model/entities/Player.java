@@ -1,22 +1,32 @@
 package com.ensibs.omeca.model.entities;
 
+import com.ensibs.omeca.wifidirect.WifiDirectManager;
+
 public class Player extends GameEntity {
 	private String username;
 	private int avatar;
 	private int id;
-	
+	private String macAddress;
+
 	public Player(){
 		this.username = "";
 		this.avatar = 0;
 		this.id = 0;
+		this.macAddress = WifiDirectManager.getMACAddress();
 	}
 	public Player(String name, int avatar, int id){
 		this.username = name;
 		this.avatar = avatar;
 		this.id = id;
+		this.macAddress = WifiDirectManager.getMACAddress();
 	}
+	
 	public int getId() {
 		return id;
+	}
+	
+	public String getMacAddress() {
+		return macAddress;
 	}
 	
 	public void setId(int id) {

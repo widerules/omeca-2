@@ -35,19 +35,6 @@ public class CardView extends ImageView{
 		setOnDragListener(null);
 				
 	}
-	/*public void onHand(boolean hand){ 
-		 if (hand == true){
-			this.setOnTouchListener(new CardTouchListenerHand());
-		 	this.setOnDragListener(new OnDragListenerHand());
-		 	//Toast.makeText(context,"hand", Toast.LENGTH_SHORT).show();
-		 }else {
-			 this.setOnTouchListener(new CardTouchListener());
-		 	this.setOnDragListener(null);
-		 }
-	}*/
-	
-
-
 	
 	public void turnCard(){
 		if(card.isFaceUp())

@@ -201,6 +201,7 @@ public class PlayerView extends RelativeLayout{
 						pv.setPlayer(pvtmp, false);
 						pv.setVisibility(View.VISIBLE);
 						setBackgroundColor(Color.TRANSPARENT);
+						ActionController.board.switchPlayers(pv.getPlayer(), player);
 
 					} else if(player != null){
 						CardView view = (CardView) vTmp;

@@ -1,9 +1,10 @@
 package com.ensibs.omeca.model.entities;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Random;
 
-public abstract class GameEntity {
+public abstract class GameEntity implements Serializable{
 	protected ArrayList<Card> cards;
 
 	public GameEntity(){

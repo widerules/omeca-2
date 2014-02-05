@@ -5,7 +5,6 @@ import java.util.Observer;
 
 import android.app.Activity;
 import android.app.AlertDialog;
-import android.content.Context;
 import android.os.Bundle;
 import android.os.Looper;
 import android.util.Log;
@@ -19,13 +18,14 @@ import android.widget.Gallery;
 import android.widget.ImageView;
 import android.widget.SeekBar;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.ensibs.omeca.controller.ActionController;
 import com.ensibs.omeca.controller.OmecaHandler;
+import com.ensibs.omeca.model.actions.AknowlegmentConnectionAction;
+import com.ensibs.omeca.model.actions.ConnectionAction;
 import com.ensibs.omeca.model.actions.DisconnectionAction;
 import com.ensibs.omeca.model.entities.Board;
-import com.ensibs.omeca.utils.DealPopup;
+import com.ensibs.omeca.model.entities.Player;
 import com.ensibs.omeca.utils.OmecaPopupExit;
 import com.ensibs.omeca.utils.SliderbarCardGallery;
 import com.ensibs.omeca.utils.SlidingUpPanelLayout;
@@ -38,6 +38,7 @@ import com.ensibs.omeca.view.SlidebarPanelSlideListener;
 import com.ensibs.omeca.wifidirect.WifiDirectManager;
 import com.ensibs.omeca.wifidirect.event.WifiDirectEvent;
 import com.ensibs.omeca.wifidirect.event.WifiDirectEventImpl;
+import com.ensibs.omeca.wifidirect.mod.WifiDirectMod;
 import com.ensibs.omeca.wifidirect.property.WifiDirectProperty;
 
 public class GameActivity extends Activity implements Observer {
@@ -69,6 +70,7 @@ public class GameActivity extends Activity implements Observer {
 		
 		// Create controller
 		controller = app.getControler();
+		ActionController.init();
 
 		// Creates the WifiDirectManager
 		 wifiDirectManager = app.getWifiDirectManager();
@@ -139,6 +141,10 @@ public class GameActivity extends Activity implements Observer {
 		// Setting up slidebar
 		slide.setDragView(findViewById(R.id.expand));
 		slide.setPanelSlideListener(new SlidebarPanelSlideListener(slide));
+		
+		if(wifiDirectManager.getMod() == WifiDirectMod.CLIENT){
+			wifiDirectManager.sendEvent(new WifiDirectEventImpl(WifiDirectEvent.EVENT, new ConnectionAction(ActionController.user)));
+		}
 	}
 
 	@Override
@@ -153,9 +159,26 @@ public class GameActivity extends Activity implements Observer {
 		if (data instanceof WifiDirectEventImpl && ((WifiDirectEventImpl)data).getEvent() == WifiDirectEvent.EVENT) {
 			WifiDirectEventImpl event = (WifiDirectEventImpl)data;
 			Log.i(WifiDirectProperty.TAG,"Event game");
-			if(event.getData() instanceof DisconnectionAction){
+			Object dataObject = event.getData();
+			if(dataObject instanceof DisconnectionAction){
 				Log.i(WifiDirectProperty.TAG,"Disconnection");
 				omecaHandler.sendEmptyMessage(OmecaHandler.DECONNEXION);
+			}
+			else if(dataObject instanceof ConnectionAction){
+				if(wifiDirectManager.getMod() == WifiDirectMod.HOST){
+					Player p = ((ConnectionAction) dataObject).getPlayer();
+					p.setId(ActionController.board.getPlayers().size()+1);
+					ActionController.board.addPlayerToTheFirstEmptyPlace(p);
+					wifiDirectManager.sendEvent(new WifiDirectEventImpl(WifiDirectEvent.EVENT, new AknowlegmentConnectionAction(p)));
+					Log.w("eded", "ededed");
+				}
+			}
+			else if(dataObject instanceof AknowlegmentConnectionAction){
+				Player p = ((AknowlegmentConnectionAction) dataObject).getPlayer();
+				if(p.getMacAddress().equals(ActionController.user.getMacAddress())){
+					ActionController.user = p;
+					Log.w("Id", ActionController.user.getId()+"");
+				}
 			}
 		}
 	}
