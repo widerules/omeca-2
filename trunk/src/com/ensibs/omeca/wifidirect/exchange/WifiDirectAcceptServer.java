@@ -4,6 +4,8 @@ import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.Socket;
 
+import android.util.Log;
+
 import com.ensibs.omeca.wifidirect.property.WifiDirectProperty;
 
 /**
@@ -34,6 +36,7 @@ public class WifiDirectAcceptServer extends Thread{
 			e.printStackTrace();
 		}
 		this.run = false;
+		Log.i(WifiDirectProperty.TAG, "end accep");
 	}
 
 	public synchronized void stopAccept(){
