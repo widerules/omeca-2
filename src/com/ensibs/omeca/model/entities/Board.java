@@ -1,13 +1,22 @@
 package com.ensibs.omeca.model.entities;
 
 import java.util.Hashtable;
+import java.util.Map.Entry;
 
+/**
+ * Model for the board entity
+ * @author Nicolas
+ * 
+ */
 public class Board extends GameEntity{
 	private int cardsToDeal;
 	private Hashtable<Integer, Player> players;
 	private DrawPile drawPile;
 	private DiscardPile discardPile;
 	
+	/**
+	 * Constructor
+	 */
 	public Board(){
 		this.players = new Hashtable<Integer, Player>();
 		this.drawPile = new DrawPile();
@@ -15,6 +24,10 @@ public class Board extends GameEntity{
 		cardsToDeal = 0;
 	}
 	
+	/**
+	 * Init the drawpile with filling it with cards
+	 * @param shuffle If the cards have to be shuffled
+	 */
 	public void initDrawPile(boolean shuffle){
 		Card tmp;
 		for(String c : Card.COLORS){
@@ -94,6 +107,23 @@ public class Board extends GameEntity{
 	public void discardCard(int player, Card card){
 		players.get(player).removeCard(card);
 		discardPile.addCard(card);
+	}
+	
+	public int getPlace(Player player){
+		for(Entry<Integer, Player> e : players.entrySet()){
+			if(player == e.getValue())
+				return e.getKey();
+		}
+		return 0;
+	}
+	
+	public void switchPlayers(Player p1, Player p2){
+		int p1Place = getPlace(p1);
+		int p2Place = getPlace(p2);
+		players.remove(p1Place);
+		players.remove(p2Place);
+		addPlayer(p1Place, p2);
+		addPlayer(p2Place, p1);
 	}
 
 }
