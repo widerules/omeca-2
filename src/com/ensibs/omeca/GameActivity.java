@@ -164,10 +164,6 @@ public class GameActivity extends Activity implements Observer {
 	public void onBackPressed() {
 		OmecaPopupExit.show(this);
 	}
-
-	public void showDealPopup() {
-		DealPopup.show(this);
-	}
 	
 	public void finishGameActivity(){
 		OmecaPopupExit.dismiss();
