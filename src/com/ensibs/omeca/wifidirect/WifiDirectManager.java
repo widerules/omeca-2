@@ -299,13 +299,13 @@ public class WifiDirectManager extends Observable implements Observer{
 			//Resends event or not ? Close game ?
 		}else if(p2pEvent.getEvent() == WifiDirectEvent.EVENT){
 			Log.i(WifiDirectProperty.TAG, "Event");
-			if(p2pEvent.getSource() != ActionController.user.getId()){
+			//if(p2pEvent.getSource() != ActionController.user.getId()){
 				setChanged();
 				notifyObservers(p2pEvent);
-			}
+			//}
 			//Resend if host
 			if(this.mod == WifiDirectMod.HOST){
-				this.wifiDirectIExchange.sendEvent(p2pEvent);
+				//this.wifiDirectIExchange.sendEvent(p2pEvent);
 			}
 		}else if(p2pEvent.getEvent() == WifiDirectEvent.RECEIVED_P2P_LIST){
 			this.wifiP2pManager.requestPeers(wifiP2PChannel, new PeerListListener() {

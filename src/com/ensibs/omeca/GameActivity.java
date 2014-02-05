@@ -19,8 +19,10 @@ import android.widget.Gallery;
 import android.widget.ImageView;
 import android.widget.SeekBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.ensibs.omeca.controller.ActionController;
+import com.ensibs.omeca.controller.OmecaHandler;
 import com.ensibs.omeca.model.actions.DisconnectionAction;
 import com.ensibs.omeca.model.entities.Board;
 import com.ensibs.omeca.utils.DealPopup;
@@ -45,6 +47,7 @@ public class GameActivity extends Activity implements Observer {
 	AlertDialog popupMenu;
 	OmecaApplication app;
 	private static GameActivity instance;
+	private OmecaHandler omecaHandler;
 
 	public static GameActivity getActivity() {
 		return instance;
@@ -56,7 +59,10 @@ public class GameActivity extends Activity implements Observer {
 		instance = this;
 		// Retrieve application
 		app = (OmecaApplication) getApplication();
-
+		
+		//Handler of UIThread
+		omecaHandler = new OmecaHandler(Looper.getMainLooper());
+		
 		// Create controller
 		controller = app.getControler();
 
@@ -139,12 +145,13 @@ public class GameActivity extends Activity implements Observer {
 
 	@Override
 	public void update(Observable observable, Object data) {
+		Log.i(WifiDirectProperty.TAG,"Event update");
 		if (data instanceof WifiDirectEventImpl && ((WifiDirectEventImpl)data).getEvent() == WifiDirectEvent.EVENT) {
-			Looper.prepare();
 			WifiDirectEventImpl event = (WifiDirectEventImpl)data;
-			Log.i(WifiDirectProperty.TAG,"Event");
+			Log.i(WifiDirectProperty.TAG,"Event game");
 			if(event.getData() instanceof DisconnectionAction){
 				Log.i(WifiDirectProperty.TAG,"Disconnection");
+				omecaHandler.sendEmptyMessage(OmecaHandler.DECONNEXION);
 			}
 		}
 	}
@@ -160,9 +167,8 @@ public class GameActivity extends Activity implements Observer {
 	
 	public void finishGameActivity(){
 		OmecaPopupExit.dismiss();
-		//Log.i(WifiDirectProperty.TAG, "End");
 		this.wifiDirectManager.sendEvent(new WifiDirectEventImpl(WifiDirectEvent.EVENT, new DisconnectionAction(ActionController.user.getId())));
-		this.wifiDirectManager.disconnect();
-		finish();
+		//this.wifiDirectManager.disconnect();
+		//finish();
 	}
 }
