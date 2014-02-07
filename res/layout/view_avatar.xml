@@ -58,8 +58,8 @@
 		    android:id="@+id/name"
 		    android:layout_width="wrap_content"
 		    android:layout_height="wrap_content"
-		    android:hint="@string/username" >
-	    
+		    android:hint="@string/username"
+		    android:singleLine="true">
 		</EditText>
     
     </LinearLayout>

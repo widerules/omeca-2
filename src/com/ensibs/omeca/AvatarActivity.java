@@ -11,12 +11,13 @@ import android.view.View;
 import android.view.ViewTreeObserver;
 import android.view.Window;
 import android.view.WindowManager;
+import android.view.inputmethod.EditorInfo;
 import android.widget.EditText;
 import android.widget.Gallery;
 import android.widget.Toast;
 
 /**
- * @author Sébastien Batézat <sebastien.batezat@gmail.com>
+ * @author Sï¿½bastien Batï¿½zat <sebastien.batezat@gmail.com>
  */
 public class AvatarActivity extends Activity{
 	
@@ -129,7 +130,6 @@ public class AvatarActivity extends Activity{
 	 * @param view
 	 */
 	public void cancelAvatar(View view) {
-		Toast.makeText(this, "Canceled...", Toast.LENGTH_SHORT).show();
 		finish();
 	}
 	
