@@ -35,7 +35,6 @@ public class WifiDirectSendThread extends Thread{
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-
 		}
 		this.client.remove(socket.getInetAddress().getHostAddress());
 		this.socket.remove(socket.getInetAddress().getHostAddress());
