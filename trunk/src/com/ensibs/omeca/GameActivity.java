@@ -71,11 +71,12 @@ public class GameActivity extends Activity implements Observer {
 		// Create controller
 		controller = app.getControler();
 		ActionController.init();
-
+		
 		// Creates the WifiDirectManager
-		 wifiDirectManager = app.getWifiDirectManager();
-		 wifiDirectManager.addObserver(this);
-		 //wifiDirectManager.setApplicationContext(this);
+		wifiDirectManager = app.getWifiDirectManager();
+		wifiDirectManager.addObserver(this);
+		//wifiDirectManager.setApplicationContext(this);
+
 
 		// Hides titlebar and actionbar
 		requestWindowFeature(Window.FEATURE_NO_TITLE);
@@ -144,6 +145,11 @@ public class GameActivity extends Activity implements Observer {
 		
 		if(wifiDirectManager.getMod() == WifiDirectMod.CLIENT){
 			wifiDirectManager.sendEvent(new WifiDirectEventImpl(WifiDirectEvent.EVENT, new ConnectionAction(ActionController.user)));
+			Log.w("Client", "Client");
+		}
+		else{
+			ActionController.board.addPlayer(0, ActionController.user);
+			Log.w("Host", "Host");
 		}
 	}
 
@@ -167,18 +173,19 @@ public class GameActivity extends Activity implements Observer {
 			else if(dataObject instanceof ConnectionAction){
 				if(wifiDirectManager.getMod() == WifiDirectMod.HOST){
 					Player p = ((ConnectionAction) dataObject).getPlayer();
-					p.setId(ActionController.board.getPlayers().size()+1);
+					p.setId(ActionController.board.getPlayers().size());
 					ActionController.board.addPlayerToTheFirstEmptyPlace(p);
-					wifiDirectManager.sendEvent(new WifiDirectEventImpl(WifiDirectEvent.EVENT, new AknowlegmentConnectionAction(p)));
-					Log.w("eded", "ededed");
+					wifiDirectManager.sendEvent(new WifiDirectEventImpl(WifiDirectEvent.EVENT, new AknowlegmentConnectionAction(p, ActionController.board)));
+					omecaHandler.sendEmptyMessage(OmecaHandler.AKNOWLEGMENT_CONNECTION_ACTION);
 				}
 			}
 			else if(dataObject instanceof AknowlegmentConnectionAction){
 				Player p = ((AknowlegmentConnectionAction) dataObject).getPlayer();
 				if(p.getMacAddress().equals(ActionController.user.getMacAddress())){
 					ActionController.user = p;
-					Log.w("Id", ActionController.user.getId()+"");
 				}
+				ActionController.board = ((AknowlegmentConnectionAction) dataObject).getBoard();
+				omecaHandler.sendEmptyMessage(OmecaHandler.AKNOWLEGMENT_CONNECTION_ACTION);
 			}
 		}
 	}

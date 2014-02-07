@@ -3,6 +3,10 @@ package com.ensibs.omeca.model.entities;
 import com.ensibs.omeca.wifidirect.WifiDirectManager;
 
 public class Player extends GameEntity {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	private String username;
 	private int avatar;
 	private int id;

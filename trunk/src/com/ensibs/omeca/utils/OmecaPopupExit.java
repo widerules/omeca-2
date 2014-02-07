@@ -3,11 +3,9 @@ package com.ensibs.omeca.utils;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
-import android.util.Log;
 
 import com.ensibs.omeca.GameActivity;
 import com.ensibs.omeca.MainActivity;
-import com.ensibs.omeca.wifidirect.property.WifiDirectProperty;
 
 public class OmecaPopupExit {
 	private static AlertDialog omecaPopupMenu = null;

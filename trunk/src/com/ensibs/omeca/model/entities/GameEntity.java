@@ -5,6 +5,10 @@ import java.util.ArrayList;
 import java.util.Random;
 
 public abstract class GameEntity implements Serializable{
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	protected ArrayList<Card> cards;
 
 	public GameEntity(){

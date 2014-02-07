@@ -1,8 +1,5 @@
 package com.ensibs.omeca;
 
-import com.ensibs.omeca.controller.ActionController;
-import com.ensibs.omeca.utils.AvatarGallery;
-
 import android.app.Activity;
 import android.content.Context;
 import android.content.SharedPreferences;
@@ -11,10 +8,12 @@ import android.view.View;
 import android.view.ViewTreeObserver;
 import android.view.Window;
 import android.view.WindowManager;
-import android.view.inputmethod.EditorInfo;
 import android.widget.EditText;
 import android.widget.Gallery;
 import android.widget.Toast;
+
+import com.ensibs.omeca.controller.ActionController;
+import com.ensibs.omeca.utils.AvatarGallery;
 
 /**
  * @author S�bastien Bat�zat <sebastien.batezat@gmail.com>

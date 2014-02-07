@@ -9,6 +9,10 @@ import java.util.Map.Entry;
  * 
  */
 public class Board extends GameEntity{
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	public static final int NB_PLAYER_MAX = 8;
 	private int cardsToDeal;
 	private Hashtable<Integer, Player> players;

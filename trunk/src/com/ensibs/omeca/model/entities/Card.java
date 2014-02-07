@@ -1,13 +1,19 @@
 package com.ensibs.omeca.model.entities;
 
 import java.io.InputStream;
+import java.io.Serializable;
+
 import org.jdom2.Document;
 import org.jdom2.Element;
 import org.jdom2.input.SAXBuilder;
 
 import android.util.Log;
 
-public class Card{
+public class Card implements Serializable{
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	//private static final String CONFIG_PATH = "/config/config.xml";
 	public static int[] VALUES;
 	public static String[] COLORS;
