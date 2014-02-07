@@ -188,10 +188,16 @@ public class GameActivity extends Activity implements Observer {
 		OmecaPopupExit.show(this);
 	}
 	
-	public void finishGameActivity(){
+	public synchronized void finishGameActivity(){
 		OmecaPopupExit.dismiss();
 		this.wifiDirectManager.sendEvent(new WifiDirectEventImpl(WifiDirectEvent.EVENT, new DisconnectionAction(ActionController.user.getId())));
-		//this.wifiDirectManager.disconnect();
-		//finish();
+		try {
+			this.wait(2000);
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		this.wifiDirectManager.disconnect();
+		finish();
 	}
 }

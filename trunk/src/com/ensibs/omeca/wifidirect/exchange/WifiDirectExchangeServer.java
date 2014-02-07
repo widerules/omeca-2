@@ -5,6 +5,7 @@ import java.net.Socket;
 import java.util.ArrayList;
 
 import com.ensibs.omeca.wifidirect.WifiDirectNotificationCenter;
+import com.ensibs.omeca.wifidirect.event.WifiDirectEvent;
 import com.ensibs.omeca.wifidirect.event.WifiDirectEventImpl;
 
 public class WifiDirectExchangeServer extends WifiDirectIExchange{
@@ -32,6 +33,7 @@ public class WifiDirectExchangeServer extends WifiDirectIExchange{
 		WifiDirectReceivedThread tmp = new WifiDirectReceivedThread(this,client);
 		tmp.start();
 		receivedThread.add(tmp);
+		wifiDirectNotificationCenter.notifyManager(new WifiDirectEventImpl(WifiDirectEvent.NEW_CLIENT));
 	}
 
 	public void removeClient(Socket client) {

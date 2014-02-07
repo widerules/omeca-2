@@ -2,12 +2,14 @@ package com.ensibs.omeca.wifidirect;
 
 import com.ensibs.omeca.wifidirect.event.WifiDirectEvent;
 import com.ensibs.omeca.wifidirect.event.WifiDirectEventImpl;
+import com.ensibs.omeca.wifidirect.property.WifiDirectProperty;
 
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.net.NetworkInfo;
 import android.net.wifi.p2p.WifiP2pManager;
+import android.util.Log;
 
 public class P2PConnectionListener extends BroadcastReceiver{
 	
