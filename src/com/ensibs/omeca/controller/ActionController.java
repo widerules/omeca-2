@@ -27,7 +27,7 @@ public class ActionController {
 	
 	public static void init(){
 		user = new Player(
-				profilPreferences.getString(AvatarActivity.SHARED_PREFERENCES_PLAYER_NAME, ""),
+				profilPreferences.getString(AvatarActivity.SHARED_PREFERENCES_PLAYER_NAME, "Player"),
 				profilPreferences.getInt(AvatarActivity.SHARED_PREFERENCES_AVATAR_ID_NAME, 0), 0);
 		
 		board = new Board();

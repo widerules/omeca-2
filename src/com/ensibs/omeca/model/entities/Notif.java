@@ -1,8 +1,13 @@
 package com.ensibs.omeca.model.entities;
 
-import java.util.Date;
+import java.io.Serializable;
 
-public class Notif extends GameEntity{
+
+public class Notif implements Serializable{
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	private String date;
 	private Player source;
 	private Player target;
