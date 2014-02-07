@@ -193,7 +193,8 @@ public class WifiDirectManager extends Observable implements Observer{
 		Log.i(WifiDirectProperty.TAG,"Disconnection");
 		if(this.status == WifiDirectStatus.CONNECTED){
 			this.wifiDirectIExchange.stopExchange();
-			this.wifiP2pManager.cancelConnect(wifiP2PChannel, actionListener);
+			this.wifiP2pManager.removeGroup(wifiP2PChannel, actionListener );
+			//this.wifiP2pManager.cancelConnect(wifiP2PChannel, actionListener);
 		}
 		this.status = WifiDirectStatus.DISCONNECTED;
 		this.cancelConnection();
@@ -301,7 +302,6 @@ public class WifiDirectManager extends Observable implements Observer{
 		}else if(p2pEvent.getEvent() == WifiDirectEvent.ERROR){
 			//Resends event or not ? Close game ?
 		}else if(p2pEvent.getEvent() == WifiDirectEvent.EVENT){
-			Log.i(WifiDirectProperty.TAG, "Event");
 			//if(p2pEvent.getSource() != ActionController.user.getId()){
 				setChanged();
 				notifyObservers(p2pEvent);
@@ -324,6 +324,10 @@ public class WifiDirectManager extends Observable implements Observer{
 			//TODO P2P not supported
 			setChanged();
 			notifyObservers(p2pEvent);
+		}else if(p2pEvent.getEvent() == WifiDirectEvent.NEW_CLIENT){
+			//TODO stay visible
+			if(this.mod == WifiDirectMod.HOST)
+				this.startVisible();
 		}
 	}
 }

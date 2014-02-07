@@ -10,5 +10,6 @@ public enum WifiDirectEvent {
 	RECEIVED_P2P_LIST,
 	ENABLED,
 	CHANNEL_LOST,
-	CONNECTION;	
+	CONNECTION,
+	NEW_CLIENT;	
 }
