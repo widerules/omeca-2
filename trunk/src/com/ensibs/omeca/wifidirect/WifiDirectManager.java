@@ -42,6 +42,7 @@ public class WifiDirectManager extends Observable implements Observer{
 	private WifiP2pManager wifiP2pManager = null;
 	private Channel wifiP2PChannel = null;
 	private static Context applicationContext = null;
+	private static Context activityContext = null;
 	private P2PActionListener actionListener = null;
 	private P2PChannelListener channelListener = null;
 	private P2PConnectionListener connectionListener = null;
@@ -67,8 +68,8 @@ public class WifiDirectManager extends Observable implements Observer{
 	 * 
 	 * @param applicationContext
 	 */
-	public static void setApplicationContext(Context applicationContext) {
-		WifiDirectManager.applicationContext = applicationContext;
+	public static void setContext(Context activityContext) {
+		WifiDirectManager.activityContext = activityContext;
 	}
 	
 	/**
@@ -113,20 +114,17 @@ public class WifiDirectManager extends Observable implements Observer{
 	 * 
 	 */
 	private void registred(){
-		WifiDirectManager.applicationContext.registerReceiver(statusReceiver, new IntentFilter(WifiP2pManager.WIFI_P2P_STATE_CHANGED_ACTION));
-		WifiDirectManager.applicationContext.registerReceiver(connectionListener, new IntentFilter(WifiP2pManager.WIFI_P2P_CONNECTION_CHANGED_ACTION));
+		Log.i(WifiDirectProperty.TAG, "Registred");
+		applicationContext.registerReceiver(statusReceiver, new IntentFilter(WifiP2pManager.WIFI_P2P_STATE_CHANGED_ACTION));
+		applicationContext.registerReceiver(connectionListener, new IntentFilter(WifiP2pManager.WIFI_P2P_CONNECTION_CHANGED_ACTION));
 	}
 
 	/**
 	 * 
 	 */
 	private void unregistred(){
-		try{
-		WifiDirectManager.applicationContext.unregisterReceiver(statusReceiver);
-		WifiDirectManager.applicationContext.unregisterReceiver(connectionListener);
-		}catch(Exception e){
-			e.printStackTrace();
-		}
+		applicationContext.unregisterReceiver(connectionListener);
+		applicationContext.unregisterReceiver(statusReceiver);
 	}
 	
 	/**
@@ -148,8 +146,10 @@ public class WifiDirectManager extends Observable implements Observer{
 	 * 
 	 */
 	public void stopDiscoverPeers(){
-		WifiDirectManager.applicationContext.unregisterReceiver(discoveryReceiver);
-		this.isDiscoveryRegistred = false;
+		if(this.isDiscoveryRegistred){
+			WifiDirectManager.applicationContext.unregisterReceiver(discoveryReceiver);
+			this.isDiscoveryRegistred = false;
+		}
 	} 
 
 	/**
@@ -157,7 +157,7 @@ public class WifiDirectManager extends Observable implements Observer{
 	 * @param peers
 	 */
 	private void showConnectionDialog(WifiP2pDeviceList peers){
-		WifiDirectPickPeersDialog dialog = new WifiDirectPickPeersDialog(applicationContext, this, peers);
+		WifiDirectPickPeersDialog dialog = new WifiDirectPickPeersDialog(activityContext, this, peers);
 		dialog.show();
 	}
 
@@ -237,13 +237,6 @@ public class WifiDirectManager extends Observable implements Observer{
 		return isDiscoveryRegistred;
 	}
 
-	/**
-	 * 
-	 * @return
-	 */
-	public static Context getApplicationContext(){
-		return WifiDirectManager.applicationContext;
-	}
 
 	/**
 	 * 
