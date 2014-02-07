@@ -114,7 +114,6 @@ public class WifiDirectManager extends Observable implements Observer{
 	 * 
 	 */
 	private void registred(){
-		Log.i(WifiDirectProperty.TAG, "Registred");
 		applicationContext.registerReceiver(statusReceiver, new IntentFilter(WifiP2pManager.WIFI_P2P_STATE_CHANGED_ACTION));
 		applicationContext.registerReceiver(connectionListener, new IntentFilter(WifiP2pManager.WIFI_P2P_CONNECTION_CHANGED_ACTION));
 	}
@@ -302,13 +301,13 @@ public class WifiDirectManager extends Observable implements Observer{
 		}else if(p2pEvent.getEvent() == WifiDirectEvent.ERROR){
 			//Resends event or not ? Close game ?
 		}else if(p2pEvent.getEvent() == WifiDirectEvent.EVENT){
-			//if(p2pEvent.getSource() != ActionController.user.getId()){
+			if(p2pEvent.getSource() != ActionController.user.getId()){
 				setChanged();
 				notifyObservers(p2pEvent);
-			//}
+			}
 			//Resend if host
 			if(this.mod == WifiDirectMod.HOST){
-				//this.wifiDirectIExchange.sendEvent(p2pEvent);
+				this.wifiDirectIExchange.sendEvent(p2pEvent);
 			}
 		}else if(p2pEvent.getEvent() == WifiDirectEvent.RECEIVED_P2P_LIST){
 			this.wifiP2pManager.requestPeers(wifiP2PChannel, new PeerListListener() {
