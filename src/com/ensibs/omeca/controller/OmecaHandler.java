@@ -10,6 +10,7 @@ import android.widget.Toast;
 import com.ensibs.omeca.GameActivity;
 import com.ensibs.omeca.R;
 import com.ensibs.omeca.view.BoardView;
+import com.ensibs.omeca.view.DiscardPileView;
 import com.ensibs.omeca.view.DrawPileView;
 import com.ensibs.omeca.wifidirect.property.WifiDirectProperty;
 
@@ -42,19 +43,18 @@ public class OmecaHandler extends Handler{
 			((BoardView)GameActivity.getActivity().findViewById(R.id.view_board)).updatePlayers();
 		}
 		else if(msg.what == RETURN_CARD){
-			Log.i(WifiDirectProperty.TAG, "Retournement");
 			Bundle data = msg.getData();
 			BoardView boardView = (BoardView)GameActivity.getActivity().findViewById(R.id.view_board);
 			if(data.getString("Source").equals("DrawPileView")){
 				DrawPileView pileView = boardView.getDrawPileView();
-				//Log.i(WifiDirectProperty.TAG, pileView.getDrawpile().getCards().get(0).getValue()+" "+pileView.getDrawpile().getCards().get(0).getColor());
-				//Log.i(WifiDirectProperty.TAG, pileView.getDrawpile().getCards().get(pileView.getDrawpile().getNumberOfCards()-1).getValue()+" "+pileView.getDrawpile().getCards().get(pileView.getDrawpile().getNumberOfCards()-1).getColor());
 				pileView.getDrawpile().getCards().get(pileView.getDrawpile().getNumberOfCards()-1).setFaceUp(!pileView.getDrawpile().getCards().get(pileView.getDrawpile().getNumberOfCards()-1).isFaceUp());
 				pileView.updateView();
 			}else if(data.getString("Source").equals("BoardView")){
 				
 			}else if(data.getString("Source").equals("DiscardPileView")){
-				
+				DiscardPileView discardView = boardView.getDiscardPileView();
+				discardView.getDiscardPile().getCards().get(discardView.getDiscardPile().getNumberOfCards()-1).setFaceUp(!discardView.getDiscardPile().getCards().get(discardView.getDiscardPile().getNumberOfCards()-1).isFaceUp());
+				discardView.updateView();
 			}
 		}
 	}
