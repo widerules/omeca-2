@@ -60,4 +60,8 @@ public class DiscardPileView extends FrameLayout{
 	public DiscardPile getDiscardPile() {
 		return discardPile;
 	}
+
+	public void setDiscardPile(DiscardPile discardPile) {
+		this.discardPile = discardPile;
+	}
 }
