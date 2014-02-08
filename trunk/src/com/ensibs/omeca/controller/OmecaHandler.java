@@ -69,13 +69,21 @@ public class OmecaHandler extends Handler{
 				pileView.updateView();
 				if(data.getString("Target").equals("BoardView")){
 					boardView.addView(new CardView(GameActivity.getActivity(),tmp));
+				}else if(data.getString("Target").equals("DiscardPileView")){
+					boardView.getDiscardPileView().addView(new CardView(GameActivity.getActivity(),tmp));
 				}
 			}else if(data.getString("Source").equals("BoardView")){
 				//TODO : chercher la carte sur le board et la retourner
 			}else if(data.getString("Source").equals("DiscardPileView")){
-				/*DiscardPileView discardView = boardView.getDiscardPileView();
-				discardView.getDiscardPile().getCards().get(discardView.getDiscardPile().getNumberOfCards()-1).setFaceUp(!discardView.getDiscardPile().getCards().get(discardView.getDiscardPile().getNumberOfCards()-1).isFaceUp());
-				discardView.updateView();*/
+				DiscardPileView discardView = boardView.getDiscardPileView();
+				Card tmp = discardView.getDiscardPile().getCards().get(discardView.getDiscardPile().getNumberOfCards()-1);
+				discardView.getDiscardPile().getCards().remove(discardView.getDiscardPile().getNumberOfCards()-1);
+				discardView.updateView();
+				if(data.getString("Target").equals("BoardView")){
+					boardView.addView(new CardView(GameActivity.getActivity(),tmp));
+				}else if(data.getString("Target").equals("DrawPileView")){
+					boardView.getDrawPileView().addView(new CardView(GameActivity.getActivity(),tmp));
+				}
 			}
 		}
 	}
