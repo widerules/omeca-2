@@ -87,6 +87,7 @@ public class CardView extends ImageView{
 					if(isOnClick){
 						turnCard();
 						view.setVisibility(View.VISIBLE);
+						
 					}
 					break;
 				case MotionEvent.ACTION_MOVE:

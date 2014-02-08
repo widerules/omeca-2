@@ -58,6 +58,10 @@ public class GameActivity extends Activity implements Observer {
 		return omecaHandler;
 	}
 
+	public WifiDirectManager getWifiDirectManager() {
+		return wifiDirectManager;
+	}
+
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -68,16 +72,15 @@ public class GameActivity extends Activity implements Observer {
 		//Handler of UIThread
 		omecaHandler = new OmecaHandler(Looper.getMainLooper());
 		
-		// Create controller
-		controller = app.getControler();
-		ActionController.init();
-		
 		// Creates the WifiDirectManager
 		wifiDirectManager = app.getWifiDirectManager();
 		wifiDirectManager.addObserver(this);
 		//wifiDirectManager.setApplicationContext(this);
-
-
+		
+		// Create controller
+		controller = app.getControler();
+		ActionController.init();
+		
 		// Hides titlebar and actionbar
 		requestWindowFeature(Window.FEATURE_NO_TITLE);
 		getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
