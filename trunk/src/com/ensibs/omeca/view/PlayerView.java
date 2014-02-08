@@ -20,11 +20,15 @@ import android.widget.TextView;
 import com.ensibs.omeca.GameActivity;
 import com.ensibs.omeca.R;
 import com.ensibs.omeca.controller.ActionController;
+import com.ensibs.omeca.model.actions.MoveCardAction;
+import com.ensibs.omeca.model.entities.Board;
 import com.ensibs.omeca.model.entities.Card;
 import com.ensibs.omeca.model.entities.Player;
 import com.ensibs.omeca.utils.AvatarsList;
 import com.ensibs.omeca.utils.NotifPopup;
 import com.ensibs.omeca.utils.SliderbarCardGallery;
+import com.ensibs.omeca.wifidirect.event.WifiDirectEvent;
+import com.ensibs.omeca.wifidirect.event.WifiDirectEventImpl;
 
 public class PlayerView extends RelativeLayout{
 
@@ -229,7 +233,18 @@ public class PlayerView extends RelativeLayout{
 						}
 						setBackgroundColor(Color.TRANSPARENT);
 						
-						NotifPopup.addNotif(ActionController.user, player, "donne une carte à");
+						NotifPopup.addNotif(ActionController.user, player, "donne une carte a");
+						
+						//Send event to the other
+						if(parent instanceof HandView){
+							
+						}else if(parent instanceof BoardView){
+							
+						}else if(parent instanceof DrawPileView){
+							GameActivity.getActivity().getWifiDirectManager().sendEvent(new WifiDirectEventImpl(WifiDirectEvent.EVENT, new MoveCardAction("DrawPileView",view.getCard(), "Player", player.getId())));
+						}else if(parent instanceof DiscardPileView){
+							GameActivity.getActivity().getWifiDirectManager().sendEvent(new WifiDirectEventImpl(WifiDirectEvent.EVENT, new MoveCardAction("DiscardPileView",view.getCard(), "Player", player.getId())));
+						}						
 					}
 					else{
 						vTmp.setVisibility(View.VISIBLE);

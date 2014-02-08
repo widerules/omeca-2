@@ -12,36 +12,36 @@ public class MoveCardAction implements Serializable{
 	private static final long serialVersionUID = 1L;
 	
 	private String src;
-	private String idSource;
+	private int idSource;
 	private String target;
-	private String idTarget;
+	private int idTarget;
 	private Card card;
 	
 	public MoveCardAction(String source, String target, Card card){
 		this.src = source;
-		this.idSource = null;
+		this.idSource = -1;
 		this.target = target;
-		this.idTarget = null;
+		this.idTarget = -1;
 		this.card = card;
 	}
 	
-	public MoveCardAction(String source, String idSource, Card card, String target){
+	public MoveCardAction(String source, int idSource, Card card, String target){
 		this.src = source;
 		this.idSource = idSource;
 		this.target = target;
-		this.idTarget = null;
+		this.idTarget = -1;
 		this.card = card;
 	}
 	
-	public MoveCardAction(String source, Card card, String target, String idTarger){
+	public MoveCardAction(String source, Card card, String target, int idTarger){
 		this.src = source;
-		this.idSource = null;
+		this.idSource = -1;
 		this.target = target;
 		this.idTarget = idTarger;
 		this.card = card;
 	}
 	
-	public MoveCardAction(String source, String idSource, String target, String idTarger, Card card){
+	public MoveCardAction(String source, int idSource, String target, int idTarger, Card card){
 		this.src = source;
 		this.idSource = idSource;
 		this.target = target;
@@ -53,7 +53,7 @@ public class MoveCardAction implements Serializable{
 		return src;
 	}
 
-	public String getIdSource() {
+	public int getIdSource() {
 		return idSource;
 	}
 
@@ -61,7 +61,7 @@ public class MoveCardAction implements Serializable{
 		return target;
 	}
 
-	public String getIdTarget() {
+	public int getIdTarget() {
 		return idTarget;
 	}
 
