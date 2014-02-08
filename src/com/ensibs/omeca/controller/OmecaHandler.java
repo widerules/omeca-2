@@ -6,9 +6,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
 import android.os.Message;
-import android.util.Log;
 import android.widget.Gallery;
-import android.widget.Toast;
 
 import com.ensibs.omeca.GameActivity;
 import com.ensibs.omeca.R;
@@ -20,38 +18,57 @@ import com.ensibs.omeca.view.DiscardPileView;
 import com.ensibs.omeca.view.DrawPileView;
 import com.ensibs.omeca.view.HandView;
 import com.ensibs.omeca.view.PlayerView;
-import com.ensibs.omeca.wifidirect.property.WifiDirectProperty;
 
-public class OmecaHandler extends Handler{
-	
+public class OmecaHandler extends Handler {
+
 	public static final int CONNEXION = 0;
 	public static final int DECONNEXION = 1;
 	public static final int AKNOWLEGMENT_CONNECTION_ACTION = 2;
-	public static final int RETURN_CARD = 3;
-	public static final int MOVE_CARD = 4;
+	public static final int SWITCH_PLAYERS_ACTION = 3;
+	public static final int RETURN_CARD = 4;
+
+	public static final int MOVE_CARD = 5;
 	
 	public OmecaHandler(Looper looper){
 		super(looper);
 	}
-	
+
 	/**
-	 * Message msgObj = handler.obtainMessage();
-                            Bundle b = new Bundle();
-                            b.putString("message", msg);
-                            msgObj.setData(b);
-                            handler.sendMessage(msgObj);
+	 * Message msgObj = handler.obtainMessage(); Bundle b = new Bundle();
+	 * b.putString("message", msg); msgObj.setData(b);
+	 * handler.sendMessage(msgObj);
 	 */
-	
+
 	@Override
 	public void handleMessage(Message msg) {
-		if(msg.what == DECONNEXION){
-			Toast.makeText(GameActivity.getActivity(), "Deconnexion", Toast.LENGTH_LONG).show();
+		switch (msg.what) {
+		case DECONNEXION:{
+			BoardView boardView = (BoardView) GameActivity.getActivity()
+					.findViewById(R.id.view_board);
+			boardView.getDiscardPileView().updateView();
+			boardView.updatePlayers();
 		}
-		else if(msg.what == AKNOWLEGMENT_CONNECTION_ACTION){
-			Log.w("deed", "deded");
-			((BoardView)GameActivity.getActivity().findViewById(R.id.view_board)).updatePlayers();
+			break;
+		case AKNOWLEGMENT_CONNECTION_ACTION:
+		{
+			BoardView boardView = (BoardView) GameActivity.getActivity()
+			.findViewById(R.id.view_board);
+			boardView.getDrawPileView().setDrawpile(ActionController.board.getDrawPile());
+			boardView.getDiscardPileView().setDiscardPile(ActionController.board.getDiscardPile());
+			boardView.getDiscardPileView().updateView();
+			boardView.getDrawPileView().updateView();
+			boardView.updatePlayers();
 		}
-		else if(msg.what == RETURN_CARD){
+			break;
+		case SWITCH_PLAYERS_ACTION:
+		{
+			BoardView boardView = (BoardView) GameActivity.getActivity()
+			.findViewById(R.id.view_board);
+			boardView.updatePlayers();
+		}
+			break;
+		case RETURN_CARD:
+		{
 			Bundle data = msg.getData();
 			BoardView boardView = (BoardView)GameActivity.getActivity().findViewById(R.id.view_board);
 			if(data.getString("Source").equals("DrawPileView")){
@@ -65,7 +82,10 @@ public class OmecaHandler extends Handler{
 				discardView.getDiscardPile().getCards().get(discardView.getDiscardPile().getNumberOfCards()-1).setFaceUp(!discardView.getDiscardPile().getCards().get(discardView.getDiscardPile().getNumberOfCards()-1).isFaceUp());
 				discardView.updateView();
 			}
-		}else if(msg.what == MOVE_CARD){
+		}
+			break;
+		case MOVE_CARD:
+		{
 			Bundle data = msg.getData();
 			BoardView boardView = (BoardView)GameActivity.getActivity().findViewById(R.id.view_board);
 			if(data.getString("Source").equals("DrawPileView")){
@@ -133,6 +153,10 @@ public class OmecaHandler extends Handler{
 					}
 				}
 			}
+		}
+			break;
+		default:
+			break;
 		}
 	}
 }
