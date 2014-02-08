@@ -1,19 +1,25 @@
 package com.ensibs.omeca.controller;
 
+import java.util.Hashtable;
+
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
 import android.os.Message;
 import android.util.Log;
+import android.widget.Gallery;
 import android.widget.Toast;
 
 import com.ensibs.omeca.GameActivity;
 import com.ensibs.omeca.R;
 import com.ensibs.omeca.model.entities.Card;
+import com.ensibs.omeca.utils.SliderbarCardGallery;
 import com.ensibs.omeca.view.BoardView;
 import com.ensibs.omeca.view.CardView;
 import com.ensibs.omeca.view.DiscardPileView;
 import com.ensibs.omeca.view.DrawPileView;
+import com.ensibs.omeca.view.HandView;
+import com.ensibs.omeca.view.PlayerView;
 import com.ensibs.omeca.wifidirect.property.WifiDirectProperty;
 
 public class OmecaHandler extends Handler{
@@ -71,6 +77,27 @@ public class OmecaHandler extends Handler{
 					boardView.addView(new CardView(GameActivity.getActivity(),tmp));
 				}else if(data.getString("Target").equals("DiscardPileView")){
 					boardView.getDiscardPileView().addView(new CardView(GameActivity.getActivity(),tmp));
+				}else if(data.getString("Target").equals("Player")){
+					int playerId = data.getInt("IDTarget");
+					if(playerId == ActionController.user.getId()){
+						ActionController.user.addCard(tmp);
+						HandView handView = (HandView)GameActivity.getActivity().findViewById(R.id.handview);
+						handView.updateView(false);
+						Gallery cards = (Gallery) GameActivity.getActivity().findViewById(R.id.playerview_slider_board_cardgallery);
+						SliderbarCardGallery l = (SliderbarCardGallery)cards.getAdapter();
+				        l.notifyDataSetChanged();
+					}else{
+						Hashtable<Integer, PlayerView> players = boardView.getPlayerViews();
+						for(int playerPlace : players.keySet()){
+							if(players.get(playerPlace).getPlayer() != null && players.get(playerPlace).getPlayer().getId() == playerId){
+								players.get(playerPlace).getPlayer().addCard(tmp);
+								break;
+							}
+						}
+						boardView.updatePlayers();
+						HandView handView = (HandView)GameActivity.getActivity().findViewById(R.id.handview);
+						handView.updateView(false);
+					}
 				}
 			}else if(data.getString("Source").equals("BoardView")){
 				//TODO : chercher la carte sur le board et la retourner
@@ -83,6 +110,27 @@ public class OmecaHandler extends Handler{
 					boardView.addView(new CardView(GameActivity.getActivity(),tmp));
 				}else if(data.getString("Target").equals("DrawPileView")){
 					boardView.getDrawPileView().addView(new CardView(GameActivity.getActivity(),tmp));
+				}else if(data.getString("Target").equals("Player")){
+					int playerId = data.getInt("IDTarget");
+					if(playerId == ActionController.user.getId()){
+						ActionController.user.addCard(tmp);
+						HandView handView = (HandView)GameActivity.getActivity().findViewById(R.id.handview);
+						handView.updateView(false);
+						Gallery cards = (Gallery) GameActivity.getActivity().findViewById(R.id.playerview_slider_board_cardgallery);
+						SliderbarCardGallery l = (SliderbarCardGallery)cards.getAdapter();
+				        l.notifyDataSetChanged();
+					}else{
+						Hashtable<Integer, PlayerView> players = boardView.getPlayerViews();
+						for(int playerPlace : players.keySet()){
+							if(players.get(playerPlace).getPlayer() != null && players.get(playerPlace).getPlayer().getId() == playerId){
+								players.get(playerPlace).getPlayer().addCard(tmp);
+								break;
+							}
+						}
+						boardView.updatePlayers();
+						HandView handView = (HandView)GameActivity.getActivity().findViewById(R.id.handview);
+						handView.updateView(false);
+					}
 				}
 			}
 		}

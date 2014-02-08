@@ -211,11 +211,11 @@ public class GameActivity extends Activity implements Observer {
 				msg.what = OmecaHandler.MOVE_CARD;
 				Bundle dataMessage = new Bundle();
 				dataMessage.putString("Source", moveCardAction.getSrc());
-				if(moveCardAction.getIdSource() != null)
-					dataMessage.putString("IDSource", moveCardAction.getIdSource());
+				if(moveCardAction.getIdSource() != -1)
+					dataMessage.putInt("IDSource", moveCardAction.getIdSource());
 				dataMessage.putString("Target", moveCardAction.getTarget());
-				if(moveCardAction.getIdTarget() != null)
-					dataMessage.putString("IDTarget", moveCardAction.getIdTarget());
+				if(moveCardAction.getIdTarget() != -1)
+					dataMessage.putInt("IDTarget", moveCardAction.getIdTarget());
 				dataMessage.putInt("Value", moveCardAction.getCard().getValue());
 				dataMessage.putString("Color", moveCardAction.getCard().getColor());
 				msg.setData(dataMessage);
