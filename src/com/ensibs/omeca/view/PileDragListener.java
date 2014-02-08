@@ -1,6 +1,10 @@
 package com.ensibs.omeca.view;
 
+import com.ensibs.omeca.GameActivity;
 import com.ensibs.omeca.R;
+import com.ensibs.omeca.model.actions.MoveCardAction;
+import com.ensibs.omeca.wifidirect.event.WifiDirectEvent;
+import com.ensibs.omeca.wifidirect.event.WifiDirectEventImpl;
 
 import android.view.DragEvent;
 import android.view.View;
@@ -37,11 +41,21 @@ public class PileDragListener implements OnDragListener {
 					DiscardPileView pile = (DiscardPileView)v;
 					TextView text = (TextView)((View)v.getParent()).findViewById(R.id.nbDiscardPileCards);
 					text.setText(""+pile.getDiscardPile().getNumberOfCards());
+					if(owner instanceof DrawPileView){
+						GameActivity.getActivity().getWifiDirectManager().sendEvent(new WifiDirectEventImpl(WifiDirectEvent.EVENT, new MoveCardAction("DrawPileView", "DiscardPileView",((CardView)view).getCard())));
+					}else if(owner instanceof BoardView){
+						//TODO
+					}
 				}
 				else if(v instanceof DrawPileView){
 					DrawPileView pile = (DrawPileView)v;
 					TextView text = (TextView)((View)v.getParent()).findViewById(R.id.nbDrawPileCards);
 					text.setText(""+pile.getDrawpile().getNumberOfCards());
+					if(owner instanceof DiscardPileView){
+						GameActivity.getActivity().getWifiDirectManager().sendEvent(new WifiDirectEventImpl(WifiDirectEvent.EVENT, new MoveCardAction("DiscardPileView","DrawPileView" ,((CardView)view).getCard())));
+					}else if(owner instanceof BoardView){
+						//TODO
+					}
 				}
 			}
 			else
