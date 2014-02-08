@@ -63,5 +63,10 @@ public class DrawPileView extends FrameLayout {
 	public DrawPile getDrawpile() {
 		return drawpile;
 	}
+
+	public void setDrawpile(DrawPile drawpile) {
+		this.drawpile = drawpile;
+	}
+	
 	
 }
