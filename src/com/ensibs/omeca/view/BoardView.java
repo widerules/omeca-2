@@ -20,9 +20,13 @@ import android.widget.Toast;
 import com.ensibs.omeca.GameActivity;
 import com.ensibs.omeca.R;
 import com.ensibs.omeca.controller.ActionController;
+import com.ensibs.omeca.model.actions.MoveCardAction;
+import com.ensibs.omeca.model.actions.ReturnCardAction;
 import com.ensibs.omeca.model.entities.Board;
 import com.ensibs.omeca.model.entities.Player;
 import com.ensibs.omeca.utils.SliderbarCardGallery;
+import com.ensibs.omeca.wifidirect.event.WifiDirectEvent;
+import com.ensibs.omeca.wifidirect.event.WifiDirectEventImpl;
 
 public class BoardView extends RelativeLayout {
 	private Context context;
@@ -209,6 +213,9 @@ public class BoardView extends RelativeLayout {
 							a2.notifyDataSetChanged();
 						}
 					}
+					else if(parent instanceof DrawPileView){
+						GameActivity.getActivity().getWifiDirectManager().sendEvent(new WifiDirectEventImpl(WifiDirectEvent.EVENT, new MoveCardAction("DrawPileView", "BoardView",view.getCard())));
+					}
 					MarginLayoutParams marginParams = new MarginLayoutParams(
 							view.getLayoutParams());
 					int left = (int) (event.getX() - (view.getWidth() / 2));
@@ -284,7 +291,7 @@ public class BoardView extends RelativeLayout {
 	
 	private void distribTo( final int toId, final int nbCard) {
 		if(nbCard> 0){ // on a pas fini
-			//recupération de la cartes
+			//recupï¿½ration de la cartes
 			final CardView vToMove = (CardView) drawPileView.getChildAt(0);	
 			drawPileView.removeViewInLayout(vToMove);
 			addView(vToMove);

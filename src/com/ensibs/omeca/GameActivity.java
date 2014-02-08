@@ -25,6 +25,7 @@ import com.ensibs.omeca.controller.OmecaHandler;
 import com.ensibs.omeca.model.actions.AknowlegmentConnectionAction;
 import com.ensibs.omeca.model.actions.ConnectionAction;
 import com.ensibs.omeca.model.actions.DisconnectionAction;
+import com.ensibs.omeca.model.actions.MoveCardAction;
 import com.ensibs.omeca.model.actions.ReturnCardAction;
 import com.ensibs.omeca.model.entities.Board;
 import com.ensibs.omeca.model.entities.Player;
@@ -201,6 +202,22 @@ public class GameActivity extends Activity implements Observer {
 				dataMessage.putString("Source", retCardAction.getSrc());
 				dataMessage.putInt("Value", retCardAction.getCard().getValue());
 				dataMessage.putString("Color", retCardAction.getCard().getColor());
+				msg.setData(dataMessage);
+				omecaHandler.sendMessage(msg);
+			}else if(dataObject instanceof MoveCardAction){
+				Log.i(WifiDirectProperty.TAG, "Carte deplace");
+				MoveCardAction moveCardAction = (MoveCardAction) dataObject;
+				Message msg = omecaHandler.obtainMessage();
+				msg.what = OmecaHandler.MOVE_CARD;
+				Bundle dataMessage = new Bundle();
+				dataMessage.putString("Source", moveCardAction.getSrc());
+				if(moveCardAction.getIdSource() != null)
+					dataMessage.putString("IDSource", moveCardAction.getIdSource());
+				dataMessage.putString("Target", moveCardAction.getTarget());
+				if(moveCardAction.getIdTarget() != null)
+					dataMessage.putString("IDTarget", moveCardAction.getIdTarget());
+				dataMessage.putInt("Value", moveCardAction.getCard().getValue());
+				dataMessage.putString("Color", moveCardAction.getCard().getColor());
 				msg.setData(dataMessage);
 				omecaHandler.sendMessage(msg);
 			}

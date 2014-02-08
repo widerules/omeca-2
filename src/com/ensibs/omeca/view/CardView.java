@@ -100,7 +100,8 @@ public class CardView extends ImageView{
 							src = "BoardView";
 						else if(view.getParent() instanceof DiscardPileView)
 							src = "DiscardPileView";
-						GameActivity.getActivity().getWifiDirectManager().sendEvent(new WifiDirectEventImpl(WifiDirectEvent.EVENT, new ReturnCardAction(src, getCard())));
+						if(src.equals("DrawPileView") || src.equals("BoardView") || src.equals("DiscardPileView"))
+							GameActivity.getActivity().getWifiDirectManager().sendEvent(new WifiDirectEventImpl(WifiDirectEvent.EVENT, new ReturnCardAction(src, getCard())));
 					}
 					break;
 				case MotionEvent.ACTION_MOVE:
