@@ -7,6 +7,7 @@ import android.app.Activity;
 import android.app.AlertDialog;
 import android.os.Bundle;
 import android.os.Looper;
+import android.os.Message;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -24,6 +25,7 @@ import com.ensibs.omeca.controller.OmecaHandler;
 import com.ensibs.omeca.model.actions.AknowlegmentConnectionAction;
 import com.ensibs.omeca.model.actions.ConnectionAction;
 import com.ensibs.omeca.model.actions.DisconnectionAction;
+import com.ensibs.omeca.model.actions.ReturnCardAction;
 import com.ensibs.omeca.model.entities.Board;
 import com.ensibs.omeca.model.entities.Player;
 import com.ensibs.omeca.utils.OmecaPopupExit;
@@ -189,6 +191,18 @@ public class GameActivity extends Activity implements Observer {
 				}
 				ActionController.board = ((AknowlegmentConnectionAction) dataObject).getBoard();
 				omecaHandler.sendEmptyMessage(OmecaHandler.AKNOWLEGMENT_CONNECTION_ACTION);
+			}
+			else if(dataObject instanceof ReturnCardAction){
+				Log.i(WifiDirectProperty.TAG, "Carte retourner");
+				ReturnCardAction retCardAction = (ReturnCardAction) dataObject;
+				Message msg = omecaHandler.obtainMessage();
+				msg.what = OmecaHandler.RETURN_CARD;
+				Bundle dataMessage = new Bundle();
+				dataMessage.putString("Source", retCardAction.getSrc());
+				dataMessage.putInt("Value", retCardAction.getCard().getValue());
+				dataMessage.putString("Color", retCardAction.getCard().getColor());
+				msg.setData(dataMessage);
+				omecaHandler.sendMessage(msg);
 			}
 		}
 	}

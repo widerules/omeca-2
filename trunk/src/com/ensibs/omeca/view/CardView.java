@@ -4,12 +4,18 @@ import android.annotation.SuppressLint;
 import android.content.ClipData;
 import android.content.Context;
 import android.util.DisplayMetrics;
+import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 
+import com.ensibs.omeca.GameActivity;
+import com.ensibs.omeca.model.actions.ReturnCardAction;
 import com.ensibs.omeca.model.entities.Card;
+import com.ensibs.omeca.wifidirect.event.WifiDirectEvent;
+import com.ensibs.omeca.wifidirect.event.WifiDirectEventImpl;
+import com.ensibs.omeca.wifidirect.property.WifiDirectProperty;
 
 @SuppressLint("ViewConstructor")
 public class CardView extends ImageView{
@@ -87,7 +93,14 @@ public class CardView extends ImageView{
 					if(isOnClick){
 						turnCard();
 						view.setVisibility(View.VISIBLE);
-						
+						String src = "";
+						if(view.getParent() instanceof DrawPileView)
+							src = "DrawPileView";
+						else if(view.getParent() instanceof BoardView)
+							src = "BoardView";
+						else if(view.getParent() instanceof DiscardPileView)
+							src = "DiscardPileView";
+						GameActivity.getActivity().getWifiDirectManager().sendEvent(new WifiDirectEventImpl(WifiDirectEvent.EVENT, new ReturnCardAction(src, getCard())));
 					}
 					break;
 				case MotionEvent.ACTION_MOVE:
