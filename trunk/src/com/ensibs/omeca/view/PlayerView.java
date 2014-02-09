@@ -227,7 +227,7 @@ public class PlayerView extends RelativeLayout {
 						int pos = boardView
 								.getPlayerViewPosition((PlayerView) v)
 								+ ActionController.board
-										.getPlace(ActionController.user);
+								.getPlace(ActionController.user);
 
 						WifiDirectManager wifiDirectManager = GameActivity
 								.getActivity().getOmecaApplication()
@@ -244,15 +244,15 @@ public class PlayerView extends RelativeLayout {
 						switch (player.getNumberOfCards()) {
 						case 1:
 							cardsImages
-									.setBackgroundResource(R.drawable.cardsx1);
+							.setBackgroundResource(R.drawable.cardsx1);
 							break;
 						case 2:
 							cardsImages
-									.setBackgroundResource(R.drawable.cardsx2);
+							.setBackgroundResource(R.drawable.cardsx2);
 							break;
 						default:
 							cardsImages
-									.setBackgroundResource(R.drawable.cardsx3);
+							.setBackgroundResource(R.drawable.cardsx3);
 							cards.setText("" + player.getCards().size());
 							break;
 						}
@@ -278,28 +278,28 @@ public class PlayerView extends RelativeLayout {
 
 						} else if (parent instanceof DrawPileView) {
 							GameActivity
-									.getActivity()
-									.getWifiDirectManager()
-									.sendEvent(
-											new WifiDirectEventImpl(
-													WifiDirectEvent.EVENT,
-													new MoveCardAction(
-															"DrawPileView",
-															view.getCard(),
-															"Player", player
-																	.getId())));
+							.getActivity()
+							.getWifiDirectManager()
+							.sendEvent(
+									new WifiDirectEventImpl(
+											WifiDirectEvent.EVENT,
+											new MoveCardAction(
+													"DrawPileView",
+													view.getCard(),
+													"Player", player
+													.getId())));
 						} else if (parent instanceof DiscardPileView) {
 							GameActivity
-									.getActivity()
-									.getWifiDirectManager()
-									.sendEvent(
-											new WifiDirectEventImpl(
-													WifiDirectEvent.EVENT,
-													new MoveCardAction(
-															"DiscardPileView",
-															view.getCard(),
-															"Player", player
-																	.getId())));
+							.getActivity()
+							.getWifiDirectManager()
+							.sendEvent(
+									new WifiDirectEventImpl(
+											WifiDirectEvent.EVENT,
+											new MoveCardAction(
+													"DiscardPileView",
+													view.getCard(),
+													"Player", player
+													.getId())));
 						}
 					} else {
 						vTmp.setVisibility(View.VISIBLE);
