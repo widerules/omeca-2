@@ -108,6 +108,7 @@ public class WifiDirectManager extends Observable implements Observer{
 	 */
 	public void stopP2P(){
 		this.unregistred();
+		this.stopDiscoverPeers();
 	}
 
 	/**
@@ -122,8 +123,12 @@ public class WifiDirectManager extends Observable implements Observer{
 	 * 
 	 */
 	private void unregistred(){
-		applicationContext.unregisterReceiver(connectionListener);
-		applicationContext.unregisterReceiver(statusReceiver);
+		try{
+			applicationContext.unregisterReceiver(statusReceiver);
+			applicationContext.unregisterReceiver(connectionListener);
+		}catch(Exception e){
+			
+		}
 	}
 	
 	/**
@@ -197,6 +202,9 @@ public class WifiDirectManager extends Observable implements Observer{
 		}
 		this.status = WifiDirectStatus.DISCONNECTED;
 		this.cancelConnection();
+		//TODO : check if works
+		this.unregistred();
+		this.registred();
 	}
 	
 	public void cancelConnectionTo(){

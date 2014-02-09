@@ -24,15 +24,21 @@ public class WifiDirectAcceptServer extends Thread{
 
 	public void run(){
 		this.run = true;
-		try{
+		try {
 			this.server = new ServerSocket(WifiDirectProperty.PORT);
 			while(run){
-				Socket client = server.accept();
-				if(run){
-					exchangeServer.addClient(client);
+				Socket client;
+				try {
+					client = server.accept();
+					if(run){
+						exchangeServer.addClient(client);
+					}
+				} catch (IOException e) {
+					e.printStackTrace();
 				}
 			}
 		} catch (IOException e) {
+			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		this.run = false;

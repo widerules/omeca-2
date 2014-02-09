@@ -2,6 +2,7 @@ package com.ensibs.omeca.view;
 
 import com.ensibs.omeca.GameActivity;
 import com.ensibs.omeca.R;
+import com.ensibs.omeca.controller.ActionController;
 import com.ensibs.omeca.model.actions.MoveCardAction;
 import com.ensibs.omeca.wifidirect.event.WifiDirectEvent;
 import com.ensibs.omeca.wifidirect.event.WifiDirectEventImpl;
@@ -44,7 +45,9 @@ public class PileDragListener implements OnDragListener {
 					if(owner instanceof DrawPileView){
 						GameActivity.getActivity().getWifiDirectManager().sendEvent(new WifiDirectEventImpl(WifiDirectEvent.EVENT, new MoveCardAction("DrawPileView", "DiscardPileView",((CardView)view).getCard())));
 					}else if(owner instanceof BoardView){
-						//TODO
+						GameActivity.getActivity().getWifiDirectManager().sendEvent(new WifiDirectEventImpl(WifiDirectEvent.EVENT, new MoveCardAction("BoardView", "DiscardPileView",((CardView)view).getCard())));
+					}else if(owner instanceof HandView){
+						GameActivity.getActivity().getWifiDirectManager().sendEvent(new WifiDirectEventImpl(WifiDirectEvent.EVENT, new MoveCardAction("Player", ActionController.user.getId(), ((CardView)view).getCard(), "DiscardPileView")));
 					}
 				}
 				else if(v instanceof DrawPileView){
@@ -54,7 +57,9 @@ public class PileDragListener implements OnDragListener {
 					if(owner instanceof DiscardPileView){
 						GameActivity.getActivity().getWifiDirectManager().sendEvent(new WifiDirectEventImpl(WifiDirectEvent.EVENT, new MoveCardAction("DiscardPileView","DrawPileView" ,((CardView)view).getCard())));
 					}else if(owner instanceof BoardView){
-						//TODO
+						GameActivity.getActivity().getWifiDirectManager().sendEvent(new WifiDirectEventImpl(WifiDirectEvent.EVENT, new MoveCardAction("BoardView", "DrawPileView",((CardView)view).getCard())));
+					}else if(owner instanceof HandView){
+						GameActivity.getActivity().getWifiDirectManager().sendEvent(new WifiDirectEventImpl(WifiDirectEvent.EVENT, new MoveCardAction("Player", ActionController.user.getId(), ((CardView)view).getCard(), "DrawPileView")));
 					}
 				}
 			}

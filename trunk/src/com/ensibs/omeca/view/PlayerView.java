@@ -273,9 +273,29 @@ public class PlayerView extends RelativeLayout {
 
 						// Send event to the other
 						if (parent instanceof HandView) {
-
+							GameActivity
+							.getActivity()
+							.getWifiDirectManager()
+							.sendEvent(
+									new WifiDirectEventImpl(
+											WifiDirectEvent.EVENT,
+											new MoveCardAction(
+													"Player",ActionController.user.getId(),
+													"Player", player
+													.getId(),
+													view.getCard())));
 						} else if (parent instanceof BoardView) {
-
+							GameActivity
+							.getActivity()
+							.getWifiDirectManager()
+							.sendEvent(
+									new WifiDirectEventImpl(
+											WifiDirectEvent.EVENT,
+											new MoveCardAction(
+													"BoardView",
+													view.getCard(),
+													"Player", player
+													.getId())));
 						} else if (parent instanceof DrawPileView) {
 							GameActivity
 							.getActivity()
