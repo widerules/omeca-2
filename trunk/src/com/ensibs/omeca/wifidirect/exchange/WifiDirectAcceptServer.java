@@ -1,6 +1,7 @@
 package com.ensibs.omeca.wifidirect.exchange;
 
 import java.io.IOException;
+import java.net.InetSocketAddress;
 import java.net.ServerSocket;
 import java.net.Socket;
 
@@ -23,15 +24,21 @@ public class WifiDirectAcceptServer extends Thread{
 	}
 
 	public void run(){
+		Log.i(WifiDirectProperty.TAG, "Thread accept start");
 		this.run = true;
 		try {
-			this.server = new ServerSocket(WifiDirectProperty.PORT);
+			Log.i(WifiDirectProperty.TAG,"Bind server");
+			this.server = new ServerSocket();
+			this.server.setReuseAddress(true);
+			Log.i(WifiDirectProperty.TAG, new InetSocketAddress(WifiDirectProperty.PORT).toString());
+	        this.server.bind(new InetSocketAddress(WifiDirectProperty.PORT));
 			while(run){
 				Socket client;
 				try {
 					client = server.accept();
 					if(run){
 						exchangeServer.addClient(client);
+						Log.i(WifiDirectProperty.TAG, "New Client");
 					}
 				} catch (IOException e) {
 					e.printStackTrace();
