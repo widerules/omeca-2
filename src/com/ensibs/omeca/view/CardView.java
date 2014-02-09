@@ -4,7 +4,6 @@ import android.annotation.SuppressLint;
 import android.content.ClipData;
 import android.content.Context;
 import android.util.DisplayMetrics;
-import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.ImageView;
@@ -15,7 +14,6 @@ import com.ensibs.omeca.model.actions.ReturnCardAction;
 import com.ensibs.omeca.model.entities.Card;
 import com.ensibs.omeca.wifidirect.event.WifiDirectEvent;
 import com.ensibs.omeca.wifidirect.event.WifiDirectEventImpl;
-import com.ensibs.omeca.wifidirect.property.WifiDirectProperty;
 
 @SuppressLint("ViewConstructor")
 public class CardView extends ImageView{
