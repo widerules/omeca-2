@@ -4,7 +4,6 @@ import java.util.Observable;
 import java.util.Observer;
 
 import android.app.Activity;
-import android.app.AlertDialog;
 import android.os.Bundle;
 import android.os.Looper;
 import android.os.Message;
@@ -27,7 +26,9 @@ import com.ensibs.omeca.model.actions.ConnectionAction;
 import com.ensibs.omeca.model.actions.DisconnectionAction;
 import com.ensibs.omeca.model.actions.MoveCardAction;
 import com.ensibs.omeca.model.actions.ReturnCardAction;
+import com.ensibs.omeca.model.actions.SwitchPlayersAction;
 import com.ensibs.omeca.model.entities.Board;
+import com.ensibs.omeca.model.entities.Card;
 import com.ensibs.omeca.model.entities.Player;
 import com.ensibs.omeca.utils.OmecaPopupExit;
 import com.ensibs.omeca.utils.SliderbarCardGallery;
@@ -46,10 +47,9 @@ import com.ensibs.omeca.wifidirect.property.WifiDirectProperty;
 
 public class GameActivity extends Activity implements Observer {
 
-	WifiDirectManager wifiDirectManager;
+	private WifiDirectManager wifiDirectManager;
 	static ActionController controller;
-	AlertDialog popupMenu;
-	OmecaApplication app;
+	private OmecaApplication app;
 	private static GameActivity instance;
 	private OmecaHandler omecaHandler;
 
@@ -61,20 +61,23 @@ public class GameActivity extends Activity implements Observer {
 		return omecaHandler;
 	}
 
+	public OmecaApplication getOmecaApplication() {
+		return app;
+	}
 	public WifiDirectManager getWifiDirectManager() {
 		return wifiDirectManager;
 	}
-
+	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		instance = this;
 		// Retrieve application
 		app = (OmecaApplication) getApplication();
-		
-		//Handler of UIThread
+
+		// Handler of UIThread
 		omecaHandler = new OmecaHandler(Looper.getMainLooper());
-		
+
 		// Creates the WifiDirectManager
 		wifiDirectManager = app.getWifiDirectManager();
 		wifiDirectManager.addObserver(this);
@@ -83,7 +86,7 @@ public class GameActivity extends Activity implements Observer {
 		// Create controller
 		controller = app.getControler();
 		ActionController.init();
-		
+
 		// Hides titlebar and actionbar
 		requestWindowFeature(Window.FEATURE_NO_TITLE);
 		getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
@@ -102,12 +105,12 @@ public class GameActivity extends Activity implements Observer {
 		boardView.buildBoard(board);
 
 		SlidingUpPanelLayout slide = (SlidingUpPanelLayout) findViewById(R.id.sliding_layout);
-		
+
 		// Set player skin and properties
 		((PlayerView) (findViewById(R.id.playerview))).setPlayer(
 				ActionController.user, true);
 
-		// Init cards gallery 
+		// Init cards gallery
 		Gallery g = (Gallery) findViewById(R.id.playerview_slider_board_cardgallery);
 		g.setAdapter(new SliderbarCardGallery(this));
 		g.setSelection(ActionController.user.getNumberOfCards() / 2);
@@ -148,15 +151,16 @@ public class GameActivity extends Activity implements Observer {
 		// Setting up slidebar
 		slide.setDragView(findViewById(R.id.expand));
 		slide.setPanelSlideListener(new SlidebarPanelSlideListener(slide));
-		
-		if(wifiDirectManager.getMod() == WifiDirectMod.CLIENT){
-			wifiDirectManager.sendEvent(new WifiDirectEventImpl(WifiDirectEvent.EVENT, new ConnectionAction(ActionController.user)));
-			Log.w("Client", "Client");
-		}
-		else{
+
+		if (wifiDirectManager.getMod() == WifiDirectMod.CLIENT) {
+			wifiDirectManager.sendEvent(new WifiDirectEventImpl(
+					WifiDirectEvent.EVENT, new ConnectionAction(
+							ActionController.user)));
+		} else {
 			ActionController.board.addPlayer(0, ActionController.user);
-			Log.w("Host", "Host");
 		}
+		
+		ActionController.board.addPlayer(3, new Player("Tonny", 2, 3));
 	}
 
 	@Override
@@ -167,31 +171,60 @@ public class GameActivity extends Activity implements Observer {
 
 	@Override
 	public void update(Observable observable, Object data) {
-		Log.i(WifiDirectProperty.TAG,"Event update");
-		if (data instanceof WifiDirectEventImpl && ((WifiDirectEventImpl)data).getEvent() == WifiDirectEvent.EVENT) {
-			WifiDirectEventImpl event = (WifiDirectEventImpl)data;
-			Log.i(WifiDirectProperty.TAG,"Event game");
+		Log.i(WifiDirectProperty.TAG, "Event update");
+		if (data instanceof WifiDirectEventImpl
+				&& ((WifiDirectEventImpl) data).getEvent() == WifiDirectEvent.EVENT) {
+			WifiDirectEventImpl event = (WifiDirectEventImpl) data;
+			Log.i(WifiDirectProperty.TAG, "Event game");
 			Object dataObject = event.getData();
-			if(dataObject instanceof DisconnectionAction){
-				Log.i(WifiDirectProperty.TAG,"Disconnection");
+			if (dataObject instanceof DisconnectionAction) {
+				Log.i(WifiDirectProperty.TAG, "Disconnection");
+				Player p = ((DisconnectionAction) dataObject).getPlayer();
+				Log.i("Player", p.getId() + "");
+				for (Card c : p.getCards()) {
+					ActionController.board.getDiscardPile().addCard(c);
+				}
+				ActionController.board.removePlayer(ActionController.board
+						.getPlace(p));
 				omecaHandler.sendEmptyMessage(OmecaHandler.DECONNEXION);
-			}
-			else if(dataObject instanceof ConnectionAction){
-				if(wifiDirectManager.getMod() == WifiDirectMod.HOST){
+			} else if (dataObject instanceof ConnectionAction) {
+				if (wifiDirectManager.getMod() == WifiDirectMod.HOST) {
 					Player p = ((ConnectionAction) dataObject).getPlayer();
 					p.setId(ActionController.board.getPlayers().size());
 					ActionController.board.addPlayerToTheFirstEmptyPlace(p);
-					wifiDirectManager.sendEvent(new WifiDirectEventImpl(WifiDirectEvent.EVENT, new AknowlegmentConnectionAction(p, ActionController.board)));
-					omecaHandler.sendEmptyMessage(OmecaHandler.AKNOWLEGMENT_CONNECTION_ACTION);
+					wifiDirectManager.sendEvent(new WifiDirectEventImpl(
+							WifiDirectEvent.EVENT,
+							new AknowlegmentConnectionAction(p,
+									ActionController.board)));
+					omecaHandler
+							.sendEmptyMessage(OmecaHandler.AKNOWLEGMENT_CONNECTION_ACTION);
 				}
-			}
-			else if(dataObject instanceof AknowlegmentConnectionAction){
-				Player p = ((AknowlegmentConnectionAction) dataObject).getPlayer();
-				if(p.getMacAddress().equals(ActionController.user.getMacAddress())){
+			} else if (dataObject instanceof AknowlegmentConnectionAction) {
+				Player p = ((AknowlegmentConnectionAction) dataObject)
+						.getPlayer();
+				if (p.getMacAddress().equals(
+						ActionController.user.getMacAddress())) {
 					ActionController.user = p;
 				}
-				ActionController.board = ((AknowlegmentConnectionAction) dataObject).getBoard();
-				omecaHandler.sendEmptyMessage(OmecaHandler.AKNOWLEGMENT_CONNECTION_ACTION);
+				ActionController.board = ((AknowlegmentConnectionAction) dataObject)
+						.getBoard();
+				omecaHandler
+						.sendEmptyMessage(OmecaHandler.AKNOWLEGMENT_CONNECTION_ACTION);
+			} else if (dataObject instanceof SwitchPlayersAction) {
+				Player p1 = ((SwitchPlayersAction) dataObject).getP1();
+				Player p2 = ((SwitchPlayersAction) dataObject).getP2();
+				if (p1 != null){
+					ActionController.board.switchPlayers(
+							p1, p2);
+				}
+				else {
+					ActionController.board.movePlayerTo(p2, ((SwitchPlayersAction) dataObject).getPosition());
+				}
+				
+				omecaHandler
+				.sendEmptyMessage(OmecaHandler.SWITCH_PLAYERS_ACTION);
+				
+				
 			}
 			else if(dataObject instanceof ReturnCardAction){
 				Log.i(WifiDirectProperty.TAG, "Carte retourner");
@@ -228,10 +261,12 @@ public class GameActivity extends Activity implements Observer {
 	public void onBackPressed() {
 		OmecaPopupExit.show(this);
 	}
-	
-	public synchronized void finishGameActivity(){
+
+	public synchronized void finishGameActivity() {
 		OmecaPopupExit.dismiss();
-		this.wifiDirectManager.sendEvent(new WifiDirectEventImpl(WifiDirectEvent.EVENT, new DisconnectionAction(ActionController.user.getId())));
+		this.wifiDirectManager.sendEvent(new WifiDirectEventImpl(
+				WifiDirectEvent.EVENT, new DisconnectionAction(
+						ActionController.user)));
 		try {
 			this.wait(2000);
 		} catch (InterruptedException e) {

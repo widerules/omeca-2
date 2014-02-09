@@ -16,17 +16,21 @@ public class ConnectionAction implements Serializable{
 	 */
 	private static final long serialVersionUID = 1L;
 	
-	private Player idPlayer;
+	private Player player;
 	
 	/**
 	 * Constructor
-	 * @param user Player id
+	 * @param user player
 	 */
 	public ConnectionAction(Player user){
-		this.idPlayer = user;
+		this.player = user;
 	}
 
+	/**
+	 * Getter on player
+	 * @return player
+	 */
 	public Player getPlayer() {
-		return idPlayer;
+		return player;
 	}
 }

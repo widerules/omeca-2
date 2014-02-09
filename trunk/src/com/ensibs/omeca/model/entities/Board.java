@@ -115,11 +115,13 @@ public class Board extends GameEntity{
 	}
 	
 	public int getPlace(Player player){
-		for(Entry<Integer, Player> e : players.entrySet()){
-			if(player == e.getValue())
-				return e.getKey();
+		if(player != null){
+			for(Entry<Integer, Player> e : players.entrySet()){
+				if(player.getId() == e.getValue().getId())
+					return e.getKey();
+			}
 		}
-		return 0;
+		return -1;
 	}
 	
 	public void switchPlayers(Player p1, Player p2){
@@ -127,8 +129,10 @@ public class Board extends GameEntity{
 		int p2Place = getPlace(p2);
 		players.remove(p1Place);
 		players.remove(p2Place);
-		addPlayer(p1Place, p2);
-		addPlayer(p2Place, p1);
+		if(p2 != null)
+			addPlayer(p1Place, p2);
+		if(p1 != null)
+			addPlayer(p2Place, p1);
 	}
 
 	public void addPlayerToTheFirstEmptyPlace(Player p) {
@@ -138,6 +142,12 @@ public class Board extends GameEntity{
 				break;
 			}
 		}
+	}
+
+	public void movePlayerTo(Player player, int index) {
+		int i = (index >= NB_PLAYER_MAX) ? index-NB_PLAYER_MAX : index;
+		players.remove(getPlace(player));
+		players.put(i, player);
 	}
 
 }

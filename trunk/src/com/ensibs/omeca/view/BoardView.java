@@ -1,6 +1,7 @@
 package com.ensibs.omeca.view;
 
 import java.util.Hashtable;
+import java.util.Map.Entry;
 
 import android.content.Context;
 import android.os.AsyncTask;
@@ -168,6 +169,14 @@ public class BoardView extends RelativeLayout {
 
 	public Hashtable<Integer, PlayerView> getPlayerViews() {
 		return playerViews;
+	}
+	
+	public int getPlayerViewPosition(PlayerView pv){
+		for(Entry<Integer, PlayerView> e : playerViews.entrySet()){
+			if(pv == e.getValue())
+				return e.getKey();
+		}
+		return -1;
 	}
 
 	public void setPlayerViews(Hashtable<Integer, PlayerView> playerViews) {

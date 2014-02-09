@@ -2,6 +2,13 @@ package com.ensibs.omeca.model.actions;
 
 import java.io.Serializable;
 
+import com.ensibs.omeca.model.entities.Player;
+
+/**
+ * Event when a Player exit the table
+ * @author Nicolas
+ *
+ */
 public class DisconnectionAction implements Serializable{
 
 	/**
@@ -9,14 +16,22 @@ public class DisconnectionAction implements Serializable{
 	 */
 	private static final long serialVersionUID = 1L;
 	
-	private int idPlayer;
+	private Player player;
 	
-	public DisconnectionAction(int idPlayer){
-		this.idPlayer = idPlayer;
+	/**
+	 * Constructor
+	 * @param user player
+	 */
+	public DisconnectionAction(Player user){
+		this.player = user;
 	}
 
-	public int getIdPlayer() {
-		return idPlayer;
+	/**
+	 * Getter on player
+	 * @return player
+	 */
+	public Player getPlayer() {
+		return player;
 	}
 
 }
