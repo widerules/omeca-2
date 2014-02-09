@@ -202,9 +202,6 @@ public class WifiDirectManager extends Observable implements Observer{
 		}
 		this.status = WifiDirectStatus.DISCONNECTED;
 		this.cancelConnection();
-		//TODO : check if works
-		this.unregistred();
-		this.registred();
 	}
 	
 	public void cancelConnectionTo(){

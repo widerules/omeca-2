@@ -41,6 +41,14 @@ public class WifiDirectAcceptServer extends Thread{
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+		if(this.server != null  && this.server.isBound()){
+			try {
+				this.server.close();
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				//e.printStackTrace();
+			}
+		}
 		this.run = false;
 		Log.i(WifiDirectProperty.TAG, "end accep");
 	}
