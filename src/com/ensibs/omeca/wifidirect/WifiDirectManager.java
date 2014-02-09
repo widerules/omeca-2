@@ -36,7 +36,6 @@ import com.ensibs.omeca.wifidirect.status.WifiDirectStatus;
  */
 public class WifiDirectManager extends Observable implements Observer{
 	//TODO methode deco client
-	//Method send msg if host if client
 	private WifiDirectMod mod = null;
 	private WifiDirectNotificationCenter notificationCenter = null;
 	private WifiP2pManager wifiP2pManager = null;
@@ -116,7 +115,6 @@ public class WifiDirectManager extends Observable implements Observer{
 	 */
 	private void registred(){
 		applicationContext.registerReceiver(statusReceiver, new IntentFilter(WifiP2pManager.WIFI_P2P_STATE_CHANGED_ACTION));
-		applicationContext.registerReceiver(connectionListener, new IntentFilter(WifiP2pManager.WIFI_P2P_CONNECTION_CHANGED_ACTION));
 	}
 
 	/**
@@ -127,7 +125,7 @@ public class WifiDirectManager extends Observable implements Observer{
 			applicationContext.unregisterReceiver(statusReceiver);
 			applicationContext.unregisterReceiver(connectionListener);
 		}catch(Exception e){
-			
+			e.printStackTrace();
 		}
 	}
 	
@@ -135,6 +133,9 @@ public class WifiDirectManager extends Observable implements Observer{
 	 * 
 	 */
 	public void startVisible(){
+		Log.i(WifiDirectProperty.TAG, "startvisible");
+		if(this.status == WifiDirectStatus.DISCONNECTED)
+			applicationContext.registerReceiver(connectionListener, new IntentFilter(WifiP2pManager.WIFI_P2P_CONNECTION_CHANGED_ACTION));
 		this.wifiP2pManager.discoverPeers(wifiP2PChannel, actionListener);
 	}
 
@@ -142,7 +143,7 @@ public class WifiDirectManager extends Observable implements Observer{
 	 * 
 	 */
 	public void startDiscoverPeers(){
-		WifiDirectManager.applicationContext.registerReceiver(discoveryReceiver, new IntentFilter(WifiP2pManager.WIFI_P2P_PEERS_CHANGED_ACTION));
+		applicationContext.registerReceiver(discoveryReceiver, new IntentFilter(WifiP2pManager.WIFI_P2P_PEERS_CHANGED_ACTION));
 		this.isDiscoveryRegistred = true;
 	}
 
@@ -151,7 +152,7 @@ public class WifiDirectManager extends Observable implements Observer{
 	 */
 	public void stopDiscoverPeers(){
 		if(this.isDiscoveryRegistred){
-			WifiDirectManager.applicationContext.unregisterReceiver(discoveryReceiver);
+			applicationContext.unregisterReceiver(discoveryReceiver);
 			this.isDiscoveryRegistred = false;
 		}
 	} 
@@ -190,16 +191,20 @@ public class WifiDirectManager extends Observable implements Observer{
 					Log.i("P2PTest", "Cancel connection");
 				}
 			}
-		}, new Date((new Date()).getTime()+15000));
+		}, new Date((new Date()).getTime()+30000));
 	}
 	
 	public void disconnect(){
-		Log.i(WifiDirectProperty.TAG,"Disconnection");
 		if(this.status == WifiDirectStatus.CONNECTED){
 			this.wifiDirectIExchange.stopExchange();
-			this.wifiP2pManager.removeGroup(wifiP2PChannel, actionListener );
 			//this.wifiP2pManager.cancelConnect(wifiP2PChannel, actionListener);
 		}
+		try{
+			applicationContext.unregisterReceiver(connectionListener);
+		}catch(Exception e){
+			e.printStackTrace();
+		}
+		this.wifiP2pManager.removeGroup(wifiP2PChannel, actionListener );
 		this.status = WifiDirectStatus.DISCONNECTED;
 		this.cancelConnection();
 	}
@@ -276,6 +281,8 @@ public class WifiDirectManager extends Observable implements Observer{
 		}else if(p2pEvent.getEvent() == WifiDirectEvent.CHANNEL_LOST){
 			//TODO Later
 		}else if(p2pEvent.getEvent() == WifiDirectEvent.CONNECTED){
+			Log.i(WifiDirectProperty.TAG, "Connected launch init connected");
+			if(this.status == WifiDirectStatus.DISCONNECTED){
 			cancelConnection();
 			this.status = WifiDirectStatus.CONNECTED;
 			//Request info
@@ -295,12 +302,13 @@ public class WifiDirectManager extends Observable implements Observer{
 				setChanged();
 				notifyObservers(p2pEvent);
 			}
+			}
 		}else if(p2pEvent.getEvent() == WifiDirectEvent.CONNECTION){
 			//this.stopDiscoverPeers();
 			this.connectTo((WifiP2pDevice) p2pEvent.getData());
 		}else if(p2pEvent.getEvent() == WifiDirectEvent.DISCONNECTED){
 			//TODO close socket
-			this.status = WifiDirectStatus.DISCONNECTED;
+			//this.status = WifiDirectStatus.DISCONNECTED;
 		}else if(p2pEvent.getEvent() == WifiDirectEvent.ENABLED){
 			//TODO Nothing later
 		}else if(p2pEvent.getEvent() == WifiDirectEvent.ERROR){

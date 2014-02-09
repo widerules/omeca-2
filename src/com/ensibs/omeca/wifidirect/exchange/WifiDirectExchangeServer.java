@@ -4,9 +4,12 @@ import java.io.IOException;
 import java.net.Socket;
 import java.util.ArrayList;
 
+import android.util.Log;
+
 import com.ensibs.omeca.wifidirect.WifiDirectNotificationCenter;
 import com.ensibs.omeca.wifidirect.event.WifiDirectEvent;
 import com.ensibs.omeca.wifidirect.event.WifiDirectEventImpl;
+import com.ensibs.omeca.wifidirect.property.WifiDirectProperty;
 
 public class WifiDirectExchangeServer extends WifiDirectIExchange{
 
@@ -22,11 +25,13 @@ public class WifiDirectExchangeServer extends WifiDirectIExchange{
 
 	public void addClient(Socket client) {
 		if(sendThread == null){
+			Log.i(WifiDirectProperty.TAG, "Add Client int");
 			this.sendThread = new WifiDirectSendThread();
 			this.sendThread.addSender(client);
 			this.sendThread.start();
 		}
 		else{
+			Log.i(WifiDirectProperty.TAG, "Add Client no int");
 			this.sendThread.addSender(client);
 		}
 		this.client.add(client);
@@ -77,6 +82,7 @@ public class WifiDirectExchangeServer extends WifiDirectIExchange{
 
 	@Override
 	public void sendEvent(WifiDirectEventImpl event) {
+		Log.i(WifiDirectProperty.TAG, "Client ="+this.receivedThread.size());
 		if(this.sendThread != null && this.sendThread.getRun()){
 			this.sendThread.sendEvent(event);
 		}

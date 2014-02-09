@@ -19,11 +19,12 @@
                android:required="true" />
 
     <application
-        android:allowBackup="true"
+        android:allowBackup="false"
         android:icon="@drawable/ic_launcher"
         android:label="@string/app_name"
         android:theme="@style/AppTheme"
-        android:name="com.ensibs.omeca.OmecaApplication" >"
+        android:name="com.ensibs.omeca.OmecaApplication"
+        android:killAfterRestore="true" >
         
         <activity
             android:name="com.ensibs.omeca.MainActivity"
