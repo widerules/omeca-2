@@ -24,14 +24,14 @@ public class ActionController {
 		profilPreferences = maActivity.getSharedPreferences(
 				AvatarActivity.SHARED_PREFERENCES_FILE_NAME, Context.MODE_PRIVATE);
 		
-		//init();
 	}
 	
 	public static void init(){
 		int id;
 		if(GameActivity.getActivity().getWifiDirectManager().getMod() == WifiDirectMod.HOST){
 			id=0;
-		}else{
+		}
+		else{
 			id=-1;
 		}
 		user = new Player(
