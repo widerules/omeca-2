@@ -159,8 +159,7 @@ public class GameActivity extends Activity implements Observer {
 		} else {
 			ActionController.board.addPlayer(0, ActionController.user);
 		}
-		
-		ActionController.board.addPlayer(3, new Player("Tonny", 2, 3));
+		//ActionController.board.addPlayer(3, new Player("Tonny", 2, 3));
 	}
 
 	@Override
