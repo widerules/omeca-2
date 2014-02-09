@@ -7,8 +7,6 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
 import android.os.Message;
-import android.util.Log;
-import android.view.View;
 import android.widget.Gallery;
 
 import com.ensibs.omeca.GameActivity;
@@ -22,7 +20,6 @@ import com.ensibs.omeca.view.DiscardPileView;
 import com.ensibs.omeca.view.DrawPileView;
 import com.ensibs.omeca.view.HandView;
 import com.ensibs.omeca.view.PlayerView;
-import com.ensibs.omeca.wifidirect.property.WifiDirectProperty;
 
 public class OmecaHandler extends Handler {
 

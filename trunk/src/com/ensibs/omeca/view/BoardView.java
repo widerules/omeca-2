@@ -22,7 +22,6 @@ import com.ensibs.omeca.GameActivity;
 import com.ensibs.omeca.R;
 import com.ensibs.omeca.controller.ActionController;
 import com.ensibs.omeca.model.actions.MoveCardAction;
-import com.ensibs.omeca.model.actions.ReturnCardAction;
 import com.ensibs.omeca.model.entities.Board;
 import com.ensibs.omeca.model.entities.Player;
 import com.ensibs.omeca.utils.SliderbarCardGallery;
@@ -71,7 +70,7 @@ public class BoardView extends RelativeLayout {
 			@Override
 			public boolean onLongClick(View v) {
 				//DealPopup.show(context);
-				distribTo(0, 4*2);
+				//distribTo(0, 4*2);
 				/*DistribTask dt = new DistribTask();
 				dt.setParameter(1, 5, (BoardView)v);
 				dt.execute();*/
@@ -360,6 +359,7 @@ public class BoardView extends RelativeLayout {
 	
 	//L'AsyncTask de distribution
 		static class DistribTask extends AsyncTask<Void, Integer, Boolean> {
+			@SuppressWarnings("unused")
 			private int distributor;
 			private int numberCard; // numbre de carte par personne
 			private BoardView bv;

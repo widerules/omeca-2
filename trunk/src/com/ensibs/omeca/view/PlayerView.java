@@ -22,7 +22,6 @@ import com.ensibs.omeca.R;
 import com.ensibs.omeca.controller.ActionController;
 import com.ensibs.omeca.model.actions.SwitchPlayersAction;
 import com.ensibs.omeca.model.actions.MoveCardAction;
-import com.ensibs.omeca.model.entities.Board;
 import com.ensibs.omeca.model.entities.Card;
 import com.ensibs.omeca.model.entities.Player;
 import com.ensibs.omeca.utils.AvatarsList;
@@ -31,8 +30,7 @@ import com.ensibs.omeca.utils.SliderbarCardGallery;
 import com.ensibs.omeca.wifidirect.WifiDirectManager;
 import com.ensibs.omeca.wifidirect.event.WifiDirectEvent;
 import com.ensibs.omeca.wifidirect.event.WifiDirectEventImpl;
-import com.ensibs.omeca.wifidirect.event.WifiDirectEvent;
-import com.ensibs.omeca.wifidirect.event.WifiDirectEventImpl;
+
 
 public class PlayerView extends RelativeLayout {
 
@@ -62,6 +60,7 @@ public class PlayerView extends RelativeLayout {
 		init(context);
 	}
 
+	@SuppressWarnings("static-access")
 	private void init(Context context) {
 		this.player = null;
 		this.context = context;
@@ -387,6 +386,7 @@ public class PlayerView extends RelativeLayout {
 		return notifs;
 	}
 
+	@SuppressWarnings("static-access")
 	public void setNotifs(TextView notifs) {
 		this.notifs = notifs;
 	}
