@@ -221,9 +221,13 @@ public class BoardView extends RelativeLayout {
 									.getAdapter();
 							a2.notifyDataSetChanged();
 						}
+						GameActivity.getActivity().getWifiDirectManager().sendEvent(new WifiDirectEventImpl(WifiDirectEvent.EVENT, new MoveCardAction("Player", ActionController.user.getId(), view.getCard(), "BoardView")));						
 					}
 					else if(parent instanceof DrawPileView){
 						GameActivity.getActivity().getWifiDirectManager().sendEvent(new WifiDirectEventImpl(WifiDirectEvent.EVENT, new MoveCardAction("DrawPileView", "BoardView",view.getCard())));
+					}
+					else if(parent instanceof DiscardPileView){
+						GameActivity.getActivity().getWifiDirectManager().sendEvent(new WifiDirectEventImpl(WifiDirectEvent.EVENT, new MoveCardAction("DiscardPileView", "BoardView",view.getCard())));
 					}
 					MarginLayoutParams marginParams = new MarginLayoutParams(
 							view.getLayoutParams());
