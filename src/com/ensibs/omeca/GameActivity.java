@@ -15,6 +15,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
 import android.view.WindowManager;
+import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ArrayAdapter;
 import android.widget.Gallery;
 import android.widget.ImageView;
@@ -175,6 +177,33 @@ public class GameActivity extends Activity implements Observer {
 				 R.layout.row_layout,R.id.text_row, getResources().getStringArray(R.array.drawer_list_item));
 		// Setting the adapter on mDrawerList
 		mListView.setAdapter(adapter);
+		mListView.setOnItemClickListener(new OnItemClickListener() {
+
+			@Override
+			public void onItemClick(AdapterView<?> arg0, View arg1, int position,
+					long id) {
+				selectItem(position);
+			}
+		});
+	}
+	
+	private void selectItem(int position) {
+	    switch(position) {
+	    case 0:
+	            Log.i(WifiDirectProperty.TAG, "Click 0");
+	            break;
+	    case 1:
+	    	Log.i(WifiDirectProperty.TAG, "Click 1");
+	           break;
+	    case 2:
+	    	Log.i(WifiDirectProperty.TAG, "Click 2");
+	           break;
+	    case 3:
+	    	Log.i(WifiDirectProperty.TAG, "Click 3");
+	           break;
+	    default:
+	    	break;
+	    }
 	}
 
 	@Override
