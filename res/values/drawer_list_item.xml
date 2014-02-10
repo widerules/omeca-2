@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <array name="drawer_list_item">
+        <item>@string/list_distribution</item>
+        <item>@string/list_shuffle</item>
+        <item>@string/list_cut</item>
+        <item>@string/list_reinit</item>
+    </array>
+</resources>

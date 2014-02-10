@@ -7,6 +7,7 @@ import android.app.Activity;
 import android.os.Bundle;
 import android.os.Looper;
 import android.os.Message;
+import android.support.v4.widget.DrawerLayout;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -14,8 +15,10 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
 import android.view.WindowManager;
+import android.widget.ArrayAdapter;
 import android.widget.Gallery;
 import android.widget.ImageView;
+import android.widget.ListView;
 import android.widget.SeekBar;
 import android.widget.TextView;
 
@@ -54,6 +57,8 @@ public class GameActivity extends Activity implements Observer {
 	private OmecaApplication app;
 	private static GameActivity instance;
 	private OmecaHandler omecaHandler;
+	private DrawerLayout mDrawerLayout;
+	private ListView mListView;
 
 	public static GameActivity getActivity() {
 		return instance;
@@ -162,7 +167,14 @@ public class GameActivity extends Activity implements Observer {
 		} else {
 			ActionController.board.addPlayer(0, ActionController.user);
 		}
-		//ActionController.board.addPlayer(3, new Player("Tonny", 2, 3));
+		
+		mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
+		mListView = (ListView)findViewById(R.id.left_drawer);
+		// Creating an ArrayAdapter to add items to the listview mDrawerList
+		ArrayAdapter<String> adapter = new ArrayAdapter<String>(getBaseContext(),
+				 R.layout.row_layout,R.id.text_row, getResources().getStringArray(R.array.drawer_list_item));
+		// Setting the adapter on mDrawerList
+		mListView.setAdapter(adapter);
 	}
 
 	@Override
