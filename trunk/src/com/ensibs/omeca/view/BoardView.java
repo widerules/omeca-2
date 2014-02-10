@@ -279,7 +279,7 @@ public class BoardView extends RelativeLayout {
 	}
 
 	public void giveTo(final int playerPlace){
-		final CardView vToMove = (CardView) drawPileView.getChildAt(0);	
+		final CardView vToMove = (CardView) drawPileView.getChildAt(drawPileView.getDrawpile().getNumberOfCards()-1);	
 		drawPileView.removeViewInLayout(vToMove);
 		addView(vToMove);
 		int x=0 , y =0;
