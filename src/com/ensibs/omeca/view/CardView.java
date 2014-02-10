@@ -10,6 +10,7 @@ import android.widget.ImageView;
 import android.widget.RelativeLayout;
 
 import com.ensibs.omeca.GameActivity;
+import com.ensibs.omeca.controller.ActionController;
 import com.ensibs.omeca.model.actions.ReturnCardAction;
 import com.ensibs.omeca.model.entities.Card;
 import com.ensibs.omeca.wifidirect.event.WifiDirectEvent;
@@ -89,7 +90,15 @@ public class CardView extends ImageView{
 					break;
 				case MotionEvent.ACTION_UP:
 					if(isOnClick){
-						turnCard();
+						int index = ActionController.user.getCards().indexOf(card);
+						if(index != -1){
+							ActionController.user.getCards().remove(index);
+							turnCard();
+							ActionController.user.getCards().add(index, card);
+						}
+						else
+							turnCard();
+						
 						view.setVisibility(View.VISIBLE);
 						String src = "";
 						if(view.getParent() instanceof DrawPileView)

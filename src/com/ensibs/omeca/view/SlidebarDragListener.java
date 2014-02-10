@@ -5,9 +5,12 @@ import android.view.DragEvent;
 import android.view.View;
 import android.view.View.OnDragListener;
 import android.view.ViewGroup.LayoutParams;
+import android.widget.Gallery;
 import android.widget.RelativeLayout;
 
 import com.ensibs.omeca.GameActivity;
+import com.ensibs.omeca.R;
+import com.ensibs.omeca.utils.SliderbarCardGallery;
 import com.ensibs.omeca.utils.SlidingUpPanelLayout;
 
 public class SlidebarDragListener implements OnDragListener{
