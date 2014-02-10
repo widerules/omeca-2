@@ -45,12 +45,11 @@ public class BoardView extends RelativeLayout {
 	private Hashtable<Integer, PlayerView> playerViews;
 
 
-	private DistribTask distribTask;
 
-
-	public void setDistribTask(int from, int nbCard) {
-		this.distribTask.setParameter(from, nbCard, this);
-		distribTask.execute();
+	public void runDistrib(int from, int nbCard) {
+		DistribTask dt = new DistribTask();
+		dt.setParameter(from, nbCard, this);
+		dt.execute();
 	}
 
 
@@ -81,7 +80,7 @@ public class BoardView extends RelativeLayout {
 				board.getDiscardPile());
 		addView(drawPileView);
 		addView(discardPileView);
-		distribTask = new DistribTask();
+		
 		this.setOnLongClickListener(new OnLongClickListener() {
 			@Override
 			public boolean onLongClick(View v) {
