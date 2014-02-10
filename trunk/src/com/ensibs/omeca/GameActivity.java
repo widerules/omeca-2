@@ -259,7 +259,7 @@ public class GameActivity extends Activity implements Observer {
 					dataMessage.putInt("PX", moveCardAction.getPourcentageX());
 				if(moveCardAction.getPourcentageY() != -1)
 					dataMessage.putInt("PY", moveCardAction.getPourcentageY());
-				dataMessage.putBoolean("Face", moveCardAction.isFace());
+				dataMessage.putBoolean("Face", moveCardAction.getCard().isFaceUp());
 				msg.setData(dataMessage);
 				omecaHandler.sendMessage(msg);
 			}
