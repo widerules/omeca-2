@@ -196,11 +196,7 @@ public class HandView extends Gallery {
 				int width = (int) (metrics.widthPixels / (CARDS_TO_DISPLAY));
 				int height = (int) (width * CardView.RATIO);
 				cv.setLayoutParams(new Gallery.LayoutParams(width, height));
-				cv.setOnTouchListener(null);
-				if (!cv.getCard().isFaceUp())
-					cv.turnCard();
 				cv.setOnDragListener(new OnDragListenerHand());
-				cv.setOnTouchListener(new CardTouchListenerHand());
 			}
 			return cv;
 		}
@@ -215,17 +211,6 @@ public class HandView extends Gallery {
 				cv.setRotationY(-10);
 				cv.setBackgroundResource(R.drawable.sorting_card_background);
 				cv.setPadding(5, 0 ,0 ,0);
-				
-				/*
-				 * Rotater la carte de gauche HandView hv = (HandView)
-				 * v.getParent(); int j =
-				 * ActionController.user.getCards().indexOf(cv.getCard());
-				 * Toast.makeText(c ,"j: "+j, Toast.LENGTH_SHORT).show();
-				 * if(j>0){ cv = (CardView) hv.getItemAtPosition(j);
-				 * Toast.makeText(c ,"j-1 :" + (j-1)+"    "+
-				 * "valeur"+cv.getCard().getValue(), Toast.LENGTH_SHORT).show();
-				 * cv.setRotationY(20); }
-				 */
 				break;
 			case DragEvent.ACTION_DROP:
 				CardView newPositionCard = (CardView) v;
@@ -250,12 +235,6 @@ public class HandView extends Gallery {
 				cv2.setRotationY(0);
 				cv2.setPadding(0, 0 ,0 ,0);
 				cv2.setBackgroundColor(Color.TRANSPARENT);
-				//cv2.setAlpha(1f);
-				/*
-				 * HandView hv2 = (HandView) v.getParent(); int k =
-				 * ActionController.user.getCards().indexOf(cv2.getCard()); cv2
-				 * = (CardView) hv2.getItemAtPosition(k); cv2.setRotationY(0);
-				 */
 				break;
 			default:
 				break;
@@ -264,6 +243,8 @@ public class HandView extends Gallery {
 		}
 	}
 
+	/**
+	 * No need for the moment
 	class CardTouchListenerHand implements OnTouchListener {
 		private boolean isOnClick;
 
@@ -292,6 +273,7 @@ public class HandView extends Gallery {
 			return true;
 		}
 	}
+	*/
 
 	@Override
 	public void removeViewInLayout(View view) {
@@ -308,7 +290,7 @@ public class HandView extends Gallery {
 		@Override
 		public void onProgressChanged(SeekBar seekBar, int progress,
 				boolean fromUser) {
-			CARDS_TO_DISPLAY = (int)(((1.0+progress)/10)*CARDS_TO_DISPLAY_ORIGIN)+CARDS_TO_DISPLAY_ORIGIN;
+			CARDS_TO_DISPLAY = (int)(((1.0+(20-progress))/10)*CARDS_TO_DISPLAY_ORIGIN)+CARDS_TO_DISPLAY_ORIGIN;
 			updateView(false);
 			
 		}
