@@ -173,7 +173,6 @@ public class MainActivity extends Activity implements Observer {
 		vibrationToggle = (ToggleButton) this.findViewById(R.id.homescreen_options_vibration_toggle);		
 		vibrationToggle.setOnClickListener(list);		
 		vibrationToggle.setChecked(this.profilPreferences.getBoolean(SHARED_PREFERENCES_VIBRATION, false));
-		
 	}	
 
 }

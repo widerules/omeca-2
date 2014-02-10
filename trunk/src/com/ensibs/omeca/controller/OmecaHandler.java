@@ -170,6 +170,7 @@ public class OmecaHandler extends Handler {
 					}
 				}
 				if(tmp != null){
+					tmp.setFaceUp(data.getBoolean("Face"));
 					if(data.getString("Target").equals("DrawPileView")){
 						boardView.getDrawPileView().addView(new CardView(GameActivity.getActivity(),tmp));
 					}else if(data.getString("Target").equals("DiscardPileView")){
@@ -266,6 +267,7 @@ public class OmecaHandler extends Handler {
 				}
 				if(tmp != null){
 					tmp.setFaceUp(data.getBoolean("Face"));
+					Log.i(WifiDirectProperty.TAG, data.getBoolean("Face")+"");
 					if(data.getString("Target").equals("BoardView")){
 						CardView card = new CardView(GameActivity.getActivity(),tmp);
 						int pourcentageX = data.getInt("PX");
