@@ -16,6 +16,8 @@ public class MoveCardAction implements Serializable{
 	private String target;
 	private int idTarget;
 	private Card card;
+	private int pourcentageX;
+	private int pourcentageY;
 	
 	public MoveCardAction(String source, String target, Card card){
 		this.src = source;
@@ -23,6 +25,8 @@ public class MoveCardAction implements Serializable{
 		this.target = target;
 		this.idTarget = -1;
 		this.card = card;
+		this.pourcentageX = -1;
+		this.pourcentageY = -1;
 	}
 	
 	public MoveCardAction(String source, int idSource, Card card, String target){
@@ -31,6 +35,8 @@ public class MoveCardAction implements Serializable{
 		this.target = target;
 		this.idTarget = -1;
 		this.card = card;
+		this.pourcentageX = -1;
+		this.pourcentageY = -1;
 	}
 	
 	public MoveCardAction(String source, Card card, String target, int idTarger){
@@ -39,6 +45,8 @@ public class MoveCardAction implements Serializable{
 		this.target = target;
 		this.idTarget = idTarger;
 		this.card = card;
+		this.pourcentageX = -1;
+		this.pourcentageY = -1;
 	}
 	
 	public MoveCardAction(String source, int idSource, String target, int idTarger, Card card){
@@ -47,6 +55,8 @@ public class MoveCardAction implements Serializable{
 		this.target = target;
 		this.idTarget = idTarger;
 		this.card = card;
+		this.pourcentageX = -1;
+		this.pourcentageY = -1;
 	}
 
 	public String getSrc() {
@@ -67,5 +77,21 @@ public class MoveCardAction implements Serializable{
 
 	public Card getCard() {
 		return card;
+	}
+
+	public int getPourcentageX() {
+		return pourcentageX;
+	}
+
+	public void setPourcentageX(int pourcentageX) {
+		this.pourcentageX = pourcentageX;
+	}
+
+	public int getPourcentageY() {
+		return pourcentageY;
+	}
+
+	public void setPourcentageY(int pourcentageY) {
+		this.pourcentageY = pourcentageY;
 	}
 }

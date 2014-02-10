@@ -7,6 +7,7 @@ import android.content.Context;
 import android.os.AsyncTask;
 import android.util.AttributeSet;
 import android.util.DisplayMetrics;
+import android.util.Log;
 import android.view.DragEvent;
 import android.view.View;
 import android.view.ViewGroup;
@@ -27,6 +28,7 @@ import com.ensibs.omeca.model.entities.Player;
 import com.ensibs.omeca.utils.SliderbarCardGallery;
 import com.ensibs.omeca.wifidirect.event.WifiDirectEvent;
 import com.ensibs.omeca.wifidirect.event.WifiDirectEventImpl;
+import com.ensibs.omeca.wifidirect.property.WifiDirectProperty;
 
 public class BoardView extends RelativeLayout {
 	private Context context;
@@ -220,14 +222,8 @@ public class BoardView extends RelativeLayout {
 									.getAdapter();
 							a2.notifyDataSetChanged();
 						}
-						GameActivity.getActivity().getWifiDirectManager().sendEvent(new WifiDirectEventImpl(WifiDirectEvent.EVENT, new MoveCardAction("Player", ActionController.user.getId(), view.getCard(), "BoardView")));						
 					}
-					else if(parent instanceof DrawPileView){
-						GameActivity.getActivity().getWifiDirectManager().sendEvent(new WifiDirectEventImpl(WifiDirectEvent.EVENT, new MoveCardAction("DrawPileView", "BoardView",view.getCard())));
-					}
-					else if(parent instanceof DiscardPileView){
-						GameActivity.getActivity().getWifiDirectManager().sendEvent(new WifiDirectEventImpl(WifiDirectEvent.EVENT, new MoveCardAction("DiscardPileView", "BoardView",view.getCard())));
-					}
+					
 					MarginLayoutParams marginParams = new MarginLayoutParams(
 							view.getLayoutParams());
 					int left = (int) (event.getX() - (view.getWidth() / 2));
@@ -239,6 +235,29 @@ public class BoardView extends RelativeLayout {
 					marginParams.setMargins(left, top, right, bottom);
 					view.setLayoutParams(new RelativeLayout.LayoutParams(
 							marginParams));
+					
+					if (parent instanceof HandView) {
+						MoveCardAction movecard = new MoveCardAction("Player", ActionController.user.getId(), view.getCard(), "BoardView");
+						movecard.setPourcentageX(left*100/((View) view.getParent()).getWidth());
+						movecard.setPourcentageY(top*100/((View) view.getParent()).getHeight());
+						Log.i(WifiDirectProperty.TAG, movecard.getPourcentageX()+" "+movecard.getPourcentageY());
+						GameActivity.getActivity().getWifiDirectManager().sendEvent(new WifiDirectEventImpl(WifiDirectEvent.EVENT, movecard));						
+					}
+					else if(parent instanceof DrawPileView){
+						MoveCardAction movecard = new MoveCardAction("DrawPileView", "BoardView",view.getCard());
+						movecard.setPourcentageX(left*100/((View) view.getParent()).getWidth());
+						movecard.setPourcentageY(top*100/((View) view.getParent()).getHeight());
+						Log.i(WifiDirectProperty.TAG, movecard.getPourcentageX()+" "+movecard.getPourcentageY());
+						GameActivity.getActivity().getWifiDirectManager().sendEvent(new WifiDirectEventImpl(WifiDirectEvent.EVENT, movecard));
+					}
+					else if(parent instanceof DiscardPileView){
+						MoveCardAction movecard = new MoveCardAction("DiscardPileView", "BoardView",view.getCard());
+						movecard.setPourcentageX(left*100/((View) view.getParent()).getWidth());
+						movecard.setPourcentageY(top*100/((View) view.getParent()).getHeight());
+						Log.i(WifiDirectProperty.TAG, movecard.getPourcentageX()+" "+movecard.getPourcentageY());
+						GameActivity.getActivity().getWifiDirectManager().sendEvent(new WifiDirectEventImpl(WifiDirectEvent.EVENT, movecard));
+					}
+					
 					for (int i = 0; i < getChildCount(); i++) {
 						getChildAt(i).setVisibility(View.VISIBLE);
 					}
