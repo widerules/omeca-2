@@ -191,15 +191,19 @@ public class GameActivity extends Activity implements Observer {
 	    switch(position) {
 	    case 0:
 	            Log.i(WifiDirectProperty.TAG, "Click 0");
+	            mDrawerLayout.closeDrawers();
 	            break;
 	    case 1:
 	    	Log.i(WifiDirectProperty.TAG, "Click 1");
+	    	mDrawerLayout.closeDrawers();
 	           break;
 	    case 2:
 	    	Log.i(WifiDirectProperty.TAG, "Click 2");
+	    	mDrawerLayout.closeDrawers();
 	           break;
 	    case 3:
 	    	Log.i(WifiDirectProperty.TAG, "Click 3");
+	    	mDrawerLayout.closeDrawers();
 	           break;
 	    default:
 	    	break;
