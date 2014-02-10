@@ -104,8 +104,6 @@ public class GameActivity extends Activity implements Observer {
 				.findViewById(R.id.view_board));
 		Board board = ActionController.board;
 		board.initDrawPile(true);
-		board.addPlayer(0, ActionController.user);
-		board.addPlayer(4, new Player("Nicolas", 8, 2));
 		boardView.buildBoard(board);
 		boardView.updatePlayers();
 

@@ -9,6 +9,8 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.os.PowerManager;
+import android.os.PowerManager.WakeLock;
 import android.util.Log;
 import android.view.Menu;
 import android.view.View;
@@ -32,7 +34,7 @@ public class MainActivity extends Activity implements Observer {
 	private final String SHARED_PREFERENCES_SOUND = "sound";
 	private ToggleButton soundToggle = null;
 	private ToggleButton vibrationToggle = null;
-	
+	private WakeLock wakeLock = null;
 	private SharedPreferences profilPreferences;
 
 	WifiDirectManager wifiDirectManager;
@@ -66,6 +68,9 @@ public class MainActivity extends Activity implements Observer {
 		// Retrieve options
 		retrieveOptions();
 		
+		PowerManager pm = (PowerManager) getSystemService(Context.POWER_SERVICE);
+        wakeLock = pm.newWakeLock(PowerManager.FULL_WAKE_LOCK, "WakeLock");
+        wakeLock.acquire();
 	}
 
 	@Override
@@ -142,6 +147,7 @@ public class MainActivity extends Activity implements Observer {
 	public void finishMainActivity(){
 		OmecaPopupExit.dismiss();
 		wifiDirectManager.stopP2P();
+		wakeLock.release();
 		this.finish();
 		System.exit(0);
 	}
