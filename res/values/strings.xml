@@ -4,10 +4,9 @@
     <string name="app_name">OMECA</string>
     <string name="action_settings">Quitter</string>
     <string name="hello_world">Hello world!</string>
-    <string name="button_host">Héberger</string>
+    <string name="button_host">Créer</string>
     <string name="button_client">Rejoindre</string>
     <string name="button_options">Options</string>
-    <string name="button_avatar">Choix avatar</string>
     <string name="button_disconnect">Quitter la partie</string>
     <string name="button_exit">Quitter le jeu</string>
     <string name="start_game">Jouer</string>
