@@ -34,9 +34,10 @@ public class OmecaHandler extends Handler {
 	public static final int SWITCH_PLAYERS_ACTION = 3;
 	public static final int RETURN_CARD = 4;
 	public static final int MOVE_CARD = 5;
-	public static final int GIVETO =6;
+	public static final int GIVETO = 6;
+	public static final int AUTOMATIC_DRAW_ACTION = 7;
 
-	public OmecaHandler(Looper looper){
+	public OmecaHandler(Looper looper) {
 		super(looper);
 	}
 
@@ -49,214 +50,293 @@ public class OmecaHandler extends Handler {
 	@Override
 	public void handleMessage(Message msg) {
 		switch (msg.what) {
-		case DECONNEXION:
-		{
+		case DECONNEXION: {
 			BoardView boardView = (BoardView) GameActivity.getActivity()
 					.findViewById(R.id.view_board);
 			boardView.getDiscardPileView().updateView();
 			boardView.updatePlayers();
 		}
-		break;
-		
-		case AKNOWLEGMENT_CONNECTION_ACTION:
-		{
+			break;
+
+		case AKNOWLEGMENT_CONNECTION_ACTION: {
 			BoardView boardView = (BoardView) GameActivity.getActivity()
 					.findViewById(R.id.view_board);
-			boardView.getDrawPileView().setDrawpile(ActionController.board.getDrawPile());
-			boardView.getDiscardPileView().setDiscardPile(ActionController.board.getDiscardPile());
+			boardView.getDrawPileView().setDrawpile(
+					ActionController.board.getDrawPile());
+			boardView.getDiscardPileView().setDiscardPile(
+					ActionController.board.getDiscardPile());
 			boardView.getDiscardPileView().updateView();
 			boardView.getDrawPileView().updateView();
 			boardView.updatePlayers();
 		}
-		break;
-		case SWITCH_PLAYERS_ACTION:
-		{
+			break;
+		case SWITCH_PLAYERS_ACTION: {
 			BoardView boardView = (BoardView) GameActivity.getActivity()
 					.findViewById(R.id.view_board);
 			boardView.updatePlayers();
 		}
-		break;
-		case RETURN_CARD:
-		{
+			break;
+		case AUTOMATIC_DRAW_ACTION: {
+			BoardView boardView = (BoardView) GameActivity.getActivity()
+					.findViewById(R.id.view_board);
 			Bundle data = msg.getData();
-			BoardView boardView = (BoardView)GameActivity.getActivity().findViewById(R.id.view_board);
-			if(data.getString("Source").equals("DrawPileView")){
+			boardView.runDistrib(data.getInt("From"), data.getInt("Number"));
+		}
+			break;
+		case RETURN_CARD: {
+			Bundle data = msg.getData();
+			BoardView boardView = (BoardView) GameActivity.getActivity()
+					.findViewById(R.id.view_board);
+			if (data.getString("Source").equals("DrawPileView")) {
 				DrawPileView pileView = boardView.getDrawPileView();
-				pileView.getDrawpile().getCards().get(pileView.getDrawpile().getNumberOfCards()-1).setFaceUp(!pileView.getDrawpile().getCards().get(pileView.getDrawpile().getNumberOfCards()-1).isFaceUp());
+				pileView.getDrawpile()
+						.getCards()
+						.get(pileView.getDrawpile().getNumberOfCards() - 1)
+						.setFaceUp(
+								!pileView
+										.getDrawpile()
+										.getCards()
+										.get(pileView.getDrawpile()
+												.getNumberOfCards() - 1)
+										.isFaceUp());
 				pileView.updateView();
-			}else if(data.getString("Source").equals("BoardView")){
+			} else if (data.getString("Source").equals("BoardView")) {
 				int value = data.getInt("Value");
 				String color = data.getString("Color");
-				for(int i=0;i<boardView.getChildCount();i++){
-					if(boardView.getChildAt(i) instanceof CardView){
+				for (int i = 0; i < boardView.getChildCount(); i++) {
+					if (boardView.getChildAt(i) instanceof CardView) {
 						CardView card = (CardView) boardView.getChildAt(i);
-						if(card.getCard().getValue() == value && card.getCard().getColor().equals(color)){
+						if (card.getCard().getValue() == value
+								&& card.getCard().getColor().equals(color)) {
 							card.turnCard();
 							break;
 						}
 					}
 				}
-			}else if(data.getString("Source").equals("DiscardPileView")){
+			} else if (data.getString("Source").equals("DiscardPileView")) {
 				DiscardPileView discardView = boardView.getDiscardPileView();
-				discardView.getDiscardPile().getCards().get(discardView.getDiscardPile().getNumberOfCards()-1).setFaceUp(!discardView.getDiscardPile().getCards().get(discardView.getDiscardPile().getNumberOfCards()-1).isFaceUp());
+				discardView
+						.getDiscardPile()
+						.getCards()
+						.get(discardView.getDiscardPile().getNumberOfCards() - 1)
+						.setFaceUp(
+								!discardView
+										.getDiscardPile()
+										.getCards()
+										.get(discardView.getDiscardPile()
+												.getNumberOfCards() - 1)
+										.isFaceUp());
 				discardView.updateView();
 			}
 		}
-		break;
-		case MOVE_CARD:
-		{
+			break;
+		case MOVE_CARD: {
 			Bundle data = msg.getData();
-			BoardView boardView = (BoardView)GameActivity.getActivity().findViewById(R.id.view_board);
-			if(data.getString("Source").equals("DrawPileView")){
+			BoardView boardView = (BoardView) GameActivity.getActivity()
+					.findViewById(R.id.view_board);
+			if (data.getString("Source").equals("DrawPileView")) {
 				DrawPileView pileView = boardView.getDrawPileView();
-				Card tmp = pileView.getDrawpile().getCards().get(pileView.getDrawpile().getNumberOfCards()-1);
-				pileView.getDrawpile().getCards().remove(pileView.getDrawpile().getNumberOfCards()-1);
+				Card tmp = pileView.getDrawpile().getCards()
+						.get(pileView.getDrawpile().getNumberOfCards() - 1);
+				pileView.getDrawpile().getCards()
+						.remove(pileView.getDrawpile().getNumberOfCards() - 1);
 				pileView.updateView();
-				if(data.getString("Target").equals("BoardView")){
-					CardView card = new CardView(GameActivity.getActivity(),tmp);
+				if (data.getString("Target").equals("BoardView")) {
+					CardView card = new CardView(GameActivity.getActivity(),
+							tmp);
 					int pourcentageX = data.getInt("PX");
 					int pourcentageY = data.getInt("PY");
-					Log.i(WifiDirectProperty.TAG, "LeftP :"+pourcentageX+ " RightP :"+pourcentageY);
+					Log.i(WifiDirectProperty.TAG, "LeftP :" + pourcentageX
+							+ " RightP :" + pourcentageY);
 					MarginLayoutParams marginParams = new MarginLayoutParams(
 							card.getLayoutParams());
-					int left = (pourcentageX*boardView.getWidth())/100;
-					int top = (pourcentageY*boardView.getHeight())/100;
-					int right = (int) (((View) boardView.getParent()).getWidth()
-							- left + boardView.getWidth());
-					int bottom = (int) (((View) boardView.getParent()).getHeight()
-							- top + boardView.getHeight());
+					int left = (pourcentageX * boardView.getWidth()) / 100;
+					int top = (pourcentageY * boardView.getHeight()) / 100;
+					int right = (int) (((View) boardView.getParent())
+							.getWidth() - left + boardView.getWidth());
+					int bottom = (int) (((View) boardView.getParent())
+							.getHeight() - top + boardView.getHeight());
 					marginParams.setMargins(left, top, right, bottom);
 					card.setLayoutParams(new RelativeLayout.LayoutParams(
 							marginParams));
-					Log.i(WifiDirectProperty.TAG, "Left :"+left+ " Right :"+right);
+					Log.i(WifiDirectProperty.TAG, "Left :" + left + " Right :"
+							+ right);
 					boardView.addView(card);
-				}else if(data.getString("Target").equals("DiscardPileView")){
-					boardView.getDiscardPileView().addView(new CardView(GameActivity.getActivity(),tmp));
-				}else if(data.getString("Target").equals("Player")){
+				} else if (data.getString("Target").equals("DiscardPileView")) {
+					boardView.getDiscardPileView().addView(
+							new CardView(GameActivity.getActivity(), tmp));
+				} else if (data.getString("Target").equals("Player")) {
 					int playerId = data.getInt("IDTarget");
-					if(playerId == ActionController.user.getId()){
+					if (playerId == ActionController.user.getId()) {
 						ActionController.user.addCard(tmp);
-						HandView handView = (HandView)GameActivity.getActivity().findViewById(R.id.handview);
+						HandView handView = (HandView) GameActivity
+								.getActivity().findViewById(R.id.handview);
 						handView.updateView(false);
-						Gallery cards = (Gallery) GameActivity.getActivity().findViewById(R.id.playerview_slider_board_cardgallery);
-						SliderbarCardGallery l = (SliderbarCardGallery)cards.getAdapter();
+						Gallery cards = (Gallery) GameActivity
+								.getActivity()
+								.findViewById(
+										R.id.playerview_slider_board_cardgallery);
+						SliderbarCardGallery l = (SliderbarCardGallery) cards
+								.getAdapter();
 						l.notifyDataSetChanged();
-					}else{
-						Hashtable<Integer, PlayerView> players = boardView.getPlayerViews();
-						for(int playerPlace : players.keySet()){
-							if(players.get(playerPlace).getPlayer() != null && players.get(playerPlace).getPlayer().getId() == playerId){
-								players.get(playerPlace).getPlayer().addCard(tmp);
+					} else {
+						Hashtable<Integer, PlayerView> players = boardView
+								.getPlayerViews();
+						for (int playerPlace : players.keySet()) {
+							if (players.get(playerPlace).getPlayer() != null
+									&& players.get(playerPlace).getPlayer()
+											.getId() == playerId) {
+								players.get(playerPlace).getPlayer()
+										.addCard(tmp);
 								break;
 							}
 						}
 						boardView.updatePlayers();
-						HandView handView = (HandView)GameActivity.getActivity().findViewById(R.id.handview);
+						HandView handView = (HandView) GameActivity
+								.getActivity().findViewById(R.id.handview);
 						handView.updateView(false);
 					}
 				}
-			}else if(data.getString("Source").equals("BoardView")){
-				//TODO : chercher la carte sur le board et la retourner
+			} else if (data.getString("Source").equals("BoardView")) {
+				// TODO : chercher la carte sur le board et la retourner
 				int value = data.getInt("Value");
 				String color = data.getString("Color");
 				Card tmp = null;
-				for(int i=0;i<boardView.getChildCount();i++){
-					if(boardView.getChildAt(i) instanceof CardView){
+				for (int i = 0; i < boardView.getChildCount(); i++) {
+					if (boardView.getChildAt(i) instanceof CardView) {
 						CardView card = (CardView) boardView.getChildAt(i);
-						if(card.getCard().getValue() == value && card.getCard().getColor().equals(color)){
+						if (card.getCard().getValue() == value
+								&& card.getCard().getColor().equals(color)) {
 							tmp = card.getCard();
 							boardView.removeView(card);
 							break;
 						}
 					}
 				}
-				if(tmp != null){
+				if (tmp != null) {
 					tmp.setFaceUp(data.getBoolean("Face"));
-					if(data.getString("Target").equals("DrawPileView")){
-						boardView.getDrawPileView().addView(new CardView(GameActivity.getActivity(),tmp));
-					}else if(data.getString("Target").equals("DiscardPileView")){
-						boardView.getDiscardPileView().addView(new CardView(GameActivity.getActivity(),tmp));
-					}else if(data.getString("Target").equals("Player")){
+					if (data.getString("Target").equals("DrawPileView")) {
+						boardView.getDrawPileView().addView(
+								new CardView(GameActivity.getActivity(), tmp));
+					} else if (data.getString("Target").equals(
+							"DiscardPileView")) {
+						boardView.getDiscardPileView().addView(
+								new CardView(GameActivity.getActivity(), tmp));
+					} else if (data.getString("Target").equals("Player")) {
 						int playerId = data.getInt("IDTarget");
-						if(playerId == ActionController.user.getId()){
+						if (playerId == ActionController.user.getId()) {
 							ActionController.user.addCard(tmp);
-							HandView handView = (HandView)GameActivity.getActivity().findViewById(R.id.handview);
+							HandView handView = (HandView) GameActivity
+									.getActivity().findViewById(R.id.handview);
 							handView.updateView(false);
-							Gallery cards = (Gallery) GameActivity.getActivity().findViewById(R.id.playerview_slider_board_cardgallery);
-							SliderbarCardGallery l = (SliderbarCardGallery)cards.getAdapter();
+							Gallery cards = (Gallery) GameActivity
+									.getActivity()
+									.findViewById(
+											R.id.playerview_slider_board_cardgallery);
+							SliderbarCardGallery l = (SliderbarCardGallery) cards
+									.getAdapter();
 							l.notifyDataSetChanged();
-						}else{
-							Hashtable<Integer, PlayerView> players = boardView.getPlayerViews();
-							for(int playerPlace : players.keySet()){
-								if(players.get(playerPlace).getPlayer() != null && players.get(playerPlace).getPlayer().getId() == playerId){
-									players.get(playerPlace).getPlayer().addCard(tmp);
+						} else {
+							Hashtable<Integer, PlayerView> players = boardView
+									.getPlayerViews();
+							for (int playerPlace : players.keySet()) {
+								if (players.get(playerPlace).getPlayer() != null
+										&& players.get(playerPlace).getPlayer()
+												.getId() == playerId) {
+									players.get(playerPlace).getPlayer()
+											.addCard(tmp);
 									break;
 								}
 							}
 							boardView.updatePlayers();
-							HandView handView = (HandView)GameActivity.getActivity().findViewById(R.id.handview);
+							HandView handView = (HandView) GameActivity
+									.getActivity().findViewById(R.id.handview);
 							handView.updateView(false);
 						}
 					}
 				}
-			}else if(data.getString("Source").equals("DiscardPileView")){
+			} else if (data.getString("Source").equals("DiscardPileView")) {
 				DiscardPileView discardView = boardView.getDiscardPileView();
-				Card tmp = discardView.getDiscardPile().getCards().get(discardView.getDiscardPile().getNumberOfCards()-1);
-				discardView.getDiscardPile().getCards().remove(discardView.getDiscardPile().getNumberOfCards()-1);
+				Card tmp = discardView
+						.getDiscardPile()
+						.getCards()
+						.get(discardView.getDiscardPile().getNumberOfCards() - 1);
+				discardView
+						.getDiscardPile()
+						.getCards()
+						.remove(discardView.getDiscardPile().getNumberOfCards() - 1);
 				discardView.updateView();
-				if(data.getString("Target").equals("BoardView")){
-					CardView card = new CardView(GameActivity.getActivity(),tmp);
+				if (data.getString("Target").equals("BoardView")) {
+					CardView card = new CardView(GameActivity.getActivity(),
+							tmp);
 					int pourcentageX = data.getInt("PX");
 					int pourcentageY = data.getInt("PY");
-					Log.i(WifiDirectProperty.TAG, "LeftP :"+pourcentageX+ " RightP :"+pourcentageY);
+					Log.i(WifiDirectProperty.TAG, "LeftP :" + pourcentageX
+							+ " RightP :" + pourcentageY);
 					MarginLayoutParams marginParams = new MarginLayoutParams(
 							card.getLayoutParams());
-					int left = (pourcentageX*boardView.getWidth())/100;
-					int top = (pourcentageY*boardView.getHeight())/100;
-					int right = (int) (((View) boardView.getParent()).getWidth()
-							- left + boardView.getWidth());
-					int bottom = (int) (((View) boardView.getParent()).getHeight()
-							- top + boardView.getHeight());
+					int left = (pourcentageX * boardView.getWidth()) / 100;
+					int top = (pourcentageY * boardView.getHeight()) / 100;
+					int right = (int) (((View) boardView.getParent())
+							.getWidth() - left + boardView.getWidth());
+					int bottom = (int) (((View) boardView.getParent())
+							.getHeight() - top + boardView.getHeight());
 					marginParams.setMargins(left, top, right, bottom);
 					card.setLayoutParams(new RelativeLayout.LayoutParams(
 							marginParams));
-					Log.i(WifiDirectProperty.TAG, "Left :"+left+ " Right :"+right);
+					Log.i(WifiDirectProperty.TAG, "Left :" + left + " Right :"
+							+ right);
 					boardView.addView(card);
-				}else if(data.getString("Target").equals("DrawPileView")){
-					boardView.getDrawPileView().addView(new CardView(GameActivity.getActivity(),tmp));
-				}else if(data.getString("Target").equals("Player")){
+				} else if (data.getString("Target").equals("DrawPileView")) {
+					boardView.getDrawPileView().addView(
+							new CardView(GameActivity.getActivity(), tmp));
+				} else if (data.getString("Target").equals("Player")) {
 					int playerId = data.getInt("IDTarget");
-					if(playerId == ActionController.user.getId()){
+					if (playerId == ActionController.user.getId()) {
 						ActionController.user.addCard(tmp);
-						HandView handView = (HandView)GameActivity.getActivity().findViewById(R.id.handview);
+						HandView handView = (HandView) GameActivity
+								.getActivity().findViewById(R.id.handview);
 						handView.updateView(false);
-						Gallery cards = (Gallery) GameActivity.getActivity().findViewById(R.id.playerview_slider_board_cardgallery);
-						SliderbarCardGallery l = (SliderbarCardGallery)cards.getAdapter();
+						Gallery cards = (Gallery) GameActivity
+								.getActivity()
+								.findViewById(
+										R.id.playerview_slider_board_cardgallery);
+						SliderbarCardGallery l = (SliderbarCardGallery) cards
+								.getAdapter();
 						l.notifyDataSetChanged();
-					}else{
-						Hashtable<Integer, PlayerView> players = boardView.getPlayerViews();
-						for(int playerPlace : players.keySet()){
-							if(players.get(playerPlace).getPlayer() != null && players.get(playerPlace).getPlayer().getId() == playerId){
-								players.get(playerPlace).getPlayer().addCard(tmp);
+					} else {
+						Hashtable<Integer, PlayerView> players = boardView
+								.getPlayerViews();
+						for (int playerPlace : players.keySet()) {
+							if (players.get(playerPlace).getPlayer() != null
+									&& players.get(playerPlace).getPlayer()
+											.getId() == playerId) {
+								players.get(playerPlace).getPlayer()
+										.addCard(tmp);
 								break;
 							}
 						}
 						boardView.updatePlayers();
-						HandView handView = (HandView)GameActivity.getActivity().findViewById(R.id.handview);
+						HandView handView = (HandView) GameActivity
+								.getActivity().findViewById(R.id.handview);
 						handView.updateView(false);
 					}
 				}
-			}else if(data.getString("Source").equals("Player")){
+			} else if (data.getString("Source").equals("Player")) {
 				int playerId = data.getInt("IDSource");
 				int value = data.getInt("Value");
 				String color = data.getString("Color");
 				Card tmp = null;
-				Hashtable<Integer, PlayerView> players = boardView.getPlayerViews();
-				for(int playerPlace : players.keySet()){
-					if(players.get(playerPlace).getPlayer() != null && players.get(playerPlace).getPlayer().getId() == playerId){
+				Hashtable<Integer, PlayerView> players = boardView
+						.getPlayerViews();
+				for (int playerPlace : players.keySet()) {
+					if (players.get(playerPlace).getPlayer() != null
+							&& players.get(playerPlace).getPlayer().getId() == playerId) {
 						Player player = players.get(playerPlace).getPlayer();
 						ArrayList<Card> cards = player.getCards();
-						for(int i = 0; i<cards.size();i++){
-							if(cards.get(i).getColor().equals(color) && cards.get(i).getValue() == value){
+						for (int i = 0; i < cards.size(); i++) {
+							if (cards.get(i).getColor().equals(color)
+									&& cards.get(i).getValue() == value) {
 								tmp = cards.get(i);
 								cards.remove(i);
 								break;
@@ -265,44 +345,58 @@ public class OmecaHandler extends Handler {
 						break;
 					}
 				}
-				if(tmp != null){
+				if (tmp != null) {
 					tmp.setFaceUp(data.getBoolean("Face"));
-					Log.i(WifiDirectProperty.TAG, data.getBoolean("Face")+"");
-					if(data.getString("Target").equals("BoardView")){
-						CardView card = new CardView(GameActivity.getActivity(),tmp);
+					Log.i(WifiDirectProperty.TAG, data.getBoolean("Face") + "");
+					if (data.getString("Target").equals("BoardView")) {
+						CardView card = new CardView(
+								GameActivity.getActivity(), tmp);
 						int pourcentageX = data.getInt("PX");
 						int pourcentageY = data.getInt("PY");
-						Log.i(WifiDirectProperty.TAG, "LeftP :"+pourcentageX+ " RightP :"+pourcentageY);
+						Log.i(WifiDirectProperty.TAG, "LeftP :" + pourcentageX
+								+ " RightP :" + pourcentageY);
 						MarginLayoutParams marginParams = new MarginLayoutParams(
 								card.getLayoutParams());
-						int left = (pourcentageX*boardView.getWidth())/100;
-						int top = (pourcentageY*boardView.getHeight())/100;
-						int right = (int) (((View) boardView.getParent()).getWidth()
-								- left + boardView.getWidth());
-						int bottom = (int) (((View) boardView.getParent()).getHeight()
-								- top + boardView.getHeight());
+						int left = (pourcentageX * boardView.getWidth()) / 100;
+						int top = (pourcentageY * boardView.getHeight()) / 100;
+						int right = (int) (((View) boardView.getParent())
+								.getWidth() - left + boardView.getWidth());
+						int bottom = (int) (((View) boardView.getParent())
+								.getHeight() - top + boardView.getHeight());
 						marginParams.setMargins(left, top, right, bottom);
 						card.setLayoutParams(new RelativeLayout.LayoutParams(
 								marginParams));
-						Log.i(WifiDirectProperty.TAG, "Left :"+left+ " Right :"+right);
+						Log.i(WifiDirectProperty.TAG, "Left :" + left
+								+ " Right :" + right);
 						boardView.addView(card);
-					}else if(data.getString("Target").equals("DrawPileView")){
-						boardView.getDrawPileView().addView(new CardView(GameActivity.getActivity(),tmp));
-					}else if(data.getString("Target").equals("DiscardPileView")){
-						boardView.getDiscardPileView().addView(new CardView(GameActivity.getActivity(),tmp));
-					}else if(data.getString("Target").equals("Player")){
+					} else if (data.getString("Target").equals("DrawPileView")) {
+						boardView.getDrawPileView().addView(
+								new CardView(GameActivity.getActivity(), tmp));
+					} else if (data.getString("Target").equals(
+							"DiscardPileView")) {
+						boardView.getDiscardPileView().addView(
+								new CardView(GameActivity.getActivity(), tmp));
+					} else if (data.getString("Target").equals("Player")) {
 						int playerTarget = data.getInt("IDTarget");
-						if(playerTarget == ActionController.user.getId()){
+						if (playerTarget == ActionController.user.getId()) {
 							ActionController.user.addCard(tmp);
-							HandView handView = (HandView)GameActivity.getActivity().findViewById(R.id.handview);
+							HandView handView = (HandView) GameActivity
+									.getActivity().findViewById(R.id.handview);
 							handView.updateView(false);
-							Gallery cards = (Gallery) GameActivity.getActivity().findViewById(R.id.playerview_slider_board_cardgallery);
-							SliderbarCardGallery l = (SliderbarCardGallery)cards.getAdapter();
+							Gallery cards = (Gallery) GameActivity
+									.getActivity()
+									.findViewById(
+											R.id.playerview_slider_board_cardgallery);
+							SliderbarCardGallery l = (SliderbarCardGallery) cards
+									.getAdapter();
 							l.notifyDataSetChanged();
-						}else{
-							for(int playerPlace : players.keySet()){
-								if(players.get(playerPlace).getPlayer() != null && players.get(playerPlace).getPlayer().getId() == playerId){
-									players.get(playerPlace).getPlayer().addCard(tmp);
+						} else {
+							for (int playerPlace : players.keySet()) {
+								if (players.get(playerPlace).getPlayer() != null
+										&& players.get(playerPlace).getPlayer()
+												.getId() == playerId) {
+									players.get(playerPlace).getPlayer()
+											.addCard(tmp);
 									break;
 								}
 							}
@@ -312,13 +406,13 @@ public class OmecaHandler extends Handler {
 				}
 			}
 		}
-		break;
-		case GIVETO:
-		{
-			BoardView boardView = (BoardView) (GameActivity.getActivity().findViewById(R.id.view_board));
+			break;
+		case GIVETO: {
+			BoardView boardView = (BoardView) (GameActivity.getActivity()
+					.findViewById(R.id.view_board));
 			boardView.giveTo(msg.getData().getInt("playerPlace"));
 		}
-		break;
+			break;
 		default:
 			break;
 		}

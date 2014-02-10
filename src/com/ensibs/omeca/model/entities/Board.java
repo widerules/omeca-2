@@ -3,6 +3,8 @@ package com.ensibs.omeca.model.entities;
 import java.util.Hashtable;
 import java.util.Map.Entry;
 
+import android.util.Log;
+
 /**
  * Model for the board entity
  * @author Nicolas
@@ -145,7 +147,7 @@ public class Board extends GameEntity{
 	}
 
 	public void movePlayerTo(Player player, int index) {
-		int i = (index >= NB_PLAYER_MAX) ? index-NB_PLAYER_MAX : index;
+		int i = (index >= NB_PLAYER_MAX) ? index-(NB_PLAYER_MAX) : index;
 		players.remove(getPlace(player));
 		players.put(i, player);
 	}
