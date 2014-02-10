@@ -201,7 +201,23 @@ public class OmecaHandler extends Handler {
 				discardView.getDiscardPile().getCards().remove(discardView.getDiscardPile().getNumberOfCards()-1);
 				discardView.updateView();
 				if(data.getString("Target").equals("BoardView")){
-					boardView.addView(new CardView(GameActivity.getActivity(),tmp));
+					CardView card = new CardView(GameActivity.getActivity(),tmp);
+					int pourcentageX = data.getInt("PX");
+					int pourcentageY = data.getInt("PY");
+					Log.i(WifiDirectProperty.TAG, "LeftP :"+pourcentageX+ " RightP :"+pourcentageY);
+					MarginLayoutParams marginParams = new MarginLayoutParams(
+							card.getLayoutParams());
+					int left = (pourcentageX*boardView.getWidth())/100;
+					int top = (pourcentageY*boardView.getHeight())/100;
+					int right = (int) (((View) boardView.getParent()).getWidth()
+							- left + boardView.getWidth());
+					int bottom = (int) (((View) boardView.getParent()).getHeight()
+							- top + boardView.getHeight());
+					marginParams.setMargins(left, top, right, bottom);
+					card.setLayoutParams(new RelativeLayout.LayoutParams(
+							marginParams));
+					Log.i(WifiDirectProperty.TAG, "Left :"+left+ " Right :"+right);
+					boardView.addView(card);
 				}else if(data.getString("Target").equals("DrawPileView")){
 					boardView.getDrawPileView().addView(new CardView(GameActivity.getActivity(),tmp));
 				}else if(data.getString("Target").equals("Player")){
@@ -247,8 +263,25 @@ public class OmecaHandler extends Handler {
 					}
 				}
 				if(tmp != null){
+					tmp.setFaceUp(data.getBoolean("Face"));
 					if(data.getString("Target").equals("BoardView")){
-						boardView.addView(new CardView(GameActivity.getActivity(),tmp));
+						CardView card = new CardView(GameActivity.getActivity(),tmp);
+						int pourcentageX = data.getInt("PX");
+						int pourcentageY = data.getInt("PY");
+						Log.i(WifiDirectProperty.TAG, "LeftP :"+pourcentageX+ " RightP :"+pourcentageY);
+						MarginLayoutParams marginParams = new MarginLayoutParams(
+								card.getLayoutParams());
+						int left = (pourcentageX*boardView.getWidth())/100;
+						int top = (pourcentageY*boardView.getHeight())/100;
+						int right = (int) (((View) boardView.getParent()).getWidth()
+								- left + boardView.getWidth());
+						int bottom = (int) (((View) boardView.getParent()).getHeight()
+								- top + boardView.getHeight());
+						marginParams.setMargins(left, top, right, bottom);
+						card.setLayoutParams(new RelativeLayout.LayoutParams(
+								marginParams));
+						Log.i(WifiDirectProperty.TAG, "Left :"+left+ " Right :"+right);
+						boardView.addView(card);
 					}else if(data.getString("Target").equals("DrawPileView")){
 						boardView.getDrawPileView().addView(new CardView(GameActivity.getActivity(),tmp));
 					}else if(data.getString("Target").equals("DiscardPileView")){
