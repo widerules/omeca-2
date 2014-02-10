@@ -7,7 +7,11 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
 import android.os.Message;
+import android.util.Log;
+import android.view.View;
+import android.view.ViewGroup.MarginLayoutParams;
 import android.widget.Gallery;
+import android.widget.RelativeLayout;
 
 import com.ensibs.omeca.GameActivity;
 import com.ensibs.omeca.R;
@@ -20,6 +24,7 @@ import com.ensibs.omeca.view.DiscardPileView;
 import com.ensibs.omeca.view.DrawPileView;
 import com.ensibs.omeca.view.HandView;
 import com.ensibs.omeca.view.PlayerView;
+import com.ensibs.omeca.wifidirect.property.WifiDirectProperty;
 
 public class OmecaHandler extends Handler {
 
@@ -106,7 +111,23 @@ public class OmecaHandler extends Handler {
 				pileView.getDrawpile().getCards().remove(pileView.getDrawpile().getNumberOfCards()-1);
 				pileView.updateView();
 				if(data.getString("Target").equals("BoardView")){
-					boardView.addView(new CardView(GameActivity.getActivity(),tmp));
+					CardView card = new CardView(GameActivity.getActivity(),tmp);
+					int pourcentageX = data.getInt("PX");
+					int pourcentageY = data.getInt("PY");
+					Log.i(WifiDirectProperty.TAG, "LeftP :"+pourcentageX+ " RightP :"+pourcentageY);
+					MarginLayoutParams marginParams = new MarginLayoutParams(
+							card.getLayoutParams());
+					int left = (pourcentageX*boardView.getWidth())/100;
+					int top = (pourcentageY*boardView.getHeight())/100;
+					int right = (int) (((View) boardView.getParent()).getWidth()
+							- left + boardView.getWidth());
+					int bottom = (int) (((View) boardView.getParent()).getHeight()
+							- top + boardView.getHeight());
+					marginParams.setMargins(left, top, right, bottom);
+					card.setLayoutParams(new RelativeLayout.LayoutParams(
+							marginParams));
+					Log.i(WifiDirectProperty.TAG, "Left :"+left+ " Right :"+right);
+					boardView.addView(card);
 				}else if(data.getString("Target").equals("DiscardPileView")){
 					boardView.getDiscardPileView().addView(new CardView(GameActivity.getActivity(),tmp));
 				}else if(data.getString("Target").equals("Player")){

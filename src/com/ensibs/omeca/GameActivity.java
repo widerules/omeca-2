@@ -250,6 +250,10 @@ public class GameActivity extends Activity implements Observer {
 					dataMessage.putInt("IDTarget", moveCardAction.getIdTarget());
 				dataMessage.putInt("Value", moveCardAction.getCard().getValue());
 				dataMessage.putString("Color", moveCardAction.getCard().getColor());
+				if(moveCardAction.getPourcentageX() != -1)
+					dataMessage.putInt("PX", moveCardAction.getPourcentageX());
+				if(moveCardAction.getPourcentageY() != -1)
+					dataMessage.putInt("PY", moveCardAction.getPourcentageY());
 				msg.setData(dataMessage);
 				omecaHandler.sendMessage(msg);
 			}
