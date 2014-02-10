@@ -42,8 +42,7 @@ public class SliderbarCardGallery extends BaseAdapter {
     		int height = (int)(parent.getHeight()*0.9);
     		cv.setLayoutParams(new Gallery.LayoutParams((int)(height/CardView.RATIO), height));
     		cv.setOnTouchListener(null);
-    		if(!cv.getCard().isFaceUp())
-    			cv.turnCard();
+    		
     		return cv; 
     	}
     	return cv;
