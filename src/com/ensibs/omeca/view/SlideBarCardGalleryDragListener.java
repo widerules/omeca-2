@@ -6,11 +6,15 @@ import android.view.View.OnDragListener;
 import android.view.ViewGroup;
 import android.widget.Gallery;
 
+import com.ensibs.omeca.GameActivity;
 import com.ensibs.omeca.R;
 import com.ensibs.omeca.controller.ActionController;
+import com.ensibs.omeca.model.actions.MoveCardAction;
 import com.ensibs.omeca.model.entities.Card;
 import com.ensibs.omeca.model.entities.Player;
 import com.ensibs.omeca.utils.SliderbarCardGallery;
+import com.ensibs.omeca.wifidirect.event.WifiDirectEvent;
+import com.ensibs.omeca.wifidirect.event.WifiDirectEventImpl;
 
 public class SlideBarCardGalleryDragListener implements OnDragListener{
 
@@ -41,6 +45,41 @@ public class SlideBarCardGalleryDragListener implements OnDragListener{
 			        g.setSelection(ActionController.user.getNumberOfCards()-1);
 			        HandView hv = ((HandView)((View)v.getParent().getParent().getParent()).findViewById(R.id.handview));
 			        hv.updateView(true);
+			     // Send event to the other
+					if (parent instanceof BoardView) {
+						GameActivity
+						.getActivity()
+						.getWifiDirectManager()
+						.sendEvent(
+								new WifiDirectEventImpl(
+										WifiDirectEvent.EVENT,
+										new MoveCardAction(
+												"BoardView",
+												view.getCard(),
+												"Player", ActionController.user.getId())));
+					} else if (parent instanceof DrawPileView) {
+						GameActivity
+						.getActivity()
+						.getWifiDirectManager()
+						.sendEvent(
+								new WifiDirectEventImpl(
+										WifiDirectEvent.EVENT,
+										new MoveCardAction(
+												"DrawPileView",
+												view.getCard(),
+												"Player", ActionController.user.getId())));
+					} else if (parent instanceof DiscardPileView) {
+						GameActivity
+						.getActivity()
+						.getWifiDirectManager()
+						.sendEvent(
+								new WifiDirectEventImpl(
+										WifiDirectEvent.EVENT,
+										new MoveCardAction(
+												"DiscardPileView",
+												view.getCard(),
+												"Player", ActionController.user.getId())));
+					}
 				} else {
 					vTmp.setVisibility(View.VISIBLE);
 				}
