@@ -24,6 +24,7 @@
         android:paddingBottom="15dp"
         android:paddingTop="5dp"
         android:max="20"
+        android:progress="20"
         />
       
 

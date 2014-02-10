@@ -206,12 +206,7 @@ public class BoardView extends RelativeLayout {
 						DisplayMetrics metrics = GameActivity.getActivity()
 								.getApplicationContext().getResources()
 								.getDisplayMetrics();
-						int height = 2 + metrics.heightPixels / CardView.SIZE;
-						int width = (int) (2 + (height / CardView.RATIO));
-						view.setLayoutParams(new RelativeLayout.LayoutParams(
-								width, height));
 						CardView card = (CardView) view;
-						card.setOnTouchListener(card.new CardTouchListener());
 						card.setOnDragListener(null);
 						Gallery g2 = (Gallery) GameActivity
 								.getActivity()

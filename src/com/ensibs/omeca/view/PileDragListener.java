@@ -4,13 +4,16 @@ import com.ensibs.omeca.GameActivity;
 import com.ensibs.omeca.R;
 import com.ensibs.omeca.controller.ActionController;
 import com.ensibs.omeca.model.actions.MoveCardAction;
+import com.ensibs.omeca.utils.SliderbarCardGallery;
 import com.ensibs.omeca.wifidirect.event.WifiDirectEvent;
 import com.ensibs.omeca.wifidirect.event.WifiDirectEventImpl;
 
+import android.util.Log;
 import android.view.DragEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.View.OnDragListener;
+import android.widget.Gallery;
 import android.widget.TextView;
 
 public class PileDragListener implements OnDragListener {
@@ -36,7 +39,9 @@ public class PileDragListener implements OnDragListener {
 		case DragEvent.ACTION_DROP:
 			if(view instanceof CardView){
 				owner.removeViewInLayout(view);
+				Log.w("Type", owner.getClass().toString());
 				pile.addView(view);
+				view.setOnDragListener(null);
 				view.setVisibility(View.VISIBLE);
 				if(v instanceof DiscardPileView){
 					DiscardPileView pile = (DiscardPileView)v;
@@ -48,6 +53,15 @@ public class PileDragListener implements OnDragListener {
 						GameActivity.getActivity().getWifiDirectManager().sendEvent(new WifiDirectEventImpl(WifiDirectEvent.EVENT, new MoveCardAction("BoardView", "DiscardPileView",((CardView)view).getCard())));
 					}else if(owner instanceof HandView){
 						GameActivity.getActivity().getWifiDirectManager().sendEvent(new WifiDirectEventImpl(WifiDirectEvent.EVENT, new MoveCardAction("Player", ActionController.user.getId(), ((CardView)view).getCard(), "DiscardPileView")));
+						Gallery g = (Gallery) GameActivity
+								.getActivity()
+								.findViewById(
+										R.id.playerview_slider_board_cardgallery);
+						if (g != null) {
+							SliderbarCardGallery a = (SliderbarCardGallery) g
+									.getAdapter();
+							a.notifyDataSetChanged();
+						}
 					}
 				}
 				else if(v instanceof DrawPileView){
@@ -60,6 +74,15 @@ public class PileDragListener implements OnDragListener {
 						GameActivity.getActivity().getWifiDirectManager().sendEvent(new WifiDirectEventImpl(WifiDirectEvent.EVENT, new MoveCardAction("BoardView", "DrawPileView",((CardView)view).getCard())));
 					}else if(owner instanceof HandView){
 						GameActivity.getActivity().getWifiDirectManager().sendEvent(new WifiDirectEventImpl(WifiDirectEvent.EVENT, new MoveCardAction("Player", ActionController.user.getId(), ((CardView)view).getCard(), "DrawPileView")));
+						Gallery g = (Gallery) GameActivity
+								.getActivity()
+								.findViewById(
+										R.id.playerview_slider_board_cardgallery);
+						if (g != null) {
+							SliderbarCardGallery a = (SliderbarCardGallery) g
+									.getAdapter();
+							a.notifyDataSetChanged();
+						}
 					}
 				}
 			}
