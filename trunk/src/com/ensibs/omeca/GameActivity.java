@@ -28,6 +28,8 @@ import com.ensibs.omeca.model.actions.MoveCardAction;
 import com.ensibs.omeca.model.actions.ReturnCardAction;
 import com.ensibs.omeca.model.actions.SwitchPlayersAction;
 import com.ensibs.omeca.model.entities.Board;
+import com.ensibs.omeca.model.entities.Player;
+import com.ensibs.omeca.utils.DealPopup;
 import com.ensibs.omeca.model.entities.Card;
 import com.ensibs.omeca.model.entities.Player;
 import com.ensibs.omeca.utils.OmecaPopupExit;
@@ -102,7 +104,10 @@ public class GameActivity extends Activity implements Observer {
 				.findViewById(R.id.view_board));
 		Board board = ActionController.board;
 		board.initDrawPile(true);
+		board.addPlayer(0, ActionController.user);
+		board.addPlayer(4, new Player("Nicolas", 8, 2));
 		boardView.buildBoard(board);
+		boardView.updatePlayers();
 
 		SlidingUpPanelLayout slide = (SlidingUpPanelLayout) findViewById(R.id.sliding_layout);
 
