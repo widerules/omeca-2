@@ -119,9 +119,7 @@ public class AvatarActivity extends Activity{
 			editor.commit();
 			ActionController.updateUser();
 			finish();
-			
 		}	
-		
 	}
 
 	/**
