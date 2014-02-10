@@ -3,14 +3,11 @@ package com.ensibs.omeca.view;
 import java.util.Hashtable;
 import java.util.Map.Entry;
 
-import android.os.Bundle;
-import android.os.Handler;
-import android.os.Looper;
-import android.os.Message;
 import android.content.Context;
 import android.os.AsyncTask;
+import android.os.Bundle;
+import android.os.Message;
 import android.util.AttributeSet;
-import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.DragEvent;
 import android.view.View;
@@ -21,7 +18,7 @@ import android.view.animation.DecelerateInterpolator;
 import android.view.animation.TranslateAnimation;
 import android.widget.Gallery;
 import android.widget.RelativeLayout;
-import android.widget.Toast;
+import android.widget.TextView;
 
 import com.ensibs.omeca.GameActivity;
 import com.ensibs.omeca.R;
@@ -32,7 +29,6 @@ import com.ensibs.omeca.model.entities.Board;
 import com.ensibs.omeca.model.entities.Player;
 import com.ensibs.omeca.utils.DealPopup;
 import com.ensibs.omeca.utils.SliderbarCardGallery;
-import com.ensibs.omeca.wifidirect.property.WifiDirectProperty;
 import com.ensibs.omeca.wifidirect.event.WifiDirectEvent;
 import com.ensibs.omeca.wifidirect.event.WifiDirectEventImpl;
 import com.ensibs.omeca.wifidirect.property.WifiDirectProperty;
@@ -212,9 +208,6 @@ public class BoardView extends RelativeLayout {
 					parent.removeViewInLayout(view);
 					addView(view);
 					if (parent instanceof HandView) {
-						DisplayMetrics metrics = GameActivity.getActivity()
-								.getApplicationContext().getResources()
-								.getDisplayMetrics();
 						CardView card = (CardView) view;
 						card.setOnDragListener(null);
 						Gallery g2 = (Gallery) GameActivity
@@ -315,6 +308,8 @@ public class BoardView extends RelativeLayout {
 		anim.setInterpolator(new DecelerateInterpolator(1.0f));
 		anim.setDuration(400);
 		vToMove.startAnimation(anim);
+		TextView text = (TextView) findViewById(R.id.nbDrawPileCards);
+		text.setText(""+drawPileView.getDrawpile().getNumberOfCards());
 	}
 
 	public void endAnim(int placePlayer, CardView vToMove ){
@@ -339,32 +334,24 @@ public class BoardView extends RelativeLayout {
 	//L'AsyncTask de distribution
 	static class DistribTask extends AsyncTask<Void, Integer, Boolean> {
 		private int distributor;
-		private int numberCard; // numbre de carte par personne
-		private BoardView bv;
+		private int numberCard; // Number of cards per person
 
 		public void setParameter( int from, int card, BoardView bv ) {
 			this.distributor = from;
 			numberCard = card;
-			this.bv = bv;
 		}
 
 		@Override
 		protected Boolean doInBackground(Void... params) {
 			for (int i = numberCard; i>0; i--){
-				int pos;
-				// récupération de la position de l'utilisateur 
-				if (distributor== ActionController.user.getId())
-					pos = ActionController.board.getPlace(ActionController.user);
-				else 
-					pos=ActionController.board.getPlace(bv.playerViews.get(distributor).getPlayer());
-				Log.i(WifiDirectProperty.TAG, "pos "+pos);
 				Player p;
-				for( int j = pos+1; j<8; j++){
-					Message msgObj = GameActivity.getActivity().getOmecaHandler().obtainMessage();
+				for( int j = distributor+1; j<Board.NB_PLAYER_MAX; j++){
+					OmecaHandler handl = GameActivity.getActivity().getOmecaHandler();
+					Message msgObj = handl.obtainMessage();
+					
 					Bundle b = new Bundle();
 					p =ActionController.board.getPlayers().get(j);
 					if(p !=null){
-						Log.i(WifiDirectProperty.TAG, "parcouru "+p.getName());
 						b.putInt("playerPlace", j);
 						msgObj.what = OmecaHandler.GIVETO;
 						msgObj.setData(b);
@@ -385,7 +372,6 @@ public class BoardView extends RelativeLayout {
 					Bundle b = new Bundle();
 					p =ActionController.board.getPlayers().get(j);
 					if(p !=null){
-						Log.i(WifiDirectProperty.TAG, "parcouru "+p.getName());
 						b.putInt("playerPlace", j);
 						msgObj.what = OmecaHandler.GIVETO;
 						msgObj.setData(b);

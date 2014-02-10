@@ -27,14 +27,13 @@ import android.widget.TextView;
 import com.ensibs.omeca.controller.ActionController;
 import com.ensibs.omeca.controller.OmecaHandler;
 import com.ensibs.omeca.model.actions.AknowlegmentConnectionAction;
+import com.ensibs.omeca.model.actions.AutomaticDistributionAction;
 import com.ensibs.omeca.model.actions.ConnectionAction;
 import com.ensibs.omeca.model.actions.DisconnectionAction;
 import com.ensibs.omeca.model.actions.MoveCardAction;
 import com.ensibs.omeca.model.actions.ReturnCardAction;
 import com.ensibs.omeca.model.actions.SwitchPlayersAction;
 import com.ensibs.omeca.model.entities.Board;
-import com.ensibs.omeca.model.entities.Player;
-import com.ensibs.omeca.utils.DealPopup;
 import com.ensibs.omeca.model.entities.Card;
 import com.ensibs.omeca.model.entities.Player;
 import com.ensibs.omeca.utils.OmecaPopupExit;
@@ -303,6 +302,16 @@ public class GameActivity extends Activity implements Observer {
 				if(moveCardAction.getPourcentageY() != -1)
 					dataMessage.putInt("PY", moveCardAction.getPourcentageY());
 				dataMessage.putBoolean("Face", moveCardAction.getCard().isFaceUp());
+				msg.setData(dataMessage);
+				omecaHandler.sendMessage(msg);
+			}
+			else if(dataObject instanceof AutomaticDistributionAction){
+				AutomaticDistributionAction autoDistrib = (AutomaticDistributionAction) dataObject;
+				Message msg = omecaHandler.obtainMessage();
+				msg.what = OmecaHandler.AUTOMATIC_DRAW_ACTION;
+				Bundle dataMessage = new Bundle();
+				dataMessage.putInt("From", autoDistrib.getPlace());
+				dataMessage.putInt("Number", autoDistrib.getDealNumber());
 				msg.setData(dataMessage);
 				omecaHandler.sendMessage(msg);
 			}

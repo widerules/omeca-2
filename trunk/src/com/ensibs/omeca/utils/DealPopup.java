@@ -8,8 +8,11 @@ import android.view.View.OnClickListener;
 import com.ensibs.omeca.GameActivity;
 import com.ensibs.omeca.R;
 import com.ensibs.omeca.controller.ActionController;
+import com.ensibs.omeca.model.actions.AutomaticDistributionAction;
 import com.ensibs.omeca.view.BoardView;
 import com.ensibs.omeca.view.DealView;
+import com.ensibs.omeca.wifidirect.event.WifiDirectEvent;
+import com.ensibs.omeca.wifidirect.event.WifiDirectEventImpl;
 
 public class DealPopup {
 	private static AlertDialog.Builder dealPopup = null;
@@ -28,10 +31,11 @@ public class DealPopup {
 			alert.show();
 			dv.buttonSave.setOnClickListener(new OnClickListener() {
 				public void onClick(View v) {
-					BoardView boardView = (BoardView) (GameActivity.getActivity().findViewById(R.id.view_board));
-					boardView.runDistrib(ActionController.board.getPlace(ActionController.user)
-							, dv.getDealNumber());
-					//controller.dealCard(dv.getDealNumber());
+					BoardView boardView = (BoardView) GameActivity.getActivity()
+							.findViewById(R.id.view_board);
+					GameActivity.getActivity().getWifiDirectManager().sendEvent(new WifiDirectEventImpl(WifiDirectEvent.EVENT,
+							new AutomaticDistributionAction(ActionController.board.getPlace(ActionController.user), dv.getDealNumber())));
+					boardView.runDistrib(ActionController.board.getPlace(ActionController.user), dv.getDealNumber());
 					alert.dismiss();
 				}
 			});

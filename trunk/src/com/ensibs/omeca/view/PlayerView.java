@@ -30,6 +30,7 @@ import com.ensibs.omeca.utils.SliderbarCardGallery;
 import com.ensibs.omeca.wifidirect.WifiDirectManager;
 import com.ensibs.omeca.wifidirect.event.WifiDirectEvent;
 import com.ensibs.omeca.wifidirect.event.WifiDirectEventImpl;
+import com.ensibs.omeca.wifidirect.mod.WifiDirectMod;
 
 
 public class PlayerView extends RelativeLayout {
@@ -147,7 +148,7 @@ public class PlayerView extends RelativeLayout {
 				cards.setGravity(Gravity.RIGHT);
 				cards.setTextColor(Color.WHITE);
 				cards.setTypeface(null, Typeface.BOLD);
-				cards.setTextSize(TypedValue.COMPLEX_UNIT_SP, 10);
+				cards.setTextSize(TypedValue.COMPLEX_UNIT_SP, 11);
 
 				addView(cards, params);
 
@@ -350,7 +351,7 @@ public class PlayerView extends RelativeLayout {
 				if (!isMe) {
 					x = mE.getX();
 					y = mE.getY();
-					isOnClick = true;
+					isOnClick = (GameActivity.getActivity().getWifiDirectManager().getMod() == WifiDirectMod.HOST);
 				} else
 					setBackgroundResource(R.drawable.player);
 				break;
