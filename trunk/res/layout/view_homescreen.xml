@@ -2,80 +2,49 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="fill_parent"
-    android:layout_centerHorizontal="true"
-    android:background="@drawable/background" >
-
-    <TextView
-        android:id="@+id/TextView01"
-        style="@style/home_AppTitle"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_centerInParent="true"
-        android:text="@string/app_name" />
+    android:background="@drawable/homescreen_background" >
 
     <LinearLayout
         android:id="@+id/homescreen_buttons_group"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/TextView01"
-        android:orientation="horizontal"
-        android:paddingBottom="1.0dip"
-        android:paddingLeft="4.0dip"
-        android:paddingRight="4.0dip"
-        android:paddingTop="5.0dip" >
+        android:gravity="right"
+        android:orientation="vertical"
+        android:paddingRight="40.0dip"
+        android:paddingTop="40.0dip" >
 
         <Button
             android:id="@+id/button1"
-            android:layout_width="0.0dip"
-            android:layout_height="fill_parent"
-            android:layout_weight="1.0"
+            android:layout_width="150dip"
+            android:layout_height="wrap_content"
             android:onClick="host"
             android:text="@string/button_host" />
 
         <Button
             android:id="@+id/button2"
-            android:layout_width="0.0dip"
-            android:layout_height="fill_parent"
-            android:layout_weight="1.0"
+            android:layout_width="150dip"
+            android:layout_height="wrap_content"
             android:onClick="join"
             android:text="@string/button_client" />
 
         <Button
             android:id="@+id/button3"
-            android:layout_width="0.0dip"
-            android:layout_height="fill_parent"
-            android:layout_weight="1.0"
+            android:layout_width="150dip"
+            android:layout_height="wrap_content"
             android:onClick="avatar"
             android:text="@string/button_options" />
-    </LinearLayout>
-
-    <LinearLayout
-        android:id="@+id/homescreen_options_group"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/homescreen_buttons_group"
-        android:gravity="center"
-        android:orientation="horizontal"
-        android:paddingBottom="1.0dip"
-        android:paddingLeft="4.0dip"
-        android:paddingRight="4.0dip"
-        android:paddingTop="5.0dip" >
 
         <ToggleButton
             android:id="@+id/homescreen_options_sound_toggle"
-            android:layout_width="wrap_content"
-            android:layout_height="40dip"
-            android:layout_marginLeft="5dip"
-            android:layout_marginRight="5dip"
+            android:layout_width="150dip"
+            android:layout_height="wrap_content"
             android:textOff="@string/homescreen_options_sound"
             android:textOn="@string/homescreen_options_sound" />
 
         <ToggleButton
             android:id="@+id/homescreen_options_vibration_toggle"
-            android:layout_width="wrap_content"
-            android:layout_height="40dip"
-            android:layout_marginLeft="5dip"
-            android:layout_marginRight="5dip"
+            android:layout_width="150dip"
+            android:layout_height="wrap_content"
             android:textOff="@string/homescreen_options_vibration"
             android:textOn="@string/homescreen_options_vibration" />
     </LinearLayout>
