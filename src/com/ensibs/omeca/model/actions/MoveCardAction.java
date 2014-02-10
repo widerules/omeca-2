@@ -18,7 +18,6 @@ public class MoveCardAction implements Serializable{
 	private Card card;
 	private int pourcentageX;
 	private int pourcentageY;
-	private boolean isFace;
 	
 	public MoveCardAction(String source, String target, Card card){
 		this.src = source;
@@ -27,8 +26,7 @@ public class MoveCardAction implements Serializable{
 		this.idTarget = -1;
 		this.card = card;
 		this.pourcentageX = -1;
-		this.pourcentageY = -1;
-		this.isFace = false;
+		this.pourcentageY = -1;	
 	}
 	
 	public MoveCardAction(String source, int idSource, Card card, String target){
@@ -39,7 +37,6 @@ public class MoveCardAction implements Serializable{
 		this.card = card;
 		this.pourcentageX = -1;
 		this.pourcentageY = -1;
-		this.isFace = false;
 	}
 	
 	public MoveCardAction(String source, Card card, String target, int idTarger){
@@ -50,7 +47,6 @@ public class MoveCardAction implements Serializable{
 		this.card = card;
 		this.pourcentageX = -1;
 		this.pourcentageY = -1;
-		this.isFace = false;
 	}
 	
 	public MoveCardAction(String source, int idSource, String target, int idTarger, Card card){
@@ -61,7 +57,6 @@ public class MoveCardAction implements Serializable{
 		this.card = card;
 		this.pourcentageX = -1;
 		this.pourcentageY = -1;
-		this.isFace = false;
 	}
 
 	public String getSrc() {
@@ -98,13 +93,5 @@ public class MoveCardAction implements Serializable{
 
 	public void setPourcentageY(int pourcentageY) {
 		this.pourcentageY = pourcentageY;
-	}
-
-	public boolean isFace() {
-		return isFace;
-	}
-
-	public void setFace(boolean isFace) {
-		this.isFace = isFace;
 	}
 }
