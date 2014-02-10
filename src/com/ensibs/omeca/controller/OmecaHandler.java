@@ -33,9 +33,9 @@ public class OmecaHandler extends Handler {
 	public static final int AKNOWLEGMENT_CONNECTION_ACTION = 2;
 	public static final int SWITCH_PLAYERS_ACTION = 3;
 	public static final int RETURN_CARD = 4;
-
 	public static final int MOVE_CARD = 5;
-	
+	public static final int GIVETO =6;
+
 	public OmecaHandler(Looper looper){
 		super(looper);
 	}
@@ -49,31 +49,33 @@ public class OmecaHandler extends Handler {
 	@Override
 	public void handleMessage(Message msg) {
 		switch (msg.what) {
-		case DECONNEXION:{
+		case DECONNEXION:
+		{
 			BoardView boardView = (BoardView) GameActivity.getActivity()
 					.findViewById(R.id.view_board);
 			boardView.getDiscardPileView().updateView();
 			boardView.updatePlayers();
 		}
-			break;
+		break;
+		
 		case AKNOWLEGMENT_CONNECTION_ACTION:
 		{
 			BoardView boardView = (BoardView) GameActivity.getActivity()
-			.findViewById(R.id.view_board);
+					.findViewById(R.id.view_board);
 			boardView.getDrawPileView().setDrawpile(ActionController.board.getDrawPile());
 			boardView.getDiscardPileView().setDiscardPile(ActionController.board.getDiscardPile());
 			boardView.getDiscardPileView().updateView();
 			boardView.getDrawPileView().updateView();
 			boardView.updatePlayers();
 		}
-			break;
+		break;
 		case SWITCH_PLAYERS_ACTION:
 		{
 			BoardView boardView = (BoardView) GameActivity.getActivity()
-			.findViewById(R.id.view_board);
+					.findViewById(R.id.view_board);
 			boardView.updatePlayers();
 		}
-			break;
+		break;
 		case RETURN_CARD:
 		{
 			Bundle data = msg.getData();
@@ -86,21 +88,21 @@ public class OmecaHandler extends Handler {
 				int value = data.getInt("Value");
 				String color = data.getString("Color");
 				for(int i=0;i<boardView.getChildCount();i++){
-				       if(boardView.getChildAt(i) instanceof CardView){
-				    	   CardView card = (CardView) boardView.getChildAt(i);
-				    	   if(card.getCard().getValue() == value && card.getCard().getColor().equals(color)){
-				    		   card.turnCard();
-				    		   break;
-				    	   }
-				       }
-				  }
+					if(boardView.getChildAt(i) instanceof CardView){
+						CardView card = (CardView) boardView.getChildAt(i);
+						if(card.getCard().getValue() == value && card.getCard().getColor().equals(color)){
+							card.turnCard();
+							break;
+						}
+					}
+				}
 			}else if(data.getString("Source").equals("DiscardPileView")){
 				DiscardPileView discardView = boardView.getDiscardPileView();
 				discardView.getDiscardPile().getCards().get(discardView.getDiscardPile().getNumberOfCards()-1).setFaceUp(!discardView.getDiscardPile().getCards().get(discardView.getDiscardPile().getNumberOfCards()-1).isFaceUp());
 				discardView.updateView();
 			}
 		}
-			break;
+		break;
 		case MOVE_CARD:
 		{
 			Bundle data = msg.getData();
@@ -138,7 +140,7 @@ public class OmecaHandler extends Handler {
 						handView.updateView(false);
 						Gallery cards = (Gallery) GameActivity.getActivity().findViewById(R.id.playerview_slider_board_cardgallery);
 						SliderbarCardGallery l = (SliderbarCardGallery)cards.getAdapter();
-				        l.notifyDataSetChanged();
+						l.notifyDataSetChanged();
 					}else{
 						Hashtable<Integer, PlayerView> players = boardView.getPlayerViews();
 						for(int playerPlace : players.keySet()){
@@ -158,15 +160,15 @@ public class OmecaHandler extends Handler {
 				String color = data.getString("Color");
 				Card tmp = null;
 				for(int i=0;i<boardView.getChildCount();i++){
-				       if(boardView.getChildAt(i) instanceof CardView){
-				    	   CardView card = (CardView) boardView.getChildAt(i);
-				    	   if(card.getCard().getValue() == value && card.getCard().getColor().equals(color)){
-				    		  tmp = card.getCard();
-				    		  boardView.removeView(card);
-				    		  break;
-				    	   }
-				       }
-				  }
+					if(boardView.getChildAt(i) instanceof CardView){
+						CardView card = (CardView) boardView.getChildAt(i);
+						if(card.getCard().getValue() == value && card.getCard().getColor().equals(color)){
+							tmp = card.getCard();
+							boardView.removeView(card);
+							break;
+						}
+					}
+				}
 				if(tmp != null){
 					if(data.getString("Target").equals("DrawPileView")){
 						boardView.getDrawPileView().addView(new CardView(GameActivity.getActivity(),tmp));
@@ -180,7 +182,7 @@ public class OmecaHandler extends Handler {
 							handView.updateView(false);
 							Gallery cards = (Gallery) GameActivity.getActivity().findViewById(R.id.playerview_slider_board_cardgallery);
 							SliderbarCardGallery l = (SliderbarCardGallery)cards.getAdapter();
-					        l.notifyDataSetChanged();
+							l.notifyDataSetChanged();
 						}else{
 							Hashtable<Integer, PlayerView> players = boardView.getPlayerViews();
 							for(int playerPlace : players.keySet()){
@@ -228,7 +230,7 @@ public class OmecaHandler extends Handler {
 						handView.updateView(false);
 						Gallery cards = (Gallery) GameActivity.getActivity().findViewById(R.id.playerview_slider_board_cardgallery);
 						SliderbarCardGallery l = (SliderbarCardGallery)cards.getAdapter();
-				        l.notifyDataSetChanged();
+						l.notifyDataSetChanged();
 					}else{
 						Hashtable<Integer, PlayerView> players = boardView.getPlayerViews();
 						for(int playerPlace : players.keySet()){
@@ -294,7 +296,7 @@ public class OmecaHandler extends Handler {
 							handView.updateView(false);
 							Gallery cards = (Gallery) GameActivity.getActivity().findViewById(R.id.playerview_slider_board_cardgallery);
 							SliderbarCardGallery l = (SliderbarCardGallery)cards.getAdapter();
-					        l.notifyDataSetChanged();
+							l.notifyDataSetChanged();
 						}else{
 							for(int playerPlace : players.keySet()){
 								if(players.get(playerPlace).getPlayer() != null && players.get(playerPlace).getPlayer().getId() == playerId){
@@ -308,7 +310,13 @@ public class OmecaHandler extends Handler {
 				}
 			}
 		}
-			break;
+		break;
+		case GIVETO:
+		{
+			BoardView boardView = (BoardView) (GameActivity.getActivity().findViewById(R.id.view_board));
+			boardView.giveTo(msg.getData().getInt("playerPlace"));
+		}
+		break;
 		default:
 			break;
 		}

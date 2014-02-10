@@ -5,7 +5,10 @@ import android.content.Context;
 import android.view.View;
 import android.view.View.OnClickListener;
 
+import com.ensibs.omeca.GameActivity;
+import com.ensibs.omeca.R;
 import com.ensibs.omeca.controller.ActionController;
+import com.ensibs.omeca.view.BoardView;
 import com.ensibs.omeca.view.DealView;
 
 public class DealPopup {
@@ -25,6 +28,9 @@ public class DealPopup {
 			alert.show();
 			dv.buttonSave.setOnClickListener(new OnClickListener() {
 				public void onClick(View v) {
+					BoardView boardView = (BoardView) (GameActivity.getActivity().findViewById(R.id.view_board));
+					boardView.setDistribTask(ActionController.board.getPlace(ActionController.user)
+							, dv.getDealNumber());
 					//controller.dealCard(dv.getDealNumber());
 					alert.dismiss();
 				}
