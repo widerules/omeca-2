@@ -3,11 +3,15 @@ package com.ensibs.omeca;
 import java.util.Observable;
 import java.util.Observer;
 
+import android.animation.Animator;
+import android.animation.Animator.AnimatorListener;
+import android.animation.ObjectAnimator;
 import android.app.Activity;
 import android.os.Bundle;
 import android.os.Looper;
 import android.os.Message;
 import android.support.v4.widget.DrawerLayout;
+import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -15,12 +19,14 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
 import android.view.WindowManager;
+import android.view.ViewGroup.MarginLayoutParams;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ArrayAdapter;
 import android.widget.Gallery;
 import android.widget.ImageView;
 import android.widget.ListView;
+import android.widget.RelativeLayout;
 import android.widget.SeekBar;
 import android.widget.TextView;
 
@@ -41,6 +47,7 @@ import com.ensibs.omeca.utils.OmecaPopupExit;
 import com.ensibs.omeca.utils.SliderbarCardGallery;
 import com.ensibs.omeca.utils.SlidingUpPanelLayout;
 import com.ensibs.omeca.view.BoardView;
+import com.ensibs.omeca.view.CardView;
 import com.ensibs.omeca.view.HandView;
 import com.ensibs.omeca.view.PlayerView;
 import com.ensibs.omeca.view.SlideBarCardGalleryDragListener;
@@ -197,9 +204,9 @@ public class GameActivity extends Activity implements Observer {
 	            DealPopup.show(this);
 	            break;
 	    case 2:
-	    	Log.i(WifiDirectProperty.TAG, "Click 1");
 	    	mDrawerLayout.closeDrawers();
-	           break;
+	    	omecaHandler.sendEmptyMessage(OmecaHandler.SHUFFLE);
+	        break;
 	    case 3:
 	    	Log.i(WifiDirectProperty.TAG, "Click 2");
 	    	mDrawerLayout.closeDrawers();

@@ -3,16 +3,17 @@ package com.ensibs.omeca.controller;
 import java.util.ArrayList;
 import java.util.Hashtable;
 
+import android.animation.ObjectAnimator;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
 import android.os.Message;
+import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup.MarginLayoutParams;
 import android.widget.Gallery;
 import android.widget.RelativeLayout;
-
 import com.ensibs.omeca.GameActivity;
 import com.ensibs.omeca.R;
 import com.ensibs.omeca.model.entities.Card;
@@ -36,6 +37,7 @@ public class OmecaHandler extends Handler {
 	public static final int MOVE_CARD = 5;
 	public static final int GIVETO = 6;
 	public static final int AUTOMATIC_DRAW_ACTION = 7;
+	public static final int SHUFFLE = 8;
 
 	public OmecaHandler(Looper looper) {
 		super(looper);
@@ -411,6 +413,20 @@ public class OmecaHandler extends Handler {
 			BoardView boardView = (BoardView) (GameActivity.getActivity()
 					.findViewById(R.id.view_board));
 			boardView.giveTo(msg.getData().getInt("playerPlace"));
+		}
+			break;
+		case SHUFFLE:{
+			BoardView boardView = (BoardView) (GameActivity.getActivity().findViewById(R.id.view_board));
+	    	CardView card = new CardView(GameActivity.getActivity(), new Card(1,Card.COLORS[0]));
+	    	card.setLayoutParams(boardView.getDrawPileView().getLayoutParams());
+			boardView.addView(card);
+			DisplayMetrics metrics = GameActivity.getActivity().getApplicationContext().getResources().getDisplayMetrics();
+	    	int weight = (int) ((metrics.heightPixels/CardView.SIZE)/CardView.RATIO);
+	    	ObjectAnimator anim =  new ObjectAnimator().ofFloat(card, "translationX", card.getX(), card.getX()-(weight/2),card.getX());
+	    	anim.setDuration(100);
+	    	anim.setRepeatCount(5);
+	    	anim.addListener(new AnimationListener(card));
+	    	anim.start();
 		}
 			break;
 		default:
