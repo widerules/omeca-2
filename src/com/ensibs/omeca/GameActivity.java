@@ -184,6 +184,9 @@ public class GameActivity extends Activity implements Observer {
 				selectItem(position);
 			}
 		});
+		ViewGroup header = (ViewGroup)inflater.inflate(R.layout.header_layout, mListView, false);
+		mListView.addHeaderView(header, null, false);
+		
 	}
 	
 	private void selectItem(int position) {

@@ -30,6 +30,7 @@
     <string name="homescreen_options_sound">Sonnerie</string>
     <string name="homescreen_options_vibration">Vibration</string>
     
+    <string name="list_menu">Menu action</string>
     <string name="list_distribution">Distribution automatique</string>
     <string name="list_shuffle">Melanger la pile de pioche</string>
     <string name="list_cut">Couper la pile de pioche</string>
