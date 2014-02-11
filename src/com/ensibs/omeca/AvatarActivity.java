@@ -8,9 +8,11 @@ import android.view.View;
 import android.view.ViewTreeObserver;
 import android.view.Window;
 import android.view.WindowManager;
+import android.view.View.OnClickListener;
 import android.widget.EditText;
 import android.widget.Gallery;
 import android.widget.Toast;
+import android.widget.ToggleButton;
 
 import com.ensibs.omeca.controller.ActionController;
 import com.ensibs.omeca.utils.AvatarGallery;
@@ -24,6 +26,10 @@ public class AvatarActivity extends Activity{
 	public static final String SHARED_PREFERENCES_FILE_NAME = "OMECA Profile";
 	public static final String SHARED_PREFERENCES_AVATAR_ID_NAME = "avatarId";
 	public static final String SHARED_PREFERENCES_PLAYER_NAME = "pseudo";
+	private final String SHARED_PREFERENCES_VIBRATION = "vibration";
+	private final String SHARED_PREFERENCES_SOUND = "sound";
+	private ToggleButton soundToggle = null;
+	private ToggleButton vibrationToggle = null;
 	private SharedPreferences profilPreferences;
 	private EditText pseudoEditText;
 	
@@ -46,6 +52,9 @@ public class AvatarActivity extends Activity{
         
         this.profilPreferences = getSharedPreferences(SHARED_PREFERENCES_FILE_NAME, Context.MODE_PRIVATE);
         loadUserProfile();
+		
+		// Retrieve options
+		retrieveOptions();
         
 	}
 	
@@ -129,5 +138,28 @@ public class AvatarActivity extends Activity{
 	public void cancelAvatar(View view) {
 		finish();
 	}
+
+	/**
+	 * Retrieves options for music and vibration preferences
+	 */
+	private void retrieveOptions() {		
+		OnClickListener list = new OnClickListener() {
+			@Override
+			public void onClick(View v) {				
+				SharedPreferences.Editor editor = profilPreferences.edit();
+				editor.putBoolean(SHARED_PREFERENCES_SOUND, soundToggle.isChecked());
+				editor.putBoolean(SHARED_PREFERENCES_VIBRATION, vibrationToggle.isChecked());
+				editor.commit();
+			}
+		};
+		
+		profilPreferences = getSharedPreferences(SHARED_PREFERENCES_FILE_NAME, Context.MODE_PRIVATE);
+		soundToggle = (ToggleButton) this.findViewById(R.id.homescreen_options_sound_toggle);
+		soundToggle.setOnClickListener(list);
+		soundToggle.setChecked(this.profilPreferences.getBoolean(SHARED_PREFERENCES_SOUND, false));
+		vibrationToggle = (ToggleButton) this.findViewById(R.id.homescreen_options_vibration_toggle);		
+		vibrationToggle.setOnClickListener(list);		
+		vibrationToggle.setChecked(this.profilPreferences.getBoolean(SHARED_PREFERENCES_VIBRATION, false));
+	}	
 	
 }

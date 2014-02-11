@@ -1,52 +1,77 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="fill_parent"
     android:background="@drawable/homescreen_background" >
 
+    <LinearLayout 
+	    android:layout_width="fill_parent"
+	    android:layout_height="fill_parent"
+        android:layout_weight="2" >
+        
+    </LinearLayout>
     <LinearLayout
         android:id="@+id/homescreen_buttons_group"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:gravity="right"
+        android:layout_weight="3"
+        android:padding="20dip"
         android:orientation="vertical"
-        android:paddingRight="40.0dip"
-        android:paddingTop="40.0dip" >
+        android:layout_gravity="center">
 
         <Button
-            android:id="@+id/button1"
-            android:layout_width="150dip"
+            android:id="@+id/button_host"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
+    		android:layout_marginBottom="10dip"
+    		android:layout_marginRight="20dip"
             android:onClick="host"
-            android:text="@string/button_host" />
+            android:text="@string/button_host"
+            android:textAllCaps="true"
+            android:background="@drawable/button_background"
+        	android:drawableLeft="@drawable/button_background_icon_hearts" />
 
         <Button
-            android:id="@+id/button2"
-            android:layout_width="150dip"
+            android:id="@+id/button_join"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
+    		android:layout_marginBottom="10dip"
+    		android:layout_marginRight="15dip"
             android:onClick="join"
-            android:text="@string/button_client" />
+            android:text="@string/button_client"
+            android:textAllCaps="true"
+            android:background="@drawable/button_background"
+        	android:drawableLeft="@drawable/button_background_icon_clubs" />
 
         <Button
-            android:id="@+id/button3"
-            android:layout_width="150dip"
+            android:id="@+id/button_options"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:onClick="avatar"
-            android:text="@string/button_options" />
+    		android:layout_marginBottom="10dip" 
+    		android:layout_marginRight="10dip"   		
+            android:onClick="options"
+            android:text="@string/button_options"
+            android:textAllCaps="true"
+            android:background="@drawable/button_background"
+        	android:drawableLeft="@drawable/button_background_icon_diamonds" />
 
-        <ToggleButton
-            android:id="@+id/homescreen_options_sound_toggle"
-            android:layout_width="150dip"
+        <Button
+            android:id="@+id/button_help"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:textOff="@string/homescreen_options_sound"
-            android:textOn="@string/homescreen_options_sound" />
-
-        <ToggleButton
-            android:id="@+id/homescreen_options_vibration_toggle"
-            android:layout_width="150dip"
-            android:layout_height="wrap_content"
-            android:textOff="@string/homescreen_options_vibration"
-            android:textOn="@string/homescreen_options_vibration" />
+    		android:layout_marginRight="5dip"
+            android:onClick="help"
+            android:text="@string/button_help"
+            android:textAllCaps="true"
+            android:background="@drawable/button_background"
+        	android:drawableLeft="@drawable/button_background_icon_spades" />
+    </LinearLayout>
+    
+    <LinearLayout 
+	    android:layout_width="fill_parent"
+	    android:layout_height="fill_parent"
+        android:layout_weight="6" >
     </LinearLayout>
 
-</RelativeLayout>
+</LinearLayout>
