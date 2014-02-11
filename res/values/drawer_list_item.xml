@@ -4,6 +4,7 @@
         <item>@string/list_distribution</item>
         <item>@string/list_shuffle</item>
         <item>@string/list_cut</item>
+        <item>@string/list_pile</item>
         <item>@string/list_reinit</item>
     </array>
 </resources>
