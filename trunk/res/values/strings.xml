@@ -34,6 +34,7 @@
     <string name="list_distribution">Distribution automatique</string>
     <string name="list_shuffle">Melanger la pile de pioche</string>
     <string name="list_cut">Couper la pile de pioche</string>
+    <string name="list_pile">Reinitialiser les piles</string>
     <string name="list_reinit">Reinitialiser la partie</string>
     
 </resources>
