@@ -1,9 +1,11 @@
 package com.ensibs.omeca.view;
 
+import android.support.v4.widget.DrawerLayout;
 import android.view.View;
 import android.widget.Gallery;
 import android.widget.LinearLayout;
 
+import com.ensibs.omeca.GameActivity;
 import com.ensibs.omeca.R;
 import com.ensibs.omeca.utils.SliderbarCardGallery;
 import com.ensibs.omeca.utils.SlidingUpPanelLayout;
@@ -37,6 +39,8 @@ public class SlidebarPanelSlideListener extends
 			}
 
 			isExpanded = true;
+			DrawerLayout mDrawerLayout = (DrawerLayout) GameActivity.getActivity().findViewById(R.id.drawer_layout);
+			mDrawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED);
 		}
 	}
 
@@ -55,6 +59,8 @@ public class SlidebarPanelSlideListener extends
 			slide.setDragView(slidebar.findViewById(R.id.expand));
 
 			isExpanded = false;
+			DrawerLayout mDrawerLayout = (DrawerLayout) GameActivity.getActivity().findViewById(R.id.drawer_layout);
+			mDrawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_UNLOCKED);
 		}
 	}
 
