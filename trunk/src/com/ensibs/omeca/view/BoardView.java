@@ -76,14 +76,6 @@ public class BoardView extends RelativeLayout {
 				board.getDiscardPile());
 		addView(drawPileView);
 		addView(discardPileView);
-		
-		this.setOnLongClickListener(new OnLongClickListener() {
-			@Override
-			public boolean onLongClick(View v) {
-				DealPopup.show(context);
-				return true;
-			}
-		});
 		displayPlayers();
 	}
 

@@ -36,6 +36,7 @@ import com.ensibs.omeca.model.actions.SwitchPlayersAction;
 import com.ensibs.omeca.model.entities.Board;
 import com.ensibs.omeca.model.entities.Card;
 import com.ensibs.omeca.model.entities.Player;
+import com.ensibs.omeca.utils.DealPopup;
 import com.ensibs.omeca.utils.OmecaPopupExit;
 import com.ensibs.omeca.utils.SliderbarCardGallery;
 import com.ensibs.omeca.utils.SlidingUpPanelLayout;
@@ -191,19 +192,19 @@ public class GameActivity extends Activity implements Observer {
 	
 	private void selectItem(int position) {
 	    switch(position) {
-	    case 0:
-	            Log.i(WifiDirectProperty.TAG, "Click 0");
-	            mDrawerLayout.closeDrawers();
-	            break;
 	    case 1:
+	    		mDrawerLayout.closeDrawers();
+	            DealPopup.show(this);
+	            break;
+	    case 2:
 	    	Log.i(WifiDirectProperty.TAG, "Click 1");
 	    	mDrawerLayout.closeDrawers();
 	           break;
-	    case 2:
+	    case 3:
 	    	Log.i(WifiDirectProperty.TAG, "Click 2");
 	    	mDrawerLayout.closeDrawers();
 	           break;
-	    case 3:
+	    case 4:
 	    	Log.i(WifiDirectProperty.TAG, "Click 3");
 	    	mDrawerLayout.closeDrawers();
 	           break;
