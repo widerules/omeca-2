@@ -12,6 +12,7 @@ import com.ensibs.omeca.controller.ActionController;
 import com.ensibs.omeca.model.actions.MoveCardAction;
 import com.ensibs.omeca.model.entities.Card;
 import com.ensibs.omeca.model.entities.Player;
+import com.ensibs.omeca.utils.NotificationTools;
 import com.ensibs.omeca.utils.SliderbarCardGallery;
 import com.ensibs.omeca.wifidirect.event.WifiDirectEvent;
 import com.ensibs.omeca.wifidirect.event.WifiDirectEventImpl;
@@ -80,6 +81,8 @@ public class SlideBarCardGalleryDragListener implements OnDragListener{
 												view.getCard(),
 												"Player", ActionController.user.getId())));
 					}
+					if(ActionController.isSoundToggled())
+						NotificationTools.createSoundNotification(v.getContext(), R.drawable.flipcard);
 				} else {
 					vTmp.setVisibility(View.VISIBLE);
 				}

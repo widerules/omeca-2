@@ -1,5 +1,7 @@
 package com.ensibs.omeca.utils;
 
+import com.ensibs.omeca.R;
+
 import android.app.NotificationManager;
 import android.content.Context;
 import android.media.RingtoneManager;
@@ -41,10 +43,9 @@ public class NotificationTools {
 		counter ++;
 	}
 	
-	public static void createSoundNotification(Context context){
+	public static void createSoundNotification(Context context, int resource){
 		NotificationCompat.Builder mBuilder = new NotificationCompat.Builder(context);
-		Uri ringURI = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
-		mBuilder.setSound(ringURI);
+		mBuilder.setSound(Uri.parse("android.resource://com.ensibs.omeca/" + resource));
 		NotificationManager notificationManager = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
 		notificationManager.notify(counter,mBuilder.build());
 		counter ++;

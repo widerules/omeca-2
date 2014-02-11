@@ -3,15 +3,11 @@ package com.ensibs.omeca;
 import java.util.Observable;
 import java.util.Observer;
 
-import android.animation.Animator;
-import android.animation.Animator.AnimatorListener;
-import android.animation.ObjectAnimator;
 import android.app.Activity;
 import android.os.Bundle;
 import android.os.Looper;
 import android.os.Message;
 import android.support.v4.widget.DrawerLayout;
-import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -19,14 +15,12 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
 import android.view.WindowManager;
-import android.view.ViewGroup.MarginLayoutParams;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ArrayAdapter;
 import android.widget.Gallery;
 import android.widget.ImageView;
 import android.widget.ListView;
-import android.widget.RelativeLayout;
 import android.widget.SeekBar;
 import android.widget.TextView;
 
@@ -38,16 +32,17 @@ import com.ensibs.omeca.model.actions.ConnectionAction;
 import com.ensibs.omeca.model.actions.DisconnectionAction;
 import com.ensibs.omeca.model.actions.MoveCardAction;
 import com.ensibs.omeca.model.actions.ReturnCardAction;
+import com.ensibs.omeca.model.actions.ShuffleAction;
 import com.ensibs.omeca.model.actions.SwitchPlayersAction;
 import com.ensibs.omeca.model.entities.Board;
 import com.ensibs.omeca.model.entities.Card;
+import com.ensibs.omeca.model.entities.DrawPile;
 import com.ensibs.omeca.model.entities.Player;
 import com.ensibs.omeca.utils.DealPopup;
 import com.ensibs.omeca.utils.OmecaPopupExit;
 import com.ensibs.omeca.utils.SliderbarCardGallery;
 import com.ensibs.omeca.utils.SlidingUpPanelLayout;
 import com.ensibs.omeca.view.BoardView;
-import com.ensibs.omeca.view.CardView;
 import com.ensibs.omeca.view.HandView;
 import com.ensibs.omeca.view.PlayerView;
 import com.ensibs.omeca.view.SlideBarCardGalleryDragListener;
@@ -183,6 +178,8 @@ public class GameActivity extends Activity implements Observer {
 		ArrayAdapter<String> adapter = new ArrayAdapter<String>(getBaseContext(),
 				 R.layout.row_layout,R.id.text_row, getResources().getStringArray(R.array.drawer_list_item));
 		// Setting the adapter on mDrawerList
+		ViewGroup header = (ViewGroup)inflater.inflate(R.layout.header_layout, mListView, false);
+		mListView.addHeaderView(header, null, false);
 		mListView.setAdapter(adapter);
 		mListView.setOnItemClickListener(new OnItemClickListener() {
 
@@ -192,8 +189,7 @@ public class GameActivity extends Activity implements Observer {
 				selectItem(position);
 			}
 		});
-		ViewGroup header = (ViewGroup)inflater.inflate(R.layout.header_layout, mListView, false);
-		mListView.addHeaderView(header, null, false);
+
 		
 	}
 	
@@ -205,7 +201,15 @@ public class GameActivity extends Activity implements Observer {
 	            break;
 	    case 2:
 	    	mDrawerLayout.closeDrawers();
+	    	ActionController.board.getDrawPile().shuffle();
+	    	Card[] cards = new Card[ActionController.board.getDrawPile().getCards().size()];
+	    	int i = 0;
+	    	for(Card c : ActionController.board.getDrawPile().getCards()){
+	    		cards[i] = c;
+	    		i++;
+	    	}
 	    	omecaHandler.sendEmptyMessage(OmecaHandler.SHUFFLE);
+	    	wifiDirectManager.sendEvent(new WifiDirectEventImpl(WifiDirectEvent.EVENT, new ShuffleAction(cards)));
 	        break;
 	    case 3:
 	    	Log.i(WifiDirectProperty.TAG, "Click 2");
@@ -325,6 +329,15 @@ public class GameActivity extends Activity implements Observer {
 				dataMessage.putInt("Number", autoDistrib.getDealNumber());
 				msg.setData(dataMessage);
 				omecaHandler.sendMessage(msg);
+			}
+			else if (dataObject instanceof ShuffleAction){
+				ShuffleAction shuffleAction = (ShuffleAction) dataObject;
+				DrawPile nDrawPile = new DrawPile();
+				for(Card c : shuffleAction.getCards()){
+					nDrawPile.addCard(c);
+				}
+				ActionController.board.setDrawPile(nDrawPile);
+				omecaHandler.sendEmptyMessage(OmecaHandler.SHUFFLE);
 			}
 		}
 	}
