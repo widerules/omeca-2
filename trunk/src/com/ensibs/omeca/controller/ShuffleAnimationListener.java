@@ -6,13 +6,14 @@ import android.view.View;
 
 import com.ensibs.omeca.GameActivity;
 import com.ensibs.omeca.R;
+import com.ensibs.omeca.utils.NotificationTools;
 import com.ensibs.omeca.view.BoardView;
 
-public class AnimationListener implements AnimatorListener{
+public class ShuffleAnimationListener implements AnimatorListener{
 	
 	private View view;
 	
-	public AnimationListener(View view){
+	public ShuffleAnimationListener(View view){
 		this.view = view;
 	}
 
@@ -32,6 +33,9 @@ public class AnimationListener implements AnimatorListener{
 
 	@Override
 	public void onAnimationStart(Animator animation) {
-		
+		if(ActionController.isSoundToggled())
+    		NotificationTools.createSoundNotification(GameActivity.getActivity().getApplicationContext(), R.drawable.shufflecard);
+    	if(ActionController.isVibrationToggled())
+    		NotificationTools.createVibrationNotification(GameActivity.getActivity().getApplicationContext(), 1000);
 	}
 }

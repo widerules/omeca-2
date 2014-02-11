@@ -28,6 +28,7 @@ import com.ensibs.omeca.model.actions.MoveCardAction;
 import com.ensibs.omeca.model.entities.Board;
 import com.ensibs.omeca.model.entities.Player;
 import com.ensibs.omeca.utils.DealPopup;
+import com.ensibs.omeca.utils.NotificationTools;
 import com.ensibs.omeca.utils.SliderbarCardGallery;
 import com.ensibs.omeca.wifidirect.event.WifiDirectEvent;
 import com.ensibs.omeca.wifidirect.event.WifiDirectEventImpl;
@@ -300,6 +301,8 @@ public class BoardView extends RelativeLayout {
 		anim.setInterpolator(new DecelerateInterpolator(1.0f));
 		anim.setDuration(400);
 		vToMove.startAnimation(anim);
+		if(ActionController.isSoundToggled())
+			NotificationTools.createSoundNotification(context, R.drawable.flipcard);
 		TextView text = (TextView) findViewById(R.id.nbDrawPileCards);
 		text.setText(""+drawPileView.getDrawpile().getNumberOfCards());
 	}

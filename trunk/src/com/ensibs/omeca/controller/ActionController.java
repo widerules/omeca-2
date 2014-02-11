@@ -5,6 +5,7 @@ import android.content.SharedPreferences;
 
 import com.ensibs.omeca.AvatarActivity;
 import com.ensibs.omeca.GameActivity;
+import com.ensibs.omeca.MainActivity;
 import com.ensibs.omeca.OmecaApplication;
 import com.ensibs.omeca.model.entities.Board;
 import com.ensibs.omeca.model.entities.Player;
@@ -41,9 +42,7 @@ public class ActionController {
 		board = new Board();
 	}
 	
-	public static void updateUser() {		
-		SharedPreferences profilPreferences = maActivity.getSharedPreferences(
-				AvatarActivity.SHARED_PREFERENCES_FILE_NAME, Context.MODE_PRIVATE);
+	public static void updateUser() {	
 		if(user == null){
 			user = new Player(
 					profilPreferences.getString(AvatarActivity.SHARED_PREFERENCES_PLAYER_NAME, "Player"),
@@ -51,6 +50,14 @@ public class ActionController {
 		}
 		user.setAvatar(profilPreferences.getInt(AvatarActivity.SHARED_PREFERENCES_AVATAR_ID_NAME, 0));
 		user.setName(profilPreferences.getString(AvatarActivity.SHARED_PREFERENCES_PLAYER_NAME, ""));
+	}
+	
+	public static boolean isVibrationToggled(){
+		return profilPreferences.getBoolean(MainActivity.SHARED_PREFERENCES_VIBRATION, false);
+	}
+	
+	public static boolean isSoundToggled(){
+		return profilPreferences.getBoolean(MainActivity.SHARED_PREFERENCES_SOUND, false);
 	}
 	
 	

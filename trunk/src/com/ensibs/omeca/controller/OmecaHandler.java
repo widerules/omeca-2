@@ -14,6 +14,7 @@ import android.view.View;
 import android.view.ViewGroup.MarginLayoutParams;
 import android.widget.Gallery;
 import android.widget.RelativeLayout;
+
 import com.ensibs.omeca.GameActivity;
 import com.ensibs.omeca.R;
 import com.ensibs.omeca.model.entities.Card;
@@ -415,18 +416,29 @@ public class OmecaHandler extends Handler {
 			boardView.giveTo(msg.getData().getInt("playerPlace"));
 		}
 			break;
-		case SHUFFLE:{
-			BoardView boardView = (BoardView) (GameActivity.getActivity().findViewById(R.id.view_board));
-	    	CardView card = new CardView(GameActivity.getActivity(), new Card(1,Card.COLORS[0]));
-	    	card.setLayoutParams(boardView.getDrawPileView().getLayoutParams());
+		case SHUFFLE: {
+			BoardView boardView = (BoardView) (GameActivity.getActivity()
+					.findViewById(R.id.view_board));
+			boardView.getDrawPileView().setDrawpile(
+					ActionController.board.getDrawPile());
+			for (Card c : boardView.getDrawPileView().getDrawpile().getCards())
+				Log.w("Card", c.getValue() + c.getColor() + "");
+			boardView.getDrawPileView().updateView();
+			CardView card = new CardView(GameActivity.getActivity(), new Card(
+					1, Card.COLORS[0]));
+			card.setLayoutParams(boardView.getDrawPileView().getLayoutParams());
 			boardView.addView(card);
-			DisplayMetrics metrics = GameActivity.getActivity().getApplicationContext().getResources().getDisplayMetrics();
-	    	int weight = (int) ((metrics.heightPixels/CardView.SIZE)/CardView.RATIO);
-	    	ObjectAnimator anim =  new ObjectAnimator().ofFloat(card, "translationX", card.getX(), card.getX()-(weight/2),card.getX());
-	    	anim.setDuration(100);
-	    	anim.setRepeatCount(5);
-	    	anim.addListener(new AnimationListener(card));
-	    	anim.start();
+			DisplayMetrics metrics = GameActivity.getActivity()
+					.getApplicationContext().getResources().getDisplayMetrics();
+			int weight = (int) ((metrics.heightPixels / CardView.SIZE) / CardView.RATIO);
+			ObjectAnimator anim = new ObjectAnimator().ofFloat(card,
+					"translationX", card.getX(), card.getX() - (weight / 2),
+					card.getX());
+			anim.setDuration(100);
+			anim.setRepeatCount(5);
+			anim.addListener(new ShuffleAnimationListener(card));
+			anim.start();
+
 		}
 			break;
 		default:

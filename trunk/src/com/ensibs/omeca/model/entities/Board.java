@@ -3,8 +3,6 @@ package com.ensibs.omeca.model.entities;
 import java.util.Hashtable;
 import java.util.Map.Entry;
 
-import android.util.Log;
-
 /**
  * Model for the board entity
  * @author Nicolas
