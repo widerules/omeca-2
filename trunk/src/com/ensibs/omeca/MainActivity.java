@@ -17,6 +17,7 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.Window;
 import android.view.WindowManager;
+import android.widget.Toast;
 import android.widget.ToggleButton;
 
 import com.ensibs.omeca.model.entities.Card;
@@ -29,13 +30,7 @@ import com.ensibs.omeca.wifidirect.property.WifiDirectProperty;
 
 public class MainActivity extends Activity implements Observer {
 	private final int EDIT_AVATAR = 2;
-	private final String SHARED_PREFERENCES_FILE_NAME = "OMECA Profile";
-	private final String SHARED_PREFERENCES_VIBRATION = "vibration";
-	private final String SHARED_PREFERENCES_SOUND = "sound";
-	private ToggleButton soundToggle = null;
-	private ToggleButton vibrationToggle = null;
 	private WakeLock wakeLock = null;
-	private SharedPreferences profilPreferences;
 
 	WifiDirectManager wifiDirectManager;
 	AlertDialog popupMenu;
@@ -64,9 +59,6 @@ public class MainActivity extends Activity implements Observer {
 				WindowManager.LayoutParams.FLAG_FULLSCREEN);
 		// Launches the stuff
 		setContentView(R.layout.view_homescreen);
-		
-		// Retrieve options
-		retrieveOptions();
 		
 		PowerManager pm = (PowerManager) getSystemService(Context.POWER_SERVICE);
         wakeLock = pm.newWakeLock(PowerManager.FULL_WAKE_LOCK, "WakeLock");
@@ -110,24 +102,24 @@ public class MainActivity extends Activity implements Observer {
 	}
 
 	/**
-	 * Opens the popup menu after the corresponding menu button have been
-	 * pressed
-	 * 
-	 * @param view
-	 */
-	public void options(View view) {
-		OmecaPopupExit.show(this);
-	}
-
-	/**
 	 * Jumps to the avatar creation/modification after the corresponding menu
 	 * button have been pressed
 	 * 
 	 * @param view
 	 */
-	public void avatar(View view) {
+	public void options(View view) {
 		Intent editProfilActivityIntent = new Intent(this, AvatarActivity.class);
 		startActivityForResult(editProfilActivityIntent, EDIT_AVATAR);
+	}
+
+	/**
+	 * Opens the popup menu after the corresponding menu button have been
+	 * pressed
+	 * 
+	 * @param view
+	 */
+	public void help(View view) {
+		Toast.makeText(this, "Aide", Toast.LENGTH_SHORT).show();
 	}
 
 	@Override
@@ -151,28 +143,5 @@ public class MainActivity extends Activity implements Observer {
 		this.finish();
 		System.exit(0);
 	}
-
-	/**
-	 * Retrieves options for music and vibration preferences
-	 */
-	private void retrieveOptions() {		
-		OnClickListener list = new OnClickListener() {
-			@Override
-			public void onClick(View v) {				
-				SharedPreferences.Editor editor = profilPreferences.edit();
-				editor.putBoolean(SHARED_PREFERENCES_SOUND, soundToggle.isChecked());
-				editor.putBoolean(SHARED_PREFERENCES_VIBRATION, vibrationToggle.isChecked());
-				editor.commit();
-			}
-		};
-		
-		profilPreferences = getSharedPreferences(SHARED_PREFERENCES_FILE_NAME, Context.MODE_PRIVATE);
-		soundToggle = (ToggleButton) this.findViewById(R.id.homescreen_options_sound_toggle);
-		soundToggle.setOnClickListener(list);
-		soundToggle.setChecked(this.profilPreferences.getBoolean(SHARED_PREFERENCES_SOUND, false));
-		vibrationToggle = (ToggleButton) this.findViewById(R.id.homescreen_options_vibration_toggle);		
-		vibrationToggle.setOnClickListener(list);		
-		vibrationToggle.setChecked(this.profilPreferences.getBoolean(SHARED_PREFERENCES_VIBRATION, false));
-	}	
 
 }

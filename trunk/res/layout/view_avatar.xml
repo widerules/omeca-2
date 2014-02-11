@@ -91,6 +91,23 @@
 	    	android:onClick="cancelAvatar"
 	    	style="@android:attr/buttonBarButtonStyle">
 	    </Button>
+
+        <ToggleButton
+            android:id="@+id/homescreen_options_sound_toggle"
+            android:layout_width="150dip"
+            android:layout_height="wrap_content"
+    		android:layout_marginBottom="5dp"
+            android:textOff="@string/homescreen_options_sound"
+            android:textOn="@string/homescreen_options_sound"
+            android:background="@drawable/button_background" />
+
+        <ToggleButton
+            android:id="@+id/homescreen_options_vibration_toggle"
+            android:layout_width="150dip"
+            android:layout_height="wrap_content"
+            android:textOff="@string/homescreen_options_vibration"
+            android:textOn="@string/homescreen_options_vibration"
+            android:background="@drawable/button_background" />
 	
 	</LinearLayout>
     
