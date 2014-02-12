@@ -3,18 +3,13 @@
 	xmlns:android="http://schemas.android.com/apk/res/android"
 	android:shape="oval">
 	
-    <gradient
-	    android:startColor="#FFFFFF"
-	    android:endColor="#157c15"
-	    android:gradientRadius="150"
-	    android:type="radial"/>
+    <solid
+        android:color="#aa000000"
+        />
     
-    <padding
-    	android:left="10dp"
-    	android:top="10dp"
-    	android:right="10dp"
-		android:bottom="15dp">
-    </padding>
+    <stroke
+	    android:color="#FFFFFF"
+	    android:width="3dip"/>
 	
     <size
 	    android:width="125dp"
