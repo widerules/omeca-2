@@ -1,114 +1,119 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
-    android:orientation="vertical"
-    android:background="@drawable/background">
-	
-	<TextView
-	    android:layout_width="wrap_content"
-    	android:layout_height="wrap_content"
-    	android:layout_marginTop="5dip"
-    	android:layout_marginLeft="5dip"
-    	android:textColor="@android:color/white"
-    	android:textSize="16sp"
-    	android:textStyle="bold"
-    	android:text="@string/choose_avatar">	    
-	</TextView>
-	
-	<LinearLayout
-	    android:layout_width="fill_parent"
-    	android:layout_height="wrap_content"
-	    android:layout_weight="1">
-	    
-		<Gallery
-	    	android:id="@+id/avatar_gallery"
-	    	android:layout_width="fill_parent"
-	    	android:layout_height="wrap_content"
-	    	android:spacing="0dip"
-	    	android:layout_gravity="center"
-	    	android:gravity="bottom">
-		</Gallery>
-		
-	</LinearLayout>
-	
-	<LinearLayout
-	    android:layout_width="fill_parent"
-	    android:layout_height="wrap_content"
-	    android:layout_marginBottom="10dip"
-	    android:orientation="horizontal"
-	    android:layout_weight="1"
-    	android:layout_gravity="center">
-	    
-	    <TextView
-	        android:layout_width="wrap_content"
-	        android:layout_height="fill_parent"
-	        android:layout_marginLeft="5dip"
-	        android:layout_marginRight="5dip"
-	        android:gravity="center"
-	        android:text="@string/choose_username"
-	        android:textColor="@android:color/white"
-	        android:textSize="16sp"
-	        android:textStyle="bold" >
-	    
-		</TextView>
-		
-		<EditText
-		    android:id="@+id/name"
-		    android:layout_width="wrap_content"
-		    android:layout_height="wrap_content"
-		    android:hint="@string/username"
-		    android:singleLine="true">
-		</EditText>
-    
+    android:background="@drawable/options_background"
+    android:orientation="vertical" >
+
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="1" >
+
+        <Gallery
+            android:id="@+id/avatar_gallery"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:gravity="bottom"
+            android:spacing="0dip" >
+        </Gallery>
     </LinearLayout>
-    
-	<LinearLayout
-	    android:layout_width="fill_parent"
-	    android:layout_height="wrap_content"
-	    android:layout_marginBottom="5dip"
-    	android:layout_marginLeft="4dip"
-    	android:layout_marginRight="4dip"
-	    android:orientation="horizontal">
-	    
-	    <Button
-	        android:layout_width="fill_parent"
-	    	android:layout_height="wrap_content"
-	    	android:layout_marginRight="2dip"
-	    	android:layout_weight="1"
-	    	android:text="@string/save"
-	    	android:onClick="saveAvatar"
-	    	style="@android:attr/buttonBarButtonStyle">
-	    </Button>
-	       
-		<Button
-	        android:layout_width="fill_parent"
-	    	android:layout_height="wrap_content"
-	    	android:layout_marginLeft="2dip"
-	    	android:layout_weight="1"
-	    	android:text="@string/cancel"
-	    	android:onClick="cancelAvatar"
-	    	style="@android:attr/buttonBarButtonStyle">
-	    </Button>
 
-        <ToggleButton
-            android:id="@+id/homescreen_options_sound_toggle"
-            android:layout_width="150dip"
-            android:layout_height="wrap_content"
-    		android:layout_marginBottom="5dp"
-            android:textOff="@string/homescreen_options_sound"
-            android:textOn="@string/homescreen_options_sound"
-            android:background="@drawable/button_background" />
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginBottom="10dip"
+        android:layout_weight="1"
+        android:orientation="horizontal" >
 
-        <ToggleButton
-            android:id="@+id/homescreen_options_vibration_toggle"
-            android:layout_width="150dip"
-            android:layout_height="wrap_content"
-            android:textOff="@string/homescreen_options_vibration"
-            android:textOn="@string/homescreen_options_vibration"
-            android:background="@drawable/button_background" />
-	
-	</LinearLayout>
-    
+        <LinearLayout
+            android:layout_width="0dip"
+            android:layout_height="fill_parent"
+            android:layout_gravity="center"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:orientation="vertical" >
+
+            <TextView
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="5dip"
+                android:layout_marginRight="5dip"
+                android:gravity="left"
+                android:text="@string/choose_username"
+                android:textAllCaps="true"
+                android:textColor="@android:color/white"
+                android:textSize="16sp"
+                android:textStyle="bold" >
+            </TextView>
+
+            <EditText
+                android:id="@+id/name"
+                android:textColor="@android:color/white"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/username"
+                android:singleLine="true" >
+            </EditText>
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="0dip"
+            android:layout_height="fill_parent"
+            android:layout_gravity="center"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:orientation="vertical" >
+
+            <ToggleButton
+                android:id="@+id/homescreen_options_sound_toggle"
+                android:layout_width="150dip"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="5dp"
+                android:textColor="@android:color/white"
+                android:textOff="@string/homescreen_options_sound"
+                android:textOn="@string/homescreen_options_sound" />
+
+            <ToggleButton
+                android:id="@+id/homescreen_options_vibration_toggle"
+                android:layout_width="150dip"
+                android:layout_height="wrap_content"
+                android:textColor="@android:color/white"
+                android:textOff="@string/homescreen_options_vibration"
+                android:textOn="@string/homescreen_options_vibration" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="0dip"
+            android:layout_height="fill_parent"
+            android:layout_gravity="center"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:orientation="vertical" >
+
+            <Button
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="10dip"
+                android:background="@drawable/button_background"
+                android:drawableLeft="@drawable/valid"
+                android:onClick="saveAvatar"
+                android:text="@string/save"
+                android:textAllCaps="true" >
+            </Button>
+
+            <Button
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/button_background"
+                android:drawableLeft="@drawable/abort"
+                android:onClick="cancelAvatar"
+                android:text="@string/cancel"
+                android:textAllCaps="true" >
+            </Button>
+        </LinearLayout>
+    </LinearLayout>
+
 </LinearLayout>
