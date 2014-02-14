@@ -1,10 +1,15 @@
 package com.ensibs.omeca.model.actions;
 
-import java.io.Serializable;
+import android.os.Bundle;
+import android.os.Message;
+import android.util.Log;
 
+import com.ensibs.omeca.GameActivity;
+import com.ensibs.omeca.controller.OmecaHandler;
 import com.ensibs.omeca.model.entities.Card;
+import com.ensibs.omeca.wifidirect.property.WifiDirectProperty;
 
-public class MoveCardAction implements Serializable{
+public class MoveCardAction implements Action{
 
 	/**
 	 * 
@@ -93,5 +98,33 @@ public class MoveCardAction implements Serializable{
 
 	public void setPourcentageY(int pourcentageY) {
 		this.pourcentageY = pourcentageY;
+	}
+
+	@Override
+	public void execute() {
+		Log.i(WifiDirectProperty.TAG, "Carte deplace");
+		Message msg = GameActivity.getActivity().getOmecaHandler().obtainMessage();
+		msg.what = OmecaHandler.MOVE_CARD;
+		Bundle dataMessage = new Bundle();
+		dataMessage.putString("Source", getSrc());
+		if (getIdSource() != -1)
+			dataMessage
+					.putInt("IDSource", getIdSource());
+		dataMessage.putString("Target",  getTarget());
+		if (getIdTarget() != -1)
+			dataMessage
+					.putInt("IDTarget", getIdTarget());
+		dataMessage
+				.putInt("Value", getCard().getValue());
+		dataMessage.putString("Color", getCard()
+				.getColor());
+		if (getPourcentageX() != -1)
+			dataMessage.putInt("PX", getPourcentageX());
+		if (getPourcentageY() != -1)
+			dataMessage.putInt("PY", getPourcentageY());
+		dataMessage.putBoolean("Face", getCard()
+				.isFaceUp());
+		msg.setData(dataMessage);
+		GameActivity.getActivity().getOmecaHandler().sendMessage(msg);
 	}
 }

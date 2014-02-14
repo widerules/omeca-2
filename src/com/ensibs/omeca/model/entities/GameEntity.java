@@ -2,6 +2,7 @@ package com.ensibs.omeca.model.entities;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Random;
 
 public abstract class GameEntity implements Serializable{
@@ -22,6 +23,14 @@ public abstract class GameEntity implements Serializable{
             r = random.nextInt(cards.size());
             moveCard(cards.get(i), r);
         }
+	}
+	
+	public void cut(int index){
+		List<Card> l1 = cards.subList(0, index);
+		List<Card> l2 = cards.subList(index, cards.size());
+		cards = new ArrayList<Card>();
+		cards.addAll(l2);
+		cards.addAll(l1);
 	}
 	
 	public void moveCard(Card card, int index){

@@ -3,15 +3,10 @@ package com.ensibs.omeca;
 import java.util.Observable;
 import java.util.Observer;
 
-import android.animation.Animator;
-import android.animation.Animator.AnimatorListener;
-import android.animation.ObjectAnimator;
 import android.app.Activity;
 import android.os.Bundle;
 import android.os.Looper;
-import android.os.Message;
 import android.support.v4.widget.DrawerLayout;
-import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -19,37 +14,28 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
 import android.view.WindowManager;
-import android.view.ViewGroup.MarginLayoutParams;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ArrayAdapter;
 import android.widget.Gallery;
 import android.widget.ImageView;
 import android.widget.ListView;
-import android.widget.RelativeLayout;
 import android.widget.SeekBar;
 import android.widget.TextView;
 
 import com.ensibs.omeca.controller.ActionController;
 import com.ensibs.omeca.controller.OmecaHandler;
-import com.ensibs.omeca.model.actions.AknowlegmentConnectionAction;
-import com.ensibs.omeca.model.actions.AutomaticDistributionAction;
+import com.ensibs.omeca.model.actions.Action;
 import com.ensibs.omeca.model.actions.ConnectionAction;
 import com.ensibs.omeca.model.actions.DisconnectionAction;
-import com.ensibs.omeca.model.actions.MoveCardAction;
-import com.ensibs.omeca.model.actions.ReturnCardAction;
 import com.ensibs.omeca.model.actions.ShuffleAction;
-import com.ensibs.omeca.model.actions.SwitchPlayersAction;
 import com.ensibs.omeca.model.entities.Board;
 import com.ensibs.omeca.model.entities.Card;
-import com.ensibs.omeca.model.entities.DrawPile;
-import com.ensibs.omeca.model.entities.Player;
 import com.ensibs.omeca.utils.DealPopup;
 import com.ensibs.omeca.utils.OmecaPopupExit;
 import com.ensibs.omeca.utils.SliderbarCardGallery;
 import com.ensibs.omeca.utils.SlidingUpPanelLayout;
 import com.ensibs.omeca.view.BoardView;
-import com.ensibs.omeca.view.CardView;
 import com.ensibs.omeca.view.HandView;
 import com.ensibs.omeca.view.PlayerView;
 import com.ensibs.omeca.view.SlideBarCardGalleryDragListener;
@@ -82,10 +68,11 @@ public class GameActivity extends Activity implements Observer {
 	public OmecaApplication getOmecaApplication() {
 		return app;
 	}
+
 	public WifiDirectManager getWifiDirectManager() {
 		return wifiDirectManager;
 	}
-	
+
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -99,8 +86,8 @@ public class GameActivity extends Activity implements Observer {
 		// Creates the WifiDirectManager
 		wifiDirectManager = app.getWifiDirectManager();
 		wifiDirectManager.addObserver(this);
-		//wifiDirectManager.setApplicationContext(this);
-		
+		// wifiDirectManager.setApplicationContext(this);
+
 		// Create controller
 		controller = app.getControler();
 		ActionController.init();
@@ -178,57 +165,63 @@ public class GameActivity extends Activity implements Observer {
 		} else {
 			ActionController.board.addPlayer(0, ActionController.user);
 		}
-		
+
 		mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
-		mListView = (ListView)findViewById(R.id.left_drawer);
+		mListView = (ListView) findViewById(R.id.left_drawer);
 		// Creating an ArrayAdapter to add items to the listview mDrawerList
-		ArrayAdapter<String> adapter = new ArrayAdapter<String>(getBaseContext(),
-				 R.layout.row_layout,R.id.text_row, getResources().getStringArray(R.array.drawer_list_item));
+		ArrayAdapter<String> adapter = new ArrayAdapter<String>(
+				getBaseContext(), R.layout.row_layout, R.id.text_row,
+				getResources().getStringArray(R.array.drawer_list_item));
 		// Setting the adapter on mDrawerList
-		ViewGroup header = (ViewGroup)inflater.inflate(R.layout.header_layout, mListView, false);
+		ViewGroup header = (ViewGroup) inflater.inflate(R.layout.header_layout,
+				mListView, false);
 		mListView.addHeaderView(header, null, false);
 		mListView.setAdapter(adapter);
 		mListView.setOnItemClickListener(new OnItemClickListener() {
 
 			@Override
-			public void onItemClick(AdapterView<?> arg0, View arg1, int position,
-					long id) {
+			public void onItemClick(AdapterView<?> arg0, View arg1,
+					int position, long id) {
 				selectItem(position);
 			}
 		});
 
-		
 	}
-	
+
 	private void selectItem(int position) {
-	    switch(position) {
-	    case 1:
-	    		mDrawerLayout.closeDrawers();
-	            DealPopup.show(this);
-	            break;
-	    case 2:
-	    	mDrawerLayout.closeDrawers();
-	    	ActionController.board.getDrawPile().shuffle();
-	    	Card[] cards = new Card[ActionController.board.getDrawPile().getCards().size()];
-	    	int i = 0;
-	    	for(Card c : ActionController.board.getDrawPile().getCards()){
-	    		cards[i] = c;
-	    		i++;
-	    	}
-	    	omecaHandler.sendEmptyMessage(OmecaHandler.SHUFFLE);
-	    	wifiDirectManager.sendEvent(new WifiDirectEventImpl(WifiDirectEvent.EVENT, new ShuffleAction(cards)));
-	        break;
-	    case 3:
-	    	Log.i(WifiDirectProperty.TAG, "Click 2");
-	    	mDrawerLayout.closeDrawers();
-	           break;
-	    case 4:
-	    	Log.i(WifiDirectProperty.TAG, "Click 3");
-	    	mDrawerLayout.closeDrawers();
-	           break;
-	    default:
-	    	break;
-	    }
+		switch (position) {
+		case 1:
+			mDrawerLayout.closeDrawers();
+			DealPopup.show(this);
+			break;
+		case 2:
+			mDrawerLayout.closeDrawers();
+			ActionController.board.getDrawPile().shuffle();
+			Card[] cards = new Card[ActionController.board.getDrawPile()
+					.getCards().size()];
+			int i = 0;
+			for (Card c : ActionController.board.getDrawPile().getCards()) {
+				cards[i] = c;
+				i++;
+			}
+			omecaHandler.sendEmptyMessage(OmecaHandler.SHUFFLE);
+			wifiDirectManager.sendEvent(new WifiDirectEventImpl(
+					WifiDirectEvent.EVENT, new ShuffleAction(cards)));
+			break;
+		case 3:
+			mDrawerLayout.closeDrawers();
+			BoardView boardView = (BoardView) findViewById(R.id.view_board);
+			boardView.bringChildToFront(boardView.getCutCardsView());
+			boardView.getCutCardsView().setVisibility(View.VISIBLE);
+			boardView.getCutCardsView().updateView();
+			break;
+		case 4:
+			Log.i(WifiDirectProperty.TAG, "Click 3");
+			mDrawerLayout.closeDrawers();
+			break;
+		default:
+			break;
+		}
 	}
 
 	@Override
@@ -239,113 +232,12 @@ public class GameActivity extends Activity implements Observer {
 
 	@Override
 	public void update(Observable observable, Object data) {
-		Log.i(WifiDirectProperty.TAG, "Event update");
 		if (data instanceof WifiDirectEventImpl
 				&& ((WifiDirectEventImpl) data).getEvent() == WifiDirectEvent.EVENT) {
 			WifiDirectEventImpl event = (WifiDirectEventImpl) data;
-			Log.i(WifiDirectProperty.TAG, "Event game");
-			Object dataObject = event.getData();
-			if (dataObject instanceof DisconnectionAction) {
-				Log.i(WifiDirectProperty.TAG, "Disconnection");
-				Player p = ((DisconnectionAction) dataObject).getPlayer();
-				Log.i("Player", p.getId() + "");
-				for (Card c : p.getCards()) {
-					ActionController.board.getDiscardPile().addCard(c);
-				}
-				ActionController.board.removePlayer(ActionController.board
-						.getPlace(p));
-				omecaHandler.sendEmptyMessage(OmecaHandler.DECONNEXION);
-			} else if (dataObject instanceof ConnectionAction) {
-				if (wifiDirectManager.getMod() == WifiDirectMod.HOST) {
-					Player p = ((ConnectionAction) dataObject).getPlayer();
-					p.setId(ActionController.board.getPlayers().size());
-					ActionController.board.addPlayerToTheFirstEmptyPlace(p);
-					wifiDirectManager.sendEvent(new WifiDirectEventImpl(
-							WifiDirectEvent.EVENT,
-							new AknowlegmentConnectionAction(p,
-									ActionController.board)));
-					omecaHandler
-							.sendEmptyMessage(OmecaHandler.AKNOWLEGMENT_CONNECTION_ACTION);
-				}
-			} else if (dataObject instanceof AknowlegmentConnectionAction) {
-				Player p = ((AknowlegmentConnectionAction) dataObject)
-						.getPlayer();
-				if (p.getMacAddress().equals(
-						ActionController.user.getMacAddress())) {
-					ActionController.user = p;
-				}
-				ActionController.board = ((AknowlegmentConnectionAction) dataObject)
-						.getBoard();
-				omecaHandler
-						.sendEmptyMessage(OmecaHandler.AKNOWLEGMENT_CONNECTION_ACTION);
-			} else if (dataObject instanceof SwitchPlayersAction) {
-				Player p1 = ((SwitchPlayersAction) dataObject).getP1();
-				Player p2 = ((SwitchPlayersAction) dataObject).getP2();
-				if (p1 != null){
-					ActionController.board.switchPlayers(
-							p1, p2);
-				}
-				else {
-					ActionController.board.movePlayerTo(p2, ((SwitchPlayersAction) dataObject).getPosition());
-				}
-				
-				omecaHandler
-				.sendEmptyMessage(OmecaHandler.SWITCH_PLAYERS_ACTION);
-				
-				
-			}
-			else if(dataObject instanceof ReturnCardAction){
-				Log.i(WifiDirectProperty.TAG, "Carte retourner");
-				ReturnCardAction retCardAction = (ReturnCardAction) dataObject;
-				Message msg = omecaHandler.obtainMessage();
-				msg.what = OmecaHandler.RETURN_CARD;
-				Bundle dataMessage = new Bundle();
-				dataMessage.putString("Source", retCardAction.getSrc());
-				dataMessage.putInt("Value", retCardAction.getCard().getValue());
-				dataMessage.putString("Color", retCardAction.getCard().getColor());
-				msg.setData(dataMessage);
-				omecaHandler.sendMessage(msg);
-			}else if(dataObject instanceof MoveCardAction){
-				Log.i(WifiDirectProperty.TAG, "Carte deplace");
-				MoveCardAction moveCardAction = (MoveCardAction) dataObject;
-				Message msg = omecaHandler.obtainMessage();
-				msg.what = OmecaHandler.MOVE_CARD;
-				Bundle dataMessage = new Bundle();
-				dataMessage.putString("Source", moveCardAction.getSrc());
-				if(moveCardAction.getIdSource() != -1)
-					dataMessage.putInt("IDSource", moveCardAction.getIdSource());
-				dataMessage.putString("Target", moveCardAction.getTarget());
-				if(moveCardAction.getIdTarget() != -1)
-					dataMessage.putInt("IDTarget", moveCardAction.getIdTarget());
-				dataMessage.putInt("Value", moveCardAction.getCard().getValue());
-				dataMessage.putString("Color", moveCardAction.getCard().getColor());
-				if(moveCardAction.getPourcentageX() != -1)
-					dataMessage.putInt("PX", moveCardAction.getPourcentageX());
-				if(moveCardAction.getPourcentageY() != -1)
-					dataMessage.putInt("PY", moveCardAction.getPourcentageY());
-				dataMessage.putBoolean("Face", moveCardAction.getCard().isFaceUp());
-				msg.setData(dataMessage);
-				omecaHandler.sendMessage(msg);
-			}
-			else if(dataObject instanceof AutomaticDistributionAction){
-				AutomaticDistributionAction autoDistrib = (AutomaticDistributionAction) dataObject;
-				Message msg = omecaHandler.obtainMessage();
-				msg.what = OmecaHandler.AUTOMATIC_DRAW_ACTION;
-				Bundle dataMessage = new Bundle();
-				dataMessage.putInt("From", autoDistrib.getPlace());
-				dataMessage.putInt("Number", autoDistrib.getDealNumber());
-				msg.setData(dataMessage);
-				omecaHandler.sendMessage(msg);
-			}
-			else if (dataObject instanceof ShuffleAction){
-				ShuffleAction shuffleAction = (ShuffleAction) dataObject;
-				DrawPile nDrawPile = new DrawPile();
-				for(Card c : shuffleAction.getCards()){
-					nDrawPile.addCard(c);
-				}
-				ActionController.board.setDrawPile(nDrawPile);
-				omecaHandler.sendEmptyMessage(OmecaHandler.SHUFFLE);
-			}
+			Action dataObject = (Action) event.getData();
+			Log.i(WifiDirectProperty.TAG, dataObject.getClass().getCanonicalName());
+			dataObject.execute();
 		}
 	}
 
@@ -362,7 +254,6 @@ public class GameActivity extends Activity implements Observer {
 		try {
 			this.wait(2000);
 		} catch (InterruptedException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		this.wifiDirectManager.disconnect();

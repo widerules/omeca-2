@@ -39,6 +39,7 @@ public class OmecaHandler extends Handler {
 	public static final int GIVETO = 6;
 	public static final int AUTOMATIC_DRAW_ACTION = 7;
 	public static final int SHUFFLE = 8;
+	public static final int CUT = 9;
 
 	public OmecaHandler(Looper looper) {
 		super(looper);
@@ -439,6 +440,14 @@ public class OmecaHandler extends Handler {
 			anim.addListener(new ShuffleAnimationListener(card));
 			anim.start();
 
+		}
+			break;
+		case CUT:{
+			BoardView boardView = (BoardView) GameActivity.getActivity()
+					.findViewById(R.id.view_board);
+			boardView.getDrawPileView().setDrawpile(ActionController.board.getDrawPile());
+			boardView.getDrawPileView().updateView();
+			boardView.getCutCardsView().setVisibility(View.GONE);
 		}
 			break;
 		default:

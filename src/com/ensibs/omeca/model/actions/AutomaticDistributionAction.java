@@ -1,13 +1,17 @@
 package com.ensibs.omeca.model.actions;
 
-import java.io.Serializable;
+import android.os.Bundle;
+import android.os.Message;
+
+import com.ensibs.omeca.GameActivity;
+import com.ensibs.omeca.controller.OmecaHandler;
 
 /**
  * Event to launch the automatic distribution
  * @author Nicolas
  *
  */
-public class AutomaticDistributionAction implements Serializable{
+public class AutomaticDistributionAction implements Action{
 
 	/**
 	 * 
@@ -40,6 +44,18 @@ public class AutomaticDistributionAction implements Serializable{
 	 */
 	public int getDealNumber() {
 		return dealNumber;
+	}
+
+	@Override
+	public void execute() {
+		Message msg = GameActivity.getActivity().getOmecaHandler().obtainMessage();
+		msg.what = OmecaHandler.AUTOMATIC_DRAW_ACTION;
+		Bundle dataMessage = new Bundle();
+		dataMessage.putInt("From", getPlace());
+		dataMessage.putInt("Number", getDealNumber());
+		msg.setData(dataMessage);
+		GameActivity.getActivity().getOmecaHandler().sendMessage(msg);
+		
 	}
 	
 	

@@ -27,7 +27,6 @@ import com.ensibs.omeca.controller.OmecaHandler;
 import com.ensibs.omeca.model.actions.MoveCardAction;
 import com.ensibs.omeca.model.entities.Board;
 import com.ensibs.omeca.model.entities.Player;
-import com.ensibs.omeca.utils.DealPopup;
 import com.ensibs.omeca.utils.NotificationTools;
 import com.ensibs.omeca.utils.SliderbarCardGallery;
 import com.ensibs.omeca.wifidirect.event.WifiDirectEvent;
@@ -39,6 +38,7 @@ public class BoardView extends RelativeLayout {
 	private Context context;
 	private DrawPileView drawPileView;
 	private DiscardPileView discardPileView;
+	private CutCardsView cutCardsView;
 	private Hashtable<Integer, PlayerView> playerViews;
 
 
@@ -77,6 +77,10 @@ public class BoardView extends RelativeLayout {
 				board.getDiscardPile());
 		addView(drawPileView);
 		addView(discardPileView);
+		cutCardsView = new CutCardsView(context);
+		cutCardsView.updateView();
+		addView(cutCardsView);
+		cutCardsView.setVisibility(View.GONE);
 		displayPlayers();
 	}
 
@@ -117,7 +121,7 @@ public class BoardView extends RelativeLayout {
 		params = (RelativeLayout.LayoutParams) player.getLayoutParams();
 		params.addRule(ALIGN_PARENT_TOP, RelativeLayout.TRUE);
 		params.addRule(CENTER_IN_PARENT, RelativeLayout.TRUE);
-		addView(player, params);
+		addView(player,0, params);
 		playerViews.put(4, player);
 
 		// Player 5
@@ -165,6 +169,11 @@ public class BoardView extends RelativeLayout {
 	public DiscardPileView getDiscardPileView() {
 		return discardPileView;
 	}
+
+	public CutCardsView getCutCardsView() {
+		return cutCardsView;
+	}
+
 
 	public Hashtable<Integer, PlayerView> getPlayerViews() {
 		return playerViews;
@@ -247,10 +256,7 @@ public class BoardView extends RelativeLayout {
 						Log.i(WifiDirectProperty.TAG, movecard.getPourcentageX()+" "+movecard.getPourcentageY());
 						GameActivity.getActivity().getWifiDirectManager().sendEvent(new WifiDirectEventImpl(WifiDirectEvent.EVENT, movecard));
 					}
-					
-					for (int i = 0; i < getChildCount(); i++) {
-						getChildAt(i).setVisibility(View.VISIBLE);
-					}
+					vTmp.setVisibility(View.VISIBLE);
 				} else {
 					vTmp.setVisibility(View.VISIBLE);
 				}
