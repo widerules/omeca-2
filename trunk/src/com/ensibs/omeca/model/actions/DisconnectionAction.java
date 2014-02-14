@@ -1,7 +1,9 @@
 package com.ensibs.omeca.model.actions;
 
-import java.io.Serializable;
-
+import com.ensibs.omeca.GameActivity;
+import com.ensibs.omeca.controller.ActionController;
+import com.ensibs.omeca.controller.OmecaHandler;
+import com.ensibs.omeca.model.entities.Card;
 import com.ensibs.omeca.model.entities.Player;
 
 /**
@@ -9,7 +11,7 @@ import com.ensibs.omeca.model.entities.Player;
  * @author Nicolas
  *
  */
-public class DisconnectionAction implements Serializable{
+public class DisconnectionAction implements Action{
 
 	/**
 	 * 
@@ -32,6 +34,17 @@ public class DisconnectionAction implements Serializable{
 	 */
 	public Player getPlayer() {
 		return player;
+	}
+
+	@Override
+	public void execute() {
+		Player p = getPlayer();
+		for (Card c : p.getCards()) {
+			ActionController.board.getDiscardPile().addCard(c);
+		}
+		ActionController.board.removePlayer(ActionController.board
+				.getPlace(p));
+		GameActivity.getActivity().getOmecaHandler().sendEmptyMessage(OmecaHandler.DECONNEXION);
 	}
 
 }

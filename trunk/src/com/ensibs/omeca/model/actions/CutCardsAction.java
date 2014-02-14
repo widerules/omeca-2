@@ -7,11 +7,11 @@ import com.ensibs.omeca.model.entities.Card;
 import com.ensibs.omeca.model.entities.DrawPile;
 
 /**
- * Event when the draw pile is shuffled
+ * Event when the draw pile is cut
  * @author Nicolas
  *
  */
-public class ShuffleAction implements Action{
+public class CutCardsAction implements Action{
 	
 	/**
 	 * 
@@ -22,9 +22,9 @@ public class ShuffleAction implements Action{
 	
 	/**
 	 * Constructor
-	 * @param cards2 the draw pile cards
+	 * @param cards the draw pile cards
 	 */
-	public ShuffleAction(Card[] cards){
+	public CutCardsAction(Card[] cards){
 		this.cards = cards;
 	}
 
@@ -43,7 +43,7 @@ public class ShuffleAction implements Action{
 			nDrawPile.addCard(c);
 		}
 		ActionController.board.setDrawPile(nDrawPile);
-		GameActivity.getActivity().getOmecaHandler().sendEmptyMessage(OmecaHandler.SHUFFLE);
+		GameActivity.getActivity().getOmecaHandler().sendEmptyMessage(OmecaHandler.CUT);
 		
 	}
 }
