@@ -14,10 +14,12 @@ import android.view.View;
 import android.view.ViewGroup.MarginLayoutParams;
 import android.widget.Gallery;
 import android.widget.RelativeLayout;
+import android.widget.TextView;
 
 import com.ensibs.omeca.GameActivity;
 import com.ensibs.omeca.R;
 import com.ensibs.omeca.model.entities.Card;
+import com.ensibs.omeca.model.entities.DiscardPile;
 import com.ensibs.omeca.model.entities.Player;
 import com.ensibs.omeca.utils.SliderbarCardGallery;
 import com.ensibs.omeca.view.BoardView;
@@ -40,6 +42,7 @@ public class OmecaHandler extends Handler {
 	public static final int AUTOMATIC_DRAW_ACTION = 7;
 	public static final int SHUFFLE = 8;
 	public static final int CUT = 9;
+	public static final int PILES_REINIT = 10;
 
 	public OmecaHandler(Looper looper) {
 		super(looper);
@@ -442,14 +445,27 @@ public class OmecaHandler extends Handler {
 
 		}
 			break;
-		case CUT:{
+		case CUT: {
 			BoardView boardView = (BoardView) GameActivity.getActivity()
 					.findViewById(R.id.view_board);
-			boardView.getDrawPileView().setDrawpile(ActionController.board.getDrawPile());
+			boardView.getDrawPileView().setDrawpile(
+					ActionController.board.getDrawPile());
 			boardView.getDrawPileView().updateView();
 			boardView.getCutCardsView().setVisibility(View.GONE);
 		}
 			break;
+
+		case PILES_REINIT: {
+			BoardView boardView = (BoardView) GameActivity.getActivity().findViewById(R.id.view_board);
+			boardView.getDrawPileView().setDrawpile(ActionController.board.getDrawPile());
+			boardView.getDrawPileView().updateView();
+			boardView.getDiscardPileView().setDiscardPile(new DiscardPile());
+			boardView.getDiscardPileView().updateView();
+			TextView textDiscardPile = (TextView) boardView.findViewById(R.id.nbDiscardPileCards);
+			TextView textDrawPile = (TextView) boardView.findViewById(R.id.nbDrawPileCards);
+			textDiscardPile.setText(""+boardView.getDiscardPileView().getDiscardPile().getNumberOfCards());
+			textDrawPile.setText(""+boardView.getDrawPileView().getDrawpile().getNumberOfCards());
+		}
 		default:
 			break;
 		}
