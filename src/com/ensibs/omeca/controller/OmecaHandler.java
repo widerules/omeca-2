@@ -43,6 +43,7 @@ public class OmecaHandler extends Handler {
 	public static final int SHUFFLE = 8;
 	public static final int CUT = 9;
 	public static final int PILES_REINIT = 10;
+	public static final int GAME_REINIT = 11;
 
 	public OmecaHandler(Looper looper) {
 		super(looper);
@@ -456,15 +457,60 @@ public class OmecaHandler extends Handler {
 			break;
 
 		case PILES_REINIT: {
-			BoardView boardView = (BoardView) GameActivity.getActivity().findViewById(R.id.view_board);
-			boardView.getDrawPileView().setDrawpile(ActionController.board.getDrawPile());
+			BoardView boardView = (BoardView) GameActivity.getActivity()
+					.findViewById(R.id.view_board);
+			boardView.getDrawPileView().setDrawpile(
+					ActionController.board.getDrawPile());
 			boardView.getDrawPileView().updateView();
 			boardView.getDiscardPileView().setDiscardPile(new DiscardPile());
 			boardView.getDiscardPileView().updateView();
-			TextView textDiscardPile = (TextView) boardView.findViewById(R.id.nbDiscardPileCards);
-			TextView textDrawPile = (TextView) boardView.findViewById(R.id.nbDrawPileCards);
-			textDiscardPile.setText(""+boardView.getDiscardPileView().getDiscardPile().getNumberOfCards());
-			textDrawPile.setText(""+boardView.getDrawPileView().getDrawpile().getNumberOfCards());
+			TextView textDiscardPile = (TextView) boardView
+					.findViewById(R.id.nbDiscardPileCards);
+			TextView textDrawPile = (TextView) boardView
+					.findViewById(R.id.nbDrawPileCards);
+			textDiscardPile.setText(""
+					+ boardView.getDiscardPileView().getDiscardPile()
+							.getNumberOfCards());
+			textDrawPile.setText(""
+					+ boardView.getDrawPileView().getDrawpile()
+							.getNumberOfCards());
+		}
+			break;
+		case GAME_REINIT: {
+			BoardView boardView = (BoardView) GameActivity.getActivity()
+					.findViewById(R.id.view_board);
+			boardView.getDrawPileView().updateView();
+			boardView.getDiscardPileView().updateView();
+			TextView textDiscardPile = (TextView) boardView
+					.findViewById(R.id.nbDiscardPileCards);
+			TextView textDrawPile = (TextView) boardView
+					.findViewById(R.id.nbDrawPileCards);
+			textDiscardPile.setText(""
+					+ boardView.getDiscardPileView().getDiscardPile()
+							.getNumberOfCards());
+			textDrawPile.setText(""
+					+ boardView.getDrawPileView().getDrawpile()
+							.getNumberOfCards());
+			boardView.updatePlayers();
+			View v;
+			for (int i = 0; i < boardView.getChildCount(); i++) {
+				v = boardView.getChildAt(i);
+				if (v instanceof CardView){
+					boardView.removeViewInLayout(v);
+					i--;
+				}
+			}
+
+			Gallery g = (Gallery) GameActivity.getActivity().findViewById(
+					R.id.playerview_slider_board_cardgallery);
+			if (g != null) {
+				SliderbarCardGallery a = (SliderbarCardGallery) g.getAdapter();
+				a.notifyDataSetChanged();
+			}
+			HandView hv = (HandView) GameActivity.getActivity().findViewById(
+					R.id.handview);
+			hv.updateView(true);
+
 		}
 		default:
 			break;
