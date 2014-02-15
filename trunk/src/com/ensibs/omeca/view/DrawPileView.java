@@ -3,7 +3,6 @@ package com.ensibs.omeca.view;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.util.DisplayMetrics;
-import android.util.Log;
 import android.view.View;
 import android.widget.FrameLayout;
 import android.widget.RelativeLayout;
@@ -41,7 +40,6 @@ public class DrawPileView extends FrameLayout {
 	@Override
 	public void removeViewInLayout(View view) {
 		drawpile.removeLastCard();
-		Log.w("ee", "cecec");
 		ActionController.board.setDrawPile(drawpile);
 		super.removeViewInLayout(view);
 		

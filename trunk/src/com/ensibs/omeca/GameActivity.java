@@ -1,5 +1,6 @@
 package com.ensibs.omeca;
 
+import java.util.Map.Entry;
 import java.util.Observable;
 import java.util.Observer;
 
@@ -28,10 +29,12 @@ import com.ensibs.omeca.controller.OmecaHandler;
 import com.ensibs.omeca.model.actions.Action;
 import com.ensibs.omeca.model.actions.ConnectionAction;
 import com.ensibs.omeca.model.actions.DisconnectionAction;
+import com.ensibs.omeca.model.actions.GameReinitAction;
 import com.ensibs.omeca.model.actions.PilesReinitAction;
 import com.ensibs.omeca.model.actions.ShuffleAction;
 import com.ensibs.omeca.model.entities.Board;
 import com.ensibs.omeca.model.entities.Card;
+import com.ensibs.omeca.model.entities.Player;
 import com.ensibs.omeca.utils.DealPopup;
 import com.ensibs.omeca.utils.OmecaPopupExit;
 import com.ensibs.omeca.utils.SliderbarCardGallery;
@@ -223,7 +226,7 @@ public class GameActivity extends Activity implements Observer {
 			mDrawerLayout.closeDrawers();
 			Card[] cards = new Card[ActionController.board.getDiscardPile()
 					.getCards().size()];
-			int i = cards.length-1;
+			int i = cards.length - 1;
 			for (Card c : ActionController.board.getDiscardPile().getCards()) {
 				cards[i] = c;
 				i--;
@@ -237,6 +240,28 @@ public class GameActivity extends Activity implements Observer {
 					WifiDirectEvent.EVENT, new PilesReinitAction()));
 		}
 			break;
+		case 5: {
+			mDrawerLayout.closeDrawers();
+			ActionController.user.getCards().clear();
+			ActionController.board.getDiscardPile().getCards().clear();
+			ActionController.board.getDrawPile().getCards().clear();
+			for (Entry<Integer, Player> e : ActionController.board.getPlayers()
+					.entrySet()) {
+				e.getValue().getCards().clear();
+			}
+			ActionController.board.initDrawPile(true);
+			Card[] cards = new Card[ActionController.board.getDrawPile()
+					.getCards().size()];
+			int i = 0;
+			for (Card c : ActionController.board.getDrawPile().getCards()) {
+				cards[i] = c;
+				i++;
+			}
+			omecaHandler.sendEmptyMessage(OmecaHandler.GAME_REINIT);
+			wifiDirectManager.sendEvent(new WifiDirectEventImpl(
+					WifiDirectEvent.EVENT, new GameReinitAction(cards)));
+
+		}
 		default:
 			break;
 		}
