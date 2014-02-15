@@ -317,10 +317,9 @@ public class BoardView extends RelativeLayout {
 		Log.i(WifiDirectProperty.TAG, "endAnim "+ placePlayer);
 		if( placePlayer != 0){
 			playerViews.get(placePlayer).getPlayer().addCard(vToMove.getCard());
-			//TODO ajouter la fonction dans la player view pour lui ajouter une carte
 			playerViews.get(placePlayer).setPlayer(playerViews.get(placePlayer).getPlayer(), false);
 		}else{
-			ActionController.user.addCard(vToMove.getCard()); //TODO updater la slidBar et handView
+			ActionController.user.addCard(vToMove.getCard());
 			Gallery gallery = (Gallery) GameActivity.getActivity().findViewById(R.id.playerview_slider_board_cardgallery);
 			SliderbarCardGallery adapter = (SliderbarCardGallery)gallery.getAdapter();
 			adapter.notifyDataSetChanged();
@@ -382,7 +381,6 @@ public class BoardView extends RelativeLayout {
 				try {
 					Thread.sleep(200);
 				} catch (InterruptedException e) {
-					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
 				

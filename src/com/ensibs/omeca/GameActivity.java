@@ -28,6 +28,7 @@ import com.ensibs.omeca.controller.OmecaHandler;
 import com.ensibs.omeca.model.actions.Action;
 import com.ensibs.omeca.model.actions.ConnectionAction;
 import com.ensibs.omeca.model.actions.DisconnectionAction;
+import com.ensibs.omeca.model.actions.PilesReinitAction;
 import com.ensibs.omeca.model.actions.ShuffleAction;
 import com.ensibs.omeca.model.entities.Board;
 import com.ensibs.omeca.model.entities.Card;
@@ -190,11 +191,12 @@ public class GameActivity extends Activity implements Observer {
 
 	private void selectItem(int position) {
 		switch (position) {
-		case 1:
+		case 1: {
 			mDrawerLayout.closeDrawers();
 			DealPopup.show(this);
+		}
 			break;
-		case 2:
+		case 2: {
 			mDrawerLayout.closeDrawers();
 			ActionController.board.getDrawPile().shuffle();
 			Card[] cards = new Card[ActionController.board.getDrawPile()
@@ -207,17 +209,33 @@ public class GameActivity extends Activity implements Observer {
 			omecaHandler.sendEmptyMessage(OmecaHandler.SHUFFLE);
 			wifiDirectManager.sendEvent(new WifiDirectEventImpl(
 					WifiDirectEvent.EVENT, new ShuffleAction(cards)));
+		}
 			break;
-		case 3:
+		case 3: {
 			mDrawerLayout.closeDrawers();
 			BoardView boardView = (BoardView) findViewById(R.id.view_board);
 			boardView.bringChildToFront(boardView.getCutCardsView());
 			boardView.getCutCardsView().setVisibility(View.VISIBLE);
 			boardView.getCutCardsView().updateView();
+		}
 			break;
-		case 4:
-			Log.i(WifiDirectProperty.TAG, "Click 3");
+		case 4: {
 			mDrawerLayout.closeDrawers();
+			Card[] cards = new Card[ActionController.board.getDiscardPile()
+					.getCards().size()];
+			int i = cards.length-1;
+			for (Card c : ActionController.board.getDiscardPile().getCards()) {
+				cards[i] = c;
+				i--;
+			}
+			for (Card c : cards) {
+				c.setFaceUp(false);
+				ActionController.board.getDrawPile().getCards().add(0, c);
+			}
+			omecaHandler.sendEmptyMessage(OmecaHandler.PILES_REINIT);
+			wifiDirectManager.sendEvent(new WifiDirectEventImpl(
+					WifiDirectEvent.EVENT, new PilesReinitAction()));
+		}
 			break;
 		default:
 			break;
@@ -236,7 +254,8 @@ public class GameActivity extends Activity implements Observer {
 				&& ((WifiDirectEventImpl) data).getEvent() == WifiDirectEvent.EVENT) {
 			WifiDirectEventImpl event = (WifiDirectEventImpl) data;
 			Action dataObject = (Action) event.getData();
-			Log.i(WifiDirectProperty.TAG, dataObject.getClass().getCanonicalName());
+			Log.i(WifiDirectProperty.TAG, dataObject.getClass()
+					.getCanonicalName());
 			dataObject.execute();
 		}
 	}
