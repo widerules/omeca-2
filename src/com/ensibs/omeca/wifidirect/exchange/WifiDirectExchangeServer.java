@@ -53,6 +53,7 @@ public class WifiDirectExchangeServer extends WifiDirectIExchange{
 
 	@Override
 	public void startExchange() {
+		Log.i(WifiDirectProperty.TAG, "startserver");
 		if(this.acceptServer !=null){
 			this.acceptServer.start();
 		}

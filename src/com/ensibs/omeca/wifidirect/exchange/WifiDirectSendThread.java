@@ -42,7 +42,8 @@ public class WifiDirectSendThread extends Thread{
 
 	public synchronized void run(){
 		this.run = true;
-		while(run & client.size() != 0){
+		//while(run & client.size() != 0){
+		while(run){
 			try{
 					this.wait();
 					if(run && eventTmp != null){

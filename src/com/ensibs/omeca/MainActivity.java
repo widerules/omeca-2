@@ -116,7 +116,8 @@ public class MainActivity extends Activity implements Observer {
 	 * @param view
 	 */
 	public void help(View view) {
-		Toast.makeText(this, "Aide", Toast.LENGTH_SHORT).show();
+		Intent intent = new Intent(this, HelpActivity.class);
+		startActivity(intent);
 	}
 
 	@Override
