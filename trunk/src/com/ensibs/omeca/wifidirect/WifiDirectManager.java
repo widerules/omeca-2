@@ -133,10 +133,13 @@ public class WifiDirectManager extends Observable implements Observer{
 	 * 
 	 */
 	public void startVisible(){
-		Log.i(WifiDirectProperty.TAG, "startvisible");
 		if(this.status == WifiDirectStatus.DISCONNECTED)
 			applicationContext.registerReceiver(connectionListener, new IntentFilter(WifiP2pManager.WIFI_P2P_CONNECTION_CHANGED_ACTION));
 		this.wifiP2pManager.discoverPeers(wifiP2PChannel, actionListener);
+		if(mod == WifiDirectMod.HOST){
+			this.wifiDirectIExchange = new WifiDirectExchangeServer(notificationCenter);
+			this.wifiDirectIExchange.startExchange();
+		}
 	}
 
 	/**
@@ -286,10 +289,7 @@ public class WifiDirectManager extends Observable implements Observer{
 			cancelConnection();
 			this.status = WifiDirectStatus.CONNECTED;
 			//Request info
-			if(this.mod == WifiDirectMod.HOST){
-				this.wifiDirectIExchange = new WifiDirectExchangeServer(notificationCenter);
-				this.wifiDirectIExchange.startExchange();
-			}else{
+			if(this.mod == WifiDirectMod.CLIENT){
 				this.wifiP2pManager.requestConnectionInfo(wifiP2PChannel, new ConnectionInfoListener() {
 						public void onConnectionInfoAvailable(WifiP2pInfo info) {
 							// If the connection is established

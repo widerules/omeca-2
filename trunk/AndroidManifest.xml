@@ -7,47 +7,49 @@
     <uses-sdk
         android:minSdkVersion="14"
         android:targetSdkVersion="18" />
-    
-    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE"/>
-	<uses-permission android:name="android.permission.CHANGE_WIFI_STATE"/>
-	<uses-permission android:name="android.permission.INTERNET"/>
-	<uses-permission android:name="android.permission.VIBRATE"/>
-	<uses-permission android:name="android.permission.WAKE_LOCK" />
-	
-	<uses-feature android:name="android.hardware.touchscreen.multitouch"
-               android:required="true" />
-	<uses-feature android:name="android.hardware.wifi.direct"
-               android:required="true" />
+
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
+    <uses-permission android:name="android.permission.CHANGE_WIFI_STATE" />
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.VIBRATE" />
+    <uses-permission android:name="android.permission.WAKE_LOCK" />
+
+    <uses-feature
+        android:name="android.hardware.touchscreen.multitouch"
+        android:required="true" />
+    <uses-feature
+        android:name="android.hardware.wifi.direct"
+        android:required="true" />
 
     <application
+        android:name="com.ensibs.omeca.OmecaApplication"
         android:allowBackup="false"
         android:icon="@drawable/omeca_icon"
+        android:killAfterRestore="true"
         android:label="@string/app_name"
-        android:theme="@style/AppTheme"
-        android:name="com.ensibs.omeca.OmecaApplication"
-        android:killAfterRestore="true" >
-        
+        android:theme="@style/AppTheme" >
         <activity
             android:name="com.ensibs.omeca.MainActivity"
             android:label="@string/app_name"
-        	android:screenOrientation="landscape" >
+            android:screenOrientation="landscape" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-
-		<activity
+        <activity
             android:name="com.ensibs.omeca.GameActivity"
-            android:screenOrientation="landscape" 
-    		android:configChanges="orientation|screenSize"
-            >
+            android:configChanges="orientation|screenSize"
+            android:screenOrientation="landscape" >
         </activity>
-
-		<activity
+        <activity
             android:name="com.ensibs.omeca.AvatarActivity"
-            android:screenOrientation="landscape">
+            android:screenOrientation="landscape" >
+        </activity>
+        <activity
+            android:name="com.ensibs.omeca.HelpActivity"
+            android:label="@string/title_activity_help" >
         </activity>
     </application>
 
