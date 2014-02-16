@@ -24,8 +24,8 @@
     <string name="tmp_slidebar">Board View</string>
     <string name="tmp_slidebar_down">Hand View</string>
     <string name="button_notifs">Notifs</string>
-    <string name="homescreen_options_sound">Sonnerie</string>
-    <string name="homescreen_options_vibration">Vibration</string>
+    <string name="homescreen_options_sound">Sons</string>
+    <string name="homescreen_options_vibration">Vibrations</string>
     <string name="list_menu">Menu action</string>
     <string name="list_distribution">Distribution automatique</string>
     <string name="list_shuffle">Melanger la pile de pioche</string>
