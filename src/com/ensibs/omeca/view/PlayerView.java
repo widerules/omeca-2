@@ -268,8 +268,6 @@ public class PlayerView extends RelativeLayout {
 							a2.notifyDataSetChanged();
 						}
 						setBackgroundColor(Color.TRANSPARENT);
-						NotifPopup.addNotif(ActionController.user, player,
-								"donne une carte a");
 
 						// Send event to the other
 						if (parent instanceof HandView) {

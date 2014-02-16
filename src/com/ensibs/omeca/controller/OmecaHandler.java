@@ -19,8 +19,10 @@ import android.widget.TextView;
 import com.ensibs.omeca.GameActivity;
 import com.ensibs.omeca.R;
 import com.ensibs.omeca.model.entities.Card;
+import com.ensibs.omeca.model.entities.Notif;
 import com.ensibs.omeca.model.entities.DiscardPile;
 import com.ensibs.omeca.model.entities.Player;
+import com.ensibs.omeca.utils.NotifPopup;
 import com.ensibs.omeca.utils.SliderbarCardGallery;
 import com.ensibs.omeca.view.BoardView;
 import com.ensibs.omeca.view.CardView;
@@ -57,18 +59,23 @@ public class OmecaHandler extends Handler {
 
 	@Override
 	public void handleMessage(Message msg) {
+		Bundle data = msg.getData();
+		BoardView boardView = (BoardView) GameActivity.getActivity()
+				.findViewById(R.id.view_board);
+		Hashtable<Integer, PlayerView> players = boardView
+				.getPlayerViews();
+		Notif notif = new Notif();
+		
 		switch (msg.what) {
 		case DECONNEXION: {
-			BoardView boardView = (BoardView) GameActivity.getActivity()
-					.findViewById(R.id.view_board);
+			notif.setEvent("Un joueur s'est déconnecté");
 			boardView.getDiscardPileView().updateView();
 			boardView.updatePlayers();
 		}
 			break;
 
 		case AKNOWLEGMENT_CONNECTION_ACTION: {
-			BoardView boardView = (BoardView) GameActivity.getActivity()
-					.findViewById(R.id.view_board);
+			notif.setEvent("Acceptation d'un joueur");
 			boardView.getDrawPileView().setDrawpile(
 					ActionController.board.getDrawPile());
 			boardView.getDiscardPileView().setDiscardPile(
@@ -79,23 +86,18 @@ public class OmecaHandler extends Handler {
 		}
 			break;
 		case SWITCH_PLAYERS_ACTION: {
-			BoardView boardView = (BoardView) GameActivity.getActivity()
-					.findViewById(R.id.view_board);
+			notif.setEvent("Déplacement de joueurs");
 			boardView.updatePlayers();
 		}
 			break;
 		case AUTOMATIC_DRAW_ACTION: {
-			BoardView boardView = (BoardView) GameActivity.getActivity()
-					.findViewById(R.id.view_board);
-			Bundle data = msg.getData();
+			notif.setEvent("Chaque joueur reçoit " + data.getInt("Number") + " carte(s)");
 			boardView.runDistrib(data.getInt("From"), data.getInt("Number"));
 		}
 			break;
 		case RETURN_CARD: {
-			Bundle data = msg.getData();
-			BoardView boardView = (BoardView) GameActivity.getActivity()
-					.findViewById(R.id.view_board);
 			if (data.getString("Source").equals("DrawPileView")) {
+				notif.setEvent("Une carte de la pioche a été retournée");
 				DrawPileView pileView = boardView.getDrawPileView();
 				pileView.getDrawpile()
 						.getCards()
@@ -109,6 +111,7 @@ public class OmecaHandler extends Handler {
 										.isFaceUp());
 				pileView.updateView();
 			} else if (data.getString("Source").equals("BoardView")) {
+				notif.setEvent("Une carte du tapis a été retournée");
 				int value = data.getInt("Value");
 				String color = data.getString("Color");
 				for (int i = 0; i < boardView.getChildCount(); i++) {
@@ -122,6 +125,7 @@ public class OmecaHandler extends Handler {
 					}
 				}
 			} else if (data.getString("Source").equals("DiscardPileView")) {
+				notif.setEvent("Une carte défaussée a été retournée");
 				DiscardPileView discardView = boardView.getDiscardPileView();
 				discardView
 						.getDiscardPile()
@@ -139,9 +143,6 @@ public class OmecaHandler extends Handler {
 		}
 			break;
 		case MOVE_CARD: {
-			Bundle data = msg.getData();
-			BoardView boardView = (BoardView) GameActivity.getActivity()
-					.findViewById(R.id.view_board);
 			if (data.getString("Source").equals("DrawPileView")) {
 				DrawPileView pileView = boardView.getDrawPileView();
 				Card tmp = pileView.getDrawpile().getCards()
@@ -149,7 +150,9 @@ public class OmecaHandler extends Handler {
 				pileView.getDrawpile().getCards()
 						.remove(pileView.getDrawpile().getNumberOfCards() - 1);
 				pileView.updateView();
+				
 				if (data.getString("Target").equals("BoardView")) {
+					notif.setEvent("Une carte a été mise en jeu");
 					CardView card = new CardView(GameActivity.getActivity(),
 							tmp);
 					int pourcentageX = data.getInt("PX");
@@ -171,11 +174,13 @@ public class OmecaHandler extends Handler {
 							+ right);
 					boardView.addView(card);
 				} else if (data.getString("Target").equals("DiscardPileView")) {
+					notif.setEvent("Défausse d'une carte de la pioche");
 					boardView.getDiscardPileView().addView(
 							new CardView(GameActivity.getActivity(), tmp));
 				} else if (data.getString("Target").equals("Player")) {
 					int playerId = data.getInt("IDTarget");
 					if (playerId == ActionController.user.getId()) {
+						notif.setEvent("J'ai reçu 1 carte de la pioche");
 						ActionController.user.addCard(tmp);
 						HandView handView = (HandView) GameActivity
 								.getActivity().findViewById(R.id.handview);
@@ -188,14 +193,14 @@ public class OmecaHandler extends Handler {
 								.getAdapter();
 						l.notifyDataSetChanged();
 					} else {
-						Hashtable<Integer, PlayerView> players = boardView
-								.getPlayerViews();
+						notif.setEvent("a reçu 1 carte de la pioche");
 						for (int playerPlace : players.keySet()) {
 							if (players.get(playerPlace).getPlayer() != null
 									&& players.get(playerPlace).getPlayer()
 											.getId() == playerId) {
-								players.get(playerPlace).getPlayer()
-										.addCard(tmp);
+								Player p = players.get(playerPlace).getPlayer();
+								notif.setSource(p);
+								p.addCard(tmp);
 								break;
 							}
 						}
@@ -226,11 +231,14 @@ public class OmecaHandler extends Handler {
 					if (data.getString("Target").equals("DrawPileView")) {
 						boardView.getDrawPileView().addView(
 								new CardView(GameActivity.getActivity(), tmp));
+						notif.setEvent("Une carte a été mise dans la pioche");
 					} else if (data.getString("Target").equals(
 							"DiscardPileView")) {
 						boardView.getDiscardPileView().addView(
 								new CardView(GameActivity.getActivity(), tmp));
+						notif.setEvent("Défausse d'une carte du tapis");
 					} else if (data.getString("Target").equals("Player")) {
+						notif.setEvent("J'ai reçu 1 carte du tapis");
 						int playerId = data.getInt("IDTarget");
 						if (playerId == ActionController.user.getId()) {
 							ActionController.user.addCard(tmp);
@@ -245,14 +253,14 @@ public class OmecaHandler extends Handler {
 									.getAdapter();
 							l.notifyDataSetChanged();
 						} else {
-							Hashtable<Integer, PlayerView> players = boardView
-									.getPlayerViews();
+							notif.setEvent("a reçu 1 carte du tapis");
 							for (int playerPlace : players.keySet()) {
 								if (players.get(playerPlace).getPlayer() != null
 										&& players.get(playerPlace).getPlayer()
 												.getId() == playerId) {
-									players.get(playerPlace).getPlayer()
-											.addCard(tmp);
+									Player p = players.get(playerPlace).getPlayer();
+									notif.setSource(p);
+									p.addCard(tmp);
 									break;
 								}
 							}
@@ -275,6 +283,7 @@ public class OmecaHandler extends Handler {
 						.remove(discardView.getDiscardPile().getNumberOfCards() - 1);
 				discardView.updateView();
 				if (data.getString("Target").equals("BoardView")) {
+					notif.setEvent("Une carte défaussée a été mise en jeu");
 					CardView card = new CardView(GameActivity.getActivity(),
 							tmp);
 					int pourcentageX = data.getInt("PX");
@@ -295,10 +304,12 @@ public class OmecaHandler extends Handler {
 					Log.i(WifiDirectProperty.TAG, "Left :" + left + " Right :"
 							+ right);
 					boardView.addView(card);
+					notif.setEvent("Une carte défaussée a été mise en pioche");
 				} else if (data.getString("Target").equals("DrawPileView")) {
 					boardView.getDrawPileView().addView(
 							new CardView(GameActivity.getActivity(), tmp));
 				} else if (data.getString("Target").equals("Player")) {
+					notif.setEvent("J'ai reçu 1 carte défaussée");
 					int playerId = data.getInt("IDTarget");
 					if (playerId == ActionController.user.getId()) {
 						ActionController.user.addCard(tmp);
@@ -313,14 +324,14 @@ public class OmecaHandler extends Handler {
 								.getAdapter();
 						l.notifyDataSetChanged();
 					} else {
-						Hashtable<Integer, PlayerView> players = boardView
-								.getPlayerViews();
+						notif.setEvent("a reçu 1 carte défaussée");
 						for (int playerPlace : players.keySet()) {
 							if (players.get(playerPlace).getPlayer() != null
 									&& players.get(playerPlace).getPlayer()
 											.getId() == playerId) {
-								players.get(playerPlace).getPlayer()
-										.addCard(tmp);
+								Player p = players.get(playerPlace).getPlayer();
+								notif.setSource(p);
+								p.addCard(tmp);
 								break;
 							}
 						}
@@ -335,12 +346,11 @@ public class OmecaHandler extends Handler {
 				int value = data.getInt("Value");
 				String color = data.getString("Color");
 				Card tmp = null;
-				Hashtable<Integer, PlayerView> players = boardView
-						.getPlayerViews();
 				for (int playerPlace : players.keySet()) {
 					if (players.get(playerPlace).getPlayer() != null
 							&& players.get(playerPlace).getPlayer().getId() == playerId) {
 						Player player = players.get(playerPlace).getPlayer();
+						notif.setSource(player);
 						ArrayList<Card> cards = player.getCards();
 						for (int i = 0; i < cards.size(); i++) {
 							if (cards.get(i).getColor().equals(color)
@@ -357,6 +367,7 @@ public class OmecaHandler extends Handler {
 					tmp.setFaceUp(data.getBoolean("Face"));
 					Log.i(WifiDirectProperty.TAG, data.getBoolean("Face") + "");
 					if (data.getString("Target").equals("BoardView")) {
+						notif.setEvent("a joué 1 carte");
 						CardView card = new CardView(
 								GameActivity.getActivity(), tmp);
 						int pourcentageX = data.getInt("PX");
@@ -378,15 +389,18 @@ public class OmecaHandler extends Handler {
 								+ " Right :" + right);
 						boardView.addView(card);
 					} else if (data.getString("Target").equals("DrawPileView")) {
+						notif.setEvent("a placé 1 carte en pioche");
 						boardView.getDrawPileView().addView(
 								new CardView(GameActivity.getActivity(), tmp));
 					} else if (data.getString("Target").equals(
 							"DiscardPileView")) {
+						notif.setEvent("s'est défaussé d'une carte");
 						boardView.getDiscardPileView().addView(
 								new CardView(GameActivity.getActivity(), tmp));
 					} else if (data.getString("Target").equals("Player")) {
 						int playerTarget = data.getInt("IDTarget");
 						if (playerTarget == ActionController.user.getId()) {
+							notif.setEvent("m'a donné une carte");
 							ActionController.user.addCard(tmp);
 							HandView handView = (HandView) GameActivity
 									.getActivity().findViewById(R.id.handview);
@@ -399,12 +413,14 @@ public class OmecaHandler extends Handler {
 									.getAdapter();
 							l.notifyDataSetChanged();
 						} else {
+							notif.setEvent("a donné une carte à");
 							for (int playerPlace : players.keySet()) {
 								if (players.get(playerPlace).getPlayer() != null
 										&& players.get(playerPlace).getPlayer()
 												.getId() == playerId) {
-									players.get(playerPlace).getPlayer()
-											.addCard(tmp);
+									Player p = players.get(playerPlace).getPlayer();
+									notif.setSource(p);
+									p.addCard(tmp);
 									break;
 								}
 							}
@@ -416,14 +432,11 @@ public class OmecaHandler extends Handler {
 		}
 			break;
 		case GIVETO: {
-			BoardView boardView = (BoardView) (GameActivity.getActivity()
-					.findViewById(R.id.view_board));
 			boardView.giveTo(msg.getData().getInt("playerPlace"));
 		}
 			break;
 		case SHUFFLE: {
-			BoardView boardView = (BoardView) (GameActivity.getActivity()
-					.findViewById(R.id.view_board));
+			notif.setEvent("Les cartes ont été mélangées");
 			boardView.getDrawPileView().setDrawpile(
 					ActionController.board.getDrawPile());
 			for (Card c : boardView.getDrawPileView().getDrawpile().getCards())
@@ -447,8 +460,7 @@ public class OmecaHandler extends Handler {
 		}
 			break;
 		case CUT: {
-			BoardView boardView = (BoardView) GameActivity.getActivity()
-					.findViewById(R.id.view_board);
+			notif.setEvent("Les cartes ont été coupées");
 			boardView.getDrawPileView().setDrawpile(
 					ActionController.board.getDrawPile());
 			boardView.getDrawPileView().updateView();
@@ -457,8 +469,7 @@ public class OmecaHandler extends Handler {
 			break;
 
 		case PILES_REINIT: {
-			BoardView boardView = (BoardView) GameActivity.getActivity()
-					.findViewById(R.id.view_board);
+			notif.setEvent("Réinitialisation des piles");
 			boardView.getDrawPileView().setDrawpile(
 					ActionController.board.getDrawPile());
 			boardView.getDrawPileView().updateView();
@@ -477,8 +488,7 @@ public class OmecaHandler extends Handler {
 		}
 			break;
 		case GAME_REINIT: {
-			BoardView boardView = (BoardView) GameActivity.getActivity()
-					.findViewById(R.id.view_board);
+			notif.setEvent("Réinitialisation de la partie");
 			boardView.getDrawPileView().updateView();
 			boardView.getDiscardPileView().updateView();
 			TextView textDiscardPile = (TextView) boardView
@@ -515,5 +525,7 @@ public class OmecaHandler extends Handler {
 		default:
 			break;
 		}
+		
+		NotifPopup.addNotif(notif);
 	}
 }

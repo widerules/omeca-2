@@ -1,6 +1,9 @@
 package com.ensibs.omeca.model.entities;
 
 import java.io.Serializable;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.Locale;
 
 
 public class Notif implements Serializable{
@@ -14,7 +17,11 @@ public class Notif implements Serializable{
 	private String event;
 	
 	public Notif(){
-	
+		SimpleDateFormat formatter = new SimpleDateFormat("hh:mm:ss", Locale.FRANCE);
+		this.date = formatter.format(new Date());
+		this.source = null;
+		this.target = null;
+		this.event = "";
 	}
 
 	public String getDate() {
