@@ -194,7 +194,7 @@ public class WifiDirectManager extends Observable implements Observer{
 					Log.i("P2PTest", "Cancel connection");
 				}
 			}
-		}, new Date((new Date()).getTime()+30000));
+		}, new Date((new Date()).getTime()+WifiDirectProperty.TIMER));
 	}
 	
 	public void disconnect(){

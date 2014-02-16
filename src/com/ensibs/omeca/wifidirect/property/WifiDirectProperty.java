@@ -9,4 +9,6 @@ public class WifiDirectProperty {
 	public final static int HOST_GO = 15;
 	
 	public final static int CLIENT_GO = 0;	
+	
+	public final static int TIMER = 15000;
 }
