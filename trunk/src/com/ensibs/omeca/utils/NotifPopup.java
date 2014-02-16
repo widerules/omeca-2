@@ -1,8 +1,5 @@
 package com.ensibs.omeca.utils;
 
-import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.util.Locale;
 import java.util.Stack;
 
 import android.app.AlertDialog;
@@ -15,9 +12,10 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.ensibs.omeca.GameActivity;
 import com.ensibs.omeca.R;
+import com.ensibs.omeca.controller.ActionController;
 import com.ensibs.omeca.model.entities.Notif;
-import com.ensibs.omeca.model.entities.Player;
 import com.ensibs.omeca.view.PlayerView;
 
 public class NotifPopup {
@@ -94,20 +92,11 @@ public class NotifPopup {
 	 * @param tgt
 	 * @param event
 	 */
-	public static void addNotif(Player src, Player tgt, String event) {
-		Notif notif = new Notif();
-		
-		SimpleDateFormat formatter = new SimpleDateFormat("hh:mm:ss", Locale.FRANCE);
-		String date = formatter.format(new Date());
-		
-		notif.setDate(date);
-		notif.setSource(src);
-		notif.setTarget(tgt);
-		notif.setEvent(event);
-		
-		notifs.push(notif);
-		
-		PlayerView.updateNotifs(notifs.size());
+	public static void addNotif(Notif notif) {	
+		if (GameActivity.getSlide().isExpanded()) {
+			notifs.push(notif);			
+			PlayerView.updateNotifs(notifs.size());
+		}
 	}
 	
 	
