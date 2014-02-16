@@ -54,8 +54,7 @@ import com.ensibs.omeca.wifidirect.property.WifiDirectProperty;
 public class GameActivity extends Activity implements Observer {
 
 	private WifiDirectManager wifiDirectManager;
-	private static SlidingUpPanelLayout slide;
-	static ActionController controller;
+	private static ActionController controller;
 	private OmecaApplication app;
 	private static GameActivity instance;
 	private OmecaHandler omecaHandler;
@@ -78,9 +77,6 @@ public class GameActivity extends Activity implements Observer {
 		return wifiDirectManager;
 	}
 
-	public static SlidingUpPanelLayout getSlide() {
-		return slide;
-	}
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -119,7 +115,7 @@ public class GameActivity extends Activity implements Observer {
 		boardView.buildBoard(board);
 		boardView.updatePlayers();
 
-		slide = (SlidingUpPanelLayout) findViewById(R.id.sliding_layout);
+		SlidingUpPanelLayout slide = (SlidingUpPanelLayout) findViewById(R.id.sliding_layout);
 
 		// Set player skin and properties
 		((PlayerView) (findViewById(R.id.playerview))).setPlayer(
