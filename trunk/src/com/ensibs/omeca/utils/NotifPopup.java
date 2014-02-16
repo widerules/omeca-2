@@ -93,7 +93,7 @@ public class NotifPopup {
 	 * @param event
 	 */
 	public static void addNotif(Notif notif) {	
-		if (GameActivity.getSlide().isExpanded()) {
+		if (((SlidingUpPanelLayout)GameActivity.getActivity().findViewById(R.id.sliding_layout)).isExpanded()) {
 			notifs.push(notif);			
 			PlayerView.updateNotifs(notifs.size());
 		}
