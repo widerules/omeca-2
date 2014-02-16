@@ -72,6 +72,7 @@
                 android:layout_width="150dip"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="5dp"
+                android:drawableLeft="@drawable/sound"
                 android:textColor="@android:color/white"
                 android:textOff="@string/homescreen_options_sound"
                 android:textOn="@string/homescreen_options_sound" />
@@ -80,6 +81,7 @@
                 android:id="@+id/homescreen_options_vibration_toggle"
                 android:layout_width="150dip"
                 android:layout_height="wrap_content"
+                android:drawableLeft="@drawable/vibrator"
                 android:textColor="@android:color/white"
                 android:textOff="@string/homescreen_options_vibration"
                 android:textOn="@string/homescreen_options_vibration" />
