@@ -240,6 +240,9 @@ public class PlayerView extends RelativeLayout {
 						CardView view = (CardView) vTmp;
 						ViewGroup parent = (ViewGroup) (view.getParent());
 						Card c = view.getCard();
+						BoardView boardView = (BoardView) GameActivity
+								.getActivity().findViewById(R.id.view_board);
+						boardView.cg.moveToPlayer(player);
 						player.addCard(c);
 						switch (player.getNumberOfCards()) {
 						case 1:
