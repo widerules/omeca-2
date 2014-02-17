@@ -4,7 +4,10 @@ import java.util.ArrayList;
 
 import com.ensibs.omeca.GameActivity;
 import com.ensibs.omeca.R;
+import com.ensibs.omeca.model.actions.MoveCardAction;
 import com.ensibs.omeca.model.entities.Player;
+import com.ensibs.omeca.wifidirect.event.WifiDirectEvent;
+import com.ensibs.omeca.wifidirect.event.WifiDirectEventImpl;
 import com.ensibs.omeca.wifidirect.property.WifiDirectProperty;
 
 import android.content.Context;
@@ -116,6 +119,11 @@ public class CardGroup {
 			tuching.get(i).setAlpha(1);
 			tuching.get(i).setVisibility(View.VISIBLE);
 			parent.addView(tuching.get(i));
+			if(parent instanceof DrawPileView){
+				GameActivity.getActivity().getWifiDirectManager().sendEvent(new WifiDirectEventImpl(WifiDirectEvent.EVENT, new MoveCardAction("BoardView", "DrawPileView",((CardView)tuching.get(i)).getCard())));
+			}else if(parent instanceof DiscardPileView){
+				GameActivity.getActivity().getWifiDirectManager().sendEvent(new WifiDirectEventImpl(WifiDirectEvent.EVENT, new MoveCardAction("BoardView", "DiscardPileView",((CardView)tuching.get(i)).getCard())));
+			}
 		}
 		tuching.clear();
 	}
@@ -128,6 +136,7 @@ public class CardGroup {
 			cv.setAlpha(1);
 			cv.setVisibility(View.VISIBLE);
 			p.addCard(cv.getCard());
+			GameActivity.getActivity().getWifiDirectManager().sendEvent(new WifiDirectEventImpl(WifiDirectEvent.EVENT, new MoveCardAction("BoardView",cv.getCard(),"Player",p.getId())));
 		}
 		tuching.clear();
 	}
