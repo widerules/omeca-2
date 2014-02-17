@@ -136,7 +136,7 @@ public class WifiDirectManager extends Observable implements Observer{
 		if(this.status == WifiDirectStatus.DISCONNECTED)
 			applicationContext.registerReceiver(connectionListener, new IntentFilter(WifiP2pManager.WIFI_P2P_CONNECTION_CHANGED_ACTION));
 		this.wifiP2pManager.discoverPeers(wifiP2PChannel, actionListener);
-		if(mod == WifiDirectMod.HOST){
+		if(mod == WifiDirectMod.HOST && status == WifiDirectStatus.DISCONNECTED){
 			this.wifiDirectIExchange = new WifiDirectExchangeServer(notificationCenter);
 			this.wifiDirectIExchange.startExchange();
 		}
@@ -284,7 +284,6 @@ public class WifiDirectManager extends Observable implements Observer{
 		}else if(p2pEvent.getEvent() == WifiDirectEvent.CHANNEL_LOST){
 			//TODO Later
 		}else if(p2pEvent.getEvent() == WifiDirectEvent.CONNECTED){
-			Log.i(WifiDirectProperty.TAG, "Connected launch init connected");
 			if(this.status == WifiDirectStatus.DISCONNECTED){
 			cancelConnection();
 			this.status = WifiDirectStatus.CONNECTED;
@@ -294,7 +293,6 @@ public class WifiDirectManager extends Observable implements Observer{
 						public void onConnectionInfoAvailable(WifiP2pInfo info) {
 							// If the connection is established
 							if (info.groupFormed) {
-								wifiDirectIExchange = new WifiDirectExchangeClient(notificationCenter,info.groupOwnerAddress.getHostAddress());
 								wifiDirectIExchange.startExchange();
 							}
 						}

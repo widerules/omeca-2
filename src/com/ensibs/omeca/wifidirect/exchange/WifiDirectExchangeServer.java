@@ -25,13 +25,11 @@ public class WifiDirectExchangeServer extends WifiDirectIExchange{
 
 	public void addClient(Socket client) {
 		if(sendThread == null){
-			Log.i(WifiDirectProperty.TAG, "Add Client int");
 			this.sendThread = new WifiDirectSendThread();
 			this.sendThread.addSender(client);
 			this.sendThread.start();
 		}
 		else{
-			Log.i(WifiDirectProperty.TAG, "Add Client no int");
 			this.sendThread.addSender(client);
 		}
 		this.client.add(client);
@@ -53,7 +51,6 @@ public class WifiDirectExchangeServer extends WifiDirectIExchange{
 
 	@Override
 	public void startExchange() {
-		Log.i(WifiDirectProperty.TAG, "startserver");
 		if(this.acceptServer !=null){
 			this.acceptServer.start();
 		}
