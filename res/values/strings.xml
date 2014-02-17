@@ -2,7 +2,8 @@
 <resources>
 
     <string name="app_name">OMECA</string>
-    <string name="action_settings">Quitter</string>
+    <string name="action_about">A propos</string>
+    <string name="action_exit">Quitter</string>
     <string name="hello_world">Hello world!</string>
     <string name="button_host">Créer</string>
     <string name="button_client">Joindre</string>
