@@ -18,6 +18,7 @@ import android.widget.TextView;
 
 public class PileDragListener implements OnDragListener {
 	private ViewGroup pile;
+
 	
 	public PileDragListener(ViewGroup pile){
 		this.pile = pile;
@@ -37,7 +38,7 @@ public class PileDragListener implements OnDragListener {
 			
 			break;
 		case DragEvent.ACTION_DROP:
-			if(view instanceof CardView){
+			if(view instanceof CardView){				
 				owner.removeViewInLayout(view);
 				Log.w("Type", owner.getClass().toString());
 				pile.addView(view);
@@ -63,6 +64,9 @@ public class PileDragListener implements OnDragListener {
 							a.notifyDataSetChanged();
 						}
 					}
+					// multi drag
+					BoardView boardView = (BoardView) (GameActivity.getActivity().findViewById(R.id.view_board));
+					boardView.cg.moveToPile(pile);
 				}
 				else if(v instanceof DrawPileView){
 					DrawPileView pile = (DrawPileView)v;

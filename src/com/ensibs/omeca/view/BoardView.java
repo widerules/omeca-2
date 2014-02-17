@@ -27,7 +27,7 @@ import com.ensibs.omeca.controller.OmecaHandler;
 import com.ensibs.omeca.model.actions.MoveCardAction;
 import com.ensibs.omeca.model.entities.Board;
 import com.ensibs.omeca.model.entities.Player;
-import com.ensibs.omeca.utils.NotificationTools;
+import com.ensibs.omeca.utils.DealPopup;
 import com.ensibs.omeca.utils.SliderbarCardGallery;
 import com.ensibs.omeca.wifidirect.event.WifiDirectEvent;
 import com.ensibs.omeca.wifidirect.event.WifiDirectEventImpl;
@@ -38,8 +38,8 @@ public class BoardView extends RelativeLayout {
 	private Context context;
 	private DrawPileView drawPileView;
 	private DiscardPileView discardPileView;
-	private CutCardsView cutCardsView;
 	private Hashtable<Integer, PlayerView> playerViews;
+	public CardGroup cg;
 
 
 
@@ -66,9 +66,10 @@ public class BoardView extends RelativeLayout {
 				RelativeLayout.LayoutParams.MATCH_PARENT,
 				RelativeLayout.LayoutParams.MATCH_PARENT);
 		setLayoutParams(params);
-		setBackgroundResource(R.drawable.board_background);
+		setBackgroundDrawable(getResources().getDrawable(R.drawable.background));
 		setOnDragListener(new BoardDragListener());
 		playerViews = new Hashtable<Integer, PlayerView>();
+		cg = new CardGroup();
 	}
 
 	public void buildBoard(Board board) {
@@ -77,10 +78,6 @@ public class BoardView extends RelativeLayout {
 				board.getDiscardPile());
 		addView(drawPileView);
 		addView(discardPileView);
-		cutCardsView = new CutCardsView(context);
-		cutCardsView.updateView();
-		addView(cutCardsView);
-		cutCardsView.setVisibility(View.GONE);
 		displayPlayers();
 	}
 
@@ -121,7 +118,7 @@ public class BoardView extends RelativeLayout {
 		params = (RelativeLayout.LayoutParams) player.getLayoutParams();
 		params.addRule(ALIGN_PARENT_TOP, RelativeLayout.TRUE);
 		params.addRule(CENTER_IN_PARENT, RelativeLayout.TRUE);
-		addView(player,0, params);
+		addView(player, params);
 		playerViews.put(4, player);
 
 		// Player 5
@@ -170,11 +167,6 @@ public class BoardView extends RelativeLayout {
 		return discardPileView;
 	}
 
-	public CutCardsView getCutCardsView() {
-		return cutCardsView;
-	}
-
-
 	public Hashtable<Integer, PlayerView> getPlayerViews() {
 		return playerViews;
 	}
@@ -221,8 +213,10 @@ public class BoardView extends RelativeLayout {
 									.getAdapter();
 							a2.notifyDataSetChanged();
 						}
+					}else if(parent instanceof BoardView){ //déplacement des cartes groupées
+						if(cg.getTuching().size()>1)
+							cg.move(event.getX(), event.getY(), getWidth(), getHeight());
 					}
-					
 					MarginLayoutParams marginParams = new MarginLayoutParams(
 							view.getLayoutParams());
 					int left = (int) (event.getX() - (view.getWidth() / 2));
@@ -236,11 +230,13 @@ public class BoardView extends RelativeLayout {
 							marginParams));
 					
 					if (parent instanceof HandView) {
+						Log.i(WifiDirectProperty.TAG, "1");
 						MoveCardAction movecard = new MoveCardAction("Player", ActionController.user.getId(), view.getCard(), "BoardView");
 						movecard.setPourcentageX(left*100/((View) view.getParent()).getWidth());
 						movecard.setPourcentageY(top*100/((View) view.getParent()).getHeight());
 						Log.i(WifiDirectProperty.TAG, movecard.getPourcentageX()+" "+movecard.getPourcentageY());
-						GameActivity.getActivity().getWifiDirectManager().sendEvent(new WifiDirectEventImpl(WifiDirectEvent.EVENT, movecard));						
+						GameActivity.getActivity().getWifiDirectManager().sendEvent(new WifiDirectEventImpl(WifiDirectEvent.EVENT, movecard));	
+						
 					}
 					else if(parent instanceof DrawPileView){
 						MoveCardAction movecard = new MoveCardAction("DrawPileView", "BoardView",view.getCard());
@@ -255,11 +251,15 @@ public class BoardView extends RelativeLayout {
 						movecard.setPourcentageY(top*100/((View) view.getParent()).getHeight());
 						Log.i(WifiDirectProperty.TAG, movecard.getPourcentageX()+" "+movecard.getPourcentageY());
 						GameActivity.getActivity().getWifiDirectManager().sendEvent(new WifiDirectEventImpl(WifiDirectEvent.EVENT, movecard));
+					}else{Log.i(WifiDirectProperty.TAG, "4");}
+					
+					for (int i = 0; i < getChildCount(); i++) {
+						getChildAt(i).setVisibility(View.VISIBLE);
 					}
-					vTmp.setVisibility(View.VISIBLE);
 				} else {
 					vTmp.setVisibility(View.VISIBLE);
 				}
+				cg.getTuching().clear();
 				break;
 			case DragEvent.ACTION_DRAG_ENDED:
 				break;
@@ -307,8 +307,6 @@ public class BoardView extends RelativeLayout {
 		anim.setInterpolator(new DecelerateInterpolator(1.0f));
 		anim.setDuration(400);
 		vToMove.startAnimation(anim);
-		if(ActionController.isSoundToggled())
-			NotificationTools.createSoundNotification(context, R.drawable.flipcard);
 		TextView text = (TextView) findViewById(R.id.nbDrawPileCards);
 		text.setText(""+drawPileView.getDrawpile().getNumberOfCards());
 	}
@@ -317,9 +315,10 @@ public class BoardView extends RelativeLayout {
 		Log.i(WifiDirectProperty.TAG, "endAnim "+ placePlayer);
 		if( placePlayer != 0){
 			playerViews.get(placePlayer).getPlayer().addCard(vToMove.getCard());
+			//TODO ajouter la fonction dans la player view pour lui ajouter une carte
 			playerViews.get(placePlayer).setPlayer(playerViews.get(placePlayer).getPlayer(), false);
 		}else{
-			ActionController.user.addCard(vToMove.getCard());
+			ActionController.user.addCard(vToMove.getCard()); //TODO updater la slidBar et handView
 			Gallery gallery = (Gallery) GameActivity.getActivity().findViewById(R.id.playerview_slider_board_cardgallery);
 			SliderbarCardGallery adapter = (SliderbarCardGallery)gallery.getAdapter();
 			adapter.notifyDataSetChanged();
@@ -381,6 +380,7 @@ public class BoardView extends RelativeLayout {
 				try {
 					Thread.sleep(200);
 				} catch (InterruptedException e) {
+					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
 				

@@ -38,6 +38,10 @@ public class SlideBarCardGalleryDragListener implements OnDragListener{
 					ViewGroup parent = (ViewGroup)(view.getParent());
 					Card c = view.getCard();
 					Player p = ActionController.user;
+					// multi drag
+					BoardView boardView = (BoardView) (GameActivity.getActivity().findViewById(R.id.view_board));
+					boardView.cg.moveToPlayer(p);
+					
 					p.addCard(c);
 			        parent.removeViewInLayout(view);
 			        Gallery g = (Gallery)v;
