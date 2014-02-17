@@ -293,6 +293,7 @@ public class WifiDirectManager extends Observable implements Observer{
 						public void onConnectionInfoAvailable(WifiP2pInfo info) {
 							// If the connection is established
 							if (info.groupFormed) {
+								wifiDirectIExchange = new WifiDirectExchangeClient(notificationCenter,info.groupOwnerAddress.getHostAddress());
 								wifiDirectIExchange.startExchange();
 							}
 						}
