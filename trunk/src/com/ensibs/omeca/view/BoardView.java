@@ -39,6 +39,7 @@ public class BoardView extends RelativeLayout {
 	private DrawPileView drawPileView;
 	private DiscardPileView discardPileView;
 	private Hashtable<Integer, PlayerView> playerViews;
+	private CutCardsView cutCardsView;
 	public CardGroup cg;
 
 
@@ -78,6 +79,10 @@ public class BoardView extends RelativeLayout {
 				board.getDiscardPile());
 		addView(drawPileView);
 		addView(discardPileView);
+		cutCardsView = new CutCardsView(context);
+        cutCardsView.updateView();
+        addView(cutCardsView);
+        cutCardsView.setVisibility(View.GONE);
 		displayPlayers();
 	}
 
@@ -163,6 +168,10 @@ public class BoardView extends RelativeLayout {
 		return drawPileView;
 	}
 
+	public CutCardsView getCutCardsView() {
+		return cutCardsView;
+	}
+
 	public DiscardPileView getDiscardPileView() {
 		return discardPileView;
 	}
@@ -170,7 +179,7 @@ public class BoardView extends RelativeLayout {
 	public Hashtable<Integer, PlayerView> getPlayerViews() {
 		return playerViews;
 	}
-	
+
 	public int getPlayerViewPosition(PlayerView pv){
 		for(Entry<Integer, PlayerView> e : playerViews.entrySet()){
 			if(pv == e.getValue())
@@ -228,7 +237,7 @@ public class BoardView extends RelativeLayout {
 					marginParams.setMargins(left, top, right, bottom);
 					view.setLayoutParams(new RelativeLayout.LayoutParams(
 							marginParams));
-					
+
 					if (parent instanceof HandView) {
 						Log.i(WifiDirectProperty.TAG, "1");
 						MoveCardAction movecard = new MoveCardAction("Player", ActionController.user.getId(), view.getCard(), "BoardView");
@@ -236,7 +245,7 @@ public class BoardView extends RelativeLayout {
 						movecard.setPourcentageY(top*100/((View) view.getParent()).getHeight());
 						Log.i(WifiDirectProperty.TAG, movecard.getPourcentageX()+" "+movecard.getPourcentageY());
 						GameActivity.getActivity().getWifiDirectManager().sendEvent(new WifiDirectEventImpl(WifiDirectEvent.EVENT, movecard));	
-						
+
 					}
 					else if(parent instanceof DrawPileView){
 						MoveCardAction movecard = new MoveCardAction("DrawPileView", "BoardView",view.getCard());
@@ -252,7 +261,7 @@ public class BoardView extends RelativeLayout {
 						Log.i(WifiDirectProperty.TAG, movecard.getPourcentageX()+" "+movecard.getPourcentageY());
 						GameActivity.getActivity().getWifiDirectManager().sendEvent(new WifiDirectEventImpl(WifiDirectEvent.EVENT, movecard));
 					}else{Log.i(WifiDirectProperty.TAG, "4");}
-					
+
 					for (int i = 0; i < getChildCount(); i++) {
 						getChildAt(i).setVisibility(View.VISIBLE);
 					}
@@ -282,7 +291,7 @@ public class BoardView extends RelativeLayout {
 			x = this.getWidth()/2;
 			y= this.getHeight();
 		}else{
-			
+
 			x = (int) playerViews.get(placeView).getX();
 			y= (int) playerViews.get(placeView).getY();
 		}	
@@ -347,7 +356,7 @@ public class BoardView extends RelativeLayout {
 				for( int j = distributor+1; j<Board.NB_PLAYER_MAX; j++){
 					OmecaHandler handl = GameActivity.getActivity().getOmecaHandler();
 					Message msgObj = handl.obtainMessage();
-					
+
 					Bundle b = new Bundle();
 					p =ActionController.board.getPlayers().get(j);
 					if(p !=null){
@@ -356,7 +365,7 @@ public class BoardView extends RelativeLayout {
 						msgObj.setData(b);
 						GameActivity.getActivity().getOmecaHandler().sendMessage(msgObj);
 					}
-					
+
 				}
 				Message msgObj1 = GameActivity.getActivity().getOmecaHandler().obtainMessage();
 				Bundle b1 = new Bundle();
@@ -364,8 +373,8 @@ public class BoardView extends RelativeLayout {
 				msgObj1.what = OmecaHandler.GIVETO;
 				msgObj1.setData(b1);
 				GameActivity.getActivity().getOmecaHandler().sendMessage(msgObj1);
-				
-				
+
+
 				for( int j = 0; j<distributor; j++){
 					Message msgObj = GameActivity.getActivity().getOmecaHandler().obtainMessage();
 					Bundle b = new Bundle();
@@ -383,15 +392,14 @@ public class BoardView extends RelativeLayout {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
-				
+
 			}
-		
-		return null;
-	}
+
+			return null;
+		}
 	}
 }
 
 
 
-			
-		
+
