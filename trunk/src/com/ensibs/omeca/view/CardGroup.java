@@ -109,10 +109,10 @@ public class CardGroup {
 	}
 	
 	/**
-	 * prepar the groupe to be move
+	 * Prepare the group to be move
 	 * this function have to be called before drag
-	 * @param x2
-	 * @param y2
+	 * @param x2 position of the pointer relatively to board 
+	 * @param y2 position of the pointer relatively to board 
 	 */
 	public void startMove( float x2, float y2){
 		this.x= x2;
@@ -120,6 +120,13 @@ public class CardGroup {
 		for(int i= 1; i<tuching.size(); i++){
 			tuching.get(i).setVisibility(View.INVISIBLE);}
 	}	
+	
+	/**
+	 *  tell if a view is tuching an other 
+	 * @param c1 first view
+	 * @param c2 second view
+	 * @return
+	 */
 	public Boolean isTuching(View c1, View c2){
 		float xUp1, xUp2, yUp1, yUp2;
 		xUp1= c1.getX();
@@ -130,6 +137,10 @@ public class CardGroup {
 			return true;
 		else return false;		
 	}
+	
+	/**
+	 * clear the tuching list	
+	 */
 	public void leave() {
 		//multiDrag=false;
 		for(int i= 1; i<tuching.size(); i++){
@@ -138,6 +149,11 @@ public class CardGroup {
 		}
 		tuching.clear();
 	}
+	
+	/**
+	 * move all cards to the parent
+	 * @param parent pile who will receive all cards
+	 */
 	public void moveToPile(FrameLayout parent) {
 		for(int i = tuching.size()-1; i>0; i--){
 			BoardView boardView = (BoardView) (GameActivity.getActivity().findViewById(R.id.view_board));
@@ -154,6 +170,10 @@ public class CardGroup {
 		tuching.clear();
 	}
 
+	/**
+	 * give all card to the player
+	 * @param p player receiving cards
+	 */
 	public void moveToPlayer(Player p) {
 		for(int i = tuching.size()-1; i>0; i--){
 			BoardView boardView = (BoardView) (GameActivity.getActivity().findViewById(R.id.view_board));
