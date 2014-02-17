@@ -8,8 +8,6 @@ import android.widget.NumberPicker;
 public class DealView extends LinearLayout{
 	public Button buttonSave;
 	public Button buttonCancel;
-	//private TextView nbCards;
-	//private SeekBar seekBar;
 	private NumberPicker numberPicker;
 
 	public DealView(int drawNumber, int playerNumber,Context c) {
@@ -24,25 +22,11 @@ public class DealView extends LinearLayout{
 		buttonSave.setText("OK");
 		buttonCancel = new Button(c);
 		buttonCancel.setText("Cancel");
-		/*seekBar = new SeekBar(c);
-		seekBar.setProgress(0);
-		seekBar.setMax((int)(drawNumber / playerNumber));
-		seekBar.setOnSeekBarChangeListener(new OnSeekBarChangeListener() {
-			public void onStopTrackingTouch(SeekBar seekBar) { }
-			public void onStartTrackingTouch(SeekBar seekBar) { }
-			public void onProgressChanged(SeekBar seekBar,int progress, boolean fromUser) {
-				nbCards.setText(""+progress);
-			}
-		});*/
-		//nbCards = new TextView(c);
-		//nbCards.setText(""+seekBar.getProgress());
 		numberPicker = new NumberPicker(c);
 		numberPicker.setMaxValue((int)(drawNumber / playerNumber));
 		numberPicker.setMinValue(1);
 		buttonLayout.addView(buttonSave,new LayoutParams(LayoutParams.FILL_PARENT,LayoutParams.WRAP_CONTENT,1));
 		buttonLayout.addView(buttonCancel,new LayoutParams(LayoutParams.FILL_PARENT,LayoutParams.WRAP_CONTENT,1));
-		//this.addView(nbCards);
-		//this.addView(seekBar,new LayoutParams(LayoutParams.MATCH_PARENT,LayoutParams.WRAP_CONTENT));
 		this.addView(numberPicker,new LayoutParams(LayoutParams.MATCH_PARENT,LayoutParams.WRAP_CONTENT));
 		this.addView(buttonLayout);
 		

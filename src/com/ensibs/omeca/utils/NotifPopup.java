@@ -14,7 +14,6 @@ import android.widget.TextView;
 
 import com.ensibs.omeca.GameActivity;
 import com.ensibs.omeca.R;
-import com.ensibs.omeca.controller.ActionController;
 import com.ensibs.omeca.model.entities.Notif;
 import com.ensibs.omeca.view.PlayerView;
 
