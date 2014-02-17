@@ -269,6 +269,12 @@ public class BoardView extends RelativeLayout {
 						Log.i(WifiDirectProperty.TAG, movecard.getPourcentageX()+" "+movecard.getPourcentageY());
 						GameActivity.getActivity().getWifiDirectManager().sendEvent(new WifiDirectEventImpl(WifiDirectEvent.EVENT, movecard));
 					}
+					View tmp;
+					for(int i=0; i<getChildCount();i++){
+						tmp = getChildAt(i);
+						if(tmp instanceof CardView)
+							tmp.setVisibility(View.VISIBLE);
+					}
 					vTmp.setVisibility(View.VISIBLE);
 				} else {
 					vTmp.setVisibility(View.VISIBLE);

@@ -241,11 +241,31 @@ public class OmecaHandler extends Handler {
 						boardView.getDrawPileView().addView(
 								new CardView(GameActivity.getActivity(), tmp));
 						notif.setEvent(GameActivity.getActivity().getResources().getString(R.string.notif_card_board_to_draw));
+						TextView textDiscardPile = (TextView) boardView
+								.findViewById(R.id.nbDiscardPileCards);
+						TextView textDrawPile = (TextView) boardView
+								.findViewById(R.id.nbDrawPileCards);
+						textDiscardPile.setText(""
+								+ boardView.getDiscardPileView().getDiscardPile()
+										.getNumberOfCards());
+						textDrawPile.setText(""
+								+ boardView.getDrawPileView().getDrawpile()
+										.getNumberOfCards());
 					} else if (data.getString("Target").equals(
 							"DiscardPileView")) {
 						boardView.getDiscardPileView().addView(
 								new CardView(GameActivity.getActivity(), tmp));
 						notif.setEvent(GameActivity.getActivity().getResources().getString(R.string.notif_card_board_to_discard));
+						TextView textDiscardPile = (TextView) boardView
+								.findViewById(R.id.nbDiscardPileCards);
+						TextView textDrawPile = (TextView) boardView
+								.findViewById(R.id.nbDrawPileCards);
+						textDiscardPile.setText(""
+								+ boardView.getDiscardPileView().getDiscardPile()
+										.getNumberOfCards());
+						textDrawPile.setText(""
+								+ boardView.getDrawPileView().getDrawpile()
+										.getNumberOfCards());
 					} else if (data.getString("Target").equals("Player")) {
 						notif.setEvent(GameActivity.getActivity().getResources().getString(R.string.notif_card_board_to_me));
 						int playerId = data.getInt("IDTarget");
@@ -351,6 +371,16 @@ public class OmecaHandler extends Handler {
 						handView.updateView(false);
 					}
 				}
+				TextView textDiscardPile = (TextView) boardView
+						.findViewById(R.id.nbDiscardPileCards);
+				TextView textDrawPile = (TextView) boardView
+						.findViewById(R.id.nbDrawPileCards);
+				textDiscardPile.setText(""
+						+ boardView.getDiscardPileView().getDiscardPile()
+								.getNumberOfCards());
+				textDrawPile.setText(""
+						+ boardView.getDrawPileView().getDrawpile()
+								.getNumberOfCards());
 			} else if (data.getString("Source").equals("Player")) {
 				int playerId = data.getInt("IDSource");
 				int value = data.getInt("Value");
