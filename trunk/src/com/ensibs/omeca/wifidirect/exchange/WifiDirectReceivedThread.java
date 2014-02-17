@@ -31,6 +31,7 @@ public class WifiDirectReceivedThread extends Thread{
 		try {
 			this.objectInputStream =  new ObjectInputStream(this.socket.getInputStream());
 			while(run && this.socket.isConnected()){
+				Log.i(WifiDirectProperty.TAG, "wait msg");
 				Object obj;
 				obj = objectInputStream.readObject();
 				if (obj instanceof WifiDirectEventImpl && run) {
