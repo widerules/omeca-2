@@ -188,10 +188,8 @@ public class WifiDirectManager extends Observable implements Observer{
 		new Timer().schedule(new TimerTask() {
 			@Override
 			public void run() {
-				Log.i("P2PTest", "Timer start");
 				if(status == WifiDirectStatus.DISCONNECTED){
 					cancelConnectionTo();
-					Log.i("P2PTest", "Cancel connection");
 				}
 			}
 		}, new Date((new Date()).getTime()+WifiDirectProperty.TIMER));

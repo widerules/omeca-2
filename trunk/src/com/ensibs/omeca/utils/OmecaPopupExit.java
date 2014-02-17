@@ -6,20 +6,21 @@ import android.content.DialogInterface;
 
 import com.ensibs.omeca.GameActivity;
 import com.ensibs.omeca.MainActivity;
+import com.ensibs.omeca.R;
 
 public class OmecaPopupExit {
 	private static AlertDialog omecaPopupMenu = null;
 	private static Boolean isGameActivity = false;
-	private static String finishText = "Voulez-vous vraiment quitter l'application?";
+	private static String finishText = "";
 
 	public static void show(Context context) {
 		if (context instanceof	GameActivity) {
 			isGameActivity = true;
-			finishText = "Voulez-vous vraiment quitter la partie?";
+			finishText = GameActivity.getActivity().getResources().getString(R.string.confirm_exit_game);
 		}
 		else{
 			isGameActivity = false;
-			finishText = "Voulez-vous vraiment quitter l'application?";
+			finishText = GameActivity.getActivity().getResources().getString(R.string.confirm_exit_application);
 		}
 
 		DialogInterface.OnClickListener dialogClickListener = new DialogInterface.OnClickListener() {
@@ -46,8 +47,8 @@ public class OmecaPopupExit {
 
 		builder
 		.setMessage(finishText)
-		.setPositiveButton("Oui", dialogClickListener)
-		.setNegativeButton("Non", dialogClickListener)
+		.setPositiveButton(GameActivity.getActivity().getResources().getString(R.string.yes), dialogClickListener)
+		.setNegativeButton(GameActivity.getActivity().getResources().getString(R.string.no), dialogClickListener)
 		.show();
 
 	}

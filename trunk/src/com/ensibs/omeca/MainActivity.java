@@ -78,7 +78,6 @@ public class MainActivity extends Activity implements Observer {
 	 * @param view
 	 */
 	public void host(View view) {
-		System.out.println("Host !!!");
 		this.wifiDirectManager.setMode(WifiDirectMod.HOST);
 		this.wifiDirectManager.startVisible();
 		Intent intent = new Intent(this, GameActivity.class);
@@ -91,7 +90,6 @@ public class MainActivity extends Activity implements Observer {
 	 * @param view
 	 */
 	public void join(View view) {
-		System.out.println("Join !!!");
 		this.wifiDirectManager.setMode(WifiDirectMod.CLIENT);
 		this.wifiDirectManager.startVisible();
 		this.wifiDirectManager.startDiscoverPeers();

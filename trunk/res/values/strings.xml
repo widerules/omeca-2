@@ -1,38 +1,98 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
+    <!-- A P P L I C A T I O N -->
     <string name="app_name">OMECA</string>
-    <string name="action_about">A propos</string>
-    <string name="action_exit">Quitter</string>
-    <string name="hello_world">Hello world!</string>
+    
+
+    <!-- M I S C -->
+    <string name="ok">OK</string>
+    <string name="yes">Oui</string>
+    <string name="no">Non</string>
+    <string name="save">Sauver</string>
+    <string name="cancel">Annuler</string>
+    
+    
+    <!-- M A I N    M E N U -->
     <string name="button_host">Créer</string>
     <string name="button_client">Joindre</string>
     <string name="button_options">Options</string>
     <string name="button_help">Aide</string>
-    <string name="button_disconnect">Quitter la partie</string>
-    <string name="button_exit">Quitter le jeu</string>
-    <string name="start_game">Jouer</string>
-    <string name="choose_avatar">Choisir un avatar</string>
+    
+    
+    
+    <!-- G A M E    A C T I V I T Y -->
+    <string name="choose_host">Choix de l\'hébergeur</string>
+    <string name="confirm_exit_game">Voulez-vous vraiment quitter la partie?</string>
+    <string name="confirm_exit_application">Voulez-vous vraiment quitter l\'application?</string>
+    
+    
+    <!-- O P T I O N S    A C T I V I T Y -->
     <string name="choose_username">Nom de joueur</string>
     <string name="username">Pseudo</string>
-    <string name="save">Sauver</string>
-    <string name="cancel">Annuler</string>
+    <string name="homescreen_options_sound">Sons</string>
+    <string name="homescreen_options_vibration">Vibrations</string>
     <string name="error_username_null">ERREUR: veuillez rentrer un pseudo</string>
     <string name="error_username_length">ERREUR: veuillez rentrer un pseudo plus court</string>
     <string name="error_username_back">ERREUR: veuillez rentrer un pseudo valide</string>
-    <string name="tmp_board">Board</string>
-    <string name="tmp_hand">Hand</string>
-    <string name="tmp_slidebar">Board View</string>
-    <string name="tmp_slidebar_down">Hand View</string>
-    <string name="button_notifs">Notifs</string>
-    <string name="homescreen_options_sound">Sons</string>
-    <string name="homescreen_options_vibration">Vibrations</string>
+    
+    
+    
+    <!-- H E L P    A C T I V I T Y -->
+    <string name="title_activity_help">HelpActivity</string>
+    <string name="action_about">A propos</string>
+    <string name="action_exit">Quitter</string>
+    <string name="about_text">OMECA version 2.0 (2013/2014)\n\nRéalisée par:\n\tRaphaël GICQUIAUX\n\tNicolas HALLOUIN\n\tSylvain RIO\n\tLindsay ROZIER\ndans le cadre du projet de fin d\'études de l\'ENSIbs</string>
+    
+    
+    
+    <!-- G A M E    A C T I V I T Y -->
     <string name="list_menu">Menu action</string>
     <string name="list_distribution">Distribution automatique</string>
     <string name="list_shuffle">Melanger la pile de pioche</string>
     <string name="list_cut">Couper la pile de pioche</string>
     <string name="list_pile">Reinitialiser les piles</string>
     <string name="list_reinit">Reinitialiser la partie</string>
-    <string name="title_activity_help">HelpActivity</string>
+    
+    
+    
+    <!-- N O T I F I C A T I O N S -->
+    <string name="notif_disconnect">Un joueur s\'est déconnecté</string>
+    <string name="notif_player_acknowledge">Acceptation d\'un joueur</string>
+    <string name="notif_player_move">Déplacement de joueurs</string>
+    <string name="notif_auto_dispatch"> cartes ont été distribuées à chacun</string>
+    <string name="notif_return_draw">Une carte de la pioche a été retournée</string>
+    <string name="notif_return_board">Une carte du tapis a été retournée</string>
+    <string name="notif_return_discard">Une carte défaussée a été retournée</string>
+    <string name="notif_card_draw_to_board">Une carte a été mise en jeu</string>
+    <string name="notif_card_draw_to_discard">Défausse d\'une carte de la pioche</string>
+    <string name="notif_card_draw_to_me">J\'ai reçu 1 carte de la pioche</string>
+    <string name="notif_card_draw_to_player">a reçu 1 carte de la pioche</string>
+    <string name="notif_card_board_to_draw">Une carte a été mise dans la pioche</string>
+    <string name="notif_card_board_to_discard">Défausse d\'une carte du tapis</string>
+    <string name="notif_card_board_to_me">J\'ai reçu 1 carte du tapis</string>
+    <string name="notif_card_board_to_player">a reçu 1 carte du tapis</string>
+    <string name="notif_card_discard_to_board">Une carte défaussée a été mise en jeu</string>
+    <string name="notif_card_discard_to_draw">Une carte défaussée a été mise en pioche</string>
+    <string name="notif_card_discard_to_me">J\'ai reçu 1 carte défaussée</string>
+    <string name="notif_card_discard_to_player">a reçu 1 carte défaussée</string>
+    <string name="notif_card_player_to_board">a joué 1 carte</string>
+    <string name="notif_card_player_to_draw">a placé 1 carte en pioche</string>
+    <string name="notif_card_player_to_discard">s\'est défaussé d\'une carte</string>
+    <string name="notif_card_player_to_me">m\'a donné une carte</string>
+    <string name="notif_card_player_to_player">a donné une carte à</string>
+    <string name="notif_shuffle">Les cartes ont été mélangées</string>
+    <string name="notif_cut">Les cartes ont été coupées</string>
+    <string name="reinit_piles">Les piles onté été réinitialisées</string>
+    <string name="reinit_game">La partie a été réinitialisée</string>
+    
+    
+    
+    <!-- T E M P -->
+    <string name="hello_world">Hello world!</string>
+    <string name="tmp_board">Board</string>
+    <string name="tmp_hand">Hand</string>
+    <string name="tmp_slidebar">Board View</string>
+    <string name="tmp_slidebar_down">Hand View</string>
 
 </resources>

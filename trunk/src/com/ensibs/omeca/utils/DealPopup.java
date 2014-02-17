@@ -25,7 +25,7 @@ public class DealPopup {
 					.getDrawPile().getNumberOfCards(), ActionController.board
 					.getPlayers().size(), context);
 			dealPopup = new AlertDialog.Builder(context);
-			dealPopup.setTitle("Distribution automatique");
+			dealPopup.setTitle(GameActivity.getActivity().getResources().getString(R.string.list_distribution));
 			dealPopup.setView(dv);
 			final AlertDialog alert = dealPopup.create();
 			alert.show();

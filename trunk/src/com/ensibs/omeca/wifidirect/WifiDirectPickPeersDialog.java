@@ -1,5 +1,7 @@
 package com.ensibs.omeca.wifidirect;
 
+import com.ensibs.omeca.GameActivity;
+import com.ensibs.omeca.R;
 import com.ensibs.omeca.wifidirect.event.WifiDirectEvent;
 import com.ensibs.omeca.wifidirect.event.WifiDirectEventImpl;
 
@@ -19,9 +21,9 @@ public class WifiDirectPickPeersDialog extends AlertDialog.Builder{
 		this.manager = manager;
 		this.peers = peers;
 		this.create();
-		this.setTitle("Choisir l'hebergeur");
+		this.setTitle(GameActivity.getActivity().getResources().getString(R.string.choose_host));
 		this.setCancelable(false);
-		this.setNegativeButton("Annuler",
+		this.setNegativeButton(GameActivity.getActivity().getResources().getString(R.string.cancel),
 				new DialogInterface.OnClickListener() {
 			public void onClick(DialogInterface dialog, int id) {
 				WifiDirectPickPeersDialog.this.manager.cancelConnection();

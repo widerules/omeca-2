@@ -1,5 +1,8 @@
 package com.ensibs.omeca.view;
 
+import com.ensibs.omeca.GameActivity;
+import com.ensibs.omeca.R;
+
 import android.content.Context;
 import android.widget.Button;
 import android.widget.LinearLayout;
@@ -19,9 +22,9 @@ public class DealView extends LinearLayout{
 		buttonLayout.setLayoutParams(new LayoutParams(LayoutParams.FILL_PARENT,LayoutParams.WRAP_CONTENT));
 		buttonLayout.setPadding(0, 5, 0, 0);
 		buttonSave = new Button(c);
-		buttonSave.setText("OK");
+		buttonSave.setText(GameActivity.getActivity().getResources().getString(R.string.ok));
 		buttonCancel = new Button(c);
-		buttonCancel.setText("Cancel");
+		buttonCancel.setText(GameActivity.getActivity().getResources().getString(R.string.cancel));
 		numberPicker = new NumberPicker(c);
 		numberPicker.setMaxValue((int)(drawNumber / playerNumber));
 		numberPicker.setMinValue(1);
