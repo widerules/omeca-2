@@ -28,10 +28,21 @@ public class CardGroup {
 	public CardGroup() {
 		tuching = new ArrayList<View>();
 	}
+	
+	/**
+	 * return the list of grouped cards based on the long click card
+	 * @return list of grouped cards
+	 */
 	public ArrayList<View> getTuching() {
 		return tuching;
 	}
-	public void add(View v, View inspect){
+	
+	/**
+	 * add inspect to tuching if it's tuching v
+	 * @param v long click card
+	 * @param inspect card to eventualy add to tuching
+	 */
+	private void add(View v, View inspect){
 		if(inspect != v){ // touche la principale 
 			for(int j= tuching.size()-1; j>-1; j--){
 				if(isTuching(tuching.get(j),inspect)){
@@ -42,6 +53,12 @@ public class CardGroup {
 			} 
 		}
 	}
+	
+	/**
+	 * verify which card is tuching the groupe 
+	 * @param cards all cards on the board
+	 * @param v long click view
+	 */
 	public void startVerify( ArrayList<View> cards, View v) {
 		int oldSize = 0;
 		tuching.add(v);
@@ -54,6 +71,15 @@ public class CardGroup {
 			}
 		}	
 	}
+	
+	/**
+	 * move all card by a distance of (x,y) in the board
+	 * if some cards leave the board it stay at the border
+	 * @param x distance in x 
+	 * @param y distance in y 
+	 * @param maxX lateral size of the board
+	 * @param maxY vertical size of the board
+	 */
 	public void move(Float x, Float y, int maxX, int maxY){
 		int left=0 , top =0, right, bottom ;
 		for(int i = tuching.size()-1; i>0; i--){
@@ -88,6 +114,13 @@ public class CardGroup {
 		tuching.get(0).setVisibility(View.VISIBLE);
 		tuching.clear();
 	}
+	
+	/**
+	 * prepar the groupe to be move
+	 * this function have to be called before drag
+	 * @param x2
+	 * @param y2
+	 */
 	public void startMove( float x2, float y2){
 		this.x= x2;
 		this.y= y2;
