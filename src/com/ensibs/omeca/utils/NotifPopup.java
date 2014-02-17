@@ -22,33 +22,33 @@ public class NotifPopup {
 	private static Stack<Notif> notifs = new Stack<Notif>();
 
 	public static void show(Context context) {
-		
+
 		if (notifs.size() > 0) {
 			notifPopup = new AlertDialog.Builder(context);
 			LayoutInflater inflater = (LayoutInflater) context.getSystemService( Context.LAYOUT_INFLATER_SERVICE );
 			View notifView = inflater.inflate(R.layout.popup_notifs, null);
-	
+
 			for (Notif n : notifs) {
 				View v = inflater.inflate(R.layout.view_notif, null);
 				TextView tvDate = (TextView) v.findViewById(R.id.notifs_date);
 				ImageView ivSrc = (ImageView) v.findViewById(R.id.notifs_src);
 				TextView tvEvent = (TextView) v.findViewById(R.id.notifs_event);
 				ImageView ivTarget = (ImageView) v.findViewById(R.id.notifs_target);
-				
+
 				notifGenerator(n, tvDate, ivSrc, tvEvent, ivTarget);
-	
-	            LinearLayout ll = (LinearLayout) notifView.findViewById(R.id.notif_wrapper);
+
+				LinearLayout ll = (LinearLayout) notifView.findViewById(R.id.notif_wrapper);
 				((ViewGroup) ll).addView(v);
 			}
-	
+
 			notifPopup.setView(notifView);
-			notifPopup.setNegativeButton("OK", new DialogInterface.OnClickListener() {
+			notifPopup.setNegativeButton(GameActivity.getActivity().getResources().getString(R.string.ok), new DialogInterface.OnClickListener() {
 				public void onClick(DialogInterface popup, int arg1) {
 					popup.dismiss();
 					flushNotifs();
 				}
 			});
-	
+
 			notifPopup.show();
 		}
 
@@ -69,22 +69,22 @@ public class NotifPopup {
 			if (n.getDate() != null) {
 				tvDate.setText(n.getDate() + " - ");
 			}
-			
+
 			if (n.getSource() != null) {
 				ivSrc.setBackgroundResource(AvatarsList.get(n.getSource().getAvatar()));
 			}
-			
+
 			if (n.getEvent() != null) {
 				tvEvent.setText(n.getEvent());
 			}
-			
+
 			if (n.getTarget() != null) {
 				ivTarget.setBackgroundResource(AvatarsList.get(n.getTarget().getAvatar()));
 			}
 		}
 	}
-	
-	
+
+
 	/**
 	 * Adds a notif
 	 * @param src
@@ -97,17 +97,17 @@ public class NotifPopup {
 			PlayerView.updateNotifs(notifs.size());
 		}
 	}
-	
-	
+
+
 	/**
 	 * Remove all notifs
 	 */
 	public static void flushNotifs() {
 		notifs.removeAllElements();
-		
+
 		PlayerView.updateNotifs(notifs.size());
 	}
-	
+
 	public static int getNumberOfNofifs(){
 		return notifs.size();
 	}
