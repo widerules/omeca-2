@@ -1,10 +1,7 @@
 package com.ensibs.omeca.utils;
 
-import com.ensibs.omeca.R;
-
 import android.app.NotificationManager;
 import android.content.Context;
-import android.media.RingtoneManager;
 import android.net.Uri;
 import android.support.v4.app.NotificationCompat;
 

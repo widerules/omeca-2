@@ -1,5 +1,7 @@
 package com.ensibs.omeca.model.actions;
 
+import android.util.Log;
+
 import com.ensibs.omeca.GameActivity;
 import com.ensibs.omeca.controller.ActionController;
 import com.ensibs.omeca.controller.OmecaHandler;
@@ -54,6 +56,7 @@ public class AknowlegmentConnectionAction implements Action {
 
 	@Override
 	public void execute() {
+		Log.w("efef", "fefef");
 		Player p = getPlayer();
 		if (p.getMacAddress().equals(ActionController.user.getMacAddress())) {
 			ActionController.user = p;

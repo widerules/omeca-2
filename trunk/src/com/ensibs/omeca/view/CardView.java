@@ -116,9 +116,9 @@ public class CardView extends ImageView{
 						src = "DiscardPileView";
 					if(src.equals("DrawPileView") || src.equals("BoardView") || src.equals("DiscardPileView"))
 						GameActivity.getActivity().getWifiDirectManager().sendEvent(new WifiDirectEventImpl(WifiDirectEvent.EVENT, new ReturnCardAction(src, getCard())));
-					boardView.cg.leave();
+					boardView.getCardsGroup().leave();
 				}
-				boardView.cg.getTuching().clear();
+				boardView.getCardsGroup().getTuching().clear();
 				break;
 			case MotionEvent.ACTION_MOVE:
 				if(isOnClick && 
@@ -128,9 +128,9 @@ public class CardView extends ImageView{
 					DragShadowBuilder shadowBuilder = new View.DragShadowBuilder(view);
 					view.startDrag(data, shadowBuilder, view, 0);
 					isOnClick = false; 
-					if(boardView.cg.getTuching().size()>1){
+					if(boardView.getCardsGroup().getTuching().size()>1){
 						Log.i(WifiDirectProperty.TAG, "x: "+mE.getX());
-						boardView.cg.startMove(view.getX()+mE.getX(), view.getY()+ mE.getY());
+						boardView.getCardsGroup().startMove(view.getX()+mE.getX(), view.getY()+ mE.getY());
 					}
 				}
 				break;
@@ -155,7 +155,7 @@ public class CardView extends ImageView{
 						//boardView.cg.add(v,inspect);
 					}
 				}
-				boardView.cg.startVerify(cards, v);
+				boardView.getCardsGroup().startVerify(cards, v);
 			
 			return true;
 		}		

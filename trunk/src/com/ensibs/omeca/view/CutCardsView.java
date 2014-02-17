@@ -4,12 +4,17 @@ import android.content.Context;
 import android.graphics.Color;
 import android.util.AttributeSet;
 import android.util.DisplayMetrics;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.MotionEvent;
 import android.view.View;
+import android.view.animation.AlphaAnimation;
+import android.view.animation.Animation;
+import android.view.animation.Animation.AnimationListener;
 import android.widget.LinearLayout;
 
 import com.ensibs.omeca.GameActivity;
+import com.ensibs.omeca.R;
 import com.ensibs.omeca.controller.ActionController;
 import com.ensibs.omeca.controller.OmecaHandler;
 import com.ensibs.omeca.model.actions.CutCardsAction;
@@ -87,9 +92,31 @@ public class CutCardsView extends LinearLayout {
 					i++;
 				}
 				ActionController.board.setDrawPile(dp);
+				Log.w("X", v.getX()+"");
+				Log.w("Y", v.getY()+"");
+				AlphaAnimation anim = new AlphaAnimation(1, 0.5f);
+				anim.setRepeatCount(5);
+				anim.setDuration(100);
+				anim.setAnimationListener(new AnimationListener() {
+					
+					@Override
+					public void onAnimationStart(Animation animation) {}
+					
+					@Override
+					public void onAnimationRepeat(Animation animation) {}
+					
+					@Override
+					public void onAnimationEnd(Animation animation) {
+						BoardView boardView = (BoardView) GameActivity.getActivity()
+								.findViewById(R.id.view_board);
+						boardView.getCutCardsView().setVisibility(View.GONE);
+					}
+				});
+				v.startAnimation(anim);
 				GameActivity.getActivity().getOmecaHandler().sendEmptyMessage(OmecaHandler.CUT);
 				GameActivity.getActivity().getWifiDirectManager().sendEvent(new WifiDirectEventImpl(
 						WifiDirectEvent.EVENT, new CutCardsAction(cards)));
+				
 				break;
 			default:
 				break;

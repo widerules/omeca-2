@@ -66,7 +66,7 @@ public class PileDragListener implements OnDragListener {
 					}
 					// multi drag
 					BoardView boardView = (BoardView) (GameActivity.getActivity().findViewById(R.id.view_board));
-					boardView.cg.moveToPile(pile);
+					boardView.getCardsGroup().moveToPile(pile);
 				}
 				else if(v instanceof DrawPileView){
 					DrawPileView pile = (DrawPileView)v;

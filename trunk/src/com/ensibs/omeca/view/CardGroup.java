@@ -2,24 +2,17 @@ package com.ensibs.omeca.view;
 
 import java.util.ArrayList;
 
+import android.view.View;
+import android.view.ViewGroup.MarginLayoutParams;
+import android.widget.FrameLayout;
+import android.widget.RelativeLayout;
+
 import com.ensibs.omeca.GameActivity;
 import com.ensibs.omeca.R;
 import com.ensibs.omeca.model.actions.MoveCardAction;
 import com.ensibs.omeca.model.entities.Player;
 import com.ensibs.omeca.wifidirect.event.WifiDirectEvent;
 import com.ensibs.omeca.wifidirect.event.WifiDirectEventImpl;
-import com.ensibs.omeca.wifidirect.property.WifiDirectProperty;
-
-import android.content.Context;
-import android.util.Log;
-import android.view.View;
-import android.view.View.DragShadowBuilder;
-import android.view.ViewGroup.MarginLayoutParams;
-import android.view.ViewGroup;
-import android.view.animation.DecelerateInterpolator;
-import android.view.animation.TranslateAnimation;
-import android.widget.FrameLayout;
-import android.widget.RelativeLayout;
 
 public class CardGroup {
 	private ArrayList<View> tuching;
