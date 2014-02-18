@@ -17,10 +17,26 @@ import com.ensibs.omeca.R;
 import com.ensibs.omeca.model.entities.Notif;
 import com.ensibs.omeca.view.PlayerView;
 
+/**
+ * This class displays, dismiss and manage a Notification popup
+ * @author OMECA 2.0 Team (Raphaël GICQUIAUX - Nicolas HALLOUIN - Sylvain RIO - Lindsay ROZIER)
+ *
+ */
 public class NotifPopup {
+	/**
+	 * The AlertDialog builder
+	 */
 	private static AlertDialog.Builder notifPopup = null;
+	
+	/**
+	 * The notifs stack
+	 */
 	private static Stack<Notif> notifs = new Stack<Notif>();
 
+	/**
+	 * Shows the popup, given context
+	 * @param context the context
+	 */
 	public static void show(Context context) {
 
 		if (notifs.size() > 0) {
@@ -100,7 +116,7 @@ public class NotifPopup {
 
 
 	/**
-	 * Remove all notifs
+	 * Removes all notifs
 	 */
 	public static void flushNotifs() {
 		notifs.removeAllElements();
@@ -108,6 +124,10 @@ public class NotifPopup {
 		PlayerView.updateNotifs(notifs.size());
 	}
 
+	/**
+	 * Returns the number of notifs
+	 * @return the number of notifs
+	 */
 	public static int getNumberOfNofifs(){
 		return notifs.size();
 	}
