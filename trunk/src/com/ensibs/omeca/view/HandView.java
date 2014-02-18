@@ -23,22 +23,33 @@ public class HandView extends Gallery {
 	public static final int CARDS_TO_DISPLAY_ORIGIN = 5;
 	public static int CARDS_TO_DISPLAY = 5;
 	
-	ArrayList<Card> list;
+	private ArrayList<Card> list;
 	private HandCardsAdapter adapter;
-	Context c;
-	HandViewCardGalleryDragListener hvcgdl = new HandViewCardGalleryDragListener();
+	private Context c;
+	private HandViewCardGalleryDragListener hvcgdl = new HandViewCardGalleryDragListener();
 
+	/**
+	 * constructor 
+	 * @param context context of the activity
+	 */
 	public HandView(Context context) {
 		super(context);
 		c = context;
 		init();
 	}
 	
+	/**
+	 * Add card to handView at the end
+	 * @param cv cardView to add
+	 */
 	public void addCard(CardView cv){
 		GA.user.addCard(cv.getCard());
 		updateView(true);
 	}
 
+	/**
+	 * Reorder cards by colors and values
+	 */
 	public void totalOrderCard() {
 		list = GA.user.getCards();
 		Card[] lOfspades = new Card[Card.VALUES.length];
@@ -81,6 +92,9 @@ public class HandView extends Gallery {
 		updateView(true);
 	}
 
+	/**
+	 * Reorder cards by colors
+	 */
 	public void colorOrderCard() {
 		list = GA.user.getCards();
 		ArrayList<Card> lOfspades = new ArrayList<Card>();
@@ -110,6 +124,9 @@ public class HandView extends Gallery {
 		updateView(true);
 	}
 
+	/**
+	 * Reorder cards by values
+	 */
 	public void valueOrderCard() {
 		list = GA.user.getCards();
 		ArrayList<Card> finalOrder = new ArrayList<Card>();
@@ -128,6 +145,10 @@ public class HandView extends Gallery {
 		this.updateView(true);
 	}
 
+	/** 
+	 * Update cards in the view
+	 * @param backToTheMiddle indicate if it have to center to middle card
+	 */
 	public void updateView(boolean backToTheMiddle) {
 		adapter.notifyDataSetChanged();
 		DisplayMetrics metrics = c.getApplicationContext().getResources()
@@ -140,6 +161,9 @@ public class HandView extends Gallery {
 			this.setSelection(GA.user.getNumberOfCards() / 2);
 	}
 
+	/**
+	 * Configure the gallery 
+	 */
 	private void init() {
 		// configurations for the carousel.
 		this.setClickable(false);
@@ -154,35 +178,62 @@ public class HandView extends Gallery {
 		list = new ArrayList<Card>();
 	}
 
+	/**
+	 * Constructor
+	 * @param context context of the activity
+	 * @param attrs
+	 */
 	public HandView(Context context, AttributeSet attrs) {
 		super(context, attrs);
 		c = context;
 		init();
 	}
 
+	/**
+	 * Adapter of the gallery
+	 * @author lindsay
+	 *
+	 */
 	public class HandCardsAdapter extends BaseAdapter {
 		private Context mContext;
 
+		/**
+		 * Constructor
+		 * @param c Activity context
+		 */
 		public HandCardsAdapter(Context c) {
 			mContext = c;
 		}
 
+		/**
+		 * return the number of cards in the view
+		 */
 		@Override
 		public int getCount() {
 			return GA.user.getNumberOfCards();
 		}
 
+		/**
+		 * Return the object in position 
+		 * @param position Position of the required element 
+		 */
 		@Override
 		public Object getItem(int position) {
 			return new CardView(c, GA.user.getCards()
 					.get(position));
 		}
 
+		/**
+		 * not used
+		 */
 		@Override
 		public long getItemId(int position) {
 			return position;
 		}
-
+		
+		/**
+		 * Used by init to complete show all cards
+		 */
 		public View getView(int position, View convertView, ViewGroup parent) {
 			if (parent.getHeight() == 0)
 				notifyDataSetChanged();
@@ -201,7 +252,15 @@ public class HandView extends Gallery {
 		}
 	}
 
+	/**
+	 * 
+	 * @author lindsay
+	 *
+	 */
 	class OnDragListenerHand implements OnDragListener {
+		/**
+		 *  Permet to move a card 
+		 */
 		@Override
 		public boolean onDrag(View v, DragEvent event) {
 			switch (event.getAction()) {
@@ -243,37 +302,8 @@ public class HandView extends Gallery {
 	}
 
 	/**
-	 * No need for the moment
-	class CardTouchListenerHand implements OnTouchListener {
-		private boolean isOnClick;
-
-		@Override
-		public boolean onTouch(View view, MotionEvent mE) {
-			switch (mE.getAction()) {
-			case MotionEvent.ACTION_DOWN:
-				isOnClick = true;
-				break;
-			case MotionEvent.ACTION_MOVE:
-				view.setVisibility(View.INVISIBLE);
-				ClipData data = ClipData.newPlainText("", "");
-				DragShadowBuilder shadowBuilder = new View.DragShadowBuilder(
-						view);
-				view.startDrag(data, shadowBuilder, view, 0);
-				isOnClick = false;
-				break;
-			case MotionEvent.ACTION_UP:
-				if (!isOnClick) {
-					view.setVisibility(View.VISIBLE);
-				}
-				break;
-			default:
-				break;
-			}
-			return true;
-		}
-	}
-	*/
-
+	 * Remove the specify view from HandView
+	 */
 	@Override
 	public void removeViewInLayout(View view) {
 		if (view instanceof CardView) {
@@ -283,7 +313,7 @@ public class HandView extends Gallery {
 		}
 	}
 	
-	
+	//TODO commentaires nico !!!
 	public class CardsZoomSeekbarChangeListener implements OnSeekBarChangeListener{
 
 		@Override
