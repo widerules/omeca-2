@@ -16,7 +16,7 @@ import android.widget.SeekBar;
 import android.widget.SeekBar.OnSeekBarChangeListener;
 
 import com.ensibs.omeca.R;
-import com.ensibs.omeca.controller.ActionController;
+import com.ensibs.omeca.controller.GA;
 import com.ensibs.omeca.model.entities.Card;
 
 public class HandView extends Gallery {
@@ -35,18 +35,18 @@ public class HandView extends Gallery {
 	}
 	
 	public void addCard(CardView cv){
-		ActionController.user.addCard(cv.getCard());
+		GA.user.addCard(cv.getCard());
 		updateView(true);
 	}
 
 	public void totalOrderCard() {
-		list = ActionController.user.getCards();
+		list = GA.user.getCards();
 		Card[] lOfspades = new Card[Card.VALUES.length];
 		Card[] lOfhearts = new Card[Card.VALUES.length];
 		Card[] lOfclubs = new Card[Card.VALUES.length];
 		Card[] lOfdiamonds = new Card[Card.VALUES.length];
 		Card[] jokers = new Card[Card.JOKERS.length];
-		for (int i = 0; ActionController.user.getCards().size() > i; i++) {
+		for (int i = 0; GA.user.getCards().size() > i; i++) {
 			if (list.get(i).getColor().equals(Card.COLORS[0]))
 				lOfdiamonds[list.get(i).getValue() - 1] = list.get(i);
 			else if (list.get(i).getColor().equals(Card.COLORS[1]))
@@ -77,18 +77,18 @@ public class HandView extends Gallery {
 		for (int i = 0; i < Card.VALUES.length; i++)
 			if (lOfclubs[i] != null)
 				list.add(lOfclubs[i]);
-		ActionController.user.setCards(list);
+		GA.user.setCards(list);
 		updateView(true);
 	}
 
 	public void colorOrderCard() {
-		list = ActionController.user.getCards();
+		list = GA.user.getCards();
 		ArrayList<Card> lOfspades = new ArrayList<Card>();
 		ArrayList<Card> lOfhearts = new ArrayList<Card>();
 		ArrayList<Card> lOfclubs = new ArrayList<Card>();
 		ArrayList<Card> lOfdiamonds = new ArrayList<Card>();
 		ArrayList<Card> jokers = new ArrayList<Card>();
-		for (int i = 0; ActionController.user.getCards().size() > i; i++) {
+		for (int i = 0; GA.user.getCards().size() > i; i++) {
 			if (list.get(i).getColor().equals(Card.COLORS[0]))
 				lOfdiamonds.add(list.get(i));
 			else if (list.get(i).getColor().equals(Card.COLORS[1]))
@@ -106,12 +106,12 @@ public class HandView extends Gallery {
 		list.addAll(lOfspades);
 		list.addAll(lOfhearts);
 		list.addAll(lOfclubs);
-		ActionController.user.setCards(list);
+		GA.user.setCards(list);
 		updateView(true);
 	}
 
 	public void valueOrderCard() {
-		list = ActionController.user.getCards();
+		list = GA.user.getCards();
 		ArrayList<Card> finalOrder = new ArrayList<Card>();
 		Card min = null;
 		while (!list.isEmpty()) {
@@ -122,9 +122,9 @@ public class HandView extends Gallery {
 
 			}
 			finalOrder.add(min);
-			ActionController.user.removeCard(min);
+			GA.user.removeCard(min);
 		}
-		ActionController.user.setCards(finalOrder);
+		GA.user.setCards(finalOrder);
 		this.updateView(true);
 	}
 
@@ -133,11 +133,11 @@ public class HandView extends Gallery {
 		DisplayMetrics metrics = c.getApplicationContext().getResources()
 				.getDisplayMetrics();
 		int cardWidth = (int)(metrics.heightPixels / CARDS_TO_DISPLAY);
-		int nbUserCards = ActionController.user.getNumberOfCards();
+		int nbUserCards = GA.user.getNumberOfCards();
 		int spacing = (nbUserCards > CARDS_TO_DISPLAY) ? (int)((-2*cardWidth*(nbUserCards-CARDS_TO_DISPLAY)) / (nbUserCards+1)) : 1;
 		setSpacing(spacing);
 		if (backToTheMiddle)
-			this.setSelection(ActionController.user.getNumberOfCards() / 2);
+			this.setSelection(GA.user.getNumberOfCards() / 2);
 	}
 
 	private void init() {
@@ -149,7 +149,7 @@ public class HandView extends Gallery {
 		adapter = new HandCardsAdapter(c);
 		this.setAdapter(adapter);
 		this.setUnselectedAlpha((float) 1);
-		this.setSelection(ActionController.user.getNumberOfCards() / 2);
+		this.setSelection(GA.user.getNumberOfCards() / 2);
 		this.setOnDragListener(hvcgdl);
 		list = new ArrayList<Card>();
 	}
@@ -169,12 +169,12 @@ public class HandView extends Gallery {
 
 		@Override
 		public int getCount() {
-			return ActionController.user.getNumberOfCards();
+			return GA.user.getNumberOfCards();
 		}
 
 		@Override
 		public Object getItem(int position) {
-			return new CardView(c, ActionController.user.getCards()
+			return new CardView(c, GA.user.getCards()
 					.get(position));
 		}
 
@@ -190,7 +190,7 @@ public class HandView extends Gallery {
 			if (cv == null) {
 				DisplayMetrics metrics = mContext.getApplicationContext()
 						.getResources().getDisplayMetrics();
-				cv = new CardView(mContext, ActionController.user.getCards()
+				cv = new CardView(mContext, GA.user.getCards()
 						.get(position));
 				int width = (int) (metrics.widthPixels / (CARDS_TO_DISPLAY));
 				int height = (int) (width * CardView.RATIO);
@@ -213,18 +213,18 @@ public class HandView extends Gallery {
 				break;
 			case DragEvent.ACTION_DROP:
 				CardView newPositionCard = (CardView) v;
-				int i = ActionController.user.getCards().indexOf(
+				int i = GA.user.getCards().indexOf(
 						newPositionCard.getCard());
 				HandView hv1 = (HandView) v.getParent();
 				CardView cardToMove1 = (CardView) event.getLocalState();
-				int exPosition = ActionController.user.getCards().indexOf(
+				int exPosition = GA.user.getCards().indexOf(
 						cardToMove1.getCard());
-				ActionController.user.getCards().remove(cardToMove1.getCard());
+				GA.user.getCards().remove(cardToMove1.getCard());
 				if (i < exPosition)
-					ActionController.user.getCards().add(i,
+					GA.user.getCards().add(i,
 							cardToMove1.getCard());
 				else
-					ActionController.user.getCards().add(i - 1,
+					GA.user.getCards().add(i - 1,
 							cardToMove1.getCard());
 				hv1.updateView(false);
 				break;
@@ -278,7 +278,7 @@ public class HandView extends Gallery {
 	public void removeViewInLayout(View view) {
 		if (view instanceof CardView) {
 			super.removeViewInLayout(view);
-			ActionController.user.removeCard(((CardView) view).getCard());
+			GA.user.removeCard(((CardView) view).getCard());
 			updateView(true);
 		}
 	}

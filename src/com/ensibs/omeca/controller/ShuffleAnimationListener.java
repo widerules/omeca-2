@@ -42,9 +42,9 @@ public class ShuffleAnimationListener implements AnimatorListener{
 
 	@Override
 	public void onAnimationStart(Animator animation) {
-		if(ActionController.isSoundToggled())
+		if(GA.isSoundToggled())
     		NotificationTools.createSoundNotification(GameActivity.getActivity().getApplicationContext(), R.drawable.shufflecard);
-    	if(ActionController.isVibrationToggled())
+    	if(GA.isVibrationToggled())
     		NotificationTools.createVibrationNotification(GameActivity.getActivity().getApplicationContext(), 1000);
 	}
 }

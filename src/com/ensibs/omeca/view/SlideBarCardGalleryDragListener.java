@@ -8,7 +8,7 @@ import android.widget.Gallery;
 
 import com.ensibs.omeca.GameActivity;
 import com.ensibs.omeca.R;
-import com.ensibs.omeca.controller.ActionController;
+import com.ensibs.omeca.controller.GA;
 import com.ensibs.omeca.model.actions.MoveCardAction;
 import com.ensibs.omeca.model.entities.Card;
 import com.ensibs.omeca.model.entities.Player;
@@ -37,7 +37,7 @@ public class SlideBarCardGalleryDragListener implements OnDragListener{
 					CardView view = (CardView) vTmp;
 					ViewGroup parent = (ViewGroup)(view.getParent());
 					Card c = view.getCard();
-					Player p = ActionController.user;
+					Player p = GA.user;
 					// multi drag
 					BoardView boardView = (BoardView) (GameActivity.getActivity().findViewById(R.id.view_board));
 					boardView.getCardsGroup().moveToPlayer(p);
@@ -47,7 +47,7 @@ public class SlideBarCardGalleryDragListener implements OnDragListener{
 			        Gallery g = (Gallery)v;
 			        SliderbarCardGallery l = (SliderbarCardGallery)g.getAdapter();
 			        l.notifyDataSetChanged();
-			        g.setSelection(ActionController.user.getNumberOfCards()-1);
+			        g.setSelection(GA.user.getNumberOfCards()-1);
 			        HandView hv = ((HandView)((View)v.getParent().getParent().getParent()).findViewById(R.id.handview));
 			        hv.updateView(true);
 			     // Send event to the other
@@ -61,7 +61,7 @@ public class SlideBarCardGalleryDragListener implements OnDragListener{
 										new MoveCardAction(
 												"BoardView",
 												view.getCard(),
-												"Player", ActionController.user.getId())));
+												"Player", GA.user.getId())));
 					} else if (parent instanceof DrawPileView) {
 						GameActivity
 						.getActivity()
@@ -72,7 +72,7 @@ public class SlideBarCardGalleryDragListener implements OnDragListener{
 										new MoveCardAction(
 												"DrawPileView",
 												view.getCard(),
-												"Player", ActionController.user.getId())));
+												"Player", GA.user.getId())));
 					} else if (parent instanceof DiscardPileView) {
 						GameActivity
 						.getActivity()
@@ -83,9 +83,9 @@ public class SlideBarCardGalleryDragListener implements OnDragListener{
 										new MoveCardAction(
 												"DiscardPileView",
 												view.getCard(),
-												"Player", ActionController.user.getId())));
+												"Player", GA.user.getId())));
 					}
-					if(ActionController.isSoundToggled())
+					if(GA.isSoundToggled())
 						NotificationTools.createSoundNotification(v.getContext(), R.drawable.flipcard);
 				} else {
 					vTmp.setVisibility(View.VISIBLE);

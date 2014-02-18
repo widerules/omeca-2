@@ -1,7 +1,7 @@
 package com.ensibs.omeca.model.actions;
 
 import com.ensibs.omeca.GameActivity;
-import com.ensibs.omeca.controller.ActionController;
+import com.ensibs.omeca.controller.GA;
 import com.ensibs.omeca.controller.OmecaHandler;
 import com.ensibs.omeca.model.entities.Card;
 
@@ -20,16 +20,16 @@ public class PilesReinitAction implements Action {
 	 */
 	@Override
 	public void execute() {
-		Card[] cards = new Card[ActionController.board.getDiscardPile()
+		Card[] cards = new Card[GA.board.getDiscardPile()
 				.getCards().size()];
 		int i = cards.length - 1;
-		for (Card c : ActionController.board.getDiscardPile().getCards()) {
+		for (Card c : GA.board.getDiscardPile().getCards()) {
 			cards[i] = c;
 			i--;
 		}
 		for (Card c : cards) {
 			c.setFaceUp(false);
-			ActionController.board.getDrawPile().getCards().add(0, c);
+			GA.board.getDrawPile().getCards().add(0, c);
 		}
 		GameActivity.getActivity().getOmecaHandler()
 				.sendEmptyMessage(OmecaHandler.PILES_REINIT);

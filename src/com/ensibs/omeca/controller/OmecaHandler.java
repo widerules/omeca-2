@@ -77,9 +77,9 @@ public class OmecaHandler extends Handler {
 		case AKNOWLEGMENT_CONNECTION_ACTION: {
 			notif.setEvent(GameActivity.getActivity().getResources().getString(R.string.notif_player_acknowledge));
 			boardView.getDrawPileView().setDrawpile(
-					ActionController.board.getDrawPile());
+					GA.board.getDrawPile());
 			boardView.getDiscardPileView().setDiscardPile(
-					ActionController.board.getDiscardPile());
+					GA.board.getDiscardPile());
 			boardView.getDiscardPileView().updateView();
 			boardView.getDrawPileView().updateView();
 			boardView.updatePlayers();
@@ -179,9 +179,9 @@ public class OmecaHandler extends Handler {
 							new CardView(GameActivity.getActivity(), tmp));
 				} else if (data.getString("Target").equals("Player")) {
 					int playerId = data.getInt("IDTarget");
-					if (playerId == ActionController.user.getId()) {
+					if (playerId == GA.user.getId()) {
 						notif.setEvent(GameActivity.getActivity().getResources().getString(R.string.notif_card_draw_to_me));
-						ActionController.user.addCard(tmp);
+						GA.user.addCard(tmp);
 						HandView handView = (HandView) GameActivity
 								.getActivity().findViewById(R.id.handview);
 						handView.updateView(false);
@@ -269,8 +269,8 @@ public class OmecaHandler extends Handler {
 					} else if (data.getString("Target").equals("Player")) {
 						notif.setEvent(GameActivity.getActivity().getResources().getString(R.string.notif_card_board_to_me));
 						int playerId = data.getInt("IDTarget");
-						if (playerId == ActionController.user.getId()) {
-							ActionController.user.addCard(tmp);
+						if (playerId == GA.user.getId()) {
+							GA.user.addCard(tmp);
 							HandView handView = (HandView) GameActivity
 									.getActivity().findViewById(R.id.handview);
 							handView.updateView(false);
@@ -341,8 +341,8 @@ public class OmecaHandler extends Handler {
 				} else if (data.getString("Target").equals("Player")) {
 					notif.setEvent(GameActivity.getActivity().getResources().getString(R.string.notif_card_discard_to_me));
 					int playerId = data.getInt("IDTarget");
-					if (playerId == ActionController.user.getId()) {
-						ActionController.user.addCard(tmp);
+					if (playerId == GA.user.getId()) {
+						GA.user.addCard(tmp);
 						HandView handView = (HandView) GameActivity
 								.getActivity().findViewById(R.id.handview);
 						handView.updateView(false);
@@ -439,9 +439,9 @@ public class OmecaHandler extends Handler {
 								new CardView(GameActivity.getActivity(), tmp));
 					} else if (data.getString("Target").equals("Player")) {
 						int playerTarget = data.getInt("IDTarget");
-						if (playerTarget == ActionController.user.getId()) {
+						if (playerTarget == GA.user.getId()) {
 							notif.setEvent(GameActivity.getActivity().getResources().getString(R.string.notif_card_player_to_me));
-							ActionController.user.addCard(tmp);
+							GA.user.addCard(tmp);
 							HandView handView = (HandView) GameActivity
 									.getActivity().findViewById(R.id.handview);
 							handView.updateView(false);
@@ -479,7 +479,7 @@ public class OmecaHandler extends Handler {
 		case SHUFFLE: {
 			notif.setEvent(GameActivity.getActivity().getResources().getString(R.string.notif_shuffle));
 			boardView.getDrawPileView().setDrawpile(
-					ActionController.board.getDrawPile());
+					GA.board.getDrawPile());
 			for (Card c : boardView.getDrawPileView().getDrawpile().getCards())
 				Log.w("Card", c.getValue() + c.getColor() + "");
 			boardView.getDrawPileView().updateView();
@@ -501,13 +501,13 @@ public class OmecaHandler extends Handler {
 		}
 			break;
 		case CUT: {
-			if(ActionController.isSoundToggled())
+			if(GA.isSoundToggled())
 	    		NotificationTools.createSoundNotification(GameActivity.getActivity().getApplicationContext(), R.drawable.cut);
-	    	if(ActionController.isVibrationToggled())
+	    	if(GA.isVibrationToggled())
 	    		NotificationTools.createVibrationNotification(GameActivity.getActivity().getApplicationContext(), 1000);
 			notif.setEvent(GameActivity.getActivity().getResources().getString(R.string.notif_cut));
 			boardView.getDrawPileView().setDrawpile(
-					ActionController.board.getDrawPile());
+					GA.board.getDrawPile());
 			boardView.getDrawPileView().updateView();
 		}
 			break;
@@ -515,7 +515,7 @@ public class OmecaHandler extends Handler {
 		case PILES_REINIT: {
 			notif.setEvent(GameActivity.getActivity().getResources().getString(R.string.reinit_piles));
 			boardView.getDrawPileView().setDrawpile(
-					ActionController.board.getDrawPile());
+					GA.board.getDrawPile());
 			boardView.getDrawPileView().updateView();
 			boardView.getDiscardPileView().setDiscardPile(new DiscardPile());
 			boardView.getDiscardPileView().updateView();
@@ -543,9 +543,9 @@ public class OmecaHandler extends Handler {
 			anim.setRepeatCount(5);
 			anim.addListener(new PileReinitAnimationListener(card));
 			anim.start();
-			if(ActionController.isSoundToggled())
+			if(GA.isSoundToggled())
 	    		NotificationTools.createSoundNotification(GameActivity.getActivity().getApplicationContext(), R.drawable.shufflecard);
-	    	if(ActionController.isVibrationToggled())
+	    	if(GA.isVibrationToggled())
 	    		NotificationTools.createVibrationNotification(GameActivity.getActivity().getApplicationContext(), 1000);
 		}
 			break;
@@ -582,9 +582,9 @@ public class OmecaHandler extends Handler {
 			HandView hv = (HandView) GameActivity.getActivity().findViewById(
 					R.id.handview);
 			hv.updateView(true);
-			if(ActionController.isSoundToggled())
+			if(GA.isSoundToggled())
 	    		NotificationTools.createSoundNotification(GameActivity.getActivity().getApplicationContext(), R.drawable.startgame);
-	    	if(ActionController.isVibrationToggled())
+	    	if(GA.isVibrationToggled())
 	    		NotificationTools.createVibrationNotification(GameActivity.getActivity().getApplicationContext(), 1000);
 		}
 		default:

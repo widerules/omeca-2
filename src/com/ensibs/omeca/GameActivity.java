@@ -24,7 +24,7 @@ import android.widget.ListView;
 import android.widget.SeekBar;
 import android.widget.TextView;
 
-import com.ensibs.omeca.controller.ActionController;
+import com.ensibs.omeca.controller.GA;
 import com.ensibs.omeca.controller.OmecaHandler;
 import com.ensibs.omeca.model.actions.Action;
 import com.ensibs.omeca.model.actions.ConnectionAction;
@@ -54,7 +54,7 @@ import com.ensibs.omeca.wifidirect.property.WifiDirectProperty;
 public class GameActivity extends Activity implements Observer {
 
 	private WifiDirectManager wifiDirectManager;
-	private static ActionController controller;
+	private static GA controller;
 	private OmecaApplication app;
 	private static GameActivity instance;
 	private OmecaHandler omecaHandler;
@@ -95,7 +95,7 @@ public class GameActivity extends Activity implements Observer {
 
 		// Create controller
 		controller = app.getControler();
-		ActionController.init();
+		GA.init();
 
 		// Hides titlebar and actionbar
 		requestWindowFeature(Window.FEATURE_NO_TITLE);
@@ -110,7 +110,7 @@ public class GameActivity extends Activity implements Observer {
 		// Built the board
 		BoardView boardView = (BoardView) (gameView
 				.findViewById(R.id.view_board));
-		Board board = ActionController.board;
+		Board board = GA.board;
 		board.initDrawPile(true);
 		boardView.buildBoard(board);
 		boardView.updatePlayers();
@@ -119,12 +119,12 @@ public class GameActivity extends Activity implements Observer {
 
 		// Set player skin and properties
 		((PlayerView) (findViewById(R.id.playerview))).setPlayer(
-				ActionController.user, true);
+				GA.user, true);
 
 		// Init cards gallery
 		Gallery g = (Gallery) findViewById(R.id.playerview_slider_board_cardgallery);
 		g.setAdapter(new SliderbarCardGallery(this));
-		g.setSelection(ActionController.user.getNumberOfCards() / 2);
+		g.setSelection(GA.user.getNumberOfCards() / 2);
 		g.setOnDragListener(new SlideBarCardGalleryDragListener());
 
 		// Number of card initialization
@@ -166,9 +166,9 @@ public class GameActivity extends Activity implements Observer {
 		if (wifiDirectManager.getMod() == WifiDirectMod.CLIENT) {
 			wifiDirectManager.sendEvent(new WifiDirectEventImpl(
 					WifiDirectEvent.EVENT, new ConnectionAction(
-							ActionController.user)));
+							GA.user)));
 		} else {
-			ActionController.board.addPlayer(0, ActionController.user);
+			GA.board.addPlayer(0, GA.user);
 		}
 
 		mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
@@ -202,11 +202,11 @@ public class GameActivity extends Activity implements Observer {
 			break;
 		case 2: {
 			mDrawerLayout.closeDrawers();
-			ActionController.board.getDrawPile().shuffle();
-			Card[] cards = new Card[ActionController.board.getDrawPile()
+			GA.board.getDrawPile().shuffle();
+			Card[] cards = new Card[GA.board.getDrawPile()
 					.getCards().size()];
 			int i = 0;
-			for (Card c : ActionController.board.getDrawPile().getCards()) {
+			for (Card c : GA.board.getDrawPile().getCards()) {
 				cards[i] = c;
 				i++;
 			}
@@ -225,16 +225,16 @@ public class GameActivity extends Activity implements Observer {
 			break;
 		case 4: {
 			mDrawerLayout.closeDrawers();
-			Card[] cards = new Card[ActionController.board.getDiscardPile()
+			Card[] cards = new Card[GA.board.getDiscardPile()
 					.getCards().size()];
 			int i = cards.length - 1;
-			for (Card c : ActionController.board.getDiscardPile().getCards()) {
+			for (Card c : GA.board.getDiscardPile().getCards()) {
 				cards[i] = c;
 				i--;
 			}
 			for (Card c : cards) {
 				c.setFaceUp(false);
-				ActionController.board.getDrawPile().getCards().add(0, c);
+				GA.board.getDrawPile().getCards().add(0, c);
 			}
 			omecaHandler.sendEmptyMessage(OmecaHandler.PILES_REINIT);
 			wifiDirectManager.sendEvent(new WifiDirectEventImpl(
@@ -243,18 +243,18 @@ public class GameActivity extends Activity implements Observer {
 			break;
 		case 5: {
 			mDrawerLayout.closeDrawers();
-			ActionController.user.getCards().clear();
-			ActionController.board.getDiscardPile().getCards().clear();
-			ActionController.board.getDrawPile().getCards().clear();
-			for (Entry<Integer, Player> e : ActionController.board.getPlayers()
+			GA.user.getCards().clear();
+			GA.board.getDiscardPile().getCards().clear();
+			GA.board.getDrawPile().getCards().clear();
+			for (Entry<Integer, Player> e : GA.board.getPlayers()
 					.entrySet()) {
 				e.getValue().getCards().clear();
 			}
-			ActionController.board.initDrawPile(true);
-			Card[] cards = new Card[ActionController.board.getDrawPile()
+			GA.board.initDrawPile(true);
+			Card[] cards = new Card[GA.board.getDrawPile()
 					.getCards().size()];
 			int i = 0;
-			for (Card c : ActionController.board.getDrawPile().getCards()) {
+			for (Card c : GA.board.getDrawPile().getCards()) {
 				cards[i] = c;
 				i++;
 			}
@@ -296,7 +296,7 @@ public class GameActivity extends Activity implements Observer {
 		OmecaPopupExit.dismiss();
 		this.wifiDirectManager.sendEvent(new WifiDirectEventImpl(
 				WifiDirectEvent.EVENT, new DisconnectionAction(
-						ActionController.user)));
+						GA.user)));
 		try {
 			this.wait(2000);
 		} catch (InterruptedException e) {

@@ -19,7 +19,7 @@ import android.widget.TextView;
 
 import com.ensibs.omeca.GameActivity;
 import com.ensibs.omeca.R;
-import com.ensibs.omeca.controller.ActionController;
+import com.ensibs.omeca.controller.GA;
 import com.ensibs.omeca.model.actions.SwitchPlayersAction;
 import com.ensibs.omeca.model.actions.MoveCardAction;
 import com.ensibs.omeca.model.entities.Card;
@@ -226,8 +226,8 @@ public class PlayerView extends RelativeLayout {
 								.getActivity().findViewById(R.id.view_board);
 						int pos = boardView
 								.getPlayerViewPosition((PlayerView) v)
-								+ ActionController.board
-								.getPlace(ActionController.user);
+								+ GA.board
+								.getPlace(GA.user);
 
 						WifiDirectManager wifiDirectManager = GameActivity
 								.getActivity().getOmecaApplication()
@@ -281,7 +281,7 @@ public class PlayerView extends RelativeLayout {
 									new WifiDirectEventImpl(
 											WifiDirectEvent.EVENT,
 											new MoveCardAction(
-													"Player",ActionController.user.getId(),
+													"Player",GA.user.getId(),
 													"Player", player
 													.getId(),
 													view.getCard())));

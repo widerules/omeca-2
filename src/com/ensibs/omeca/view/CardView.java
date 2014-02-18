@@ -14,7 +14,7 @@ import android.widget.RelativeLayout;
 
 import com.ensibs.omeca.GameActivity;
 import com.ensibs.omeca.R;
-import com.ensibs.omeca.controller.ActionController;
+import com.ensibs.omeca.controller.GA;
 import com.ensibs.omeca.model.actions.ReturnCardAction;
 import com.ensibs.omeca.model.entities.Card;
 import com.ensibs.omeca.wifidirect.event.WifiDirectEvent;
@@ -97,11 +97,11 @@ public class CardView extends ImageView{
 				break;
 			case MotionEvent.ACTION_UP:
 				if(isOnClick){
-					int index = ActionController.user.getCards().indexOf(card);
+					int index = GA.user.getCards().indexOf(card);
 					if(index != -1){
-						ActionController.user.getCards().remove(index);
+						GA.user.getCards().remove(index);
 						turnCard();
-						ActionController.user.getCards().add(index, card);
+						GA.user.getCards().add(index, card);
 					}
 					else
 						turnCard();
