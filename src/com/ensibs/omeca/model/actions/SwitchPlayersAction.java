@@ -1,5 +1,9 @@
 package com.ensibs.omeca.model.actions;
 
+import java.util.Map.Entry;
+
+import android.util.Log;
+
 import com.ensibs.omeca.GameActivity;
 import com.ensibs.omeca.controller.GA;
 import com.ensibs.omeca.controller.OmecaHandler;
@@ -76,6 +80,8 @@ public class SwitchPlayersAction implements Action {
 			GA.board.movePlayerTo(p2, getPosition());
 		}
 
+		for(Entry<Integer, Player> e : GA.board.getPlayers().entrySet())
+			Log.w("Player", e.getValue()+ " "+e.getKey());
 		GameActivity.getActivity().getOmecaHandler()
 				.sendEmptyMessage(OmecaHandler.SWITCH_PLAYERS_ACTION);
 	}

@@ -295,6 +295,7 @@ public class BoardView extends RelativeLayout {
 		final CardView vToMove = (CardView) drawPileView.getChildAt(drawPileView.getDrawpile().getNumberOfCards()-1);	
 		drawPileView.removeViewInLayout(vToMove);
 		addView(vToMove);
+		
 		int x=0 , y =0;
 		final int placeView = (playerPlace - GA.board.getPlace(GA.user)<0) ? 
 				playerPlace - GA.board.getPlace(GA.user)+Board.NB_PLAYER_MAX 
@@ -333,7 +334,6 @@ public class BoardView extends RelativeLayout {
 	}
 
 	public void endAnim(int placePlayer, CardView vToMove ){
-		Log.i(WifiDirectProperty.TAG, "endAnim "+ placePlayer);
 		if( placePlayer != 0){
 			playerViews.get(placePlayer).getPlayer().addCard(vToMove.getCard());
 			playerViews.get(placePlayer).setPlayer(playerViews.get(placePlayer).getPlayer(), false);
@@ -371,6 +371,7 @@ public class BoardView extends RelativeLayout {
 					Bundle b = new Bundle();
 					p =GA.board.getPlayers().get(j);
 					if(p !=null){
+						Log.i(WifiDirectProperty.TAG, "pouette"+ p.getName()+ j);
 						b.putInt("playerPlace", j);
 						msgObj.what = OmecaHandler.GIVETO;
 						msgObj.setData(b);
