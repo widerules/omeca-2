@@ -8,34 +8,38 @@ import com.ensibs.omeca.model.entities.DrawPile;
 
 /**
  * Event when the draw pile is shuffled
+ * 
  * @author Nicolas
- *
+ * 
  */
-public class ShuffleAction implements Action{
-	
-	/**
-	 * 
-	 */
+public class ShuffleAction implements Action {
+
 	private static final long serialVersionUID = 1L;
-	
+
 	private Card[] cards;
-	
+
 	/**
 	 * Constructor
-	 * @param cards2 the draw pile cards
+	 * 
+	 * @param cards
+	 *            the DrawPile cards
 	 */
-	public ShuffleAction(Card[] cards){
+	public ShuffleAction(Card[] cards) {
 		this.cards = cards;
 	}
 
 	/**
 	 * Getter on cards
+	 * 
 	 * @return cards
 	 */
 	public Card[] getCards() {
 		return cards;
 	}
 
+	/**
+	 * Execute the DrawPile shuffle action
+	 */
 	@Override
 	public void execute() {
 		DrawPile nDrawPile = new DrawPile();
@@ -43,7 +47,8 @@ public class ShuffleAction implements Action{
 			nDrawPile.addCard(c);
 		}
 		ActionController.board.setDrawPile(nDrawPile);
-		GameActivity.getActivity().getOmecaHandler().sendEmptyMessage(OmecaHandler.SHUFFLE);
-		
+		GameActivity.getActivity().getOmecaHandler()
+				.sendEmptyMessage(OmecaHandler.SHUFFLE);
+
 	}
 }

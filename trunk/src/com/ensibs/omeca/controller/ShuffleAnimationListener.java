@@ -9,10 +9,19 @@ import com.ensibs.omeca.R;
 import com.ensibs.omeca.utils.NotificationTools;
 import com.ensibs.omeca.view.BoardView;
 
+/**
+ * Listener of the DrawPile shuffle animation
+ * @author Nicolas
+ * @see AnimatorListener
+ */
 public class ShuffleAnimationListener implements AnimatorListener{
 	
 	private View view;
 	
+	/**
+	 * Constructor
+	 * @param view The view which is animated
+	 */
 	public ShuffleAnimationListener(View view){
 		this.view = view;
 	}

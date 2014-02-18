@@ -8,34 +8,38 @@ import com.ensibs.omeca.model.entities.DrawPile;
 
 /**
  * Event when the draw pile is cut
+ * 
  * @author Nicolas
- *
+ * 
  */
-public class CutCardsAction implements Action{
-	
-	/**
-	 * 
-	 */
+public class CutCardsAction implements Action {
+
 	private static final long serialVersionUID = 1L;
-	
+
 	private Card[] cards;
-	
+
 	/**
 	 * Constructor
-	 * @param cards the draw pile cards
+	 * 
+	 * @param cards
+	 *            the DrawPile cards
 	 */
-	public CutCardsAction(Card[] cards){
+	public CutCardsAction(Card[] cards) {
 		this.cards = cards;
 	}
 
 	/**
 	 * Getter on cards
+	 * 
 	 * @return cards
 	 */
 	public Card[] getCards() {
 		return cards;
 	}
 
+	/**
+	 * Execute the cards cut action
+	 */
 	@Override
 	public void execute() {
 		DrawPile nDrawPile = new DrawPile();
@@ -43,7 +47,8 @@ public class CutCardsAction implements Action{
 			nDrawPile.addCard(c);
 		}
 		ActionController.board.setDrawPile(nDrawPile);
-		GameActivity.getActivity().getOmecaHandler().sendEmptyMessage(OmecaHandler.CUT);
-		
+		GameActivity.getActivity().getOmecaHandler()
+				.sendEmptyMessage(OmecaHandler.CUT);
+
 	}
 }

@@ -20,9 +20,6 @@ import com.ensibs.omeca.wifidirect.mod.WifiDirectMod;
  */
 public class ConnectionAction implements Action {
 
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = 1L;
 
 	private Player player;
@@ -31,7 +28,7 @@ public class ConnectionAction implements Action {
 	 * Constructor
 	 * 
 	 * @param user
-	 *            player
+	 *            The Player who is connecting
 	 */
 	public ConnectionAction(Player user) {
 		this.player = user;
@@ -46,6 +43,9 @@ public class ConnectionAction implements Action {
 		return player;
 	}
 
+	/**
+	 * Execute a new Player connection action
+	 */
 	@Override
 	public void execute() {
 		if (GameActivity.getActivity().getWifiDirectManager().getMod() == WifiDirectMod.HOST) {
@@ -55,7 +55,7 @@ public class ConnectionAction implements Action {
 			Card[] discardPileCards = new Card[ActionController.board
 					.getDiscardPile().getCards().size()];
 			Card[] drawPileCards = new Card[ActionController.board
-			               					.getDrawPile().getCards().size()];
+					.getDrawPile().getCards().size()];
 			Player[] players = new Player[Board.NB_PLAYER_MAX];
 			int i = 0;
 			for (Card c : ActionController.board.getDiscardPile().getCards()) {
@@ -67,8 +67,9 @@ public class ConnectionAction implements Action {
 				drawPileCards[i] = c;
 				i++;
 			}
-			
-			for (Entry<Integer, Player> e : ActionController.board.getPlayers().entrySet()) {
+
+			for (Entry<Integer, Player> e : ActionController.board.getPlayers()
+					.entrySet()) {
 				players[e.getKey()] = e.getValue();
 			}
 			GameActivity
@@ -77,7 +78,8 @@ public class ConnectionAction implements Action {
 					.sendEvent(
 							new WifiDirectEventImpl(WifiDirectEvent.EVENT,
 									new AknowlegmentConnectionAction(p,
-											players, drawPileCards, discardPileCards)));
+											players, drawPileCards,
+											discardPileCards)));
 			GameActivity
 					.getActivity()
 					.getOmecaHandler()

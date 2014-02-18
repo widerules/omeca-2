@@ -13,16 +13,16 @@ import com.ensibs.omeca.model.entities.Card;
  */
 public class PilesReinitAction implements Action {
 
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = 1L;
 
+	/**
+	 * Execute the cards transfert from the DiscardPile to the DrawPile
+	 */
 	@Override
 	public void execute() {
 		Card[] cards = new Card[ActionController.board.getDiscardPile()
 				.getCards().size()];
-		int i = cards.length-1;
+		int i = cards.length - 1;
 		for (Card c : ActionController.board.getDiscardPile().getCards()) {
 			cards[i] = c;
 			i--;
@@ -31,7 +31,8 @@ public class PilesReinitAction implements Action {
 			c.setFaceUp(false);
 			ActionController.board.getDrawPile().getCards().add(0, c);
 		}
-		GameActivity.getActivity().getOmecaHandler().sendEmptyMessage(OmecaHandler.PILES_REINIT);
+		GameActivity.getActivity().getOmecaHandler()
+				.sendEmptyMessage(OmecaHandler.PILES_REINIT);
 	}
 
 }
