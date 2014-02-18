@@ -14,10 +14,26 @@ import com.ensibs.omeca.view.DealView;
 import com.ensibs.omeca.wifidirect.event.WifiDirectEvent;
 import com.ensibs.omeca.wifidirect.event.WifiDirectEventImpl;
 
+/**
+ * This class shows and deals with a Deal Popup
+ * @author OMECA 2.0 Team (Raphaël GICQUIAUX - Nicolas HALLOUIN - Sylvain RIO - Lindsay ROZIER)
+ *
+ */
 public class DealPopup {
+	/**
+	 * The AlertDialog builder
+	 */
 	private static AlertDialog.Builder dealPopup = null;
+	
+	/**
+	 * The DealView
+	 */
 	private static DealView dv;
 
+	/**
+	 * Displays the popup, given context
+	 * @param context the context
+	 */
 	public static void show(Context context) {
 		
 		if (ActionController.board.getDrawPile().getNumberOfCards() > 0) {

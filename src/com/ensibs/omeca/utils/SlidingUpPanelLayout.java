@@ -21,6 +21,11 @@ import android.view.ViewConfiguration;
 import android.view.ViewGroup;
 import android.view.accessibility.AccessibilityEvent;
 
+/**
+ * This class creates and manages the SlidingUpPanelLayout
+ * @author OMECA 2.0 Team (Raphaël GICQUIAUX - Nicolas HALLOUIN - Sylvain RIO - Lindsay ROZIER)
+ *  *
+ */
 public class SlidingUpPanelLayout extends ViewGroup {
     
     private static final String TAG = SlidingUpPanelLayout.class.getSimpleName();

@@ -10,37 +10,58 @@ import android.widget.Gallery;
 import android.widget.ImageView;
 
 /**
- * @author Sébastien Batézat <sebastien.batezat@gmail.com>
+ * This class deals with the AvatarGallery functionality
+ * @author OMECA 2.0 Team (Raphaël GICQUIAUX - Nicolas HALLOUIN - Sylvain RIO - Lindsay ROZIER)
+ * 
  */
 public class AvatarGallery extends BaseAdapter {
 	
+	/**
+	 * The context
+	 */
     private Context mContext;
 
-    public AvatarGallery(Context c) {
-    	
+    /**
+     * Constructor of the AvatarGallery
+     * @param c the context
+     */
+    public AvatarGallery(Context c) {    	
     	this.mContext = c;
     
     }
 
-    public int getCount() {
-    	
+    /**
+     * Returns the number of available avatars
+     */
+    public int getCount() {    	
         return AvatarsList.getLength();
         
     }
 
-    public Object getItem(int position) {
-    	
+    /**
+     * Returns an item, given position
+     * @param position the position
+     */
+    public Object getItem(int position) {    	
         return position;
     
     }
 
-    public long getItemId(int position) {
-    	
+    /**
+     * Returns an item id, given position
+     * @param position the position
+     */
+    public long getItemId(int position) {    	
         return position;
         
-    }
-    
+    }    
 
+    /**
+     * Returns a view, given position, convertView and parent
+     * @param position the position
+     * @param convertView the convertView
+     * @param parent the parent
+     */
     public View getView(int position, View convertView, ViewGroup parent) {
     	ImageView imageView = (ImageView)convertView;
     	if(convertView == null){

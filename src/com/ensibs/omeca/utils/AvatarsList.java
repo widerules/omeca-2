@@ -4,10 +4,14 @@ import com.ensibs.omeca.R;
 
 
 /**
- * @author Sébastien Batézat <sebastien.batezat@gmail.com>
+ * This class contains the list of every avatar images.
+ * @author OMECA 2.0 Team (Raphaël GICQUIAUX - Nicolas HALLOUIN - Sylvain RIO - Lindsay ROZIER)
  */
 public abstract class AvatarsList {
 
+	/**
+	 * The list of every avatar image
+	 */
 	private final static Integer[] mImageIds = {
 		
 		R.drawable.avatar_alien,
@@ -39,12 +43,21 @@ public abstract class AvatarsList {
 	
 	};
 	
+	/**
+	 * Getter for an avatar image, given id
+	 * @param id
+	 * @return
+	 */
 	public static int get(int id){
 		
 		return mImageIds[id];
 		
 	}
 	
+	/**
+	 * Returns the number of available avatars
+	 * @return
+	 */
 	public static int getLength(){
 		
 		return mImageIds.length;
