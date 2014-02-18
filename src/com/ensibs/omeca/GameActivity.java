@@ -61,18 +61,34 @@ public class GameActivity extends Activity implements Observer {
 	private DrawerLayout mDrawerLayout;
 	private ListView mListView;
 
+	/**
+	 * Getter on activity
+	 * @return current activity
+	 */
 	public static GameActivity getActivity() {
 		return instance;
 	}
 
+	/**
+	 * Getter on handler
+	 * @return handler
+	 */
 	public OmecaHandler getOmecaHandler() {
 		return omecaHandler;
 	}
 
+	/**
+	 * Getter on Omeca application
+	 * @return OmecaApplication
+	 */
 	public OmecaApplication getOmecaApplication() {
 		return app;
 	}
 
+	/**
+	 * Getter on Wifi Direct Manager
+	 * @return WifiDirectManager
+	 */
 	public WifiDirectManager getWifiDirectManager() {
 		return wifiDirectManager;
 	}
@@ -193,6 +209,7 @@ public class GameActivity extends Activity implements Observer {
 
 	}
 
+	//TODO: comments
 	private void selectItem(int position) {
 		switch (position) {
 		case 1: {
@@ -292,6 +309,9 @@ public class GameActivity extends Activity implements Observer {
 		OmecaPopupExit.show(this);
 	}
 
+	/**
+	 * Permits to stop the game activity
+	 */
 	public synchronized void finishGameActivity() {
 		OmecaPopupExit.dismiss();
 		this.wifiDirectManager.sendEvent(new WifiDirectEventImpl(

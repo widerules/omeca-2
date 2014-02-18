@@ -58,6 +58,9 @@ public class AvatarActivity extends Activity{
         
 	}
 	
+	/**
+	 * Load the saved user profile
+	 */
 	public void loadUserProfile() {		
         String pseudo = this.profilPreferences.getString(SHARED_PREFERENCES_PLAYER_NAME, "");
         int avatarId = this.profilPreferences.getInt(SHARED_PREFERENCES_AVATAR_ID_NAME, (int)(this.avatarGallery.getAdapter().getCount() / 2));
@@ -80,6 +83,10 @@ public class AvatarActivity extends Activity{
         
 	}
 	
+	/**
+	 * Saves the user Profile
+	 * @param v
+	 */
 	public void saveUserProfile(View v) {		
 		String pseudo = this.pseudoEditText.getText().toString();
 		
