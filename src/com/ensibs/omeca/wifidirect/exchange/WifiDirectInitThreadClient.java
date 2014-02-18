@@ -7,17 +7,24 @@ import java.net.UnknownHostException;
 import com.ensibs.omeca.wifidirect.property.WifiDirectProperty;
 
 /**
- * 
- *
+ * Thread used to initialize all threads client and socket outside of the UIThread
  */
 public class WifiDirectInitThreadClient extends Thread{
 	
+	//The interface
 	private WifiDirectExchangeClient wifiDirectExchangeClient;
 	
+	/**
+	 * Constructor
+	 * @param wifiDirectExchangeClient the interface
+	 */
 	public WifiDirectInitThreadClient(WifiDirectExchangeClient wifiDirectExchangeClient){
 		this.wifiDirectExchangeClient = wifiDirectExchangeClient;
 	}
 	
+	/**
+	 * Thread loop which initialize all client thread
+	 */
 	public void run(){
 		try {
 			this.wifiDirectExchangeClient.setSocket(new Socket(this.wifiDirectExchangeClient.getIpAdress(),WifiDirectProperty.PORT));
@@ -27,12 +34,9 @@ public class WifiDirectInitThreadClient extends Thread{
 			this.wifiDirectExchangeClient.getWifiDirectReceivedThread().start();
 			this.wifiDirectExchangeClient.getWifiDirectSendThread().start();
 		} catch (UnknownHostException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}
-
 }
