@@ -8,7 +8,7 @@ import android.widget.FrameLayout;
 import android.widget.RelativeLayout;
 
 import com.ensibs.omeca.R;
-import com.ensibs.omeca.controller.ActionController;
+import com.ensibs.omeca.controller.GA;
 import com.ensibs.omeca.model.entities.Card;
 import com.ensibs.omeca.model.entities.DrawPile;
 
@@ -40,7 +40,7 @@ public class DrawPileView extends FrameLayout {
 	@Override
 	public void removeViewInLayout(View view) {
 		drawpile.removeLastCard();
-		ActionController.board.setDrawPile(drawpile);
+		GA.board.setDrawPile(drawpile);
 		super.removeViewInLayout(view);
 		
 	}
@@ -48,7 +48,7 @@ public class DrawPileView extends FrameLayout {
 	@Override
 	public void addView(View child) {
 		drawpile.addCard(((CardView)child).getCard());
-		ActionController.board.setDrawPile(drawpile);
+		GA.board.setDrawPile(drawpile);
 		super.addView(child);
 	}
 
@@ -57,7 +57,7 @@ public class DrawPileView extends FrameLayout {
 		for (Card c : drawpile.getCards()) {
 			super.addView(new CardView(context, c));
 		}
-		ActionController.board.setDrawPile(drawpile);
+		GA.board.setDrawPile(drawpile);
 	}
 
 	public DrawPile getDrawpile() {

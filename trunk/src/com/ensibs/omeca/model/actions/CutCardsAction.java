@@ -1,7 +1,7 @@
 package com.ensibs.omeca.model.actions;
 
 import com.ensibs.omeca.GameActivity;
-import com.ensibs.omeca.controller.ActionController;
+import com.ensibs.omeca.controller.GA;
 import com.ensibs.omeca.controller.OmecaHandler;
 import com.ensibs.omeca.model.entities.Card;
 import com.ensibs.omeca.model.entities.DrawPile;
@@ -46,7 +46,7 @@ public class CutCardsAction implements Action {
 		for (Card c : getCards()) {
 			nDrawPile.addCard(c);
 		}
-		ActionController.board.setDrawPile(nDrawPile);
+		GA.board.setDrawPile(nDrawPile);
 		GameActivity.getActivity().getOmecaHandler()
 				.sendEmptyMessage(OmecaHandler.CUT);
 

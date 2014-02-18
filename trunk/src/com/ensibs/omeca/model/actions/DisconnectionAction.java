@@ -1,7 +1,7 @@
 package com.ensibs.omeca.model.actions;
 
 import com.ensibs.omeca.GameActivity;
-import com.ensibs.omeca.controller.ActionController;
+import com.ensibs.omeca.controller.GA;
 import com.ensibs.omeca.controller.OmecaHandler;
 import com.ensibs.omeca.model.entities.Card;
 import com.ensibs.omeca.model.entities.Player;
@@ -44,9 +44,9 @@ public class DisconnectionAction implements Action {
 	public void execute() {
 		Player p = getPlayer();
 		for (Card c : p.getCards()) {
-			ActionController.board.getDiscardPile().addCard(c);
+			GA.board.getDiscardPile().addCard(c);
 		}
-		ActionController.board.removePlayer(ActionController.board.getPlace(p));
+		GA.board.removePlayer(GA.board.getPlace(p));
 		GameActivity.getActivity().getOmecaHandler()
 				.sendEmptyMessage(OmecaHandler.DECONNEXION);
 	}

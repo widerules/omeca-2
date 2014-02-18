@@ -3,7 +3,7 @@ package com.ensibs.omeca.model.actions;
 import java.util.Map.Entry;
 
 import com.ensibs.omeca.GameActivity;
-import com.ensibs.omeca.controller.ActionController;
+import com.ensibs.omeca.controller.GA;
 import com.ensibs.omeca.controller.OmecaHandler;
 import com.ensibs.omeca.model.entities.Board;
 import com.ensibs.omeca.model.entities.Card;
@@ -50,25 +50,25 @@ public class ConnectionAction implements Action {
 	public void execute() {
 		if (GameActivity.getActivity().getWifiDirectManager().getMod() == WifiDirectMod.HOST) {
 			Player p = getPlayer();
-			p.setId(ActionController.board.getPlayers().size());
-			ActionController.board.addPlayerToTheFirstEmptyPlace(p);
-			Card[] discardPileCards = new Card[ActionController.board
+			p.setId(GA.board.getPlayers().size());
+			GA.board.addPlayerToTheFirstEmptyPlace(p);
+			Card[] discardPileCards = new Card[GA.board
 					.getDiscardPile().getCards().size()];
-			Card[] drawPileCards = new Card[ActionController.board
+			Card[] drawPileCards = new Card[GA.board
 					.getDrawPile().getCards().size()];
 			Player[] players = new Player[Board.NB_PLAYER_MAX];
 			int i = 0;
-			for (Card c : ActionController.board.getDiscardPile().getCards()) {
+			for (Card c : GA.board.getDiscardPile().getCards()) {
 				discardPileCards[i] = c;
 				i++;
 			}
 			i = 0;
-			for (Card c : ActionController.board.getDrawPile().getCards()) {
+			for (Card c : GA.board.getDrawPile().getCards()) {
 				drawPileCards[i] = c;
 				i++;
 			}
 
-			for (Entry<Integer, Player> e : ActionController.board.getPlayers()
+			for (Entry<Integer, Player> e : GA.board.getPlayers()
 					.entrySet()) {
 				players[e.getKey()] = e.getValue();
 			}

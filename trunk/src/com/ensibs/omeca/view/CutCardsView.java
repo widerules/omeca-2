@@ -15,7 +15,7 @@ import android.widget.LinearLayout;
 
 import com.ensibs.omeca.GameActivity;
 import com.ensibs.omeca.R;
-import com.ensibs.omeca.controller.ActionController;
+import com.ensibs.omeca.controller.GA;
 import com.ensibs.omeca.controller.OmecaHandler;
 import com.ensibs.omeca.model.actions.CutCardsAction;
 import com.ensibs.omeca.model.entities.Card;
@@ -53,22 +53,22 @@ public class CutCardsView extends LinearLayout {
 
 	public void updateView() {
 		removeAllViews();
-		if (!ActionController.board.getDrawPile().getCards().isEmpty()) {
+		if (!GA.board.getDrawPile().getCards().isEmpty()) {
 			DisplayMetrics metrics = context.getApplicationContext()
 					.getResources().getDisplayMetrics();
-			CardView cv = new CardView(context, ActionController.board
+			CardView cv = new CardView(context, GA.board
 					.getDrawPile().getCards().get(0));
 			LinearLayout.LayoutParams params = new LayoutParams(
 					cv.getLayoutParams().width * 2,
 					cv.getLayoutParams().height * 2);
 			params.leftMargin = 20;
 			params.bottomMargin = 30;
-			params.rightMargin = ((((ActionController.board.getDrawPile()
-					.getNumberOfCards() + 1) * params.width) - metrics.widthPixels) / -ActionController.board
+			params.rightMargin = ((((GA.board.getDrawPile()
+					.getNumberOfCards() + 1) * params.width) - metrics.widthPixels) / -GA.board
 					.getDrawPile().getNumberOfCards())
 					- params.leftMargin;
 
-			for (Card c : ActionController.board.getDrawPile().getCards()) {
+			for (Card c : GA.board.getDrawPile().getCards()) {
 				cv = new CardView(context, c);
 				cv.setRotationY(30);
 				cv.setOnTouchListener(new CutCardsTouchListener());
@@ -83,7 +83,7 @@ public class CutCardsView extends LinearLayout {
 		public boolean onTouch(View v, MotionEvent mE) {
 			switch (mE.getAction()) {
 			case MotionEvent.ACTION_UP:
-				DrawPile dp = ActionController.board.getDrawPile();
+				DrawPile dp = GA.board.getDrawPile();
 				dp.cut(indexOfChild(v) + 1);
 				Card[] cards = new Card[dp.getCards().size()];
 				int i = 0;
@@ -91,7 +91,7 @@ public class CutCardsView extends LinearLayout {
 					cards[i] = c;
 					i++;
 				}
-				ActionController.board.setDrawPile(dp);
+				GA.board.setDrawPile(dp);
 				Log.w("X", v.getX()+"");
 				Log.w("Y", v.getY()+"");
 				AlphaAnimation anim = new AlphaAnimation(1, 0.5f);

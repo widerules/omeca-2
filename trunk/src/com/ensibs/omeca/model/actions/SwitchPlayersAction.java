@@ -1,7 +1,7 @@
 package com.ensibs.omeca.model.actions;
 
 import com.ensibs.omeca.GameActivity;
-import com.ensibs.omeca.controller.ActionController;
+import com.ensibs.omeca.controller.GA;
 import com.ensibs.omeca.controller.OmecaHandler;
 import com.ensibs.omeca.model.entities.Player;
 
@@ -71,9 +71,9 @@ public class SwitchPlayersAction implements Action {
 		Player p1 = getP1();
 		Player p2 = getP2();
 		if (p1 != null) {
-			ActionController.board.switchPlayers(p1, p2);
+			GA.board.switchPlayers(p1, p2);
 		} else {
-			ActionController.board.movePlayerTo(p2, getPosition());
+			GA.board.movePlayerTo(p2, getPosition());
 		}
 
 		GameActivity.getActivity().getOmecaHandler()

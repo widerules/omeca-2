@@ -20,7 +20,7 @@ import android.net.wifi.p2p.WifiP2pManager.ConnectionInfoListener;
 import android.net.wifi.p2p.WifiP2pManager.PeerListListener;
 import android.util.Log;
 
-import com.ensibs.omeca.controller.ActionController;
+import com.ensibs.omeca.controller.GA;
 import com.ensibs.omeca.wifidirect.event.WifiDirectEvent;
 import com.ensibs.omeca.wifidirect.event.WifiDirectEventImpl;
 import com.ensibs.omeca.wifidirect.exchange.WifiDirectExchangeClient;
@@ -264,7 +264,7 @@ public class WifiDirectManager extends Observable implements Observer{
 	public void sendEvent(WifiDirectEventImpl event){
 		if(this.wifiDirectIExchange != null){
 			WifiDirectEventImpl tmp = event;
-			tmp.setSource(ActionController.user.getId());
+			tmp.setSource(GA.user.getId());
 			this.wifiDirectIExchange.sendEvent(tmp);
 		}
 	}
@@ -311,7 +311,7 @@ public class WifiDirectManager extends Observable implements Observer{
 		}else if(p2pEvent.getEvent() == WifiDirectEvent.ERROR){
 			//Resends event or not ? Close game ?
 		}else if(p2pEvent.getEvent() == WifiDirectEvent.EVENT){
-			if(p2pEvent.getSource() != ActionController.user.getId()){
+			if(p2pEvent.getSource() != GA.user.getId()){
 				setChanged();
 				notifyObservers(p2pEvent);
 			}

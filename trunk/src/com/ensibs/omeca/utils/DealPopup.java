@@ -7,7 +7,7 @@ import android.view.View.OnClickListener;
 
 import com.ensibs.omeca.GameActivity;
 import com.ensibs.omeca.R;
-import com.ensibs.omeca.controller.ActionController;
+import com.ensibs.omeca.controller.GA;
 import com.ensibs.omeca.model.actions.AutomaticDistributionAction;
 import com.ensibs.omeca.view.BoardView;
 import com.ensibs.omeca.view.DealView;
@@ -36,9 +36,9 @@ public class DealPopup {
 	 */
 	public static void show(Context context) {
 		
-		if (ActionController.board.getDrawPile().getNumberOfCards() > 0) {
-			dv = new DealView(ActionController.board
-					.getDrawPile().getNumberOfCards(), ActionController.board
+		if (GA.board.getDrawPile().getNumberOfCards() > 0) {
+			dv = new DealView(GA.board
+					.getDrawPile().getNumberOfCards(), GA.board
 					.getPlayers().size(), context);
 			dealPopup = new AlertDialog.Builder(context);
 			dealPopup.setTitle(GameActivity.getActivity().getResources().getString(R.string.list_distribution));
@@ -50,8 +50,8 @@ public class DealPopup {
 					BoardView boardView = (BoardView) GameActivity.getActivity()
 							.findViewById(R.id.view_board);
 					GameActivity.getActivity().getWifiDirectManager().sendEvent(new WifiDirectEventImpl(WifiDirectEvent.EVENT,
-							new AutomaticDistributionAction(ActionController.board.getPlace(ActionController.user), dv.getDealNumber())));
-					boardView.runDistrib(ActionController.board.getPlace(ActionController.user), dv.getDealNumber());
+							new AutomaticDistributionAction(GA.board.getPlace(GA.user), dv.getDealNumber())));
+					boardView.runDistrib(GA.board.getPlace(GA.user), dv.getDealNumber());
 					alert.dismiss();
 				}
 			});

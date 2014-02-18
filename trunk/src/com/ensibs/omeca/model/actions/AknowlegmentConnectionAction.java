@@ -1,7 +1,7 @@
 package com.ensibs.omeca.model.actions;
 
 import com.ensibs.omeca.GameActivity;
-import com.ensibs.omeca.controller.ActionController;
+import com.ensibs.omeca.controller.GA;
 import com.ensibs.omeca.controller.OmecaHandler;
 import com.ensibs.omeca.model.entities.Card;
 import com.ensibs.omeca.model.entities.Player;
@@ -121,21 +121,21 @@ public class AknowlegmentConnectionAction implements Action {
 	@Override
 	public void execute() {
 		Player p = getPlayer();
-		if (p.getMacAddress().equals(ActionController.user.getMacAddress())) {
-			ActionController.user = p;
+		if (p.getMacAddress().equals(GA.user.getMacAddress())) {
+			GA.user = p;
 		}
 
 		for (int i = 0; i < getPlayers().length; i++) {
 			if (getPlayers()[i] != null)
-				ActionController.board.addPlayer(i, getPlayers()[i]);
+				GA.board.addPlayer(i, getPlayers()[i]);
 		}
 
-		ActionController.board.getDrawPile().getCards().clear();
+		GA.board.getDrawPile().getCards().clear();
 		for (Card c : drawPileCards)
-			ActionController.board.getDrawPile().addCard(c);
-		ActionController.board.getDiscardPile().getCards().clear();
+			GA.board.getDrawPile().addCard(c);
+		GA.board.getDiscardPile().getCards().clear();
 		for (Card c : discardPileCards)
-			ActionController.board.getDiscardPile().addCard(c);
+			GA.board.getDiscardPile().addCard(c);
 
 		GameActivity.getActivity().getOmecaHandler()
 				.sendEmptyMessage(OmecaHandler.AKNOWLEGMENT_CONNECTION_ACTION);

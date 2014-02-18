@@ -2,7 +2,7 @@ package com.ensibs.omeca.view;
 
 import com.ensibs.omeca.GameActivity;
 import com.ensibs.omeca.R;
-import com.ensibs.omeca.controller.ActionController;
+import com.ensibs.omeca.controller.GA;
 import com.ensibs.omeca.model.actions.MoveCardAction;
 import com.ensibs.omeca.utils.SliderbarCardGallery;
 import com.ensibs.omeca.wifidirect.event.WifiDirectEvent;
@@ -53,7 +53,7 @@ public class PileDragListener implements OnDragListener {
 					}else if(owner instanceof BoardView){
 						GameActivity.getActivity().getWifiDirectManager().sendEvent(new WifiDirectEventImpl(WifiDirectEvent.EVENT, new MoveCardAction("BoardView", "DiscardPileView",((CardView)view).getCard())));
 					}else if(owner instanceof HandView){
-						GameActivity.getActivity().getWifiDirectManager().sendEvent(new WifiDirectEventImpl(WifiDirectEvent.EVENT, new MoveCardAction("Player", ActionController.user.getId(), ((CardView)view).getCard(), "DiscardPileView")));
+						GameActivity.getActivity().getWifiDirectManager().sendEvent(new WifiDirectEventImpl(WifiDirectEvent.EVENT, new MoveCardAction("Player", GA.user.getId(), ((CardView)view).getCard(), "DiscardPileView")));
 						Gallery g = (Gallery) GameActivity
 								.getActivity()
 								.findViewById(
@@ -77,7 +77,7 @@ public class PileDragListener implements OnDragListener {
 					}else if(owner instanceof BoardView){
 						GameActivity.getActivity().getWifiDirectManager().sendEvent(new WifiDirectEventImpl(WifiDirectEvent.EVENT, new MoveCardAction("BoardView", "DrawPileView",((CardView)view).getCard())));
 					}else if(owner instanceof HandView){
-						GameActivity.getActivity().getWifiDirectManager().sendEvent(new WifiDirectEventImpl(WifiDirectEvent.EVENT, new MoveCardAction("Player", ActionController.user.getId(), ((CardView)view).getCard(), "DrawPileView")));
+						GameActivity.getActivity().getWifiDirectManager().sendEvent(new WifiDirectEventImpl(WifiDirectEvent.EVENT, new MoveCardAction("Player", GA.user.getId(), ((CardView)view).getCard(), "DrawPileView")));
 						Gallery g = (Gallery) GameActivity
 								.getActivity()
 								.findViewById(

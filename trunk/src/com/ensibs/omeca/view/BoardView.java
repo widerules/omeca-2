@@ -22,7 +22,7 @@ import android.widget.TextView;
 
 import com.ensibs.omeca.GameActivity;
 import com.ensibs.omeca.R;
-import com.ensibs.omeca.controller.ActionController;
+import com.ensibs.omeca.controller.GA;
 import com.ensibs.omeca.controller.OmecaHandler;
 import com.ensibs.omeca.model.actions.MoveCardAction;
 import com.ensibs.omeca.model.entities.Board;
@@ -152,11 +152,11 @@ public class BoardView extends RelativeLayout {
 	}
 
 	public void updatePlayers(){
-		int myPlace = ActionController.board.getPlace(ActionController.user);
+		int myPlace = GA.board.getPlace(GA.user);
 		Player p;
 		for(int i=1; i<Board.NB_PLAYER_MAX;i++){
 			myPlace = (myPlace >=Board.NB_PLAYER_MAX-1) ? 0 : myPlace+1;
-			p = ActionController.board.getPlayers().get(myPlace);
+			p = GA.board.getPlayers().get(myPlace);
 			playerViews.get(i).setPlayer(p, false);
 
 		}
@@ -248,7 +248,7 @@ public class BoardView extends RelativeLayout {
 
 					if (parent instanceof HandView) {
 						Log.i(WifiDirectProperty.TAG, "1");
-						MoveCardAction movecard = new MoveCardAction("Player", ActionController.user.getId(), view.getCard(), "BoardView");
+						MoveCardAction movecard = new MoveCardAction("Player", GA.user.getId(), view.getCard(), "BoardView");
 						movecard.setPourcentageX(left*100/((View) view.getParent()).getWidth());
 						movecard.setPourcentageY(top*100/((View) view.getParent()).getHeight());
 						Log.i(WifiDirectProperty.TAG, movecard.getPourcentageX()+" "+movecard.getPourcentageY());
@@ -295,10 +295,10 @@ public class BoardView extends RelativeLayout {
 		drawPileView.removeViewInLayout(vToMove);
 		addView(vToMove);
 		int x=0 , y =0;
-		final int placeView = (playerPlace - ActionController.board.getPlace(ActionController.user)<0) ? 
-				playerPlace - ActionController.board.getPlace(ActionController.user)+Board.NB_PLAYER_MAX 
-				: playerPlace - ActionController.board.getPlace(ActionController.user);
-		if( playerPlace == ActionController.board.getPlace(ActionController.user)){
+		final int placeView = (playerPlace - GA.board.getPlace(GA.user)<0) ? 
+				playerPlace - GA.board.getPlace(GA.user)+Board.NB_PLAYER_MAX 
+				: playerPlace - GA.board.getPlace(GA.user);
+		if( playerPlace == GA.board.getPlace(GA.user)){
 			x = this.getWidth()/2;
 			y= this.getHeight();
 		}else{
@@ -337,11 +337,11 @@ public class BoardView extends RelativeLayout {
 			playerViews.get(placePlayer).getPlayer().addCard(vToMove.getCard());
 			playerViews.get(placePlayer).setPlayer(playerViews.get(placePlayer).getPlayer(), false);
 		}else{
-			ActionController.user.addCard(vToMove.getCard());
+			GA.user.addCard(vToMove.getCard());
 			Gallery gallery = (Gallery) GameActivity.getActivity().findViewById(R.id.playerview_slider_board_cardgallery);
 			SliderbarCardGallery adapter = (SliderbarCardGallery)gallery.getAdapter();
 			adapter.notifyDataSetChanged();
-			gallery.setSelection(ActionController.user.getNumberOfCards()-1);
+			gallery.setSelection(GA.user.getNumberOfCards()-1);
 			HandView handView = (HandView) GameActivity.getActivity().findViewById(R.id.handview);
 			handView.updateView(true);
 		}
@@ -368,7 +368,7 @@ public class BoardView extends RelativeLayout {
 					Message msgObj = handl.obtainMessage();
 
 					Bundle b = new Bundle();
-					p =ActionController.board.getPlayers().get(j);
+					p =GA.board.getPlayers().get(j);
 					if(p !=null){
 						b.putInt("playerPlace", j);
 						msgObj.what = OmecaHandler.GIVETO;
@@ -388,7 +388,7 @@ public class BoardView extends RelativeLayout {
 				for( int j = 0; j<distributor; j++){
 					Message msgObj = GameActivity.getActivity().getOmecaHandler().obtainMessage();
 					Bundle b = new Bundle();
-					p =ActionController.board.getPlayers().get(j);
+					p =GA.board.getPlayers().get(j);
 					if(p !=null){
 						b.putInt("playerPlace", j);
 						msgObj.what = OmecaHandler.GIVETO;

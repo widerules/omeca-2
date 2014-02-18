@@ -6,7 +6,7 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.Gallery;
 
-import com.ensibs.omeca.controller.ActionController;
+import com.ensibs.omeca.controller.GA;
 import com.ensibs.omeca.view.CardView;
 
 /**
@@ -33,7 +33,7 @@ public class SliderbarCardGallery extends BaseAdapter {
      * Returns the user's number of cards
      */
     public int getCount() {
-        return ActionController.user.getCards().size();        
+        return GA.user.getCards().size();        
     }
 
     /**
@@ -64,7 +64,7 @@ public class SliderbarCardGallery extends BaseAdapter {
     		notifyDataSetChanged();
     	CardView cv = (CardView)convertView;
     	if(cv == null){
-    		cv = new CardView(mContext, ActionController.user.getCards().get(position));
+    		cv = new CardView(mContext, GA.user.getCards().get(position));
     		int height = (int)(parent.getHeight()*0.9);
     		cv.setLayoutParams(new Gallery.LayoutParams((int)(height/CardView.RATIO), height));
     		cv.setOnTouchListener(null);

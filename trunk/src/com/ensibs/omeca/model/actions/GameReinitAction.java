@@ -3,7 +3,7 @@ package com.ensibs.omeca.model.actions;
 import java.util.Map.Entry;
 
 import com.ensibs.omeca.GameActivity;
-import com.ensibs.omeca.controller.ActionController;
+import com.ensibs.omeca.controller.GA;
 import com.ensibs.omeca.controller.OmecaHandler;
 import com.ensibs.omeca.model.entities.Card;
 import com.ensibs.omeca.model.entities.Player;
@@ -44,15 +44,15 @@ public class GameReinitAction implements Action {
 	 */
 	@Override
 	public void execute() {
-		ActionController.user.getCards().clear();
-		for (Entry<Integer, Player> e : ActionController.board.getPlayers()
+		GA.user.getCards().clear();
+		for (Entry<Integer, Player> e : GA.board.getPlayers()
 				.entrySet()) {
 			e.getValue().getCards().clear();
 		}
-		ActionController.board.getDiscardPile().getCards().clear();
-		ActionController.board.getDrawPile().getCards().clear();
+		GA.board.getDiscardPile().getCards().clear();
+		GA.board.getDrawPile().getCards().clear();
 		for (Card c : getCards())
-			ActionController.board.getDrawPile().addCard(c);
+			GA.board.getDrawPile().addCard(c);
 		GameActivity.getActivity().getOmecaHandler()
 				.sendEmptyMessage(OmecaHandler.GAME_REINIT);
 	}

@@ -14,11 +14,11 @@ import com.ensibs.omeca.wifidirect.mod.WifiDirectMod;
 
 /**
  * This class provides global access to the current Player and the Board
- * 
+ * GA for Global Accessor
  * @author Nicolas
  * 
  */
-public class ActionController {
+public class GA {
 	/**
 	 * Omeca android application
 	 */
@@ -45,9 +45,9 @@ public class ActionController {
 	 * @param omecaApplication
 	 *            The Omeca android application
 	 */
-	public ActionController(OmecaApplication omecaApplication) {
+	public GA(OmecaApplication omecaApplication) {
 
-		ActionController.maActivity = omecaApplication;
+		GA.maActivity = omecaApplication;
 
 		profilPreferences = maActivity.getSharedPreferences(
 				AvatarActivity.SHARED_PREFERENCES_FILE_NAME,
