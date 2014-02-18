@@ -10,7 +10,7 @@ import com.ensibs.omeca.R;
 
 /**
  * This class creates, display, discard and manages the exit popup
- * @author OMECA 2.0 Team (Raphaël GICQUIAUX - Nicolas HALLOUIN - Sylvain RIO - Lindsay ROZIER)
+ * @author OMECA 2.0 Team (Raphaï¿½l GICQUIAUX - Nicolas HALLOUIN - Sylvain RIO - Lindsay ROZIER)
  *
  */
 public class OmecaPopupExit {
@@ -38,11 +38,11 @@ public class OmecaPopupExit {
 		// Define whether we deal with exiting GameActivity or MainActivity
 		if (context instanceof	GameActivity) {
 			isGameActivity = true;
-			finishText = GameActivity.getActivity().getResources().getString(R.string.confirm_exit_game);
+			finishText = context.getString(R.string.confirm_exit_game);
 		}
 		else{
 			isGameActivity = false;
-			finishText = GameActivity.getActivity().getResources().getString(R.string.confirm_exit_application);
+			finishText = context.getString(R.string.confirm_exit_application);
 		}
 
 		// Define the Lister
@@ -71,8 +71,8 @@ public class OmecaPopupExit {
 
 		builder
 		.setMessage(finishText)
-		.setPositiveButton(GameActivity.getActivity().getResources().getString(R.string.yes), dialogClickListener)
-		.setNegativeButton(GameActivity.getActivity().getResources().getString(R.string.no), dialogClickListener)
+		.setPositiveButton(context.getString(R.string.yes), dialogClickListener)
+		.setNegativeButton(context.getString(R.string.no), dialogClickListener)
 		.show();
 
 	}
