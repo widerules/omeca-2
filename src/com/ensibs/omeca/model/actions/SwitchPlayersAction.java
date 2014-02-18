@@ -13,9 +13,6 @@ import com.ensibs.omeca.model.entities.Player;
  */
 public class SwitchPlayersAction implements Action {
 
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = 1L;
 
 	private Player player1;
@@ -26,11 +23,11 @@ public class SwitchPlayersAction implements Action {
 	 * Constructor
 	 * 
 	 * @param player1
-	 *            player1
+	 *            First Player
 	 * @param player2
-	 *            player2
+	 *            Second Player
 	 * @param pos
-	 *            position
+	 *            Position of the current Player
 	 */
 	public SwitchPlayersAction(Player player1, Player player2, int pos) {
 		this.player1 = player1;
@@ -65,6 +62,10 @@ public class SwitchPlayersAction implements Action {
 		return position;
 	}
 
+	/**
+	 * Execute the Player changing place action depending on the position of the
+	 * current Player
+	 */
 	@Override
 	public void execute() {
 		Player p1 = getP1();

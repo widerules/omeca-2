@@ -17,13 +17,27 @@ import android.util.Log;
  */
 public class Card implements Serializable {
 	/**
-	 * 
+	 * Card values
 	 */
-	private static final long serialVersionUID = 1L;
 	public static int[] VALUES;
+	
+	/**
+	 * Card colors
+	 */
 	public static String[] COLORS;
+	
+	/**
+	 * Jokers
+	 */
 	public static String[] JOKERS;
+	
+	/**
+	 * Card's back
+	 */
 	public static String CARDBACK;
+	
+	private static final long serialVersionUID = 1L;
+	
 
 	private int value;
 	private String color;

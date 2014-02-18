@@ -14,9 +14,6 @@ import com.ensibs.omeca.model.entities.Player;
  */
 public class AknowlegmentConnectionAction implements Action {
 
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = 1L;
 	private Player player;
 	private Player[] players;
@@ -25,10 +22,14 @@ public class AknowlegmentConnectionAction implements Action {
 
 	/**
 	 * 
-	 * @param p Player who will be added
-	 * @param players The other players
-	 * @param drawPileCards The DrawPile cards
-	 * @param discardPileCards The DiscardPile cards
+	 * @param p
+	 *            Player who will be added
+	 * @param players
+	 *            The other players
+	 * @param drawPileCards
+	 *            The DrawPile cards
+	 * @param discardPileCards
+	 *            The DiscardPile cards
 	 */
 	public AknowlegmentConnectionAction(Player p, Player[] players,
 			Card[] drawPileCards, Card[] discardPileCards) {
@@ -40,6 +41,7 @@ public class AknowlegmentConnectionAction implements Action {
 
 	/**
 	 * Getter on player
+	 * 
 	 * @return player
 	 */
 	public Player getPlayer() {
@@ -48,7 +50,9 @@ public class AknowlegmentConnectionAction implements Action {
 
 	/**
 	 * Setter on player
-	 * @param player The new player
+	 * 
+	 * @param player
+	 *            The new player
 	 */
 	public void setPlayer(Player player) {
 		this.player = player;
@@ -56,6 +60,7 @@ public class AknowlegmentConnectionAction implements Action {
 
 	/**
 	 * Getter on players
+	 * 
 	 * @return players
 	 */
 	public Player[] getPlayers() {
@@ -64,7 +69,9 @@ public class AknowlegmentConnectionAction implements Action {
 
 	/**
 	 * Setter on players
-	 * @param player The new players tab
+	 * 
+	 * @param player
+	 *            The new players tab
 	 */
 	public void setPlayers(Player[] players) {
 		this.players = players;
@@ -72,6 +79,7 @@ public class AknowlegmentConnectionAction implements Action {
 
 	/**
 	 * Getter on discardPileCards
+	 * 
 	 * @return discardPileCards
 	 */
 	public Card[] getDiscardPileCards() {
@@ -80,7 +88,9 @@ public class AknowlegmentConnectionAction implements Action {
 
 	/**
 	 * Setter on discardPileCards
-	 * @param player The new discardPileCards tab
+	 * 
+	 * @param player
+	 *            The new discardPileCards tab
 	 */
 	public void setDiscardPileCards(Card[] discardPileCards) {
 		this.discardPileCards = discardPileCards;
@@ -88,6 +98,7 @@ public class AknowlegmentConnectionAction implements Action {
 
 	/**
 	 * Getter on drawPileCards
+	 * 
 	 * @return drawPileCards
 	 */
 	public Card[] getDrawPileCards() {
@@ -96,31 +107,36 @@ public class AknowlegmentConnectionAction implements Action {
 
 	/**
 	 * Setter on drawPileCards
-	 * @param player The new drawPileCards tab
+	 * 
+	 * @param player
+	 *            The new drawPileCards tab
 	 */
 	public void setDrawPileCards(Card[] drawPileCards) {
 		this.drawPileCards = drawPileCards;
 	}
 
+	/**
+	 * Execute the aknowlegment of a connection action
+	 */
 	@Override
 	public void execute() {
 		Player p = getPlayer();
 		if (p.getMacAddress().equals(ActionController.user.getMacAddress())) {
 			ActionController.user = p;
 		}
-		
-		for(int i=0; i<getPlayers().length ; i++){
-			if(getPlayers()[i] != null)
+
+		for (int i = 0; i < getPlayers().length; i++) {
+			if (getPlayers()[i] != null)
 				ActionController.board.addPlayer(i, getPlayers()[i]);
 		}
-		
+
 		ActionController.board.getDrawPile().getCards().clear();
-		for(Card c : drawPileCards)
+		for (Card c : drawPileCards)
 			ActionController.board.getDrawPile().addCard(c);
 		ActionController.board.getDiscardPile().getCards().clear();
-		for(Card c : discardPileCards)
+		for (Card c : discardPileCards)
 			ActionController.board.getDiscardPile().addCard(c);
-		
+
 		GameActivity.getActivity().getOmecaHandler()
 				.sendEmptyMessage(OmecaHandler.AKNOWLEGMENT_CONNECTION_ACTION);
 	}

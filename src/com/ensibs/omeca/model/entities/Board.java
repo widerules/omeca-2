@@ -10,11 +10,14 @@ import java.util.Map.Entry;
  * 
  */
 public class Board extends GameEntity {
+	
 	/**
-	 * 
+	 * Max number of Player on the table
 	 */
-	private static final long serialVersionUID = 1L;
 	public static final int NB_PLAYER_MAX = 8;
+	
+	private static final long serialVersionUID = 1L;
+	
 	private int cardsToDeal;
 	private Hashtable<Integer, Player> players;
 	private DrawPile drawPile;

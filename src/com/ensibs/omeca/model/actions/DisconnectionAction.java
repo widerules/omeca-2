@@ -8,43 +8,47 @@ import com.ensibs.omeca.model.entities.Player;
 
 /**
  * Event when a Player exit the table
+ * 
  * @author Nicolas
- *
+ * 
  */
-public class DisconnectionAction implements Action{
+public class DisconnectionAction implements Action {
+
+	private static final long serialVersionUID = 1L;
+
+	private Player player;
 
 	/**
-	 * 
-	 */
-	private static final long serialVersionUID = 1L;
-	
-	private Player player;
-	
-	/**
 	 * Constructor
-	 * @param user player
+	 * 
+	 * @param user
+	 *            The Player who is disconnecting
 	 */
-	public DisconnectionAction(Player user){
+	public DisconnectionAction(Player user) {
 		this.player = user;
 	}
 
 	/**
 	 * Getter on player
+	 * 
 	 * @return player
 	 */
 	public Player getPlayer() {
 		return player;
 	}
 
+	/**
+	 * Execute a Player disconnection action
+	 */
 	@Override
 	public void execute() {
 		Player p = getPlayer();
 		for (Card c : p.getCards()) {
 			ActionController.board.getDiscardPile().addCard(c);
 		}
-		ActionController.board.removePlayer(ActionController.board
-				.getPlace(p));
-		GameActivity.getActivity().getOmecaHandler().sendEmptyMessage(OmecaHandler.DECONNEXION);
+		ActionController.board.removePlayer(ActionController.board.getPlace(p));
+		GameActivity.getActivity().getOmecaHandler()
+				.sendEmptyMessage(OmecaHandler.DECONNEXION);
 	}
 
 }
