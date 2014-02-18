@@ -64,7 +64,8 @@ public class BoardView extends RelativeLayout {
 				RelativeLayout.LayoutParams.MATCH_PARENT,
 				RelativeLayout.LayoutParams.MATCH_PARENT);
 		setLayoutParams(params);
-		setBackgroundDrawable(getResources().getDrawable(R.drawable.background));
+		setBackgroundResource(R.drawable.board_background);
+		//setBackgroundDrawable(getResources().getDrawable(R.drawable.background));
 		setOnDragListener(new BoardDragListener());
 		playerViews = new Hashtable<Integer, PlayerView>();
 		cardsGroup = new CardGroup();
