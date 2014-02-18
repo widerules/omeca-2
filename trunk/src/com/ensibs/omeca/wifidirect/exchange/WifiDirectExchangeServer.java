@@ -11,6 +11,9 @@ import com.ensibs.omeca.wifidirect.event.WifiDirectEvent;
 import com.ensibs.omeca.wifidirect.event.WifiDirectEventImpl;
 import com.ensibs.omeca.wifidirect.property.WifiDirectProperty;
 
+/**
+ * Implementation of WifiDirectIExchange for server
+ */
 public class WifiDirectExchangeServer extends WifiDirectIExchange{
 
 	private WifiDirectAcceptServer acceptServer = null;
@@ -78,6 +81,10 @@ public class WifiDirectExchangeServer extends WifiDirectIExchange{
 		}
 	}
 
+	/**
+	 * Send event to clients
+	 * @param event the event
+	 */
 	@Override
 	public void sendEvent(WifiDirectEventImpl event) {
 		Log.i(WifiDirectProperty.TAG, "Client ="+this.receivedThread.size());

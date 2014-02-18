@@ -9,8 +9,7 @@ import com.ensibs.omeca.wifidirect.event.WifiDirectEventImpl;
 import com.ensibs.omeca.wifidirect.property.WifiDirectProperty;
 
 /**
- * 
- *
+ * Implementation of WifiDirectIExchange for client
  */
 public class WifiDirectExchangeClient extends WifiDirectIExchange{
 	
@@ -70,6 +69,10 @@ public class WifiDirectExchangeClient extends WifiDirectIExchange{
 		this.socket = socket;
 	}
 
+	/**
+	 * Get ip adress of the device
+	 * @return ip adress
+	 */
 	public String getIpAdress() {
 		return ipAdress;
 	}

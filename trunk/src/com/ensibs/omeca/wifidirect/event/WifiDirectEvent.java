@@ -1,5 +1,8 @@
 package com.ensibs.omeca.wifidirect.event;
 
+/**
+ * Enumeration of different type of event related to the wifi direct API
+ */
 public enum WifiDirectEvent {
 	CONNECTED,
 	DISCONNECTED,
