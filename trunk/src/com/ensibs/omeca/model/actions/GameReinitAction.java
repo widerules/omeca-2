@@ -11,7 +11,7 @@ import com.ensibs.omeca.model.entities.Player;
 /**
  * Event when a game have to be reinitialized
  * 
- * @author Nicolas
+ * @author OMECA 2.0 Team (Raphaël GICQUIAUX - Nicolas HALLOUIN - Sylvain RIO - Lindsay ROZIER)
  * 
  */
 public class GameReinitAction implements Action {
