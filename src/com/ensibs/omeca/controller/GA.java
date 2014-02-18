@@ -15,7 +15,7 @@ import com.ensibs.omeca.wifidirect.mod.WifiDirectMod;
 /**
  * This class provides global access to the current Player and the Board
  * GA for Global Accessor
- * @author Nicolas
+ * @author OMECA 2.0 Team (Raphaël GICQUIAUX - Nicolas HALLOUIN - Sylvain RIO - Lindsay ROZIER)
  * 
  */
 public class GA {

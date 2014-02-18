@@ -11,7 +11,7 @@ import com.ensibs.omeca.view.BoardView;
 
 /**
  * Listener of the DrawPile shuffle animation
- * @author Nicolas
+ * @author OMECA 2.0 Team (Raphaël GICQUIAUX - Nicolas HALLOUIN - Sylvain RIO - Lindsay ROZIER)
  * @see AnimatorListener
  */
 public class ShuffleAnimationListener implements AnimatorListener{

@@ -5,7 +5,7 @@ import com.ensibs.omeca.wifidirect.WifiDirectManager;
 /**
  * Model for the Player entity
  * 
- * @author Nicolas
+ * @author OMECA 2.0 Team (Raphaël GICQUIAUX - Nicolas HALLOUIN - Sylvain RIO - Lindsay ROZIER)
  * 
  */
 public class Player extends GameEntity {

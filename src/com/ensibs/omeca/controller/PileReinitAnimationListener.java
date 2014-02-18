@@ -10,7 +10,7 @@ import com.ensibs.omeca.view.BoardView;
 
 /**
  * Listener of the Piles reinitialization animation
- * @author Nicolas
+ * @author OMECA 2.0 Team (Raphaël GICQUIAUX - Nicolas HALLOUIN - Sylvain RIO - Lindsay ROZIER)
  * @see AnimatorListener
  */
 public class PileReinitAnimationListener implements AnimatorListener{

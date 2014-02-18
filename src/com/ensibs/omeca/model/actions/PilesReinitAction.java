@@ -8,7 +8,7 @@ import com.ensibs.omeca.model.entities.Card;
 /**
  * Event when the discard pile's cards have to be transfered to the draw pile
  * 
- * @author Nicolas
+ * @author OMECA 2.0 Team (Raphaël GICQUIAUX - Nicolas HALLOUIN - Sylvain RIO - Lindsay ROZIER)
  * 
  */
 public class PilesReinitAction implements Action {

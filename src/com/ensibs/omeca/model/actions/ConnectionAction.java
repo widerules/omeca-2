@@ -15,7 +15,7 @@ import com.ensibs.omeca.wifidirect.mod.WifiDirectMod;
 /**
  * Event when a Player join the table
  * 
- * @author Nicolas
+ * @author OMECA 2.0 Team (Raphaël GICQUIAUX - Nicolas HALLOUIN - Sylvain RIO - Lindsay ROZIER)
  * 
  */
 public class ConnectionAction implements Action {

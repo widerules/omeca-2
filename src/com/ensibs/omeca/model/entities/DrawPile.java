@@ -2,7 +2,7 @@ package com.ensibs.omeca.model.entities;
 
 /**
  * Model for DrawPile entity
- * @author Nicolas
+ * @author OMECA 2.0 Team (Raphaël GICQUIAUX - Nicolas HALLOUIN - Sylvain RIO - Lindsay ROZIER)
  *
  */
 public class DrawPile extends GameEntity{

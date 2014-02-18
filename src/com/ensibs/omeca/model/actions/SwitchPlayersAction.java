@@ -8,7 +8,7 @@ import com.ensibs.omeca.model.entities.Player;
 /**
  * Event when two Players are switched
  * 
- * @author Nicolas
+ * @author OMECA 2.0 Team (Raphaël GICQUIAUX - Nicolas HALLOUIN - Sylvain RIO - Lindsay ROZIER)
  * 
  */
 public class SwitchPlayersAction implements Action {
