@@ -21,7 +21,7 @@ public class WifiDirectPickPeersDialog extends AlertDialog.Builder{
 		this.manager = manager;
 		this.peers = peers;
 		this.create();
-		this.setTitle(GameActivity.getActivity().getResources().getString(R.string.choose_host));
+		this.setTitle(context.getString(R.string.choose_host));
 		this.setCancelable(false);
 		this.setNegativeButton(GameActivity.getActivity().getResources().getString(R.string.cancel),
 				new DialogInterface.OnClickListener() {
