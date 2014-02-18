@@ -1,15 +1,14 @@
 package com.ensibs.omeca.wifidirect;
 
-import com.ensibs.omeca.GameActivity;
-import com.ensibs.omeca.R;
-import com.ensibs.omeca.wifidirect.event.WifiDirectEvent;
-import com.ensibs.omeca.wifidirect.event.WifiDirectEventImpl;
-
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.net.wifi.p2p.WifiP2pDevice;
 import android.net.wifi.p2p.WifiP2pDeviceList;
+
+import com.ensibs.omeca.R;
+import com.ensibs.omeca.wifidirect.event.WifiDirectEvent;
+import com.ensibs.omeca.wifidirect.event.WifiDirectEventImpl;
 
 public class WifiDirectPickPeersDialog extends AlertDialog.Builder{
 	
@@ -23,7 +22,7 @@ public class WifiDirectPickPeersDialog extends AlertDialog.Builder{
 		this.create();
 		this.setTitle(context.getString(R.string.choose_host));
 		this.setCancelable(false);
-		this.setNegativeButton(GameActivity.getActivity().getResources().getString(R.string.cancel),
+		this.setNegativeButton(context.getString(R.string.cancel),
 				new DialogInterface.OnClickListener() {
 			public void onClick(DialogInterface dialog, int id) {
 				WifiDirectPickPeersDialog.this.manager.cancelConnection();

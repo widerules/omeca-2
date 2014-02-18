@@ -1,11 +1,14 @@
 package com.ensibs.omeca.view;
 
+import java.util.Map.Entry;
+
 import android.content.ClipData;
 import android.content.Context;
 import android.graphics.Color;
 import android.graphics.Typeface;
 import android.util.AttributeSet;
 import android.util.DisplayMetrics;
+import android.util.Log;
 import android.util.TypedValue;
 import android.view.DragEvent;
 import android.view.Gravity;
@@ -229,6 +232,12 @@ public class PlayerView extends RelativeLayout {
 								+ GA.board
 								.getPlace(GA.user);
 
+						if (ptmp != null) {
+							GA.board.switchPlayers(ptmp, player);
+						} else {
+							GA.board.movePlayerTo(player, pos);
+						}
+						
 						WifiDirectManager wifiDirectManager = GameActivity
 								.getActivity().getOmecaApplication()
 								.getWifiDirectManager();

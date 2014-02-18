@@ -80,8 +80,6 @@ public class SwitchPlayersAction implements Action {
 			GA.board.movePlayerTo(p2, getPosition());
 		}
 
-		for(Entry<Integer, Player> e : GA.board.getPlayers().entrySet())
-			Log.w("Player", e.getValue()+ " "+e.getKey());
 		GameActivity.getActivity().getOmecaHandler()
 				.sendEmptyMessage(OmecaHandler.SWITCH_PLAYERS_ACTION);
 	}
