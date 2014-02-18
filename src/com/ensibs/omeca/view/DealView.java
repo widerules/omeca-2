@@ -11,8 +11,16 @@ import android.widget.NumberPicker;
 public class DealView extends LinearLayout{
 	public Button buttonSave;
 	public Button buttonCancel;
+	
+	// number of card to deal by players
 	private NumberPicker numberPicker;
 
+	/**
+	 * Constructor 
+	 * @param drawNumber Total number of card how can be deal
+	 * @param playerNumber Number of players in the game 
+	 * @param c Context of the avtiviy
+	 */
 	public DealView(int drawNumber, int playerNumber,Context c) {
 		super(c);	
 		this.setOrientation(LinearLayout.VERTICAL);
@@ -35,8 +43,12 @@ public class DealView extends LinearLayout{
 		
 		
 	}
+	
+	/**
+	 * Return the selected number the the user have chose 
+	 * @return Selected number
+	 */
 	public int getDealNumber(){
-		//return seekBar.getProgress();
 		return numberPicker.getValue();
 	}
 }
