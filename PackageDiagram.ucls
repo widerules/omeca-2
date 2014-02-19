@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<class-diagram version="1.1.4" icons="true" always-add-relationships="false" generalizations="true" realizations="true" 
+  associations="true" dependencies="false" nesting-relationships="true">  
+  <package id="1" language="java" name="com.ensibs.omeca.controller" project="Omeca_SVN" 
+    file="/Omeca_SVN/src/com/ensibs/omeca/controller" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="-1" width="-1" x="520" y="36"/>    
+    <display autosize="true" stereotype="true" accessors="true"/>  
+  </package>  
+  <package id="2" language="java" name="com.ensibs.omeca.wifidirect.status" project="Omeca_SVN" 
+    file="/Omeca_SVN/src/com/ensibs/omeca/wifidirect/status" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="-1" width="-1" x="135" y="140"/>    
+    <display autosize="true" stereotype="true" accessors="true"/>  
+  </package>  
+  <package id="3" language="java" name="com.ensibs.omeca.wifidirect.event" project="Omeca_SVN" 
+    file="/Omeca_SVN/src/com/ensibs/omeca/wifidirect/event" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="-1" width="-1" x="133" y="88"/>    
+    <display autosize="true" stereotype="true" accessors="true"/>  
+  </package>  
+  <package id="4" language="java" name="com.ensibs.omeca.wifidirect" project="Omeca_SVN" 
+    file="/Omeca_SVN/src/com/ensibs/omeca/wifidirect" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="50" width="235" x="22" y="11"/>    
+    <display autosize="false" stereotype="true" accessors="true"/>  
+  </package>  
+  <package id="5" language="java" name="com.ensibs.omeca.utils" project="Omeca_SVN" 
+    file="/Omeca_SVN/src/com/ensibs/omeca/utils" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="-1" width="-1" x="340" y="36"/>    
+    <display autosize="true" stereotype="true" accessors="true"/>  
+  </package>  
+  <package id="6" language="java" name="com.ensibs.omeca" project="Omeca_SVN" file="/Omeca_SVN/src/com/ensibs/omeca" 
+    binary="false" corner="BOTTOM_RIGHT">    
+    <position height="-1" width="-1" x="484" y="-19"/>    
+    <display autosize="true" stereotype="true" accessors="true"/>  
+  </package>  
+  <package id="7" language="java" name="com.ensibs.omeca.wifidirect.exchange" project="Omeca_SVN" 
+    file="/Omeca_SVN/src/com/ensibs/omeca/wifidirect/exchange" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="-1" width="-1" x="145" y="247"/>    
+    <display autosize="true" stereotype="true" accessors="true"/>  
+  </package>  
+  <package id="8" language="java" name="com.ensibs.omeca.wifidirect.property" project="Omeca_SVN" 
+    file="/Omeca_SVN/src/com/ensibs/omeca/wifidirect/property" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="-1" width="-1" x="141" y="194"/>    
+    <display autosize="true" stereotype="true" accessors="true"/>  
+  </package>  
+  <package id="9" language="java" name="com.ensibs.omeca.model.entities" project="Omeca_SVN" 
+    file="/Omeca_SVN/src/com/ensibs/omeca/model/entities" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="-1" width="-1" x="890" y="90"/>    
+    <display autosize="true" stereotype="true" accessors="true"/>  
+  </package>  
+  <package id="10" language="java" name="com.ensibs.omeca.wifidirect.mod" project="Omeca_SVN" 
+    file="/Omeca_SVN/src/com/ensibs/omeca/wifidirect/mod" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="-1" width="-1" x="130" y="301"/>    
+    <display autosize="true" stereotype="true" accessors="true"/>  
+  </package>  
+  <package id="11" language="java" name="com.ensibs.omeca.model.actions" project="Omeca_SVN" 
+    file="/Omeca_SVN/src/com/ensibs/omeca/model/actions" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="-1" width="-1" x="890" y="36"/>    
+    <display autosize="true" stereotype="true" accessors="true"/>  
+  </package>  
+  <package id="12" language="java" name="com.ensibs.omeca.view" project="Omeca_SVN" 
+    file="/Omeca_SVN/src/com/ensibs/omeca/view" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="-1" width="-1" x="698" y="36"/>    
+    <display autosize="true" stereotype="true" accessors="true"/>  
+  </package>  
+  <classifier-display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+    accessors="true" visibility="true">    
+    <attributes public="true" package="true" protected="true" private="true" static="true"/>    
+    <operations public="true" package="true" protected="true" private="true" static="true"/>  
+  </classifier-display>  
+  <association-display labels="true" multiplicity="true"/>
+</class-diagram>

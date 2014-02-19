@@ -1,14 +1,11 @@
 package com.ensibs.omeca.view;
 
-import java.util.Map.Entry;
-
 import android.content.ClipData;
 import android.content.Context;
 import android.graphics.Color;
 import android.graphics.Typeface;
 import android.util.AttributeSet;
 import android.util.DisplayMetrics;
-import android.util.Log;
 import android.util.TypedValue;
 import android.view.DragEvent;
 import android.view.Gravity;
@@ -23,8 +20,8 @@ import android.widget.TextView;
 import com.ensibs.omeca.GameActivity;
 import com.ensibs.omeca.R;
 import com.ensibs.omeca.controller.GA;
-import com.ensibs.omeca.model.actions.SwitchPlayersAction;
 import com.ensibs.omeca.model.actions.MoveCardAction;
+import com.ensibs.omeca.model.actions.SwitchPlayersAction;
 import com.ensibs.omeca.model.entities.Card;
 import com.ensibs.omeca.model.entities.Player;
 import com.ensibs.omeca.utils.AvatarsList;
@@ -35,8 +32,19 @@ import com.ensibs.omeca.wifidirect.event.WifiDirectEvent;
 import com.ensibs.omeca.wifidirect.event.WifiDirectEventImpl;
 import com.ensibs.omeca.wifidirect.mod.WifiDirectMod;
 
-
+/**
+ * This class represents the View of a Player on the BoardView
+ * 
+ * @author OMECA 2.0 Team (Rapha�l GICQUIAUX - Nicolas HALLOUIN - Sylvain RIO -
+ *         Lindsay ROZIER)
+ * 
+ */
 public class PlayerView extends RelativeLayout {
+
+	/**
+	 * Maximum number of PlayerViews on the BoardView
+	 */
+	public static final int SIZE = 7;
 
 	private Player player;
 	private Context context;
@@ -47,24 +55,51 @@ public class PlayerView extends RelativeLayout {
 	private ImageView cardsImages;
 	private boolean isMe;
 
-	public static final int SIZE = 7;
-
+	/**
+	 * Constructor
+	 * 
+	 * @param context
+	 *            The context
+	 */
 	public PlayerView(Context context) {
 		super(context);
 		init(context);
 	}
 
+	/**
+	 * Constructor
+	 * 
+	 * @param context
+	 *            The context
+	 * @param attrs
+	 *            The attributes
+	 */
 	public PlayerView(Context context, AttributeSet attrs) {
 		this(context, attrs, 0);
 		init(context);
 	}
 
+	/**
+	 * Constructor
+	 * 
+	 * @param context
+	 *            The context
+	 * @param attrs
+	 *            The attributes
+	 * @param defStyle
+	 *            The Style
+	 */
 	public PlayerView(Context context, AttributeSet attrs, int defStyle) {
 		super(context, attrs, defStyle);
 		init(context);
 	}
 
-	@SuppressWarnings("static-access")
+	/**
+	 * Initializes the PlayerView
+	 * 
+	 * @param context
+	 *            The context
+	 */
 	private void init(Context context) {
 		this.player = null;
 		this.context = context;
@@ -83,10 +118,23 @@ public class PlayerView extends RelativeLayout {
 		setOnDragListener(new PlayerDragListener());
 	}
 
+	/**
+	 * Getter on Player model
+	 * 
+	 * @return player
+	 */
 	public Player getPlayer() {
 		return player;
 	}
 
+	/**
+	 * Sets the Player model and update the PlayerView according to this model
+	 * 
+	 * @param player
+	 *            The new Player model
+	 * @param isMe
+	 *            If The PlayerView is the current user (Player)
+	 */
 	public void setPlayer(Player player, boolean isMe) {
 		this.player = player;
 		this.isMe = isMe;
@@ -188,8 +236,18 @@ public class PlayerView extends RelativeLayout {
 		}
 	}
 
+	/**
+	 * Drag listener for PlayerView to switch Players or to receive cards
+	 * 
+	 * @author OMECA 2.0 Team (Rapha�l GICQUIAUX - Nicolas HALLOUIN - Sylvain
+	 *         RIO - Lindsay ROZIER)
+	 * 
+	 */
 	private class PlayerDragListener implements OnDragListener {
 
+		/**
+		 * OnDrag event actions
+		 */
 		@Override
 		public boolean onDrag(View v, DragEvent event) {
 			View vTmp = (View) event.getLocalState();
@@ -229,15 +287,14 @@ public class PlayerView extends RelativeLayout {
 								.getActivity().findViewById(R.id.view_board);
 						int pos = boardView
 								.getPlayerViewPosition((PlayerView) v)
-								+ GA.board
-								.getPlace(GA.user);
+								+ GA.board.getPlace(GA.user);
 
 						if (ptmp != null) {
 							GA.board.switchPlayers(ptmp, player);
 						} else {
 							GA.board.movePlayerTo(player, pos);
 						}
-						
+
 						WifiDirectManager wifiDirectManager = GameActivity
 								.getActivity().getOmecaApplication()
 								.getWifiDirectManager();
@@ -256,15 +313,15 @@ public class PlayerView extends RelativeLayout {
 						switch (player.getNumberOfCards()) {
 						case 1:
 							cardsImages
-							.setBackgroundResource(R.drawable.cardsx1);
+									.setBackgroundResource(R.drawable.cardsx1);
 							break;
 						case 2:
 							cardsImages
-							.setBackgroundResource(R.drawable.cardsx2);
+									.setBackgroundResource(R.drawable.cardsx2);
 							break;
 						default:
 							cardsImages
-							.setBackgroundResource(R.drawable.cardsx3);
+									.setBackgroundResource(R.drawable.cardsx3);
 							cards.setText("" + player.getCards().size());
 							break;
 						}
@@ -284,52 +341,53 @@ public class PlayerView extends RelativeLayout {
 						// Send event to the other
 						if (parent instanceof HandView) {
 							GameActivity
-							.getActivity()
-							.getWifiDirectManager()
-							.sendEvent(
-									new WifiDirectEventImpl(
-											WifiDirectEvent.EVENT,
-											new MoveCardAction(
-													"Player",GA.user.getId(),
-													"Player", player
-													.getId(),
-													view.getCard())));
+									.getActivity()
+									.getWifiDirectManager()
+									.sendEvent(
+											new WifiDirectEventImpl(
+													WifiDirectEvent.EVENT,
+													new MoveCardAction(
+															"Player", GA.user
+																	.getId(),
+															"Player", player
+																	.getId(),
+															view.getCard())));
 						} else if (parent instanceof BoardView) {
 							GameActivity
-							.getActivity()
-							.getWifiDirectManager()
-							.sendEvent(
-									new WifiDirectEventImpl(
-											WifiDirectEvent.EVENT,
-											new MoveCardAction(
-													"BoardView",
-													view.getCard(),
-													"Player", player
-													.getId())));
+									.getActivity()
+									.getWifiDirectManager()
+									.sendEvent(
+											new WifiDirectEventImpl(
+													WifiDirectEvent.EVENT,
+													new MoveCardAction(
+															"BoardView", view
+																	.getCard(),
+															"Player", player
+																	.getId())));
 						} else if (parent instanceof DrawPileView) {
 							GameActivity
-							.getActivity()
-							.getWifiDirectManager()
-							.sendEvent(
-									new WifiDirectEventImpl(
-											WifiDirectEvent.EVENT,
-											new MoveCardAction(
-													"DrawPileView",
-													view.getCard(),
-													"Player", player
-													.getId())));
+									.getActivity()
+									.getWifiDirectManager()
+									.sendEvent(
+											new WifiDirectEventImpl(
+													WifiDirectEvent.EVENT,
+													new MoveCardAction(
+															"DrawPileView",
+															view.getCard(),
+															"Player", player
+																	.getId())));
 						} else if (parent instanceof DiscardPileView) {
 							GameActivity
-							.getActivity()
-							.getWifiDirectManager()
-							.sendEvent(
-									new WifiDirectEventImpl(
-											WifiDirectEvent.EVENT,
-											new MoveCardAction(
-													"DiscardPileView",
-													view.getCard(),
-													"Player", player
-													.getId())));
+									.getActivity()
+									.getWifiDirectManager()
+									.sendEvent(
+											new WifiDirectEventImpl(
+													WifiDirectEvent.EVENT,
+													new MoveCardAction(
+															"DiscardPileView",
+															view.getCard(),
+															"Player", player
+																	.getId())));
 						}
 					} else {
 						vTmp.setVisibility(View.VISIBLE);
@@ -347,12 +405,22 @@ public class PlayerView extends RelativeLayout {
 		}
 	}
 
+	/**
+	 * Touch listener for PlayerView
+	 * 
+	 * @author OMECA 2.0 Team (Rapha�l GICQUIAUX - Nicolas HALLOUIN - Sylvain
+	 *         RIO - Lindsay ROZIER)
+	 * 
+	 */
 	class PlayerTouchListener implements OnTouchListener {
 		private float x;
 		private float y;
 		private final float SCROLL_THRESHOLD = 10;
 		private boolean isOnClick;
 
+		/**
+		 * OnTouch event actions
+		 */
 		@Override
 		public boolean onTouch(View view, MotionEvent mE) {
 
@@ -361,7 +429,8 @@ public class PlayerView extends RelativeLayout {
 				if (!isMe) {
 					x = mE.getX();
 					y = mE.getY();
-					isOnClick = (GameActivity.getActivity().getWifiDirectManager().getMod() == WifiDirectMod.HOST);
+					isOnClick = (GameActivity.getActivity()
+							.getWifiDirectManager().getMod() == WifiDirectMod.HOST);
 				} else
 					setBackgroundResource(R.drawable.player);
 				break;
@@ -393,15 +462,31 @@ public class PlayerView extends RelativeLayout {
 
 	}
 
+	/**
+	 * Returns notifications TextView of the current PlayerView
+	 * 
+	 * @return notifs
+	 */
 	public TextView getNotifs() {
 		return notifs;
 	}
 
-	@SuppressWarnings("static-access")
+	/**
+	 * Sets the notifications TextView
+	 * 
+	 * @param notifs
+	 *            The new TextView for notifications
+	 */
 	public void setNotifs(TextView notifs) {
 		this.notifs = notifs;
 	}
 
+	/**
+	 * Updates notifications counter
+	 * 
+	 * @param nb
+	 *            Number of notifications to display
+	 */
 	public static void updateNotifs(int nb) {
 		notifs.setBackgroundResource((nb > 0) ? R.drawable.notif_up
 				: R.drawable.notif_down);

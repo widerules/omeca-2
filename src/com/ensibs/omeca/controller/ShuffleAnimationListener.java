@@ -11,18 +11,22 @@ import com.ensibs.omeca.view.BoardView;
 
 /**
  * Listener of the DrawPile shuffle animation
- * @author OMECA 2.0 Team (Raphaël GICQUIAUX - Nicolas HALLOUIN - Sylvain RIO - Lindsay ROZIER)
+ * 
+ * @author OMECA 2.0 Team (Raphaï¿½l GICQUIAUX - Nicolas HALLOUIN - Sylvain RIO -
+ *         Lindsay ROZIER)
  * @see AnimatorListener
  */
-public class ShuffleAnimationListener implements AnimatorListener{
-	
+public class ShuffleAnimationListener implements AnimatorListener {
+
 	private View view;
-	
+
 	/**
 	 * Constructor
-	 * @param view The view which is animated
+	 * 
+	 * @param view
+	 *            The view which is animated
 	 */
-	public ShuffleAnimationListener(View view){
+	public ShuffleAnimationListener(View view) {
 		this.view = view;
 	}
 
@@ -32,7 +36,8 @@ public class ShuffleAnimationListener implements AnimatorListener{
 
 	@Override
 	public void onAnimationEnd(Animator animation) {
-		BoardView boardView = (BoardView) (GameActivity.getActivity().findViewById(R.id.view_board));
+		BoardView boardView = (BoardView) (GameActivity.getActivity()
+				.findViewById(R.id.view_board));
 		boardView.removeView(view);
 	}
 
@@ -42,9 +47,12 @@ public class ShuffleAnimationListener implements AnimatorListener{
 
 	@Override
 	public void onAnimationStart(Animator animation) {
-		if(GA.isSoundToggled())
-    		NotificationTools.createSoundNotification(GameActivity.getActivity().getApplicationContext(), R.drawable.shufflecard);
-    	if(GA.isVibrationToggled())
-    		NotificationTools.createVibrationNotification(GameActivity.getActivity().getApplicationContext(), 1000);
+		if (GA.isSoundToggled())
+			NotificationTools.createSoundNotification(GameActivity
+					.getActivity().getApplicationContext(),
+					R.drawable.shufflecard);
+		if (GA.isVibrationToggled())
+			NotificationTools.createVibrationNotification(GameActivity
+					.getActivity().getApplicationContext(), 1000);
 	}
 }

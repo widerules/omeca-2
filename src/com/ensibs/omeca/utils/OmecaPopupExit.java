@@ -10,8 +10,10 @@ import com.ensibs.omeca.R;
 
 /**
  * This class creates, display, discard and manages the exit popup
- * @author OMECA 2.0 Team (Rapha�l GICQUIAUX - Nicolas HALLOUIN - Sylvain RIO - Lindsay ROZIER)
- *
+ * 
+ * @author OMECA 2.0 Team (Rapha�l GICQUIAUX - Nicolas HALLOUIN - Sylvain RIO -
+ *         Lindsay ROZIER)
+ * 
  */
 public class OmecaPopupExit {
 	/**
@@ -31,16 +33,17 @@ public class OmecaPopupExit {
 
 	/**
 	 * Displays the popup
-	 * @param context the context
+	 * 
+	 * @param context
+	 *            the context
 	 */
 	public static void show(Context context) {
 
 		// Define whether we deal with exiting GameActivity or MainActivity
-		if (context instanceof	GameActivity) {
+		if (context instanceof GameActivity) {
 			isGameActivity = true;
 			finishText = context.getString(R.string.confirm_exit_game);
-		}
-		else{
+		} else {
 			isGameActivity = false;
 			finishText = context.getString(R.string.confirm_exit_application);
 		}
@@ -49,7 +52,7 @@ public class OmecaPopupExit {
 		DialogInterface.OnClickListener dialogClickListener = new DialogInterface.OnClickListener() {
 			@Override
 			public void onClick(DialogInterface dialog, int which) {
-				switch (which){
+				switch (which) {
 				case DialogInterface.BUTTON_POSITIVE:
 					if (isGameActivity) {
 						GameActivity.getActivity().finishGameActivity();
@@ -69,11 +72,11 @@ public class OmecaPopupExit {
 		AlertDialog.Builder builder = new AlertDialog.Builder(context);
 		omecaPopupMenu = builder.create();
 
-		builder
-		.setMessage(finishText)
-		.setPositiveButton(context.getString(R.string.yes), dialogClickListener)
-		.setNegativeButton(context.getString(R.string.no), dialogClickListener)
-		.show();
+		builder.setMessage(finishText)
+				.setPositiveButton(context.getString(R.string.yes),
+						dialogClickListener)
+				.setNegativeButton(context.getString(R.string.no),
+						dialogClickListener).show();
 
 	}
 

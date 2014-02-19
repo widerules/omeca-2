@@ -51,6 +51,13 @@ import com.ensibs.omeca.wifidirect.event.WifiDirectEventImpl;
 import com.ensibs.omeca.wifidirect.mod.WifiDirectMod;
 import com.ensibs.omeca.wifidirect.property.WifiDirectProperty;
 
+/**
+ * This class is the activity when the Player is playing
+ * 
+ * @author OMECA 2.0 Team (Rapha�l GICQUIAUX - Nicolas HALLOUIN - Sylvain RIO -
+ *         Lindsay ROZIER)
+ * 
+ */
 public class GameActivity extends Activity implements Observer {
 
 	private WifiDirectManager wifiDirectManager;
@@ -63,6 +70,7 @@ public class GameActivity extends Activity implements Observer {
 
 	/**
 	 * Getter on activity
+	 * 
 	 * @return current activity
 	 */
 	public static GameActivity getActivity() {
@@ -71,7 +79,8 @@ public class GameActivity extends Activity implements Observer {
 
 	/**
 	 * Getter on handler
-	 * @return handler
+	 * 
+	 * @return omecaHandler
 	 */
 	public OmecaHandler getOmecaHandler() {
 		return omecaHandler;
@@ -79,6 +88,7 @@ public class GameActivity extends Activity implements Observer {
 
 	/**
 	 * Getter on Omeca application
+	 * 
 	 * @return OmecaApplication
 	 */
 	public OmecaApplication getOmecaApplication() {
@@ -87,13 +97,16 @@ public class GameActivity extends Activity implements Observer {
 
 	/**
 	 * Getter on Wifi Direct Manager
+	 * 
 	 * @return WifiDirectManager
 	 */
 	public WifiDirectManager getWifiDirectManager() {
 		return wifiDirectManager;
 	}
 
-
+	/**
+	 * Creates the activity
+	 */
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -110,7 +123,7 @@ public class GameActivity extends Activity implements Observer {
 		// wifiDirectManager.setApplicationContext(this);
 
 		// Create controller
-		controller = app.getControler();
+		controller = app.getController();
 		GA.init();
 
 		// Hides titlebar and actionbar
@@ -134,8 +147,7 @@ public class GameActivity extends Activity implements Observer {
 		SlidingUpPanelLayout slide = (SlidingUpPanelLayout) findViewById(R.id.sliding_layout);
 
 		// Set player skin and properties
-		((PlayerView) (findViewById(R.id.playerview))).setPlayer(
-				GA.user, true);
+		((PlayerView) (findViewById(R.id.playerview))).setPlayer(GA.user, true);
 
 		// Init cards gallery
 		Gallery g = (Gallery) findViewById(R.id.playerview_slider_board_cardgallery);
@@ -181,14 +193,14 @@ public class GameActivity extends Activity implements Observer {
 
 		if (wifiDirectManager.getMod() == WifiDirectMod.CLIENT) {
 			wifiDirectManager.sendEvent(new WifiDirectEventImpl(
-					WifiDirectEvent.EVENT, new ConnectionAction(
-							GA.user)));
+					WifiDirectEvent.EVENT, new ConnectionAction(GA.user)));
 		} else {
 			GA.board.addPlayer(0, GA.user);
 		}
 
 		mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
 		mListView = (ListView) findViewById(R.id.left_drawer);
+
 		// Creating an ArrayAdapter to add items to the listview mDrawerList
 		ArrayAdapter<String> adapter = new ArrayAdapter<String>(
 				getBaseContext(), R.layout.row_layout, R.id.text_row,
@@ -209,7 +221,13 @@ public class GameActivity extends Activity implements Observer {
 
 	}
 
-	//TODO: comments
+	/**
+	 * Executes different actions depending on the item selected in the drawer
+	 * menu
+	 * 
+	 * @param position
+	 *            The selected item
+	 */
 	private void selectItem(int position) {
 		switch (position) {
 		case 1: {
@@ -220,8 +238,7 @@ public class GameActivity extends Activity implements Observer {
 		case 2: {
 			mDrawerLayout.closeDrawers();
 			GA.board.getDrawPile().shuffle();
-			Card[] cards = new Card[GA.board.getDrawPile()
-					.getCards().size()];
+			Card[] cards = new Card[GA.board.getDrawPile().getCards().size()];
 			int i = 0;
 			for (Card c : GA.board.getDrawPile().getCards()) {
 				cards[i] = c;
@@ -242,8 +259,7 @@ public class GameActivity extends Activity implements Observer {
 			break;
 		case 4: {
 			mDrawerLayout.closeDrawers();
-			Card[] cards = new Card[GA.board.getDiscardPile()
-					.getCards().size()];
+			Card[] cards = new Card[GA.board.getDiscardPile().getCards().size()];
 			int i = cards.length - 1;
 			for (Card c : GA.board.getDiscardPile().getCards()) {
 				cards[i] = c;
@@ -263,13 +279,11 @@ public class GameActivity extends Activity implements Observer {
 			GA.user.getCards().clear();
 			GA.board.getDiscardPile().getCards().clear();
 			GA.board.getDrawPile().getCards().clear();
-			for (Entry<Integer, Player> e : GA.board.getPlayers()
-					.entrySet()) {
+			for (Entry<Integer, Player> e : GA.board.getPlayers().entrySet()) {
 				e.getValue().getCards().clear();
 			}
 			GA.board.initDrawPile(true);
-			Card[] cards = new Card[GA.board.getDrawPile()
-					.getCards().size()];
+			Card[] cards = new Card[GA.board.getDrawPile().getCards().size()];
 			int i = 0;
 			for (Card c : GA.board.getDrawPile().getCards()) {
 				cards[i] = c;
@@ -285,12 +299,18 @@ public class GameActivity extends Activity implements Observer {
 		}
 	}
 
+	/**
+	 * Click on Android options menu button
+	 */
 	@Override
 	public boolean onPrepareOptionsMenu(Menu menu) {
 		OmecaPopupExit.show(this);
 		return false;
 	}
 
+	/**
+	 * Receives the events and executes them
+	 */
 	@Override
 	public void update(Observable observable, Object data) {
 		if (data instanceof WifiDirectEventImpl
@@ -300,23 +320,25 @@ public class GameActivity extends Activity implements Observer {
 			Log.i(WifiDirectProperty.TAG, dataObject.getClass()
 					.getCanonicalName());
 			dataObject.execute();
-			
+
 		}
 	}
 
+	/**
+	 * Click on Android back menu button
+	 */
 	@Override
 	public void onBackPressed() {
 		OmecaPopupExit.show(this);
 	}
 
 	/**
-	 * Permits to stop the game activity
+	 * Stops the game activity
 	 */
 	public synchronized void finishGameActivity() {
 		OmecaPopupExit.dismiss();
 		this.wifiDirectManager.sendEvent(new WifiDirectEventImpl(
-				WifiDirectEvent.EVENT, new DisconnectionAction(
-						GA.user)));
+				WifiDirectEvent.EVENT, new DisconnectionAction(GA.user)));
 		try {
 			this.wait(2000);
 		} catch (InterruptedException e) {

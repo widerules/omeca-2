@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<class-diagram version="1.1.4" icons="true" always-add-relationships="false" generalizations="true" realizations="true" 
+  associations="true" dependencies="false" nesting-relationships="true">  
+  <class id="1" language="java" name="com.ensibs.omeca.controller.GA" project="Omeca_SVN" 
+    file="/Omeca_SVN/src/com/ensibs/omeca/controller/GA.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="225" width="211" x="126" y="-68"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" accessors="true" 
+      visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <class id="2" language="java" name="com.ensibs.omeca.controller.PileReinitAnimationListener" project="Omeca_SVN" 
+    file="/Omeca_SVN/src/com/ensibs/omeca/controller/PileReinitAnimationListener.java" binary="false" 
+    corner="BOTTOM_RIGHT">    
+    <position height="171" width="193" x="377" y="-68"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" accessors="true" 
+      visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <class id="3" language="java" name="com.ensibs.omeca.controller.ShuffleAnimationListener" project="Omeca_SVN" 
+    file="/Omeca_SVN/src/com/ensibs/omeca/controller/ShuffleAnimationListener.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="171" width="193" x="895" y="-68"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" accessors="true" 
+      visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <class id="4" language="java" name="com.ensibs.omeca.controller.OmecaHandler" project="Omeca_SVN" 
+    file="/Omeca_SVN/src/com/ensibs/omeca/controller/OmecaHandler.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="315" width="245" x="610" y="-68"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" accessors="true" 
+      visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <classifier-display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+    accessors="true" visibility="true">    
+    <attributes public="true" package="true" protected="true" private="true" static="true"/>    
+    <operations public="true" package="true" protected="true" private="true" static="true"/>  
+  </classifier-display>  
+  <association-display labels="true" multiplicity="true"/>
+</class-diagram>
