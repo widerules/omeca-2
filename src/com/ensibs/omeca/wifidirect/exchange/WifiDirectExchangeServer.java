@@ -16,16 +16,36 @@ import com.ensibs.omeca.wifidirect.property.WifiDirectProperty;
  */
 public class WifiDirectExchangeServer extends WifiDirectIExchange{
 
+	/**
+	 * Is the accepting thread is running ?
+	 */
 	private WifiDirectAcceptServer acceptServer = null;
+	/**
+	 * List of client socket
+	 */
 	private ArrayList<Socket> client = new ArrayList<Socket>();
+	/**
+	 * The acceptation thread
+	 */
 	private WifiDirectSendThread sendThread = null;
+	/**
+	 * List of received thread (1 by client)
+	 */
 	private ArrayList<WifiDirectReceivedThread> receivedThread = new ArrayList<WifiDirectReceivedThread>();
 
+	/**
+	 * 
+	 * @param wifiDirectNotificationCenter
+	 */
 	public WifiDirectExchangeServer(WifiDirectNotificationCenter wifiDirectNotificationCenter) {
 		super(wifiDirectNotificationCenter);
 		this.acceptServer = new WifiDirectAcceptServer(this);
 	}
 
+	/**
+	 * Add a new client
+	 * @param socket socket client
+	 */
 	public void addClient(Socket client) {
 		if(sendThread == null){
 			this.sendThread = new WifiDirectSendThread();
@@ -42,16 +62,26 @@ public class WifiDirectExchangeServer extends WifiDirectIExchange{
 		wifiDirectNotificationCenter.notifyManager(new WifiDirectEventImpl(WifiDirectEvent.NEW_CLIENT));
 	}
 
+	/**
+	 * Delete a client
+	 * @param socket socket client to delete
+	 */
 	public void removeClient(Socket client) {
 		// TODO Auto-generated method stub
 	}
 
+	/**
+	 * Stop the accepting thread
+	 */
 	public void stopAccept(){
 		if(this.acceptServer !=null && this.acceptServer.getRun()){
 			this.acceptServer.stopAccept();
 		}
 	}
 
+	/**
+	 * Start thread
+	 */
 	@Override
 	public void startExchange() {
 		if(this.acceptServer !=null){
@@ -59,6 +89,9 @@ public class WifiDirectExchangeServer extends WifiDirectIExchange{
 		}
 	}
 
+	/**
+	 * Stop the thread
+	 */
 	@Override
 	public void stopExchange() {
 		this.stopAccept();
@@ -74,7 +107,6 @@ public class WifiDirectExchangeServer extends WifiDirectIExchange{
 				try {
 					this.client.get(i).close();
 				} catch (IOException e) {
-					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
 			}

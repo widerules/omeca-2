@@ -8,7 +8,9 @@ import com.ensibs.omeca.wifidirect.event.WifiDirectEventImpl;
  */
 public abstract class WifiDirectIExchange {
 	
-	//Notification center
+	/**
+	 * Notification center
+	 */
 	protected WifiDirectNotificationCenter wifiDirectNotificationCenter;
 	
 	/**

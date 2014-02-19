@@ -12,13 +12,21 @@ import com.ensibs.omeca.wifidirect.event.WifiDirectEventImpl;
  */
 public class WifiDirectReceivedThread extends Thread{
 
-	//Is thread is running ?
+	/**
+	 * Is thread is running ?
+	 */
 	private volatile boolean run = false;
-	//Notification point
+	/**
+	 * Notification point
+	 */
 	private WifiDirectIExchange wifiDirectIExchange;
-	//Socket of the client
+	/**
+	 * Socket of the client
+	 */
 	private Socket socket = null;
-	//Related input stream of the socket
+	/**
+	 * Related input stream of the socket
+	 */
 	private ObjectInputStream objectInputStream;
 	
 	/**
