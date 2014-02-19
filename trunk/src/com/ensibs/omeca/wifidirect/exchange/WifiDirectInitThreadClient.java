@@ -11,7 +11,9 @@ import com.ensibs.omeca.wifidirect.property.WifiDirectProperty;
  */
 public class WifiDirectInitThreadClient extends Thread{
 	
-	//The interface
+	/**
+	 * The interface
+	 */
 	private WifiDirectExchangeClient wifiDirectExchangeClient;
 	
 	/**
