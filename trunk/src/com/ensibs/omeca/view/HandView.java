@@ -19,36 +19,54 @@ import com.ensibs.omeca.R;
 import com.ensibs.omeca.controller.GA;
 import com.ensibs.omeca.model.entities.Card;
 
+/**
+ * This class represents the View of a Player hand
+ * 
+ * @author OMECA 2.0 Team (Rapha�l GICQUIAUX - Nicolas HALLOUIN - Sylvain RIO -
+ *         Lindsay ROZIER)
+ * 
+ */
 public class HandView extends Gallery {
+	/**
+	 * Original number of cards to display
+	 */
 	public static final int CARDS_TO_DISPLAY_ORIGIN = 5;
+
+	/**
+	 * Current number of cards to display
+	 */
 	public static int CARDS_TO_DISPLAY = 5;
-	
+
 	private ArrayList<Card> list;
 	private HandCardsAdapter adapter;
 	private Context c;
 	private HandViewCardGalleryDragListener hvcgdl = new HandViewCardGalleryDragListener();
 
 	/**
-	 * constructor 
-	 * @param context context of the activity
+	 * Constructor
+	 * 
+	 * @param context
+	 *            Context of the activity
 	 */
 	public HandView(Context context) {
 		super(context);
 		c = context;
 		init();
 	}
-	
+
 	/**
-	 * Add card to handView at the end
-	 * @param cv cardView to add
+	 * Adds card to handView at the end
+	 * 
+	 * @param cv
+	 *            CardView to add
 	 */
-	public void addCard(CardView cv){
+	public void addCard(CardView cv) {
 		GA.user.addCard(cv.getCard());
 		updateView(true);
 	}
 
 	/**
-	 * Reorder cards by colors and values
+	 * Reorders cards by colors and values
 	 */
 	public void totalOrderCard() {
 		list = GA.user.getCards();
@@ -93,7 +111,7 @@ public class HandView extends Gallery {
 	}
 
 	/**
-	 * Reorder cards by colors
+	 * Reorders cards by colors
 	 */
 	public void colorOrderCard() {
 		list = GA.user.getCards();
@@ -125,7 +143,7 @@ public class HandView extends Gallery {
 	}
 
 	/**
-	 * Reorder cards by values
+	 * Reorders cards by values
 	 */
 	public void valueOrderCard() {
 		list = GA.user.getCards();
@@ -145,24 +163,27 @@ public class HandView extends Gallery {
 		this.updateView(true);
 	}
 
-	/** 
-	 * Update cards in the view
-	 * @param backToTheMiddle indicate if it have to center to middle card
+	/**
+	 * Updates cards in the view
+	 * 
+	 * @param backToTheMiddle
+	 *            indicate if it have to center to middle card
 	 */
 	public void updateView(boolean backToTheMiddle) {
 		adapter.notifyDataSetChanged();
 		DisplayMetrics metrics = c.getApplicationContext().getResources()
 				.getDisplayMetrics();
-		int cardWidth = (int)(metrics.heightPixels / CARDS_TO_DISPLAY);
+		int cardWidth = (int) (metrics.heightPixels / CARDS_TO_DISPLAY);
 		int nbUserCards = GA.user.getNumberOfCards();
-		int spacing = (nbUserCards > CARDS_TO_DISPLAY) ? (int)((-2*cardWidth*(nbUserCards-CARDS_TO_DISPLAY)) / (nbUserCards+1)) : 1;
+		int spacing = (nbUserCards > CARDS_TO_DISPLAY) ? (int) ((-2 * cardWidth * (nbUserCards - CARDS_TO_DISPLAY)) / (nbUserCards + 1))
+				: 1;
 		setSpacing(spacing);
 		if (backToTheMiddle)
 			this.setSelection(GA.user.getNumberOfCards() / 2);
 	}
 
 	/**
-	 * Configure the gallery 
+	 * Configures the gallery
 	 */
 	private void init() {
 		// configurations for the carousel.
@@ -180,8 +201,11 @@ public class HandView extends Gallery {
 
 	/**
 	 * Constructor
-	 * @param context context of the activity
+	 * 
+	 * @param context
+	 *            Context of the activity
 	 * @param attrs
+	 *            The attributes
 	 */
 	public HandView(Context context, AttributeSet attrs) {
 		super(context, attrs);
@@ -191,22 +215,26 @@ public class HandView extends Gallery {
 
 	/**
 	 * Adapter of the gallery
-	 * @author lindsay
-	 *
+	 * 
+	 * @author OMECA 2.0 Team (Rapha�l GICQUIAUX - Nicolas HALLOUIN - Sylvain
+	 *         RIO - Lindsay ROZIER)
+	 * 
 	 */
 	public class HandCardsAdapter extends BaseAdapter {
 		private Context mContext;
 
 		/**
 		 * Constructor
-		 * @param c Activity context
+		 * 
+		 * @param c
+		 *            Activity context
 		 */
 		public HandCardsAdapter(Context c) {
 			mContext = c;
 		}
 
 		/**
-		 * return the number of cards in the view
+		 * Returns the number of cards in the view
 		 */
 		@Override
 		public int getCount() {
@@ -214,25 +242,33 @@ public class HandView extends Gallery {
 		}
 
 		/**
-		 * Return the object in position 
-		 * @param position Position of the required element 
+		 * Returns the object at the given position
+		 * 
+		 * @param position
+		 *            Position of the required element
 		 */
 		@Override
 		public Object getItem(int position) {
-			return new CardView(c, GA.user.getCards()
-					.get(position));
+			return new CardView(c, GA.user.getCards().get(position));
 		}
 
 		/**
-		 * not used
+		 * Not used
 		 */
 		@Override
 		public long getItemId(int position) {
 			return position;
 		}
-		
+
 		/**
-		 * Used by init to complete show all cards
+		 * Used by init() to complete the show of all cards
+		 * 
+		 * @param position
+		 *            The position focused
+		 * @param convertView
+		 *            The view currently shown
+		 * @param parent
+		 *            The parent
 		 */
 		public View getView(int position, View convertView, ViewGroup parent) {
 			if (parent.getHeight() == 0)
@@ -241,8 +277,7 @@ public class HandView extends Gallery {
 			if (cv == null) {
 				DisplayMetrics metrics = mContext.getApplicationContext()
 						.getResources().getDisplayMetrics();
-				cv = new CardView(mContext, GA.user.getCards()
-						.get(position));
+				cv = new CardView(mContext, GA.user.getCards().get(position));
 				int width = (int) (metrics.widthPixels / (CARDS_TO_DISPLAY));
 				int height = (int) (width * CardView.RATIO);
 				cv.setLayoutParams(new Gallery.LayoutParams(width, height));
@@ -253,13 +288,15 @@ public class HandView extends Gallery {
 	}
 
 	/**
+	 * OnDrag listener for HandView
 	 * 
-	 * @author lindsay
-	 *
+	 * @author OMECA 2.0 Team (Rapha�l GICQUIAUX - Nicolas HALLOUIN - Sylvain
+	 *         RIO - Lindsay ROZIER)
+	 * 
 	 */
 	class OnDragListenerHand implements OnDragListener {
 		/**
-		 *  Permet to move a card 
+		 * OnDrag event actions
 		 */
 		@Override
 		public boolean onDrag(View v, DragEvent event) {
@@ -268,30 +305,27 @@ public class HandView extends Gallery {
 				CardView cv = (CardView) v;
 				cv.setRotationY(-10);
 				cv.setBackgroundResource(R.drawable.sorting_card_background);
-				cv.setPadding(5, 0 ,0 ,0);
+				cv.setPadding(5, 0, 0, 0);
 				break;
 			case DragEvent.ACTION_DROP:
 				CardView newPositionCard = (CardView) v;
-				int i = GA.user.getCards().indexOf(
-						newPositionCard.getCard());
+				int i = GA.user.getCards().indexOf(newPositionCard.getCard());
 				HandView hv1 = (HandView) v.getParent();
 				CardView cardToMove1 = (CardView) event.getLocalState();
 				int exPosition = GA.user.getCards().indexOf(
 						cardToMove1.getCard());
 				GA.user.getCards().remove(cardToMove1.getCard());
 				if (i < exPosition)
-					GA.user.getCards().add(i,
-							cardToMove1.getCard());
+					GA.user.getCards().add(i, cardToMove1.getCard());
 				else
-					GA.user.getCards().add(i - 1,
-							cardToMove1.getCard());
+					GA.user.getCards().add(i - 1, cardToMove1.getCard());
 				hv1.updateView(false);
 				break;
 
 			case DragEvent.ACTION_DRAG_EXITED:
 				CardView cv2 = (CardView) v;
 				cv2.setRotationY(0);
-				cv2.setPadding(0, 0 ,0 ,0);
+				cv2.setPadding(0, 0, 0, 0);
 				cv2.setBackgroundColor(Color.TRANSPARENT);
 				break;
 			default:
@@ -302,7 +336,7 @@ public class HandView extends Gallery {
 	}
 
 	/**
-	 * Remove the specify view from HandView
+	 * Removes the specified view from HandView
 	 */
 	@Override
 	public void removeViewInLayout(View view) {
@@ -312,16 +346,24 @@ public class HandView extends Gallery {
 			updateView(true);
 		}
 	}
-	
-	//TODO commentaires nico !!!
-	public class CardsZoomSeekbarChangeListener implements OnSeekBarChangeListener{
+
+	/**
+	 * Seekbar change listener to resize CardViews in HandView
+	 * 
+	 * @author OMECA 2.0 Team (Rapha�l GICQUIAUX - Nicolas HALLOUIN - Sylvain
+	 *         RIO - Lindsay ROZIER)
+	 * 
+	 */
+	public class CardsZoomSeekbarChangeListener implements
+			OnSeekBarChangeListener {
 
 		@Override
 		public void onProgressChanged(SeekBar seekBar, int progress,
 				boolean fromUser) {
-			CARDS_TO_DISPLAY = (int)(((1.0+(20-progress))/10)*CARDS_TO_DISPLAY_ORIGIN)+CARDS_TO_DISPLAY_ORIGIN;
+			CARDS_TO_DISPLAY = (int) (((1.0 + (20 - progress)) / 10) * CARDS_TO_DISPLAY_ORIGIN)
+					+ CARDS_TO_DISPLAY_ORIGIN;
 			updateView(false);
-			
+
 		}
 
 		@Override
@@ -331,11 +373,21 @@ public class HandView extends Gallery {
 		@Override
 		public void onStopTrackingTouch(SeekBar seekBar) {
 		}
-		
+
 	}
 
+	/**
+	 * Listener on the touch of order by value item
+	 * 
+	 * @author OMECA 2.0 Team (Rapha�l GICQUIAUX - Nicolas HALLOUIN - Sylvain
+	 *         RIO - Lindsay ROZIER)
+	 * 
+	 */
 	public class OrderByValueTouchListener implements OnTouchListener {
 
+		/**
+		 * OnTouch event actions
+		 */
 		@Override
 		public boolean onTouch(View v, MotionEvent mE) {
 			switch (mE.getAction()) {
@@ -354,8 +406,18 @@ public class HandView extends Gallery {
 
 	}
 
+	/**
+	 * Listener on the touch of order by color item
+	 * 
+	 * @author OMECA 2.0 Team (Rapha�l GICQUIAUX - Nicolas HALLOUIN - Sylvain
+	 *         RIO - Lindsay ROZIER)
+	 * 
+	 */
 	public class OrderByColorTouchListener implements OnTouchListener {
 
+		/**
+		 * OnTouch event actions
+		 */
 		@Override
 		public boolean onTouch(View v, MotionEvent mE) {
 			switch (mE.getAction()) {
@@ -374,8 +436,18 @@ public class HandView extends Gallery {
 
 	}
 
+	/**
+	 * Listener on the touch of total order item
+	 * 
+	 * @author OMECA 2.0 Team (Rapha�l GICQUIAUX - Nicolas HALLOUIN - Sylvain
+	 *         RIO - Lindsay ROZIER)
+	 * 
+	 */
 	public class TotalOrderTouchListener implements OnTouchListener {
 
+		/**
+		 * OnTouch event actions
+		 */
 		@Override
 		public boolean onTouch(View v, MotionEvent mE) {
 			switch (mE.getAction()) {

@@ -1,0 +1,169 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<class-diagram version="1.1.4" icons="true" always-add-relationships="false" generalizations="true" realizations="true" 
+  associations="true" dependencies="false" nesting-relationships="true">  
+  <class id="1" language="java" name="com.ensibs.omeca.view.DrawPileView" project="Omeca_SVN" 
+    file="/Omeca_SVN/src/com/ensibs/omeca/view/DrawPileView.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="207" width="186" x="2774" y="320"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" accessors="true" 
+      visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <class id="2" language="java" name="com.ensibs.omeca.view.PlayerView.PlayerDragListener" project="Omeca_SVN" 
+    file="/Omeca_SVN/src/com/ensibs/omeca/view/PlayerView.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="99" width="188" x="2519" y="747"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" accessors="true" 
+      visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <class id="3" language="java" name="com.ensibs.omeca.view.CutCardsView.CutCardsTouchListener" project="Omeca_SVN" 
+    file="/Omeca_SVN/src/com/ensibs/omeca/view/CutCardsView.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="99" width="202" x="2277" y="747"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" accessors="true" 
+      visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <class id="4" language="java" name="com.ensibs.omeca.view.CutCardsView" project="Omeca_SVN" 
+    file="/Omeca_SVN/src/com/ensibs/omeca/view/CutCardsView.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="171" width="216" x="2277" y="320"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" accessors="true" 
+      visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <class id="5" language="java" name="com.ensibs.omeca.view.BoardView.BoardDragListener" project="Omeca_SVN" 
+    file="/Omeca_SVN/src/com/ensibs/omeca/view/BoardView.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="99" width="188" x="3244" y="320"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" accessors="true" 
+      visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <class id="6" language="java" name="com.ensibs.omeca.view.BoardView" project="Omeca_SVN" 
+    file="/Omeca_SVN/src/com/ensibs/omeca/view/BoardView.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="387" width="285" x="3000" y="-107"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" accessors="true" 
+      visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <class id="7" language="java" name="com.ensibs.omeca.view.BoardView.DistribTask" project="Omeca_SVN" 
+    file="/Omeca_SVN/src/com/ensibs/omeca/view/BoardView.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="153" width="204" x="3000" y="320"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" accessors="true" 
+      visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <class id="8" language="java" name="com.ensibs.omeca.view.DiscardPileView" project="Omeca_SVN" 
+    file="/Omeca_SVN/src/com/ensibs/omeca/view/DiscardPileView.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="207" width="206" x="3472" y="320"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" accessors="true" 
+      visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <class id="9" language="java" name="com.ensibs.omeca.view.CardGroup" project="Omeca_SVN" 
+    file="/Omeca_SVN/src/com/ensibs/omeca/view/CardGroup.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="297" width="220" x="3718" y="320"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" accessors="true" 
+      visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <class id="10" language="java" name="com.ensibs.omeca.view.PlayerView" project="Omeca_SVN" 
+    file="/Omeca_SVN/src/com/ensibs/omeca/view/PlayerView.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="387" width="201" x="2533" y="320"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" accessors="true" 
+      visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <class id="11" language="java" name="com.ensibs.omeca.view.PlayerView.PlayerTouchListener" project="Omeca_SVN" 
+    file="/Omeca_SVN/src/com/ensibs/omeca/view/PlayerView.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="171" width="202" x="2747" y="747"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" accessors="true" 
+      visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <association id="12">    
+    <end type="SOURCE" refId="6" navigable="false">      
+      <attribute id="13" name="cardsGroup"/>      
+      <multiplicity id="14" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="9" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <nesting id="15">    
+    <end type="SOURCE" refId="4"/>    
+    <end type="TARGET" refId="3"/>  
+  </nesting>  
+  <association id="16">    
+    <end type="SOURCE" refId="6" navigable="false">      
+      <attribute id="17" name="drawPileView"/>      
+      <multiplicity id="18" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="1" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <nesting id="19">    
+    <end type="SOURCE" refId="6"/>    
+    <end type="TARGET" refId="5"/>  
+  </nesting>  
+  <association id="20">    
+    <end type="SOURCE" refId="6" navigable="false">      
+      <attribute id="21" name="discardPileView"/>      
+      <multiplicity id="22" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="8" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <nesting id="23">    
+    <end type="SOURCE" refId="10"/>    
+    <end type="TARGET" refId="11"/>  
+  </nesting>  
+  <nesting id="24">    
+    <end type="SOURCE" refId="10"/>    
+    <end type="TARGET" refId="2"/>  
+  </nesting>  
+  <association id="25">    
+    <end type="SOURCE" refId="6" navigable="false">      
+      <attribute id="26" name="playerViews"/>      
+      <multiplicity id="27" minimum="0" maximum="2147483647"/>    
+    </end>    
+    <end type="TARGET" refId="10" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <nesting id="28">    
+    <end type="SOURCE" refId="6"/>    
+    <end type="TARGET" refId="7"/>  
+  </nesting>  
+  <association id="29">    
+    <end type="SOURCE" refId="6" navigable="false">      
+      <attribute id="30" name="cutCardsView"/>      
+      <multiplicity id="31" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="4" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <classifier-display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+    accessors="true" visibility="true">    
+    <attributes public="true" package="true" protected="true" private="true" static="true"/>    
+    <operations public="true" package="true" protected="true" private="true" static="true"/>  
+  </classifier-display>  
+  <association-display labels="true" multiplicity="true"/>
+</class-diagram>

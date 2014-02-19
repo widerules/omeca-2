@@ -10,16 +10,33 @@ import com.ensibs.omeca.R;
 import com.ensibs.omeca.utils.SliderbarCardGallery;
 import com.ensibs.omeca.utils.SlidingUpPanelLayout;
 
+/**
+ * Listener for the Slidebar to catch its movements and bring modifications to
+ * others views
+ * 
+ * @author OMECA 2.0 Team (Rapha�l GICQUIAUX - Nicolas HALLOUIN - Sylvain RIO -
+ *         Lindsay ROZIER)
+ * 
+ */
 public class SlidebarPanelSlideListener extends
 		SlidingUpPanelLayout.SimplePanelSlideListener {
 
 	private SlidingUpPanelLayout slidebar;
 	private boolean isExpanded = false;
 
+	/**
+	 * Constructor
+	 * 
+	 * @param slidebar
+	 *            The Slidebar view
+	 */
 	public SlidebarPanelSlideListener(SlidingUpPanelLayout slidebar) {
 		this.slidebar = slidebar;
 	}
 
+	/**
+	 * OnPanelExpanded event actions
+	 */
 	@Override
 	public void onPanelExpanded(View panel) {
 		if (!isExpanded) {
@@ -39,11 +56,16 @@ public class SlidebarPanelSlideListener extends
 			}
 
 			isExpanded = true;
-			DrawerLayout mDrawerLayout = (DrawerLayout) GameActivity.getActivity().findViewById(R.id.drawer_layout);
-			mDrawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED);
+			DrawerLayout mDrawerLayout = (DrawerLayout) GameActivity
+					.getActivity().findViewById(R.id.drawer_layout);
+			mDrawerLayout
+					.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED);
 		}
 	}
 
+	/**
+	 * OnPanelCollapsed event actions
+	 */
 	@Override
 	public void onPanelCollapsed(View panel) {
 		if (isExpanded) {
@@ -59,7 +81,8 @@ public class SlidebarPanelSlideListener extends
 			slide.setDragView(slidebar.findViewById(R.id.expand));
 
 			isExpanded = false;
-			DrawerLayout mDrawerLayout = (DrawerLayout) GameActivity.getActivity().findViewById(R.id.drawer_layout);
+			DrawerLayout mDrawerLayout = (DrawerLayout) GameActivity
+					.getActivity().findViewById(R.id.drawer_layout);
 			mDrawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_UNLOCKED);
 		}
 	}

@@ -7,22 +7,25 @@ import android.content.Context;
 
 /**
  * Shows the About popup inside the HelpActivity
- * @author OMECA 2.0 Team (Raphaël GICQUIAUX - Nicolas HALLOUIN - Sylvain RIO - Lindsay ROZIER)
- *
+ * 
+ * @author OMECA 2.0 Team (Raphaï¿½l GICQUIAUX - Nicolas HALLOUIN - Sylvain RIO -
+ *         Lindsay ROZIER)
+ * 
  */
 public class AboutPopup {
 
 	/**
 	 * Shows the popup, given context
-	 * @param context the context
+	 * 
+	 * @param context
+	 *            the context
 	 */
 	public static void show(Context context) {
 
 		AlertDialog.Builder builder = new AlertDialog.Builder(context);
 
-		builder
-			.setMessage(context.getResources().getString(R.string.about_text))
-			.show();
+		builder.setMessage(
+				context.getResources().getString(R.string.about_text)).show();
 
 	}
 

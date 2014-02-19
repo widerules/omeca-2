@@ -15,15 +15,28 @@ import android.view.ViewGroup;
 import android.view.View.OnDragListener;
 import android.widget.Gallery;
 import android.widget.TextView;
-
+/**
+ * Drag listener for DrawPileView adn DiscardPileView on the BoardView
+ * 
+ * @author OMECA 2.0 Team (Rapha�l GICQUIAUX - Nicolas HALLOUIN - Sylvain RIO -
+ *         Lindsay ROZIER)
+ * 
+ */
 public class PileDragListener implements OnDragListener {
 	private ViewGroup pile;
 
 	
+	/**
+	 * Constructor
+	 * @param pile The pile view
+	 */
 	public PileDragListener(ViewGroup pile){
 		this.pile = pile;
 	}
 	
+	/**
+	 * OnDrag event actions
+	 */
 	@Override
 	public boolean onDrag(View v, DragEvent event) {
 		View view = (View) event.getLocalState();

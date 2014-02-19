@@ -10,18 +10,22 @@ import com.ensibs.omeca.view.BoardView;
 
 /**
  * Listener of the Piles reinitialization animation
- * @author OMECA 2.0 Team (Raphaël GICQUIAUX - Nicolas HALLOUIN - Sylvain RIO - Lindsay ROZIER)
+ * 
+ * @author OMECA 2.0 Team (Raphaï¿½l GICQUIAUX - Nicolas HALLOUIN - Sylvain RIO -
+ *         Lindsay ROZIER)
  * @see AnimatorListener
  */
-public class PileReinitAnimationListener implements AnimatorListener{
-	
+public class PileReinitAnimationListener implements AnimatorListener {
+
 	private View view;
-	
+
 	/**
 	 * Constructor
-	 * @param view The view which is animated
+	 * 
+	 * @param view
+	 *            The view which is animated
 	 */
-	public PileReinitAnimationListener(View view){
+	public PileReinitAnimationListener(View view) {
 		this.view = view;
 	}
 
@@ -31,7 +35,8 @@ public class PileReinitAnimationListener implements AnimatorListener{
 
 	@Override
 	public void onAnimationEnd(Animator animation) {
-		BoardView boardView = (BoardView) (GameActivity.getActivity().findViewById(R.id.view_board));
+		BoardView boardView = (BoardView) (GameActivity.getActivity()
+				.findViewById(R.id.view_board));
 		boardView.removeView(view);
 	}
 
