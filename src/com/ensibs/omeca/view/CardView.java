@@ -8,6 +8,7 @@ import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
+import android.widget.Gallery;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 
@@ -65,7 +66,6 @@ public class CardView extends ImageView {
 		setOnTouchListener(new CardTouchListener());
 		setOnLongClickListener(new CardLongTouchListener());
 		setOnDragListener(null);
-
 	}
 
 	/**
@@ -167,6 +167,7 @@ public class CardView extends ImageView {
 								view.getX() + mE.getX(),
 								view.getY() + mE.getY());
 					}
+					
 				}
 				break;
 			default:

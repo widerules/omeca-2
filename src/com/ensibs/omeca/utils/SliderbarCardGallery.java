@@ -80,7 +80,7 @@ public class SliderbarCardGallery extends BaseAdapter {
 			cv.setLayoutParams(new Gallery.LayoutParams(
 					(int) (height / CardView.RATIO), height));
 			cv.setOnTouchListener(null);
-
+			cv.setLongClickable(false);
 			return cv;
 		}
 		return cv;
