@@ -39,7 +39,7 @@
     
     
     <!-- H E L P    A C T I V I T Y -->
-    <string name="title_activity_help">HelpActivity</string>
+    <string name="title_activity_help">Aide</string>
     <string name="action_about">A propos</string>
     <string name="action_exit">Quitter</string>
     <string name="about_text">OMECA version 2.0 (2013/2014)\n\nRéalisée par:\n\tRaphaël GICQUIAUX\n\tNicolas HALLOUIN\n\tSylvain RIO\n\tLindsay ROZIER\ndans le cadre du projet de fin d\'études de l\'ENSIbs</string>
