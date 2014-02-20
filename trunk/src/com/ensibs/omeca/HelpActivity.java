@@ -6,11 +6,12 @@ import android.os.Bundle;
 import android.app.Activity;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.webkit.WebView;
 
 /**
  * This class is the activity when the Player is reading the help
  * 
- * @author OMECA 2.0 Team (Rapha�l GICQUIAUX - Nicolas HALLOUIN - Sylvain RIO -
+ * @author OMECA 2.0 Team (Raphael GICQUIAUX - Nicolas HALLOUIN - Sylvain RIO -
  *         Lindsay ROZIER)
  * 
  */
@@ -23,6 +24,8 @@ public class HelpActivity extends Activity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_help);
+		WebView wb = (WebView) findViewById(R.id.webview);
+        wb.loadUrl("file:///android_asset/OMECA_Manuel Utilisation.htm");
 	}
 
 	/**
