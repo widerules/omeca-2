@@ -10,11 +10,26 @@ import com.ensibs.omeca.R;
 import com.ensibs.omeca.wifidirect.event.WifiDirectEvent;
 import com.ensibs.omeca.wifidirect.event.WifiDirectEventImpl;
 
+/**
+ * Popup in which we can choose a wifi direct device for connection
+ */
 public class WifiDirectPickPeersDialog extends AlertDialog.Builder{
 	
+	/**
+	 * Interface of wifi direct api
+	 */
 	private WifiDirectManager manager = null;
+	/**
+	 * List of wifi direct device
+	 */
 	private WifiP2pDeviceList peers = null;
 
+	/**
+	 * Constructor
+	 * @param context activity context
+	 * @param manager wifi direct api manager
+	 * @param peers list of device available
+	 */
 	public WifiDirectPickPeersDialog(Context context, WifiDirectManager manager, WifiP2pDeviceList peers){
 		super(context);
 		this.manager = manager;
@@ -35,6 +50,11 @@ public class WifiDirectPickPeersDialog extends AlertDialog.Builder{
 			}});
 	}
 
+	/**
+	 * Return tab of char device name from the list
+	 * @param peers device list
+	 * @return tab of device name
+	 */
 	private CharSequence[] peersToCharSequence(WifiP2pDeviceList peers){
 		CharSequence[] ret = new CharSequence[peers.getDeviceList().size()];
 		int i = 0;

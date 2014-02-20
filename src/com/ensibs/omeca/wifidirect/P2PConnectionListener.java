@@ -11,14 +11,27 @@ import com.ensibs.omeca.wifidirect.event.WifiDirectEvent;
 import com.ensibs.omeca.wifidirect.event.WifiDirectEventImpl;
 import com.ensibs.omeca.wifidirect.property.WifiDirectProperty;
 
+/**
+ * Listener for connection or deconnection of wifi direct network
+ */
 public class P2PConnectionListener extends BroadcastReceiver{
 	
+	/**
+	 * notification center for api wifi direct
+	 */
 	private WifiDirectNotificationCenter notificationCenter;
 	
+	/**
+	 * Constructor
+	 * @param notificationCenter notification center for api wifi direct
+	 */
 	public P2PConnectionListener(WifiDirectNotificationCenter notificationCenter){
 		this.notificationCenter = notificationCenter;
 	}
 
+	/**
+	 * Check for type of event receive from the api
+	 */
 	@Override
 	public void onReceive(Context context, Intent intent) {
 		Log.i(WifiDirectProperty.TAG, "ConnectionListener");

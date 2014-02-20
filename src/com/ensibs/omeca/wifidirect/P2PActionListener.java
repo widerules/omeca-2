@@ -8,14 +8,27 @@ import android.net.wifi.p2p.WifiP2pManager;
 import android.net.wifi.p2p.WifiP2pManager.ActionListener;
 import android.util.Log;
 
+/**
+ * Wifi direct listen for result of action
+ */
 public class P2PActionListener implements ActionListener {
 	
+	/**
+	 * notification center for api wifi direct
+	 */
 	private WifiDirectNotificationCenter notificationCenter;
 	
+	/**
+	 * Constructor
+	 * @param notificationCenter notification center for api wifi direct
+	 */
 	public P2PActionListener(WifiDirectNotificationCenter notificationCenter){
 		this.notificationCenter = notificationCenter;
 	}
 	
+	/**
+	 * If the action failed in launch it
+	 */
 	@Override
 	public void onFailure(int reason) {
 		switch (reason) {
@@ -38,6 +51,9 @@ public class P2PActionListener implements ActionListener {
 		}
 	}
 
+	/**
+	 * If the action succeed in launch it
+	 */
 	@Override
 	public void onSuccess() {
 		// Nothing to do.
