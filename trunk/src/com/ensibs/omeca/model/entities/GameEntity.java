@@ -9,7 +9,7 @@ import java.util.Random;
  * Model that represents a GameEntity. It's a super class for all the others
  * entities which own Cards
  * 
- * @author OMECA 2.0 Team (Raphaël GICQUIAUX - Nicolas HALLOUIN - Sylvain RIO - Lindsay ROZIER)
+ * @author OMECA 2.0 Team (Raphael GICQUIAUX - Nicolas HALLOUIN - Sylvain RIO - Lindsay ROZIER)
  * 
  */
 public abstract class GameEntity implements Serializable {

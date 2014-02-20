@@ -10,7 +10,7 @@ import com.ensibs.omeca.model.entities.Card;
 /**
  * Event when a card has been fliped
  * 
- * @author OMECA 2.0 Team (Raphaël GICQUIAUX - Nicolas HALLOUIN - Sylvain RIO - Lindsay ROZIER)
+ * @author OMECA 2.0 Team (Raphael GICQUIAUX - Nicolas HALLOUIN - Sylvain RIO - Lindsay ROZIER)
  * 
  */
 public class ReturnCardAction implements Action {

@@ -8,7 +8,7 @@ import java.util.Locale;
 /**
  * Model for Notif entity. Represents a game notification
  * 
- * @author OMECA 2.0 Team (Raphaël GICQUIAUX - Nicolas HALLOUIN - Sylvain RIO - Lindsay ROZIER)
+ * @author OMECA 2.0 Team (Raphael GICQUIAUX - Nicolas HALLOUIN - Sylvain RIO - Lindsay ROZIER)
  * 
  */
 public class Notif implements Serializable {

@@ -9,7 +9,7 @@ import com.ensibs.omeca.model.entities.Player;
 /**
  * Event when the host allows a new player to be part of the game
  * 
- * @author OMECA 2.0 Team (Raphaël GICQUIAUX - Nicolas HALLOUIN - Sylvain RIO - Lindsay ROZIER)
+ * @author OMECA 2.0 Team (Raphael GICQUIAUX - Nicolas HALLOUIN - Sylvain RIO - Lindsay ROZIER)
  * 
  */
 public class AknowlegmentConnectionAction implements Action {
