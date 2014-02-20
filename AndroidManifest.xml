@@ -49,7 +49,8 @@
         </activity>
         <activity
             android:name="com.ensibs.omeca.HelpActivity"
-            android:label="@string/title_activity_help" >
+            android:label="@string/title_activity_help"
+            android:screenOrientation="landscape" >
         </activity>
     </application>
 
