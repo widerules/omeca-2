@@ -5,7 +5,7 @@ import com.ensibs.omeca.R;
 
 /**
  * This class contains the list of every avatar images.
- * @author OMECA 2.0 Team (Raphaël GICQUIAUX - Nicolas HALLOUIN - Sylvain RIO - Lindsay ROZIER)
+ * @author OMECA 2.0 Team (Raphael GICQUIAUX - Nicolas HALLOUIN - Sylvain RIO - Lindsay ROZIER)
  */
 public abstract class AvatarsList {
 

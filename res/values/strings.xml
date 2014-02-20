@@ -15,7 +15,7 @@
     
     <!-- M A I N    M E N U -->
     <string name="button_host">Créer</string>
-    <string name="button_client">Joindre</string>
+    <string name="button_client">Jouer</string>
     <string name="button_options">Options</string>
     <string name="button_help">Aide</string>
     
@@ -49,10 +49,10 @@
     <!-- G A M E    A C T I V I T Y -->
     <string name="list_menu">Menu action</string>
     <string name="list_distribution">Distribution automatique</string>
-    <string name="list_shuffle">Melanger la pile de pioche</string>
+    <string name="list_shuffle">Mélanger la pile de pioche</string>
     <string name="list_cut">Couper la pile de pioche</string>
-    <string name="list_pile">Reinitialiser les piles</string>
-    <string name="list_reinit">Reinitialiser la partie</string>
+    <string name="list_pile">Réinitialiser les piles</string>
+    <string name="list_reinit">Réinitialiser la partie</string>
     
     
     

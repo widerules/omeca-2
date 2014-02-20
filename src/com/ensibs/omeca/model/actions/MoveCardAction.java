@@ -12,7 +12,7 @@ import com.ensibs.omeca.wifidirect.property.WifiDirectProperty;
 /**
  * Event when a card has been moved
  * 
- * @author OMECA 2.0 Team (Raphaël GICQUIAUX - Nicolas HALLOUIN - Sylvain RIO - Lindsay ROZIER)
+ * @author OMECA 2.0 Team (Raphael GICQUIAUX - Nicolas HALLOUIN - Sylvain RIO - Lindsay ROZIER)
  * 
  */
 public class MoveCardAction implements Action {
