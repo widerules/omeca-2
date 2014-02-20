@@ -9,14 +9,27 @@ import android.content.Context;
 import android.content.Intent;
 import android.util.Log;
 
+/**
+ * Listener for wifi direct device found
+ */
 public class P2PDiscoveryReceiver extends BroadcastReceiver{
 	
+	/**
+	 * notification center for api wifi direct
+	 */
 	private WifiDirectNotificationCenter notificationCenter;
 	
+	/**
+	 * Constructor
+	 * @param notificationCenter notification center for api wifi direct
+	 */
 	public P2PDiscoveryReceiver(WifiDirectNotificationCenter notificationCenter){
 		this.notificationCenter = notificationCenter;
 	}
 
+	/**
+	 * Check for type of event receive from the api
+	 */
 	@Override
 	public void onReceive(Context context, Intent intent) {
 		Log.i(WifiDirectProperty.TAG, "Framework P2P peers find");

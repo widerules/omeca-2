@@ -30,11 +30,12 @@ import com.ensibs.omeca.wifidirect.property.WifiDirectProperty;
 import com.ensibs.omeca.wifidirect.status.WifiDirectStatus;
 
 /**
- * 
- *
+ * Main interface for use the wifi direct api of Omeca
  */
 public class WifiDirectManager extends Observable implements Observer{
-	//TODO methode deco client
+	/**
+	 * Wifi direct mod attribut
+	 */
 	private WifiDirectMod mod = null;
 	private WifiDirectNotificationCenter notificationCenter = null;
 	private WifiP2pManager wifiP2pManager = null;
@@ -52,8 +53,8 @@ public class WifiDirectManager extends Observable implements Observer{
 	private boolean isDiscoveryRegistred = false;
 
 	/**
-	 * 
-	 * @param applicationContext
+	 * Constructor
+	 * @param applicationContext application context
 	 */
 	public WifiDirectManager(Context applicationContext){
 		WifiDirectManager.applicationContext  = applicationContext;
@@ -63,9 +64,9 @@ public class WifiDirectManager extends Observable implements Observer{
 	}
 	
 	/**
-	 * 
-	 * @param applicationContext
-	 */
+	 * Set context of the activity to show popup 
+	 * @param activityContext activity context
+	 */ 
 	public static void setContext(Context activityContext) {
 		WifiDirectManager.activityContext = activityContext;
 	}
@@ -80,15 +81,15 @@ public class WifiDirectManager extends Observable implements Observer{
 	}
 
 	/**
-	 * 
-	 */
+	 * Initialization of the notification center of the api
+	 */	
 	private void initNotificator(){
 		this.notificationCenter = new WifiDirectNotificationCenter();
 		this.notificationCenter.addObserver(this);
 	}
 
 	/**
-	 * 
+	 * Start the wifi direct
 	 */
 	private void initP2P(){
 		this.wifiP2pManager = (WifiP2pManager)applicationContext.getSystemService(Context.WIFI_P2P_SERVICE);
@@ -102,7 +103,7 @@ public class WifiDirectManager extends Observable implements Observer{
 	}
 	
 	/**
-	 * 
+	 * Stop the wifi direct
 	 */
 	public void stopP2P(){
 		this.unregistred();
@@ -110,14 +111,14 @@ public class WifiDirectManager extends Observable implements Observer{
 	}
 
 	/**
-	 * 
+	 * Register listen in the context of the application
 	 */
 	private void registred(){
 		applicationContext.registerReceiver(statusReceiver, new IntentFilter(WifiP2pManager.WIFI_P2P_STATE_CHANGED_ACTION));
 	}
 
 	/**
-	 * 
+	 * Unregister listen in the context of the application
 	 */
 	private void unregistred(){
 		try{
@@ -129,7 +130,7 @@ public class WifiDirectManager extends Observable implements Observer{
 	}
 	
 	/**
-	 * 
+	 * This method enable you to be visible to other wifi direct device
 	 */
 	public void startVisible(){
 		if(this.status == WifiDirectStatus.DISCONNECTED)
@@ -142,7 +143,7 @@ public class WifiDirectManager extends Observable implements Observer{
 	}
 
 	/**
-	 * 
+	 * Start searching devices available
 	 */
 	public void startDiscoverPeers(){
 		applicationContext.registerReceiver(discoveryReceiver, new IntentFilter(WifiP2pManager.WIFI_P2P_PEERS_CHANGED_ACTION));
@@ -150,7 +151,7 @@ public class WifiDirectManager extends Observable implements Observer{
 	}
 
 	/**
-	 * 
+	 * Stop searching devices available
 	 */
 	public void stopDiscoverPeers(){
 		if(this.isDiscoveryRegistred){
@@ -160,8 +161,8 @@ public class WifiDirectManager extends Observable implements Observer{
 	} 
 
 	/**
-	 * 
-	 * @param peers
+	 * Call the popup to show all devices available
+	 * @param peers list of wifi direct devices available
 	 */
 	private void showConnectionDialog(WifiP2pDeviceList peers){
 		WifiDirectPickPeersDialog dialog = new WifiDirectPickPeersDialog(activityContext, this, peers);
@@ -169,15 +170,15 @@ public class WifiDirectManager extends Observable implements Observer{
 	}
 
 	/**
-	 * 
+	 * Set attribut for cancel connection
 	 */
 	public void cancelConnection(){
 		this.isOnConnection = false;
 	}
 	
 	/**
-	 * 
-	 * @param device
+	 * Try to connect to a wifi direct device
+	 * @param device the wifi direct devie from api android
 	 */
 	public void connectTo(WifiP2pDevice device) {
 		WifiP2pConfig config = new WifiP2pConfig();
@@ -194,6 +195,9 @@ public class WifiDirectManager extends Observable implements Observer{
 		}, new Date((new Date()).getTime()+WifiDirectProperty.TIMER));
 	}
 	
+	/**
+	 * Disconnection from a wifi direct device
+	 */
 	public void disconnect(){
 		if(this.status == WifiDirectStatus.CONNECTED){
 			this.wifiDirectIExchange.stopExchange();
@@ -209,6 +213,9 @@ public class WifiDirectManager extends Observable implements Observer{
 		this.cancelConnection();
 	}
 	
+	/**
+	 * Cancel connection to a device by wifi direct
+	 */
 	public void cancelConnectionTo(){
 		this.wifiP2pManager.cancelConnect(wifiP2PChannel, actionListener);
 		this.status = WifiDirectStatus.DISCONNECTED;
@@ -216,32 +223,32 @@ public class WifiDirectManager extends Observable implements Observer{
 	}
 
 	/**
-	 * 
-	 * @return
+	 * Return notification center
+	 * @return notification center for wifi direct event
 	 */
 	public WifiDirectNotificationCenter getNotificationCenter() {
 		return this.notificationCenter;
 	}
 
 	/**
-	 * 
-	 * @param mod
+	 * Set the mod of the device
+	 * @param mod host or client
 	 */
 	public void setMode(WifiDirectMod mod){
 		this.mod = mod;
 	}
 
 	/**
-	 * 
-	 * @return
+	 * Return mod of the wifi direct of the device
+	 * @return host or client
 	 */
 	public WifiDirectMod getMod(){
 		return this.mod;
 	}
 
 	/**
-	 * 
-	 * @return
+	 * Is currently search device ?
+	 * @return true if is searching, else false
 	 */
 	public boolean isDiscoveryRegistred() {
 		return isDiscoveryRegistred;
@@ -249,16 +256,16 @@ public class WifiDirectManager extends Observable implements Observer{
 
 
 	/**
-	 * 
-	 * @return
+	 * Return wifi direct status
+	 * @return connected or disconnected
 	 */
 	public WifiDirectStatus getStatus() {
 		return this.status;
 	}
 	
 	/**
-	 * 
-	 * @param event
+	 * Send event to all clients with your user id
+	 * @param event the wifidirectimpl event
 	 */
 	public void sendEvent(WifiDirectEventImpl event){
 		if(this.wifiDirectIExchange != null){
@@ -269,13 +276,13 @@ public class WifiDirectManager extends Observable implements Observer{
 	}
 
 	/**
-	 * 
+	 * Different action depend of event wifi direct type
 	 */
 	@Override
 	public synchronized void update(Observable source, Object event) {
 		WifiDirectEventImpl p2pEvent = (WifiDirectEventImpl) event;
 		if(p2pEvent.getEvent() == WifiDirectEvent.BUSY){
-			//TODO No wifi !!!! ou framework en attente
+			//No wifi !!!! ou framework en attente
 			setChanged();
 			notifyObservers(p2pEvent);
 		}else if(p2pEvent.getEvent() == WifiDirectEvent.CHANNEL_LOST){
@@ -303,10 +310,8 @@ public class WifiDirectManager extends Observable implements Observer{
 			//this.stopDiscoverPeers();
 			this.connectTo((WifiP2pDevice) p2pEvent.getData());
 		}else if(p2pEvent.getEvent() == WifiDirectEvent.DISCONNECTED){
-			//TODO close socket
 			//this.status = WifiDirectStatus.DISCONNECTED;
 		}else if(p2pEvent.getEvent() == WifiDirectEvent.ENABLED){
-			//TODO Nothing later
 		}else if(p2pEvent.getEvent() == WifiDirectEvent.ERROR){
 			//Resends event or not ? Close game ?
 		}else if(p2pEvent.getEvent() == WifiDirectEvent.EVENT){
@@ -333,7 +338,6 @@ public class WifiDirectManager extends Observable implements Observer{
 			setChanged();
 			notifyObservers(p2pEvent);
 		}else if(p2pEvent.getEvent() == WifiDirectEvent.NEW_CLIENT){
-			//TODO stay visible
 			if(this.mod == WifiDirectMod.HOST)
 				this.startVisible();
 		}
