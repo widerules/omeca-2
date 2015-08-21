@@ -1,0 +1,1 @@
+This project consists of developing an Android app which can be used as a playing cards deck for any kind of game.
